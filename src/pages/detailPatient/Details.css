@@ -1,0 +1,42 @@
+.product {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  height: auto;
+  width: 100%;
+}
+
+.productRight {
+  height: auto;
+  width: 60%;
+}
+.productLeft {
+  height: auto;
+  width: 60%;
+  padding-top: 20px;
+}
+.productRightCard {
+  position: relative;
+  width: 100%;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+@media screen and (max-width: 900px) {
+  .product {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: auto;
+    width: 100%;
+  }
+  .productRight {
+    height: auto;
+    width: 90%;
+  }
+  .productLeft {
+    height: auto;
+    width: 90%;
+    padding-top: 20px;
+  }
+}
