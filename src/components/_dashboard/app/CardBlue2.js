@@ -1,18 +1,18 @@
-import propTypes from 'prop-types';
+import propTypes from "prop-types";
 // material
-import { styled } from '@material-ui/core/styles';
-import { Card, Typography } from '@material-ui/core';
+import { styled } from "@material-ui/core/styles";
+import { Card, Typography } from "@material-ui/core";
 // utils
-import { fShortenNumber } from '../../../utils/formatNumber';
+import { fShortenNumber } from "../../../utils/formatNumber";
 
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Card)(({ theme }) => ({
-  boxShadow: 'none',
-  textAlign: 'center',
+  boxShadow: "none",
+  textAlign: "center",
   padding: theme.spacing(5, 0),
   color: theme.palette.warning.darker,
-  backgroundColor: theme.palette.warning.lighter
+  backgroundColor: theme.palette.warning.light
 }));
 
 // ----------------------------------------------------------------------
@@ -20,7 +20,7 @@ const RootStyle = styled(Card)(({ theme }) => ({
 CardBlue2.propTypes = {
   title: propTypes.string,
   nombreM: propTypes.number,
-  nombreF: propTypes.number
+  nombreF: propTypes.number,
 };
 export default function CardBlue2({ title, nombreM, nombreF }) {
   const total = nombreM + nombreF || 0;

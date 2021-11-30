@@ -13,6 +13,7 @@ import {
 import { green } from "@material-ui/core/colors";
 import { useFormik, Form, FormikProvider } from "formik";
 import * as Yup from "yup";
+import { name } from "faker/locale/de_AT";
 
 export default function Material({ produits }) {
   console.log(produits);
@@ -43,7 +44,8 @@ export default function Material({ produits }) {
               control={
                 <Checkbox
                   onChange={handleChangeCheck}
-                  name={produit.nom_produit}
+                  name={`id_` + produit.id_produit}
+                  value={produit.id_produit}
                 />
               }
               label={produit.nom_produit}
@@ -52,6 +54,7 @@ export default function Material({ produits }) {
               fullWidth
               label="Quantite"
               onChange={handleChangeTextField}
+              name={`qte_` + produit.id_produit}
               // error={Boolean(touched.quantite && errors.quantite)}
               // helperText={touched.quantite && errors.quantite}
             />
