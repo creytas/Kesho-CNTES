@@ -1,12 +1,12 @@
-import { useState } from 'react';
-import password from 'secure-random-password';
-import * as Yup from 'yup';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { styled } from '@material-ui/core/styles';
-import { useFormik, Form, FormikProvider } from 'formik';
-import Axios from 'axios';
+import { useState } from "react";
+import password from "secure-random-password";
+import * as Yup from "yup";
+import { useNavigate, useLocation } from "react-router-dom";
+import { styled } from "@material-ui/core/styles";
+import { useFormik, Form, FormikProvider } from "formik";
+import Axios from "axios";
 // material
-import Select from '@material-ui/core/Select';
+import Select from "@material-ui/core/Select";
 import {
   Radio,
   Stack,
@@ -15,27 +15,27 @@ import {
   FormLabel,
   RadioGroup,
   // InputAdornment,
-  FormControlLabel
-} from '@material-ui/core';
-import { LoadingButton } from '@material-ui/lab';
-import { makeStyles } from '@material-ui/styles';
-import { fakeAuth } from '../../../fakeAuth';
+  FormControlLabel,
+} from "@material-ui/core";
+import { LoadingButton } from "@material-ui/lab";
+import { makeStyles } from "@material-ui/styles";
+import { fakeAuth } from "../../../fakeAuth";
 
-const Box = styled('div')(() => ({
-  width: '100%',
-  textAlign: 'center',
-  position: 'relative',
-  left: '125%',
-  transform: 'translate(-50%,0)'
+const Box = styled("div")(() => ({
+  width: "100%",
+  textAlign: "center",
+  position: "relative",
+  left: "125%",
+  transform: "translate(-50%,0)",
 }));
 
 export default function PersonnelAddFrom() {
   const useStyles = makeStyles(() => ({
     labelRoot: {
-      '&&': {
-        color: 'red'
-      }
-    }
+      "&&": {
+        color: "red",
+      },
+    },
   }));
   const classes = useStyles();
   const navigate = useNavigate();
@@ -43,41 +43,56 @@ export default function PersonnelAddFrom() {
   const [loader, setLoader] = useState(false);
 
   const RegisterSchema = Yup.object().shape({
-    firstName: Yup.string().min(1, 'Trop court!').max(50, 'Trop long!').required('Prénom requis'),
-    lastName: Yup.string().min(1, 'Trop court!').max(50, 'Trop long!').required('Nom requis'),
+    firstName: Yup.string()
+      .min(1, "Trop court!")
+      .max(50, "Trop long!")
+      .required("Prénom requis"),
+    lastName: Yup.string()
+      .min(1, "Trop court!")
+      .max(50, "Trop long!")
+      .required("Nom requis"),
     middleName: Yup.string()
-      .min(1, 'Trop court!')
-      .max(50, 'Trop long!')
-      .required('Post-nom requis'),
+      .min(1, "Trop court!")
+      .max(50, "Trop long!")
+      .required("Post-nom requis"),
     status: Yup.string().required(),
     myEmail: Yup.string()
-      .email('Adresse mail doit être au format valide')
-      .required('Adresse mail requis'),
-    myPassword: Yup.string().required('Mot de passe requis'),
+      .email("Adresse mail doit être au format valide")
+      .required("Adresse mail requis"),
+    myPassword: Yup.string().required("Mot de passe requis"),
     sex: Yup.string().required(),
-    isAdmin: Yup.string().required()
+    isAdmin: Yup.string().required(),
   });
 
   const location = useLocation();
 
-  const { from } = location.state || { from: { pathname: '/dashboard/app' } };
+  const { from } = location.state || { from: { pathname: "/dashboard/app" } };
   const formik = useFormik({
     enableReinitialize: false,
     initialValues: {
-      firstName: '',
-      lastName: '',
-      middleName: '',
-      status: '',
-      myEmail: '',
+      firstName: "",
+      lastName: "",
+      middleName: "",
+      status: "",
+      myEmail: "",
       myPassword: password.randomPassword({
         length: 8,
-        characters: [password.lower, password.upper, password.digits]
+        characters: [password.lower, password.upper, password.digits],
       }),
-      sex: '',
-      isAdmin: ''
+      sex: "",
+      isAdmin: "",
     },
     validationSchema: RegisterSchema,
-    onSubmit: ({ firstName, lastName, middleName, status, myEmail, myPassword, sex, isAdmin }) => {
+    onSubmit: ({
+      firstName,
+      lastName,
+      middleName,
+      status,
+      myEmail,
+      myPassword,
+      sex,
+      isAdmin,
+    }) => {
       setLoader(true);
       Axios.post(
         `https://kesho-congo-api.herokuapp.com/user/register`,
@@ -89,22 +104,22 @@ export default function PersonnelAddFrom() {
           sexe_user: sex,
           prenom_user: firstName,
           is_admin: isAdmin,
-          statut: status
+          statut: status,
         },
         {
           headers: {
-            'Content-Type': 'application/json',
-            Authorization: `bearer ${localStorage.getItem('token')}`
-          }
+            "Content-Type": "application/json",
+            Authorization: `bearer ${localStorage.getItem("token")}`,
+          },
         }
       )
         .then((response) => {
           setLoader(false);
           const message = response.data;
-          console.log('Yves', message);
+          console.log("Yves", message);
           fakeAuth.login(() => {
             navigate(from);
-            navigate('/dashboard/personnel', { replace: true });
+            navigate("/dashboard/personnel", { replace: true });
           });
         })
         .catch((err) => {
@@ -112,10 +127,11 @@ export default function PersonnelAddFrom() {
           setLoader(false);
           console.log(err);
         });
-    }
+    },
   });
 
-  const { errors, touched, handleSubmit, getFieldProps, values, handleChange } = formik;
+  const { errors, touched, handleSubmit, getFieldProps, values, handleChange } =
+    formik;
   return (
     <FormikProvider value={formik}>
       <Box>
@@ -125,7 +141,7 @@ export default function PersonnelAddFrom() {
               fullWidth
               label="Prénom"
               value={values.firstName}
-              {...getFieldProps('firstName')}
+              {...getFieldProps("firstName")}
               error={Boolean(touched.firstName && errors.firstName)}
               helperText={touched.firstName && errors.firstName}
             />
@@ -133,7 +149,7 @@ export default function PersonnelAddFrom() {
               fullWidth
               label="Nom"
               value={values.lastName}
-              {...getFieldProps('lastName')}
+              {...getFieldProps("lastName")}
               error={Boolean(touched.lastName && errors.lastName)}
               helperText={touched.lastName && errors.lastName}
             />
@@ -141,18 +157,18 @@ export default function PersonnelAddFrom() {
             <TextField
               fullWidth
               label="Post-nom"
-              {...getFieldProps('middleName')}
+              {...getFieldProps("middleName")}
               error={Boolean(touched.middleName && errors.middleName)}
               helperText={touched.middleName && errors.middleName}
             />
             <RadioGroup
-              {...getFieldProps('sex')}
+              {...getFieldProps("sex")}
               error={Boolean(touched.sex && errors.sex)}
               value={values.sex}
             >
               <Stack
-                direction={{ xs: 'column', sm: 'row' }}
-                sx={{ display: 'flex', alignItems: 'center' }}
+                direction={{ xs: "column", sm: "row" }}
+                sx={{ display: "flex", alignItems: "center" }}
                 spacing={1}
               >
                 <FormLabel component="label">Sexe:</FormLabel>
@@ -163,7 +179,7 @@ export default function PersonnelAddFrom() {
             <Select
               native
               value={values.status}
-              {...getFieldProps('status')}
+              {...getFieldProps("status")}
               error={Boolean(touched.status && errors.status)}
             >
               <option value="" selected disabled hidden>
@@ -179,7 +195,7 @@ export default function PersonnelAddFrom() {
               autoComplete="Email"
               type="email"
               label="Email "
-              {...getFieldProps('myEmail')}
+              {...getFieldProps("myEmail")}
               error={Boolean(touched.myEmail && errors.myEmail)}
               helperText={touched.myEmail && errors.myEmail}
             />
@@ -188,23 +204,31 @@ export default function PersonnelAddFrom() {
               label="Mot de passe"
               value={values.myPassword}
               onChange={handleChange}
-              {...getFieldProps('myPassword')}
+              {...getFieldProps("myPassword")}
               error={Boolean(touched.myPassword && errors.myPassword)}
               helperText={touched.myPassword && errors.myPassword}
             />
             <RadioGroup
-              {...getFieldProps('isAdmin')}
+              {...getFieldProps("isAdmin")}
               error={Boolean(touched.isAdmin && errors.isAdmin)}
               value={values.isAdmin}
             >
               <Stack
-                direction={{ xs: 'column', sm: 'row' }}
-                sx={{ display: 'flex', alignItems: 'center' }}
+                direction={{ xs: "column", sm: "row" }}
+                sx={{ display: "flex", alignItems: "center" }}
                 spacing={1}
               >
                 <FormLabel component="label">Admin:</FormLabel>
-                <FormControlLabel value="true" control={<Radio />} label="Oui" />
-                <FormControlLabel value="false" control={<Radio />} label="Non" />
+                <FormControlLabel
+                  value="true"
+                  control={<Radio />}
+                  label="Oui"
+                />
+                <FormControlLabel
+                  value="false"
+                  control={<Radio />}
+                  label="Non"
+                />
               </Stack>
             </RadioGroup>
 
@@ -213,7 +237,7 @@ export default function PersonnelAddFrom() {
                 Cet adresse mail existe, veuillez entrer un autre adresse mail
               </span>
             ) : (
-              ''
+              ""
             )}
 
             <LoadingButton

@@ -15,7 +15,7 @@ import DashboardApp from "./pages/DashboardApp";
 import NewPersonnel from "./pages/NewPersonnel";
 import PageDetail from "./pages/detailPatient/Details";
 import MoreDetail from "./pages/detailPatient/MoreDetails";
-import AddOperationForm from "./components/_dashboard/stock/AddOperationForm";
+import NewOperation from "./pages/NewOperation";
 
 // ----------------------------------------------------------------------
 
@@ -46,7 +46,7 @@ export default function Router() {
         { path: "patient/detail_patient/:id", element: <PageDetail /> },
         { path: "patient/detail_patient/more/:id", element: <MoreDetail /> },
         { path: "patient/add_Patient", element: <NewPatient /> },
-        { path: "stock/add_Operation", element: <AddOperationForm /> },
+        { path: "stock/add_Operation", element: < NewOperation/> },
         { path: "personnel/add_Personnel", element: <NewPersonnel /> },
       ],
     },

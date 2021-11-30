@@ -1,22 +1,23 @@
+import React from "react";
 import { useState } from "react";
-import password from "secure-random-password";
 import * as Yup from "yup";
 import { useNavigate, useLocation } from "react-router-dom";
 import { styled } from "@material-ui/core/styles";
 import { useFormik, Form, FormikProvider } from "formik";
 import Axios from "axios";
+import Material from "./Material";
 // material
-import Select from "@material-ui/core/Select";
 import {
   Radio,
   Stack,
   TextField,
-  // IconButton,
+  Select,
   FormLabel,
   RadioGroup,
-  // InputAdornment,
+  Checkbox,
   FormControlLabel,
 } from "@material-ui/core";
+import { green } from "@material-ui/core/colors";
 import { LoadingButton } from "@material-ui/lab";
 import { makeStyles } from "@material-ui/styles";
 import { fakeAuth } from "../../../fakeAuth";
@@ -30,6 +31,12 @@ const Box = styled("div")(() => ({
 }));
 
 export default function AddOperationForm() {
+  const produits = [
+    { id_produit: 1, nom_produit: "soja" },
+    { id_produit: 2, nom_produit: "mais" },
+    { id_produit: 3, nom_produit: "sorgho" },
+    { id_produit: 4, nom_produit: "extrait foliaire" },
+  ];
   const useStyles = makeStyles(() => ({
     labelRoot: {
       "&&": {
@@ -44,7 +51,7 @@ export default function AddOperationForm() {
 
   const RegisterSchema = Yup.object().shape({
     dateOperation: Yup.date().required("Date requise"),
-    matiere: Yup.string().required(),
+    matiere: Yup.array().required(),
     typeOperation: Yup.string().required("type d'operation requis"),
     quantite: Yup.number().required(),
     commentaire: Yup.string().required("Justifiez l'operation"),
@@ -74,11 +81,11 @@ export default function AddOperationForm() {
       Axios.post(
         `https://kesho-congo-api.herokuapp.com/stock/operation`,
         {
-          dateOperation: dateOperation,
-          matiere: matiere,
-          typeOperation: typeOperation,
-          quantite: quantite,
-          commentaire: commentaire,
+          date_operation: dateOperation,
+          matiere_id: matiere,
+          type_operation: typeOperation,
+          qte_operation: quantite,
+          commentaire_operation: commentaire,
         },
         {
           headers: {
@@ -117,7 +124,6 @@ export default function AddOperationForm() {
     console.log(value);
     setFieldValue("dateOperation", value);
   };
-
   return (
     <FormikProvider value={formik}>
       <Box>
@@ -136,38 +142,96 @@ export default function AddOperationForm() {
               //  {...getFieldProps('dateOperation')}
               helperText={touched.dateOperation && errors.dateOperation}
               error={Boolean(touched.dateOperation && errors.dateOperation)}
-            />
+            />{" "}
+            <Select
+              native
+              value={values.status}
+              {...getFieldProps("status")}
+              error={Boolean(touched.status && errors.status)}
+            >
+              <option value="" selected disabled hidden>
+                Type operation
+              </option>
+              <option value="Entrée">Entrée</option>
+              <option value="Sortie">Sortie</option>
+            </Select>
             <TextField
               fullWidth
-              label="Nom"
-              value={values.lastName}
-              {...getFieldProps("lastName")}
-              error={Boolean(touched.lastName && errors.lastName)}
-              helperText={touched.lastName && errors.lastName}
-            />
-
-            <TextField
-              fullWidth
-              label="Post-nom"
+              label="Raison"
               {...getFieldProps("middleName")}
               error={Boolean(touched.middleName && errors.middleName)}
               helperText={touched.middleName && errors.middleName}
             />
-            <RadioGroup
-              {...getFieldProps("sex")}
-              error={Boolean(touched.sex && errors.sex)}
-              value={values.sex}
+            <Material produits={produits}/>
+            {/* <Stack
+              direction={{ xs: "column", sm: "row" }}
+              sx={{ display: "flex", flexDirection:"column", alignItems: "center" }}
+              spacing={1}
             >
-              <Stack
-                direction={{ xs: "column", sm: "row" }}
-                sx={{ display: "flex", alignItems: "center" }}
-                spacing={1}
-              >
-                <FormLabel component="label">Sexe:</FormLabel>
-                <FormControlLabel value="M" control={<Radio />} label="M" />
-                <FormControlLabel value="F" control={<Radio />} label="F" />
-              </Stack>
-            </RadioGroup>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    // checked={true}
+                    onChange={handleChange}
+                    name="Mais"
+                  />
+                }
+                label="Mais"
+              />
+              <TextField
+                fullWidth
+                label="Quantite"
+                {...getFieldProps("quantite")}
+                error={Boolean(touched.middleName && errors.middleName)}
+                helperText={touched.middleName && errors.middleName}
+              />
+            </Stack>
+            <Stack
+              direction={{ xs: "column", sm: "row" }}
+              sx={{ display: "flex", alignItems: "center" }}
+              spacing={1}
+            >
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    // checked={true}
+                    onChange={handleChange}
+                    name="Mais"
+                  />
+                }
+                label="Sorgho"
+              />
+              <TextField
+                fullWidth
+                label="Quantite"
+                {...getFieldProps("quantite")}
+                error={Boolean(touched.middleName && errors.middleName)}
+                helperText={touched.middleName && errors.middleName}
+              />
+            </Stack>
+            <Stack
+              direction={{ xs: "column", sm: "row" }}
+              sx={{ display: "flex", alignItems: "center" }}
+              spacing={1}
+            >
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    // checked={true}
+                    onChange={handleChange}
+                    name="Soja"
+                  />
+                }
+                label="Soja"
+              />
+              <TextField
+                fullWidth
+                label="Quantite"
+                {...getFieldProps("quantite")}
+                error={Boolean(touched.middleName && errors.middleName)}
+                helperText={touched.middleName && errors.middleName}
+              />
+            </Stack> */}
             <Select
               native
               value={values.status}
@@ -181,7 +245,6 @@ export default function AddOperationForm() {
               <option value="Infirmier">Infirmier</option>
               <option value="Nutritionniste">Nutritionniste</option>
             </Select>
-
             <TextField
               fullWidth
               autoComplete="Email"
@@ -223,7 +286,6 @@ export default function AddOperationForm() {
                 />
               </Stack>
             </RadioGroup>
-
             {error ? (
               <span className={classes.labelRoot}>
                 Cet adresse mail existe, veuillez entrer un autre adresse mail
@@ -231,7 +293,6 @@ export default function AddOperationForm() {
             ) : (
               ""
             )}
-
             <LoadingButton
               fullWidth
               size="large"
