@@ -1,12 +1,8 @@
 import { useState } from "react";
 
 import {
-  Radio,
   Stack,
   TextField,
-  Select,
-  FormLabel,
-  RadioGroup,
   Checkbox,
   FormControlLabel,
 } from "@material-ui/core";
@@ -36,7 +32,7 @@ export default function Material({ produits }) {
         return (
           <Stack
             direction={{ xs: "column", sm: "row" }}
-            sx={{ display: "flex", alignItems: "center" }}
+            sx={{ width:"100%", display: "flex", alignItems: "center" }}
             spacing={1}
           >
             {" "}

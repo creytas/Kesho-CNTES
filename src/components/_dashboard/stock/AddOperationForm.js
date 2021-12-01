@@ -8,14 +8,9 @@ import Axios from "axios";
 import Material from "./Material";
 // material
 import {
-  Radio,
-  Stack,
+ Stack,
   TextField,
   Select,
-  FormLabel,
-  RadioGroup,
-  Checkbox,
-  FormControlLabel,
 } from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
 import { LoadingButton } from "@material-ui/lab";
@@ -36,6 +31,10 @@ export default function AddOperationForm() {
     { id_produit: 2, nom_produit: "mais" },
     { id_produit: 3, nom_produit: "sorgho" },
     { id_produit: 4, nom_produit: "extrait foliaire" },
+    { id_produit: 5, nom_produit: "sucre" },
+    { id_produit: 6, nom_produit: "briquette energetique" },
+    { id_produit: 7, nom_produit: "huiles" },
+    { id_produit: 8, nom_produit: "savon" },
   ];
   const useStyles = makeStyles(() => ({
     labelRoot: {

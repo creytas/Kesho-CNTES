@@ -37,7 +37,7 @@ export default function NewOperation() {
         <Box sx={{ pb: 5 }}>
           <Typography variant="h4">Nouvelle operation</Typography>
         </Box>
-        <Grid container spacing={3}>
+        <Grid container spacing={2}>
           <Grid item xs={12} sm={6} md={5}>
             <AddOperationForm/>
           </Grid>

@@ -1,9 +1,8 @@
 import { Icon } from "@iconify/react";
-import stock from "@iconify/icons-ant-design/stock-outlined";
 
 // ----------------------------------------------------------------------
 
-const getIcon = (name) => <Icon icon={name} width={22} height={22} />;
+const getIcon = (name) => <Icon icon={name} width={30} height={30} />;
 
 const sidebarConfig = [
   {

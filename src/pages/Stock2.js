@@ -16,7 +16,6 @@ import {
   Card,
   Table,
   Stack,
-  Avatar,
   Button,
   TableRow,
   TableBody,
@@ -26,6 +25,7 @@ import {
   TableContainer,
   OutlinedInput,
   Toolbar,
+  Grid,
 } from "@material-ui/core";
 import Badge from "@material-ui/core/Badge";
 import { styled } from "@material-ui/core/styles";
@@ -42,6 +42,7 @@ import Scrollbar from "../components/Scrollbar";
 import SearchNotFound from "../components/SearchNotFound";
 import { PatientListHead } from "../components/_dashboard/patient";
 import Label from "../components/Label";
+import OperationItem from "src/components/OperationItem";
 
 const TABLE_HEAD = [
   { id: "DO", label: "Date", alignLeft: true },
@@ -92,7 +93,7 @@ const SearchStyle = styled(OutlinedInput)(() => ({
   width: 240,
 }));
 
-export default function Patient() {
+export default function Stock() {
   const operations = [
     {
       id_operation: 1,
@@ -159,7 +160,6 @@ export default function Patient() {
       commentaire: `achat briquette energetique`,
     },
   ];
-
   const [patientsList, setPatientsList] = useState([]);
   const [allData, setAllData] = useState([]);
   const [lenghtData, setLenghtData] = useState(0);
@@ -190,7 +190,7 @@ export default function Patient() {
       .then((data) => {
         const { Patients, nombre_patient } = data;
         setNumberOfElement(
-          numberOfElement === 0 ? Patients.length : numberOfElement
+          numberOfElement === 0 ? operations.length : numberOfElement
         );
         setLenghtData(nombre_patient);
         setPatientsList(operations);
@@ -201,7 +201,7 @@ export default function Patient() {
         console.error("MyError:", error);
       });
   }, [start, numberOfElement]);
-  console.log("donnees patients :", patientsList, numberOfElement);
+  console.log("donnees recu", patientsList);
 
   useEffect(() => {
     fetch(`https://kesho-congo-api.herokuapp.com/patient/export`, {
@@ -233,7 +233,7 @@ export default function Patient() {
     FileSaver.saveAs(data, fileName + fileExtension);
   };
 
-  const exportedFileName = `keshoCongoPatients${moment().format("DDMMMMYYYY")}`;
+  const exportedFileName = `keshoCongoStocks${moment().format("DDMMMMYYYY")}`;
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -324,7 +324,7 @@ export default function Patient() {
     setStart(3);
     setNumberOfElement(0);
   };
-  const filteredPatient = patientsList;
+  const filteredPatient = operations;
 
   const location = useLocation();
   const [isAuth, setIsAuth] = useState(localStorage.getItem("token"));
@@ -410,7 +410,7 @@ export default function Patient() {
                           value={filterName}
                           inputRef={refButtonRefresh}
                           onChange={handleFilterByName}
-                          placeholder="Tapez un nom"
+                          placeholder="Tapez une matiere"
                         />
                       </Form>
                     </FormikProvider>
@@ -448,12 +448,7 @@ export default function Patient() {
                           <TableBody>
                             {filteredPatient.map((row, i) => {
                               const {
-                                date_operation,
-                                matiere,
-                                quantite,
-                                type_operation,
-                                commentaire,
-                                id_operation,
+                                id_patient,
                                 nom_patient,
                                 type_malnutrition,
                                 date_naissance,
@@ -470,10 +465,10 @@ export default function Patient() {
                               return (
                                 <TableRow
                                   component={RouterLink}
-                                  to={`detail_patient/${id_operation}`}
+                                  to={`detail_patient/${id_patient}`}
                                   className={classes.patientRow}
                                   hover
-                                  key={id_operation}
+                                  key={id_patient}
                                   tabIndex={-1}
                                   // role="checkbox"
                                   selected={isItemSelected}
@@ -488,20 +483,72 @@ export default function Patient() {
                                       {i + 1}
                                     </TableCell>
                                   </TableCell>
-                                  <TableCell align="left">
-                                    {moment(date_operation).format(
+                                  <TableCell
+                                    component="th"
+                                    scope="row"
+                                    padding="none"
+                                  >
+                                    <Stack
+                                      direction="row"
+                                      alignItems="center"
+                                      spacing={2}
+                                    >
+                                      <Avatar
+                                        alt={nom_patient}
+                                        src={`/static/mock-images/avatars/avatar_${id_patient}.jpg`}
+                                      />
+                                      <Typography variant="subtitle2" noWrap>
+                                        {nom_patient}
+                                      </Typography>
+                                    </Stack>
+                                  </TableCell>
+                                  <TableCell align="center">
+                                    {prenom_patient}
+                                  </TableCell>
+                                  <TableCell align="center">
+                                    {moment(date_naissance).format(
                                       "DD/MM/YYYY"
                                     )}
                                   </TableCell>
-                                  <TableCell align="left">{matiere}</TableCell>
-                                  <TableCell align="left">
-                                    {type_operation}
+                                  <TableCell align="center">
+                                    {sexe_patient}
                                   </TableCell>
+                                  <TableCell align="center">
+                                    {moment(date_Consultation).format(
+                                      "DD/MM/YYYY"
+                                    )}
+                                  </TableCell>
+                                  <TableCell align="center">
+                                    {transferer_unt ? (
+                                      <>
+                                        <Badge color="error" variant="dot" />
+                                        &nbsp;&nbsp;
+                                      </>
+                                    ) : (
+                                      ""
+                                    )}
 
-                                  <TableCell align="left">{quantite}</TableCell>
-
+                                    <Label
+                                      variant="outlined"
+                                      sx={{
+                                        color: `${
+                                          type_malnutrition === "MAC"
+                                            ? "#D32F2F"
+                                            : type_malnutrition === "MAM"
+                                            ? "#ffb74d"
+                                            : type_malnutrition === "MAS-K"
+                                            ? "#e57373"
+                                            : type_malnutrition === "MAS-M"
+                                            ? "#f57c00"
+                                            : "#4CAF50"
+                                        }`,
+                                      }}
+                                    >
+                                      {type_malnutrition}
+                                    </Label>
+                                  </TableCell>
                                   <TableCell align="left">
-                                    {commentaire}
+                                    {nom_consultant} {postnom_consultant}
                                   </TableCell>
                                 </TableRow>
                               );
@@ -551,17 +598,6 @@ export default function Patient() {
                 </TableCell>
                 <TableCell style={{ fontWeight: "900px" }}>
                   {numberOfElement}/{lenghtData}
-                </TableCell>
-                <TableCell
-                  style={{
-                    fontWeight: "900px",
-                    position: "absolute",
-                    left: "87%",
-                  }}
-                >
-                  <Badge color="error" variant="dot" />
-                  &nbsp;&nbsp;
-                  <span>Transféré</span>
                 </TableCell>
               </TableRow>
             </Card>
