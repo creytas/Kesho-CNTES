@@ -552,17 +552,6 @@ export default function Patient() {
                 <TableCell style={{ fontWeight: "900px" }}>
                   {numberOfElement}/{lenghtData}
                 </TableCell>
-                <TableCell
-                  style={{
-                    fontWeight: "900px",
-                    position: "absolute",
-                    left: "87%",
-                  }}
-                >
-                  <Badge color="error" variant="dot" />
-                  &nbsp;&nbsp;
-                  <span>Transféré</span>
-                </TableCell>
               </TableRow>
             </Card>
           </Container>
