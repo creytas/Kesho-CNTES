@@ -42,6 +42,7 @@ import Scrollbar from "../components/Scrollbar";
 import SearchNotFound from "../components/SearchNotFound";
 import { PatientListHead } from "../components/_dashboard/patient";
 import Label from "../components/Label";
+import { green, red } from "@material-ui/core/colors";
 
 const TABLE_HEAD = [
   { id: "DO", label: "Date", alignLeft: true },
@@ -455,14 +456,6 @@ export default function Patient() {
                                 commentaire,
                                 id_operation,
                                 nom_patient,
-                                type_malnutrition,
-                                date_naissance,
-                                sexe_patient,
-                                date_Consultation,
-                                nom_consultant,
-                                postnom_consultant,
-                                prenom_patient,
-                                transferer_unt,
                               } = row;
                               const isItemSelected =
                                 selected.indexOf(nom_patient) !== -1;
@@ -494,7 +487,16 @@ export default function Patient() {
                                     )}
                                   </TableCell>
                                   <TableCell align="left">{matiere}</TableCell>
-                                  <TableCell align="left">
+                                  <TableCell
+                                    align="left"
+                                    sx={{
+                                      color: `${
+                                        type_operation === "entree"
+                                          ? "green"
+                                          : "red"
+                                      }`,
+                                    }}
+                                  >
                                     {type_operation}
                                   </TableCell>
 
