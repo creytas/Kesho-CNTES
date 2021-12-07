@@ -1,108 +1,113 @@
 /* eslint no-nested-ternary: "error" */
-import { Link as RouterLink, Navigate, useLocation } from 'react-router-dom';
-import { Stack, Button } from '@material-ui/core';
-import { Icon } from '@iconify/react';
-import { useState, useEffect } from 'react';
-import Page from '../../components/Page';
+import { Link as RouterLink, Navigate, useLocation } from "react-router-dom";
+import { Stack, Button } from "@material-ui/core";
+import { Icon } from "@iconify/react";
+import { useState, useEffect } from "react";
+import Page from "../../components/Page";
 import {
   FamilleForm,
   CauseForm,
   ShowDAtaPatient,
-  PatientForm
-} from '../../components/_dashboard/patient';
-import './styledNewPatient.css';
+  PatientForm,
+} from "../../components/_dashboard/patient";
+import "./styledNewPatient.css";
 
 export default function NewPatient() {
   const [Step, SetStep] = useState(1);
   const [DataPatient, SetDataPatient] = useState({});
   // ___________ formIdentité__________________________
-  const [taille, setTaille] = useState('');
-  const [poidsActuel, setPoidsActuel] = useState('');
-  const [rationSeche, setRationSeche] = useState('');
-  const [perimetreCranien, setPerimetreCranien] = useState('');
-  const [prenomPatient, setPrenomPatient] = useState('');
-  const [nomPatient, setNomPatient] = useState('');
-  const [postNomPatient, setPostNomPatient] = useState('');
-  const [telephone, setTelephone] = useState('');
-  const [diversificationAliment, setDiversificationAliment] = useState('');
-  const [sexePatient, setSexePatient] = useState('');
-  const [dataNaissancePatient, setDataNaissancePatient] = useState('');
-  const [constitutionAliment, setConstitutionAliment] = useState('');
-  const [provenancePatient, setProvenancePatient] = useState('');
-  const [adressePatient, setadressePatient] = useState('');
-  const [modeArriverPatient, setModeArriverPatient] = useState('');
-  const [ageFinAllaitement, setAgeFinAllaitement] = useState('');
-  const [traitementNutritionnelAutre, setTraitementNutritionnelAutre] = useState('');
-  const [poidsNaissance, setPoidsNaissance] = useState('');
-  const [traitementNutritionnel, setTraitementNutritionnel] = useState('');
-  const [perimetreBrachail, setPerimetreBrachail] = useState('');
-  const [typeMalnutrition, setTypeMalnutrition] = useState('');
-  const [ExplicationAutre, setExplicationAutre] = useState('');
-  const [ExplicationProvenance, setExplicationProvenance] = useState('');
-  const [AllaitementExclisifSixMois, setAllaitementExclisifSixMois] = useState(false);
-  const [transfererUnt, setTransfererUnt] = useState('');
+  const [taille, setTaille] = useState("");
+  const [poidsActuel, setPoidsActuel] = useState("");
+  const [rationSeche, setRationSeche] = useState("");
+  const [perimetreCranien, setPerimetreCranien] = useState("");
+  const [prenomPatient, setPrenomPatient] = useState("");
+  const [nomPatient, setNomPatient] = useState("");
+  const [postNomPatient, setPostNomPatient] = useState("");
+  const [telephone, setTelephone] = useState("");
+  const [diversificationAliment, setDiversificationAliment] = useState("");
+  const [sexePatient, setSexePatient] = useState("");
+  const [dataNaissancePatient, setDataNaissancePatient] = useState("");
+  const [constitutionAliment, setConstitutionAliment] = useState("");
+  const [provenancePatient, setProvenancePatient] = useState("");
+  const [adressePatient, setadressePatient] = useState("");
+  const [modeArriverPatient, setModeArriverPatient] = useState("");
+  const [ageFinAllaitement, setAgeFinAllaitement] = useState("");
+  const [traitementNutritionnelAutre, setTraitementNutritionnelAutre] =
+    useState("");
+  const [poidsNaissance, setPoidsNaissance] = useState("");
+  const [traitementNutritionnel, setTraitementNutritionnel] = useState("");
+  const [perimetreBrachail, setPerimetreBrachail] = useState("");
+  const [typeMalnutrition, setTypeMalnutrition] = useState("");
+  const [ExplicationAutre, setExplicationAutre] = useState("");
+  const [ExplicationProvenance, setExplicationProvenance] = useState("");
+  const [AllaitementExclisifSixMois, setAllaitementExclisifSixMois] =
+    useState(false);
+  const [transfererUnt, setTransfererUnt] = useState("");
 
   // _______________Form famille_________________
-  const [vivreAvecParent, setVivreAvecParent] = useState('');
-  const [typeContraceptionModerne, setTypeContraceptionModerne] = useState('');
-  const [contraceptionMere, setContraceptionMere] = useState('');
-  const [professionMere, setProfessionMere] = useState('');
-  const [nomTuteur, setNomTuteur] = useState('');
-  const [dateNaissanceMere, setDateNaissanceMere] = useState('');
-  const [mereEnceinte, setMereEnceinte] = useState('');
-  const [possederTeleRadio, setPossederTeleRadio] = useState('');
-  const [proffessionChefMenage, setProffessionChefMenage] = useState('');
-  const [scolariteMere, setScolariteMere] = useState('');
-  const [pereMariage, setPereMariage] = useState('');
-  const [mereEnVie, setMereEnVie] = useState('');
-  const [consommationPoisson, setConsommationPoisson] = useState('');
-  const [typeContraceptionNaturel, setTypeContraceptionNaturel] = useState('');
-  const [niveauSocioEconomique, setNiveauSocioEconomique] = useState('');
-  const [statutMarital, setStatutMarital] = useState('');
-  const [tribut, setTribut] = useState('');
-  const [dateNaissanceChefMenage, setDateNaissanceChefMenage] = useState('');
-  const [religion, setReligion] = useState('');
-  const [nbrRepasJour, setNbrRepasJour] = useState('');
-  const [pereEnvie, setPereEnvie] = useState('');
-  const [nbrFemme, setNbrFemme] = useState('');
-  const [tailleMenage, setTailleMenage] = useState('');
-  const [contraceptionType, setContraceptionType] = useState('');
-  const [listAtb, setListAtb] = useState('');
-  const [atb, setAtb] = useState('');
+  const [vivreAvecParent, setVivreAvecParent] = useState("");
+  const [typeContraceptionModerne, setTypeContraceptionModerne] = useState("");
+  const [contraceptionMere, setContraceptionMere] = useState("");
+  const [professionMere, setProfessionMere] = useState("");
+  const [nomTuteur, setNomTuteur] = useState("");
+  const [dateNaissanceMere, setDateNaissanceMere] = useState("");
+  const [mereEnceinte, setMereEnceinte] = useState("");
+  const [possederTeleRadio, setPossederTeleRadio] = useState("");
+  const [proffessionChefMenage, setProffessionChefMenage] = useState("");
+  const [scolariteMere, setScolariteMere] = useState("");
+  const [pereMariage, setPereMariage] = useState("");
+  const [mereEnVie, setMereEnVie] = useState("");
+  const [consommationPoisson, setConsommationPoisson] = useState("");
+  const [typeContraceptionNaturel, setTypeContraceptionNaturel] = useState("");
+  const [niveauSocioEconomique, setNiveauSocioEconomique] = useState("");
+  const [statutMarital, setStatutMarital] = useState("");
+  const [tribut, setTribut] = useState("");
+  const [dateNaissanceChefMenage, setDateNaissanceChefMenage] = useState("");
+  const [religion, setReligion] = useState("");
+  const [nbrRepasJour, setNbrRepasJour] = useState("");
+  const [pereEnvie, setPereEnvie] = useState("");
+  const [nbrFemme, setNbrFemme] = useState("");
+  const [tailleMenage, setTailleMenage] = useState("");
+  const [contraceptionType, setContraceptionType] = useState("");
+  const [listAtb, setListAtb] = useState("");
+  const [atb, setAtb] = useState("");
   // ________form PatientCauseMalnutri_______
-  const [rangFratrie, setRangFratrie] = useState('');
-  const [lieuAccouchement, setLieuAccouchement] = useState('');
-  const [sejourNeo, setSejourNeo] = useState('');
-  const [cocktailAtbDuree, setCocktailAtbDuree] = useState('');
-  const [cocktailAtb, setCocktailAtb] = useState('');
-  const [atcdMas, setAtcdMas] = useState('');
-  const [atcdRougeole, setAtcdRougeole] = useState('');
-  const [tbcChezParent, setTbcChezParent] = useState('');
-  const [tbcLequel, setTbcLequel] = useState('');
-  const [tbcTraiter, setTbcTraiter] = useState('');
-  const [dureeTraitementTbc, setDureeTraitementTbc] = useState('');
-  const [tbcGuerie, setTbcGuerie] = useState('');
-  const [termeGrossesse, setTermeGrossesse] = useState('');
-  const [calendrierVaccin, setCalendrierVaccin] = useState('');
-  const [preciserCalendrierVaccinNonjour, setPreciserCalendrierVaccinNonjour] = useState('');
-  const [asphyxiePrerinatale, setAsphyxiePrerinatale] = useState('');
-  const [tailleFratrie, setTailleFratrie] = useState('');
-  const [masFratrie, setMasFratrie] = useState('');
-  const [terrainVih, setTerrainVih] = useState('');
-  const [nombreChute, setNombreChute] = useState('');
-  const [vaccinationRougeole, setVaccinationRougeole] = useState('');
-  const [eig, setEig] = useState('');
-  const [dpm, setDpm] = useState('');
-  const [tbc, setTbc] = useState('');
-  const [produitPlante, setProduitPlante] = useState('');
-  const [hospitalisationRecente, sethospitalisationRecente] = useState('');
-  const [diagnostiqueHospitalisation, setDiagnostiqueHospitalisation] = useState('');
-  const [atcdDuTbcDansFratrie, setAtcdDuTbcDansFratrie] = useState('');
-  const [dpmAnormalPrecision, setDpmAnormalPrecision] = useState('');
-  const [dureeTraitementProduitPlante, setDureeTraitementProduitPlante] = useState('');
+  const [rangFratrie, setRangFratrie] = useState("");
+  const [lieuAccouchement, setLieuAccouchement] = useState("");
+  const [sejourNeo, setSejourNeo] = useState("");
+  const [cocktailAtbDuree, setCocktailAtbDuree] = useState("");
+  const [cocktailAtb, setCocktailAtb] = useState("");
+  const [atcdMas, setAtcdMas] = useState("");
+  const [atcdRougeole, setAtcdRougeole] = useState("");
+  const [tbcChezParent, setTbcChezParent] = useState("");
+  const [tbcLequel, setTbcLequel] = useState("");
+  const [tbcTraiter, setTbcTraiter] = useState("");
+  const [dureeTraitementTbc, setDureeTraitementTbc] = useState("");
+  const [tbcGuerie, setTbcGuerie] = useState("");
+  const [termeGrossesse, setTermeGrossesse] = useState("");
+  const [calendrierVaccin, setCalendrierVaccin] = useState("");
+  const [preciserCalendrierVaccinNonjour, setPreciserCalendrierVaccinNonjour] =
+    useState("");
+  const [asphyxiePrerinatale, setAsphyxiePrerinatale] = useState("");
+  const [tailleFratrie, setTailleFratrie] = useState("");
+  const [masFratrie, setMasFratrie] = useState("");
+  const [terrainVih, setTerrainVih] = useState("");
+  const [nombreChute, setNombreChute] = useState("");
+  const [vaccinationRougeole, setVaccinationRougeole] = useState("");
+  const [eig, setEig] = useState("");
+  const [dpm, setDpm] = useState("");
+  const [tbc, setTbc] = useState("");
+  const [produitPlante, setProduitPlante] = useState("");
+  const [hospitalisationRecente, sethospitalisationRecente] = useState("");
+  const [diagnostiqueHospitalisation, setDiagnostiqueHospitalisation] =
+    useState("");
+  const [atcdDuTbcDansFratrie, setAtcdDuTbcDansFratrie] = useState("");
+  const [dpmAnormalPrecision, setDpmAnormalPrecision] = useState("");
+  const [dureeTraitementProduitPlante, setDureeTraitementProduitPlante] =
+    useState("");
 
   const location = useLocation();
-  const [isAuth, setIsAuth] = useState(localStorage.getItem('token'));
+  const [isAuth, setIsAuth] = useState(localStorage.getItem("token"));
 
   useEffect(() => {
     setIsAuth(isAuth);
@@ -164,7 +169,7 @@ export default function NewPatient() {
       typeMalnutrition,
       ExplicationAutre,
       ExplicationProvenance,
-      AllaitementExclisifSixMois
+      AllaitementExclisifSixMois,
     };
 
     const patientFormCause = {
@@ -227,7 +232,7 @@ export default function NewPatient() {
       dpmAnormalPrecision,
       setDpmAnormalPrecision,
       dureeTraitementProduitPlante,
-      setDureeTraitementProduitPlante
+      setDureeTraitementProduitPlante,
     };
 
     const patientFormFamille = {
@@ -282,7 +287,7 @@ export default function NewPatient() {
       tailleMenage,
       setTailleMenage,
       contraceptionType,
-      setContraceptionType
+      setContraceptionType,
     };
     switch (key) {
       case 1:
@@ -337,7 +342,9 @@ export default function NewPatient() {
           />
         );
       case 4:
-        return <ShowDAtaPatient PrevStep={PrevStep} DataPatient={DataPatient} />;
+        return (
+          <ShowDAtaPatient PrevStep={PrevStep} DataPatient={DataPatient} />
+        );
       default:
         return null;
     }
@@ -355,23 +362,26 @@ export default function NewPatient() {
           Retour
         </Button>
         <div
-          className={`progress-step  ${Step === 1 && 'progress-step-active'}`}
+          className={`progress-step  ${Step === 1 && "progress-step-active"}`}
           data-title="Indentité"
         />
         <div
-          className={`progress-step  ${Step === 2 && 'progress-step-active'}`}
+          className={`progress-step  ${Step === 2 && "progress-step-active"}`}
           data-title="Cause malnutrition"
         />
         <div
-          className={`progress-step  ${Step === 3 && 'progress-step-active'}`}
+          className={`progress-step  ${Step === 3 && "progress-step-active"}`}
           data-title="Famille"
         />
         <div
-          className={`progress-step  ${Step === 4 && 'progress-step-active'}`}
+          className={`progress-step  ${Step === 4 && "progress-step-active"}`}
           data-title="Valider"
         />
       </div>
-      <Stack direction={{ xs: 'column', sm: 'row' }} sx={{ justifyContent: 'center' }}>
+      <Stack
+        direction={{ xs: "column", sm: "row" }}
+        sx={{ justifyContent: "center" }}
+      >
         {FormPatientInfo(Step)}
       </Stack>
     </Page>

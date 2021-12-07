@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
+import { Icon } from "@iconify/react";
 import { styled } from '@material-ui/core/styles';
-import { Navigate, useLocation } from 'react-router-dom';
-import { Typography, Grid } from '@material-ui/core';
+import { Navigate, useLocation, Link as RouterLink } from 'react-router-dom';
+import { Typography, Grid, Button } from '@material-ui/core';
 import Page from '../components/Page';
 import { PersonnelAddForm } from '../components/_dashboard/personnel';
 
@@ -33,7 +34,15 @@ export default function NewPatient() {
   }, [isAuth]);
   return isAuth ? (
     <Page>
-      <Div>
+      <Div sx={{ px: `10px` }}>
+      <Button
+          variant="outlined"
+          component={RouterLink}
+          to="/dashboard/personnel"
+          startIcon={<Icon icon="bx:bx-arrow-back" />}
+        >
+          Retour
+        </Button>
         <Box sx={{ pb: 5 }}>
           <Typography variant="h4">Créer Utilisateur</Typography>
         </Box>

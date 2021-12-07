@@ -47,7 +47,7 @@ import { green, red } from "@material-ui/core/colors";
 const TABLE_HEAD = [
   { id: "DO", label: "Date", alignLeft: true },
   { id: "MO", label: "Matiere", alignRight: false },
-  { id: "TO", label: "Type operation", alignRight: false },
+  { id: "TO", label: "Type opération", alignRight: false },
   { id: "QTE", label: "Quantité", alignRight: false },
   { id: "CO", label: "Commentaire", alignRight: false },
 ];
@@ -97,25 +97,33 @@ export default function Patient() {
   const operations = [
     {
       id_operation: 1,
-      date_operation: `12/12/2021`,
-      matiere: `mais`,
-      type_operation: `entree`,
+      date_operation: `12/10/2021`,
+      matiere: `maïs`,
+      type_operation: `entrée`,
       quantite: 250,
-      commentaire: `achat sac de mais`,
+      commentaire: `achat sac de maïs`,
     },
     {
       id_operation: 2,
       date_operation: `12/12/2021`,
       matiere: `soja`,
-      type_operation: `entree`,
-      quantite: 250,
-      commentaire: `achat sac de soja`,
+      type_operation: `sortie`,
+      quantite: 2,
+      commentaire: `cuisson bouillie`,
     },
     {
       id_operation: 3,
       date_operation: `12/12/2021`,
+      matiere: `extrait foliaire`,
+      type_operation: `sortie`,
+      quantite: 0.25,
+      commentaire: `cuisson bouillie`,
+    },
+    {
+      id_operation: 4,
+      date_operation: `12/12/2021`,
       matiere: `sorgho`,
-      type_operation: `entree`,
+      type_operation: `entrée`,
       quantite: 250,
       commentaire: `achat sac de sorgho`,
     },
@@ -123,7 +131,7 @@ export default function Patient() {
       id_operation: 4,
       date_operation: `12/12/2021`,
       matiere: `sucre`,
-      type_operation: `entree`,
+      type_operation: `entrée`,
       quantite: 250,
       commentaire: `achat sac de sucre`,
     },
@@ -131,7 +139,7 @@ export default function Patient() {
       id_operation: 5,
       date_operation: `12/12/2021`,
       matiere: `extrait foliaire`,
-      type_operation: `entree`,
+      type_operation: `entrée`,
       quantite: 1500,
       commentaire: `reception extrait foliaire`,
     },
@@ -139,7 +147,7 @@ export default function Patient() {
       id_operation: 6,
       date_operation: `12/12/2021`,
       matiere: `huiles`,
-      type_operation: `entree`,
+      type_operation: `entrée`,
       quantite: 25,
       commentaire: `achat bidon 25L huile`,
     },
@@ -147,21 +155,37 @@ export default function Patient() {
       id_operation: 7,
       date_operation: `12/12/2021`,
       matiere: `savon`,
-      type_operation: `entree`,
+      type_operation: `entrée`,
       quantite: 250,
       commentaire: `achat savon OMO`,
     },
     {
       id_operation: 8,
+      date_operation: `12/13/2021`,
+      matiere: `briquette energetique`,
+      type_operation: `sortie`,
+      quantite: 1,
+      commentaire: `cuisson bouillie`,
+    },
+    {
+      id_operation: 9,
       date_operation: `12/12/2021`,
       matiere: `briquette energetique`,
-      type_operation: `entree`,
+      type_operation: `entrée`,
       quantite: 250,
       commentaire: `achat briquette energetique`,
     },
+    {
+      id_operation: 10,
+      date_operation: `12/13/2021`,
+      matiere: `savon`,
+      type_operation: `sortie`,
+      quantite: 0.1,
+      commentaire: `netoyage des habits et ustensiles`,
+    },
   ];
 
-  const [patientsList, setPatientsList] = useState([]);
+  const [operationsList, setOperationsList] = useState([]);
   const [allData, setAllData] = useState([]);
   const [lenghtData, setLenghtData] = useState(0);
   const [order, setOrder] = useState("asc");
@@ -189,12 +213,12 @@ export default function Patient() {
     )
       .then((response) => response.json())
       .then((data) => {
-        const { Patients, nombre_patient } = data;
+        const { Operations, nombre_operations } = data;
         setNumberOfElement(
-          numberOfElement === 0 ? Patients.length : numberOfElement
+          numberOfElement === 0 ? operations.length : numberOfElement
         );
-        setLenghtData(nombre_patient);
-        setPatientsList(operations);
+        setLenghtData(operations.length);
+        setOperationsList(operations);
         setLoader(false);
         setLoadingData(false);
       })
@@ -202,7 +226,7 @@ export default function Patient() {
         console.error("MyError:", error);
       });
   }, [start, numberOfElement]);
-  console.log("donnees patients :", patientsList, numberOfElement);
+  console.log("donnees patients :", operationsList, numberOfElement);
 
   useEffect(() => {
     fetch(`https://kesho-congo-api.herokuapp.com/patient/export`, {
@@ -244,7 +268,7 @@ export default function Patient() {
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
       setLoader(true);
-      const newSelecteds = patientsList.map((n) => n.nom_patient);
+      const newSelecteds = operationsList.map((n) => n.nom_patient);
       setSelected(newSelecteds);
       return;
     }
@@ -253,9 +277,9 @@ export default function Patient() {
   const handleClickPrev = () => {
     if (numberOfElement > 3) {
       setLoadingData(true);
-      const step = numberOfElement % 3 === 0 ? 3 : patientsList.length;
+      const step = numberOfElement % 3 === 0 ? 3 : operationsList.length;
       setStart((prevState) => prevState - step);
-      const number = numberOfElement % 3 === 0 ? 3 : patientsList.length;
+      const number = numberOfElement % 3 === 0 ? 3 : operationsList.length;
       setNumberOfElement((prevState) => prevState - number);
     }
   };
@@ -265,12 +289,12 @@ export default function Patient() {
       const step =
         numberOfElement + 3 > lenghtData
           ? lenghtData - numberOfElement + 1
-          : patientsList.length;
+          : operationsList.length;
       setStart((prevState) => prevState + step);
       const number =
         numberOfElement + 3 > lenghtData
           ? lenghtData - numberOfElement
-          : patientsList.length;
+          : operationsList.length;
       setNumberOfElement((prevState) => prevState + number);
     }
   };
@@ -303,7 +327,7 @@ export default function Patient() {
         const output = await response.data;
         setSearchedValue("");
         setLoadingButton(false);
-        setPatientsList(output);
+        setOperationsList(output);
       } catch (err) {
         console.log("message error :", err.message);
         setLoadingButton(false);
@@ -325,7 +349,7 @@ export default function Patient() {
     setStart(3);
     setNumberOfElement(0);
   };
-  const filteredPatient = patientsList;
+  const filteredPatient = operationsList;
 
   const location = useLocation();
   const [isAuth, setIsAuth] = useState(localStorage.getItem("token"));
@@ -408,10 +432,11 @@ export default function Patient() {
                           Rechercher
                         </LoadingButton>
                         <SearchStyle
+                          type="date"
                           value={filterName}
                           inputRef={refButtonRefresh}
                           onChange={handleFilterByName}
-                          placeholder="Tapez un nom"
+                          placeholder="Tapez une date"
                         />
                       </Form>
                     </FormikProvider>
@@ -440,7 +465,7 @@ export default function Patient() {
                           order={order}
                           orderBy={orderBy}
                           headLabel={TABLE_HEAD}
-                          rowCount={patientsList.length}
+                          rowCount={operationsList.length}
                           numSelected={selected.length}
                           onRequestSort={handleRequestSort}
                           onSelectAllClick={handleSelectAllClick}
@@ -455,10 +480,9 @@ export default function Patient() {
                                 type_operation,
                                 commentaire,
                                 id_operation,
-                                nom_patient,
                               } = row;
                               const isItemSelected =
-                                selected.indexOf(nom_patient) !== -1;
+                                selected.indexOf(date_operation) !== -1;
 
                               return (
                                 <TableRow
@@ -491,7 +515,7 @@ export default function Patient() {
                                     align="left"
                                     sx={{
                                       color: `${
-                                        type_operation === "entree"
+                                        type_operation === "entrée"
                                           ? "green"
                                           : "red"
                                       }`,

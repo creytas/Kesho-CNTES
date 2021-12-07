@@ -11,15 +11,17 @@ import { useFormik, Form, FormikProvider } from "formik";
 import * as Yup from "yup";
 import { name } from "faker/locale/de_AT";
 
-export default function Material({ produits }) {
-  console.log(produits);
-  const { produit, setProduit } = useState([]);
+export default function Material({ id_produit, libelle_produit }) {
+  const [enable, setEnable] = useState(true);
+  const [matieres, setMatieres] = useState([]);
 
   const RegisterSchema = Yup.object().shape({
-    quantite: Yup.number(),
+    qte_produit: Yup.number(),
+    id_produit: Yup.number(),
   });
   const handleChangeCheck = () => {
     console.log("true");
+    setEnable(!enable);
   };
 
   const handleChangeTextField = () => {
@@ -28,35 +30,32 @@ export default function Material({ produits }) {
 
   return (
     <>
-      {produits.map((produit) => {
-        return (
-          <Stack
-            direction={{ xs: "column", sm: "row" }}
-            sx={{ width:"100%", display: "flex", alignItems: "center" }}
-            spacing={1}
-          >
-            {" "}
-            <FormControlLabel
-              control={
-                <Checkbox
-                  onChange={handleChangeCheck}
-                  name={`id_` + produit.id_produit}
-                  value={produit.id_produit}
-                />
-              }
-              label={produit.nom_produit}
+      <Stack
+        direction={{ xs: "column", sm: "row" }}
+        sx={{ width: "100%", display: "flex", alignItems: "center" }}
+        spacing={1}
+      >
+        {" "}
+        <FormControlLabel
+          control={
+            <Checkbox
+              onChange={handleChangeCheck}
+              name={`id_` + id_produit}
+              value={id_produit}
             />
-            <TextField
-              fullWidth
-              label="Quantite"
-              onChange={handleChangeTextField}
-              name={`qte_` + produit.id_produit}
-              // error={Boolean(touched.quantite && errors.quantite)}
-              // helperText={touched.quantite && errors.quantite}
-            />
-          </Stack>
-        );
-      })}
+          }
+          label={libelle_produit}
+        />
+        <TextField
+          fullWidth
+          label="Quantite"
+          onChange={handleChangeTextField}
+          name={`qte_` + id_produit}
+          disabled={enable}
+          // error={Boolean(touched.quantite && errors.quantite)}
+          // helperText={touched.quantite && errors.quantite}
+        />
+      </Stack>
     </>
   );
 }

@@ -28,7 +28,9 @@ export default function CardStockMatieres({ title, nombre, icon }) {
     <RootStyle>
       <Icon icon={icon} style={{ fontSize: "50px" }} />
       <Typography variant="h3">{title}</Typography>
-      <Typography variant="h3">{fShortenNumber(nombre)}</Typography>
+      <Typography variant="h3">
+        {fShortenNumber(nombre)} {title === "Huiles" ? "L" : "Kg"}
+      </Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}></Typography>
     </RootStyle>
   );

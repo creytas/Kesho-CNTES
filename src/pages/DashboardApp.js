@@ -336,17 +336,17 @@ export default function DashboardApp() {
             <br />
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6} md={3}>
-                <CardStockMatieres icon="mdi:corn" title="Maïs" nombre={5} />
+                <CardStockMatieres icon="mdi:corn" title="Maïs" nombre={244} />
               </Grid>
               <Grid item xs={12} sm={6} md={3}>
                 <CardStockMatieres
                   icon="carbon:wheat"
                   title="Sorgho"
-                  nombre={5}
+                  nombre={235}
                 />
               </Grid>
               <Grid item xs={12} sm={6} md={3}>
-                <CardStockMatieres icon="mdi:seed" title="Soja" nombre={5} />
+                <CardStockMatieres icon="mdi:seed" title="Soja" nombre={247} />
               </Grid>
               <Grid item xs={12} sm={6} md={3}>
                 <CardStockMatieres

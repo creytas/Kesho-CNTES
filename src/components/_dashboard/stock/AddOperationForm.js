@@ -7,11 +7,7 @@ import { useFormik, Form, FormikProvider } from "formik";
 import Axios from "axios";
 import Material from "./Material";
 // material
-import {
- Stack,
-  TextField,
-  Select,
-} from "@material-ui/core";
+import { Stack, TextField, Select } from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
 import { LoadingButton } from "@material-ui/lab";
 import { makeStyles } from "@material-ui/styles";
@@ -27,14 +23,14 @@ const Box = styled("div")(() => ({
 
 export default function AddOperationForm() {
   const produits = [
-    { id_produit: 1, nom_produit: "soja" },
-    { id_produit: 2, nom_produit: "mais" },
-    { id_produit: 3, nom_produit: "sorgho" },
-    { id_produit: 4, nom_produit: "extrait foliaire" },
-    { id_produit: 5, nom_produit: "sucre" },
-    { id_produit: 6, nom_produit: "briquette energetique" },
-    { id_produit: 7, nom_produit: "huiles" },
-    { id_produit: 8, nom_produit: "savon" },
+    { id_produit: 1, libelle_produit: "soja" },
+    { id_produit: 2, libelle_produit: "mais" },
+    { id_produit: 3, libelle_produit: "sorgho" },
+    { id_produit: 4, libelle_produit: "extrait foliaire" },
+    { id_produit: 5, libelle_produit: "sucre" },
+    { id_produit: 6, libelle_produit: "briquette energetique" },
+    { id_produit: 7, libelle_produit: "huiles" },
+    { id_produit: 8, libelle_produit: "savon" },
   ];
   const useStyles = makeStyles(() => ({
     labelRoot: {
@@ -116,7 +112,6 @@ export default function AddOperationForm() {
     getFieldProps,
     setFieldValue,
     values,
-    handleChange,
   } = formik;
   const handleChangeDateOperation = (event) => {
     const { value } = event.target;
@@ -151,8 +146,8 @@ export default function AddOperationForm() {
               <option value="" selected disabled hidden>
                 Type operation
               </option>
-              <option value="Entrée">Entrée</option>
-              <option value="Sortie">Sortie</option>
+              <option value="entrée">Entrée</option>
+              <option value="sortie">Sortie</option>
             </Select>
             <TextField
               fullWidth
@@ -161,7 +156,13 @@ export default function AddOperationForm() {
               error={Boolean(touched.middleName && errors.middleName)}
               helperText={touched.middleName && errors.middleName}
             />
-            <Material produits={produits} />
+            {produits.map((produit) => 
+                <Material
+                  id_produit={produit.id_produit}
+                  libelle_produit={produit.libelle_produit}
+                />
+              
+            )}
             <LoadingButton
               fullWidth
               size="large"
