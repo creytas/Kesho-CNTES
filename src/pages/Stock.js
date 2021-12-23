@@ -41,8 +41,8 @@ import Page from "../components/Page";
 import Scrollbar from "../components/Scrollbar";
 import SearchNotFound from "../components/SearchNotFound";
 import { PatientListHead } from "../components/_dashboard/patient";
-import Label from "../components/Label";
-import { green, red } from "@material-ui/core/colors";
+import DefaultPage from "../components/DefaultPage";
+import image from "../utils/undraw_doctors_stock.svg";
 
 const TABLE_HEAD = [
   { id: "DO", label: "Date", alignLeft: true },
@@ -94,96 +94,96 @@ const SearchStyle = styled(OutlinedInput)(() => ({
 }));
 
 export default function Patient() {
-  const operations = [
-    {
-      id_operation: 1,
-      date_operation: `12/10/2021`,
-      matiere: `maïs`,
-      type_operation: `entrée`,
-      quantite: 250,
-      commentaire: `achat sac de maïs`,
-    },
-    {
-      id_operation: 2,
-      date_operation: `12/12/2021`,
-      matiere: `soja`,
-      type_operation: `sortie`,
-      quantite: 2,
-      commentaire: `cuisson bouillie`,
-    },
-    {
-      id_operation: 3,
-      date_operation: `12/12/2021`,
-      matiere: `extrait foliaire`,
-      type_operation: `sortie`,
-      quantite: 0.25,
-      commentaire: `cuisson bouillie`,
-    },
-    {
-      id_operation: 4,
-      date_operation: `12/12/2021`,
-      matiere: `sorgho`,
-      type_operation: `entrée`,
-      quantite: 250,
-      commentaire: `achat sac de sorgho`,
-    },
-    {
-      id_operation: 4,
-      date_operation: `12/12/2021`,
-      matiere: `sucre`,
-      type_operation: `entrée`,
-      quantite: 250,
-      commentaire: `achat sac de sucre`,
-    },
-    {
-      id_operation: 5,
-      date_operation: `12/12/2021`,
-      matiere: `extrait foliaire`,
-      type_operation: `entrée`,
-      quantite: 1500,
-      commentaire: `reception extrait foliaire`,
-    },
-    {
-      id_operation: 6,
-      date_operation: `12/12/2021`,
-      matiere: `huiles`,
-      type_operation: `entrée`,
-      quantite: 25,
-      commentaire: `achat bidon 25L huile`,
-    },
-    {
-      id_operation: 7,
-      date_operation: `12/12/2021`,
-      matiere: `savon`,
-      type_operation: `entrée`,
-      quantite: 250,
-      commentaire: `achat savon OMO`,
-    },
-    {
-      id_operation: 8,
-      date_operation: `12/13/2021`,
-      matiere: `briquette energetique`,
-      type_operation: `sortie`,
-      quantite: 1,
-      commentaire: `cuisson bouillie`,
-    },
-    {
-      id_operation: 9,
-      date_operation: `12/12/2021`,
-      matiere: `briquette energetique`,
-      type_operation: `entrée`,
-      quantite: 250,
-      commentaire: `achat briquette energetique`,
-    },
-    {
-      id_operation: 10,
-      date_operation: `12/13/2021`,
-      matiere: `savon`,
-      type_operation: `sortie`,
-      quantite: 0.1,
-      commentaire: `netoyage des habits et ustensiles`,
-    },
-  ];
+  // const operations = [
+  //   {
+  //     id_operation: 1,
+  //     date_operation: `12/10/2021`,
+  //     matiere: `maïs`,
+  //     type_operation: `entrée`,
+  //     quantite: 250,
+  //     commentaire: `achat sac de maïs`,
+  //   },
+  //   {
+  //     id_operation: 2,
+  //     date_operation: `12/12/2021`,
+  //     matiere: `soja`,
+  //     type_operation: `sortie`,
+  //     quantite: 2,
+  //     commentaire: `cuisson bouillie`,
+  //   },
+  //   {
+  //     id_operation: 3,
+  //     date_operation: `12/12/2021`,
+  //     matiere: `extrait foliaire`,
+  //     type_operation: `sortie`,
+  //     quantite: 0.25,
+  //     commentaire: `cuisson bouillie`,
+  //   },
+  //   {
+  //     id_operation: 4,
+  //     date_operation: `12/12/2021`,
+  //     matiere: `sorgho`,
+  //     type_operation: `entrée`,
+  //     quantite: 250,
+  //     commentaire: `achat sac de sorgho`,
+  //   },
+  //   {
+  //     id_operation: 4,
+  //     date_operation: `12/12/2021`,
+  //     matiere: `sucre`,
+  //     type_operation: `entrée`,
+  //     quantite: 250,
+  //     commentaire: `achat sac de sucre`,
+  //   },
+  //   {
+  //     id_operation: 5,
+  //     date_operation: `12/12/2021`,
+  //     matiere: `extrait foliaire`,
+  //     type_operation: `entrée`,
+  //     quantite: 1500,
+  //     commentaire: `reception extrait foliaire`,
+  //   },
+  //   {
+  //     id_operation: 6,
+  //     date_operation: `12/12/2021`,
+  //     matiere: `huiles`,
+  //     type_operation: `entrée`,
+  //     quantite: 25,
+  //     commentaire: `achat bidon 25L huile`,
+  //   },
+  //   {
+  //     id_operation: 7,
+  //     date_operation: `12/12/2021`,
+  //     matiere: `savon`,
+  //     type_operation: `entrée`,
+  //     quantite: 250,
+  //     commentaire: `achat savon OMO`,
+  //   },
+  //   {
+  //     id_operation: 8,
+  //     date_operation: `12/13/2021`,
+  //     matiere: `briquette energetique`,
+  //     type_operation: `sortie`,
+  //     quantite: 1,
+  //     commentaire: `cuisson bouillie`,
+  //   },
+  //   {
+  //     id_operation: 9,
+  //     date_operation: `12/12/2021`,
+  //     matiere: `briquette energetique`,
+  //     type_operation: `entrée`,
+  //     quantite: 250,
+  //     commentaire: `achat briquette energetique`,
+  //   },
+  //   {
+  //     id_operation: 10,
+  //     date_operation: `12/13/2021`,
+  //     matiere: `savon`,
+  //     type_operation: `sortie`,
+  //     quantite: 0.1,
+  //     commentaire: `netoyage des habits et ustensiles`,
+  //   },
+  // ];
 
   const [operationsList, setOperationsList] = useState([]);
   const [allData, setAllData] = useState([]);
@@ -202,7 +202,7 @@ export default function Patient() {
   const refButtonRefresh = useRef(null);
   useEffect(() => {
     fetch(
-      `https://kesho-congo-api.herokuapp.com/patient/all?limit_start=${start}&limit_end=${5}`,
+      `https://kesho-api.herokuapp.com/operation/all?limit_start=${start}&limit_end=${5}`,
       {
         method: "GET",
         headers: {
@@ -215,21 +215,23 @@ export default function Patient() {
       .then((data) => {
         const { Operations, nombre_operations } = data;
         setNumberOfElement(
-          numberOfElement === 0 ? operations.length : numberOfElement
+          numberOfElement === 0 ? Operations.length : numberOfElement
         );
-        setLenghtData(operations.length);
-        setOperationsList(operations);
+        setLenghtData(Operations.length);
+        setOperationsList(Operations);
         setLoader(false);
         setLoadingData(false);
       })
       .catch((error) => {
         console.error("MyError:", error);
+        setLoader(false);
+        setLoadingData(false);
       });
   }, [start, numberOfElement]);
   console.log("donnees patients :", operationsList, numberOfElement);
 
   useEffect(() => {
-    fetch(`https://kesho-congo-api.herokuapp.com/patient/export`, {
+    fetch(`https://kesho-api.herokuapp.com/operation/export`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -313,7 +315,7 @@ export default function Patient() {
       setLoadingButton(true);
       try {
         const response = await Axios.post(
-          "https://kesho-congo-api.herokuapp.com/patient/search",
+          "https://kesho-api.herokuapp.com/operation/search",
           {
             nom_patient: searchValue,
           },
@@ -357,6 +359,7 @@ export default function Patient() {
   useEffect(() => {
     setIsAuth(isAuth);
   }, [isAuth]);
+  const component = "add_Operation";
 
   return isAuth ? (
     <>
@@ -365,223 +368,233 @@ export default function Patient() {
           <CircularProgress />
         </div>
       ) : (
-        <Page>
-          <Container>
-            <Stack
-              direction="row"
-              alignItems="center"
-              justifyContent="space-between"
-              mb={2}
-            >
-              <Typography variant="h4" gutterBottom>
-                Stocks
-              </Typography>
-              <div>
-                <Button
-                  variant="contained"
-                  component={RouterLink}
-                  to="add_Operation"
-                  startIcon={<Icon icon={plusFill} />}
+        <>
+          {operationsList.length === 0 ? (
+            <DefaultPage image={image} component={component} />
+          ) : (
+            <Page>
+              <Container>
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  justifyContent="space-between"
+                  mb={2}
                 >
-                  operation
-                </Button>
-                &nbsp; &nbsp;
-                <Button
-                  variant="outlined"
-                  onClick={() => exportToCSV(allData, exportedFileName)}
-                  startIcon={<Icon icon="bx:bx-export" />}
-                >
-                  Exporter
-                </Button>
-              </div>
-            </Stack>
-
-            <Card>
-              <RootStyle
-                sx={{
-                  ...(selected.length > 0 && {
-                    color: "primary.main",
-                    bgcolor: "primary.lighter",
-                  }),
-                }}
-              >
-                {selected.length > 0 ? (
-                  <Typography component="div" variant="subtitle1">
-                    {selected.length} selectionés
+                  <Typography variant="h4" gutterBottom>
+                    Stocks
                   </Typography>
-                ) : (
-                  <>
-                    <FormikProvider value={formik}>
-                      <Form onSubmit={handleSubmit}>
-                        <LoadingButton
-                          style={{
-                            width: "auto",
-                            height: "55px",
-                          }}
-                          variant="contained"
-                          color="primary"
-                          type="submit"
-                          loading={loadingButton}
-                          className={classes.button}
-                          startIcon={
-                            <Icon>
-                              <SearchIcon />
-                            </Icon>
-                          }
-                        >
-                          Rechercher
-                        </LoadingButton>
-                        <SearchStyle
-                          type="date"
-                          value={filterName}
-                          inputRef={refButtonRefresh}
-                          onChange={handleFilterByName}
-                          placeholder="Tapez une date"
-                        />
-                      </Form>
-                    </FormikProvider>
-                    <Tooltip
-                      title="Rafraîchir"
-                      color="primary"
-                      onClick={handleClickRefresh}
+                  <div>
+                    <Button
+                      variant="contained"
+                      component={RouterLink}
+                      to="add_Operation"
+                      startIcon={<Icon icon={plusFill} />}
                     >
-                      <IconButton>
-                        <RefreshIcon />
-                      </IconButton>
-                    </Tooltip>
-                  </>
-                )}
-              </RootStyle>
-              <Scrollbar>
-                <TableContainer sx={{ minWidth: 800 }}>
-                  <>
-                    {loadingData ? (
-                      <div className={classes.loading}>
-                        <CircularProgress />
-                      </div>
+                      operation
+                    </Button>
+                    &nbsp; &nbsp;
+                    <Button
+                      variant="outlined"
+                      onClick={() => exportToCSV(allData, exportedFileName)}
+                      startIcon={<Icon icon="bx:bx-export" />}
+                    >
+                      Exporter
+                    </Button>
+                  </div>
+                </Stack>
+
+                <Card>
+                  <RootStyle
+                    sx={{
+                      ...(selected.length > 0 && {
+                        color: "primary.main",
+                        bgcolor: "primary.lighter",
+                      }),
+                    }}
+                  >
+                    {selected.length > 0 ? (
+                      <Typography component="div" variant="subtitle1">
+                        {selected.length} selectionés
+                      </Typography>
                     ) : (
-                      <Table>
-                        <PatientListHead
-                          order={order}
-                          orderBy={orderBy}
-                          headLabel={TABLE_HEAD}
-                          rowCount={operationsList.length}
-                          numSelected={selected.length}
-                          onRequestSort={handleRequestSort}
-                          onSelectAllClick={handleSelectAllClick}
-                        />
-                        {filteredPatient.length > 0 ? (
-                          <TableBody>
-                            {filteredPatient.map((row, i) => {
-                              const {
-                                date_operation,
-                                matiere,
-                                quantite,
-                                type_operation,
-                                commentaire,
-                                id_operation,
-                              } = row;
-                              const isItemSelected =
-                                selected.indexOf(date_operation) !== -1;
+                      <>
+                        <FormikProvider value={formik}>
+                          <Form onSubmit={handleSubmit}>
+                            <LoadingButton
+                              style={{
+                                width: "auto",
+                                height: "55px",
+                              }}
+                              variant="contained"
+                              color="primary"
+                              type="submit"
+                              loading={loadingButton}
+                              className={classes.button}
+                              startIcon={
+                                <Icon>
+                                  <SearchIcon />
+                                </Icon>
+                              }
+                            >
+                              Rechercher
+                            </LoadingButton>
+                            <SearchStyle
+                              type="date"
+                              value={filterName}
+                              inputRef={refButtonRefresh}
+                              onChange={handleFilterByName}
+                              placeholder="Tapez une date"
+                            />
+                          </Form>
+                        </FormikProvider>
+                        <Tooltip
+                          title="Rafraîchir"
+                          color="primary"
+                          onClick={handleClickRefresh}
+                        >
+                          <IconButton>
+                            <RefreshIcon />
+                          </IconButton>
+                        </Tooltip>
+                      </>
+                    )}
+                  </RootStyle>
+                  <Scrollbar>
+                    <TableContainer sx={{ minWidth: 800 }}>
+                      <>
+                        {loadingData ? (
+                          <div className={classes.loading}>
+                            <CircularProgress />
+                          </div>
+                        ) : (
+                          <Table>
+                            <PatientListHead
+                              order={order}
+                              orderBy={orderBy}
+                              headLabel={TABLE_HEAD}
+                              rowCount={operationsList.length}
+                              numSelected={selected.length}
+                              onRequestSort={handleRequestSort}
+                              onSelectAllClick={handleSelectAllClick}
+                            />
+                            {filteredPatient.length > 0 ? (
+                              <TableBody>
+                                {filteredPatient.map((row, i) => {
+                                  const {
+                                    date_operation,
+                                    matiere,
+                                    quantite,
+                                    type_operation,
+                                    commentaire,
+                                    id_operation,
+                                  } = row;
+                                  const isItemSelected =
+                                    selected.indexOf(date_operation) !== -1;
 
-                              return (
-                                <TableRow
-                                  component={RouterLink}
-                                  to={`detail_patient/${id_operation}`}
-                                  className={classes.patientRow}
-                                  hover
-                                  key={id_operation}
-                                  tabIndex={-1}
-                                  // role="checkbox"
-                                  selected={isItemSelected}
-                                  aria-checked={isItemSelected}
-                                >
-                                  <TableCell padding="left">
-                                    <TableCell
-                                      padding="checkbox"
-                                      variant="subtitle2"
-                                      noWrap
+                                  return (
+                                    <TableRow
+                                      component={RouterLink}
+                                      to={`detail_patient/${id_operation}`}
+                                      className={classes.patientRow}
+                                      hover
+                                      key={id_operation}
+                                      tabIndex={-1}
+                                      // role="checkbox"
+                                      selected={isItemSelected}
+                                      aria-checked={isItemSelected}
                                     >
-                                      {i + 1}
-                                    </TableCell>
-                                  </TableCell>
-                                  <TableCell align="left">
-                                    {moment(date_operation).format(
-                                      "DD/MM/YYYY"
-                                    )}
-                                  </TableCell>
-                                  <TableCell align="left">{matiere}</TableCell>
+                                      <TableCell padding="left">
+                                        <TableCell
+                                          padding="checkbox"
+                                          variant="subtitle2"
+                                          noWrap
+                                        >
+                                          {i + 1}
+                                        </TableCell>
+                                      </TableCell>
+                                      <TableCell align="left">
+                                        {moment(date_operation).format(
+                                          "DD/MM/YYYY"
+                                        )}
+                                      </TableCell>
+                                      <TableCell align="left">
+                                        {matiere}
+                                      </TableCell>
+                                      <TableCell
+                                        align="left"
+                                        sx={{
+                                          color: `${
+                                            type_operation === "entrée"
+                                              ? "green"
+                                              : "red"
+                                          }`,
+                                        }}
+                                      >
+                                        {type_operation}
+                                      </TableCell>
+
+                                      <TableCell align="left">
+                                        {quantite}
+                                      </TableCell>
+
+                                      <TableCell align="left">
+                                        {commentaire}
+                                      </TableCell>
+                                    </TableRow>
+                                  );
+                                })}
+                              </TableBody>
+                            ) : (
+                              <TableBody>
+                                <TableRow>
                                   <TableCell
-                                    align="left"
-                                    sx={{
-                                      color: `${
-                                        type_operation === "entrée"
-                                          ? "green"
-                                          : "red"
-                                      }`,
-                                    }}
+                                    align="center"
+                                    colSpan={6}
+                                    sx={{ py: 3 }}
                                   >
-                                    {type_operation}
-                                  </TableCell>
-
-                                  <TableCell align="left">{quantite}</TableCell>
-
-                                  <TableCell align="left">
-                                    {commentaire}
+                                    <SearchNotFound searchQuery={filterName} />
                                   </TableCell>
                                 </TableRow>
-                              );
-                            })}
-                          </TableBody>
-                        ) : (
-                          <TableBody>
-                            <TableRow>
-                              <TableCell
-                                align="center"
-                                colSpan={6}
-                                sx={{ py: 3 }}
-                              >
-                                <SearchNotFound searchQuery={filterName} />
-                              </TableCell>
-                            </TableRow>
-                          </TableBody>
+                              </TableBody>
+                            )}
+                          </Table>
                         )}
-                      </Table>
-                    )}
-                  </>
-                </TableContainer>
-              </Scrollbar>
-              <TableRow>
-                <TableCell>
-                  <GrFormPrevious
-                    style={{
-                      width: "30px",
-                      height: "30px",
-                      color: "#1f2b35",
-                      cursor: "pointer",
-                    }}
-                    onClick={handleClickPrev}
-                  />
-                </TableCell>
-                <TableCell>
-                  <GrFormNext
-                    style={{
-                      width: "30px",
-                      height: "30px",
-                      color: "#1f2b35",
-                      cursor: "pointer",
-                    }}
-                    onClick={handleClickNext}
-                    // disabled={}
-                  />
-                </TableCell>
-                <TableCell style={{ fontWeight: "900px" }}>
-                  {numberOfElement}/{lenghtData}
-                </TableCell>
-              </TableRow>
-            </Card>
-          </Container>
-        </Page>
+                      </>
+                    </TableContainer>
+                  </Scrollbar>
+                  <TableRow>
+                    <TableCell>
+                      <GrFormPrevious
+                        style={{
+                          width: "30px",
+                          height: "30px",
+                          color: "#1f2b35",
+                          cursor: "pointer",
+                        }}
+                        onClick={handleClickPrev}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <GrFormNext
+                        style={{
+                          width: "30px",
+                          height: "30px",
+                          color: "#1f2b35",
+                          cursor: "pointer",
+                        }}
+                        onClick={handleClickNext}
+                        // disabled={}
+                      />
+                    </TableCell>
+                    <TableCell style={{ fontWeight: "900px" }}>
+                      {numberOfElement}/{lenghtData}
+                    </TableCell>
+                  </TableRow>
+                </Card>
+              </Container>
+            </Page>
+          )}
+        </>
       )}
     </>
   ) : (

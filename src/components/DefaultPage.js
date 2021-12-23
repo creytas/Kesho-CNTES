@@ -11,7 +11,8 @@ export default function DefaultPage({ image, component }) {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        padding: "0px 50px",
+        padding: "1px 0px",
+       // border: "1px solid #000",
       }}
     >
       <div>
@@ -19,20 +20,22 @@ export default function DefaultPage({ image, component }) {
       </div>
       <div
         style={{
-          padding: "0px 50px",
+          padding: "1px 0px",
           fontSize: "24px",
           textAlign: "center",
         }}
       >
+        {console.log(component.length)}
         <p>Les informations que vous cherchez sont indisponibles</p>
-        {component ? (
+        {component.length > 0 ? (
           <Button
             variant="contained"
             component={RouterLink}
             to={component}
             startIcon={<Icon icon={plusFill} />}
+            style={{ margin: "25px 0px" }}
           >
-            ajouter
+            nouvel enregistrement
           </Button>
         ) : (
           <></>

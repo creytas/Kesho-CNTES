@@ -363,7 +363,7 @@ export default function NewPatient() {
         </Button>
         <div
           className={`progress-step  ${Step === 1 && "progress-step-active"}`}
-          data-title="Indentité"
+          data-title="Identité"
         />
         <div
           className={`progress-step  ${Step === 2 && "progress-step-active"}`}

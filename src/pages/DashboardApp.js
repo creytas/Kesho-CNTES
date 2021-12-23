@@ -149,6 +149,7 @@ export default function DashboardApp() {
     },
   });
   const { errors, touched, handleSubmit, getFieldProps } = formik;
+  const component = "";
 
   return isAuth ? (
     <>
@@ -159,7 +160,7 @@ export default function DashboardApp() {
       ) : (
         <>
           {reports.length === 0 ? (
-            <DefaultPage image={image} />
+            <DefaultPage image={image} component={component} />
           ) : (
             <Page>
               <Container maxWidth="xl">

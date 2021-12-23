@@ -138,7 +138,6 @@ export default function Patient() {
         console.error("MyError:", error);
         setLoader(false);
         setLoadingData(false);
-        console.log(loader);
       });
   }, [start, numberOfElement]);
 
@@ -270,10 +269,10 @@ export default function Patient() {
   useEffect(() => {
     setIsAuth(isAuth);
   }, [isAuth]);
+  const component = "add_Patient";
 
   return isAuth ? (
     <>
-      {console.log(loader)}
       {loader ? (
         <div className={classes.root}>
           <CircularProgress />
@@ -281,7 +280,7 @@ export default function Patient() {
       ) : (
         <>
           {patientsList.length === 0 ? (
-            <DefaultPage image={image} />
+            <DefaultPage image={image} component={component} />
           ) : (
             <Page>
               <Container>
