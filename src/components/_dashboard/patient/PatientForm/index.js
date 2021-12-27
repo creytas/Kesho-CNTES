@@ -414,7 +414,7 @@ export default function PatientForm({
                   sx={{ padding: "2px" }}
                   // fullWidth
                   autoFocus
-                  label="Prénom ex: job"
+                  label="Prénom ex: Kevin"
                   value={patientFormData.prenomPatient}
                   onChange={handleChangeFistName}
                   // {...getFieldProps('fistNamePatient')}
@@ -427,7 +427,7 @@ export default function PatientForm({
                   sx={{ padding: "2px" }}
                   autoComplete="name"
                   // fullWidth
-                  label="Nom ex: kalala"
+                  label="Nom ex: Bayekula"
                   value={patientFormData.nomPatient}
                   // {...getFieldProps('NomPatient')}
                   onChange={handleChangeNom}
@@ -439,7 +439,7 @@ export default function PatientForm({
                   // fullWidth
                   autoComplete="lastname"
                   type="text"
-                  label="Postnom ex: Kalala"
+                  label="Postnom ex: Kashala"
                   defaultValue={patientFormData.postNomPatient}
                   // {...getFieldProps('postNomPatient')}
                   onChange={handleChangePostNomPatient}
@@ -453,7 +453,7 @@ export default function PatientForm({
                   // fullWidth
                   autoComplete="tel"
                   type="tel"
-                  label="Téléphone ex:+243801212643"
+                  label="Téléphone ex:+243850157817"
                   value={patientFormData.telephone}
                   onChange={handleChangeTelephone}
                   // {...getFieldProps('telephone')}
@@ -561,7 +561,7 @@ export default function PatientForm({
                     {`${
                       patientFormData.modeArriverPatient
                         ? patientFormData.modeArriverPatient
-                        : "Mode d'arriver"
+                        : "Mode d'arrivé"
                     }`}
                   </option>
                   <option value="De la maison">De la maison</option>
@@ -571,7 +571,7 @@ export default function PatientForm({
                 <TextField
                   sx={{ padding: "2px" }}
                   // fullWidth
-                  label="Si le mode d'arriver est autre veuillez préciser"
+                  label="Si le mode d'arrivé est autre veuillez préciser"
                   // {...getFieldProps('ExplicationAutre')}
                   value={patientFormData.ExplicationAutre}
                   onChange={handleChangeExplicationAutre}
@@ -856,7 +856,7 @@ export default function PatientForm({
                   sx={{ padding: "2px" }}
                   // required
                   // fullWidth
-                  label="Périmètre branchial (Cm) ex:40"
+                  label="Périmètre brachial (Cm) ex:40"
                   value={patientFormData.perimetreBrachail}
                   onChange={handleChangePerimetreBrachail}
                   // defaultValue={DataPatient.perimetreBrachail}
@@ -884,7 +884,7 @@ export default function PatientForm({
                   sx={{ padding: "2px" }}
                   // required
                   // fullWidth
-                  label="Diversification à quel âge (en mois) ex:20"
+                  label="Diversification alimentaire à quel âge (en mois) ex:20"
                   value={patientFormData.diversificationAliment}
                   onChange={handleChangeDiversificationAliment}
                   // {...getFieldProps('diversificationAliment')}

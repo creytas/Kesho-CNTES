@@ -107,7 +107,7 @@ export default function PatientData({ DataPatient, PrevStep }) {
   newPatient.type_statut_marital =
     FamalyData.pereMariage === "" ? "non marié" : FamalyData.pereMariage;
   newPatient.taille_menage = FamalyData.tailleMenage;
-  newPatient.vivre_deux_parents = FamalyData.mereEnVie && FamalyData.pereEnvie; // FamalyData.vivreAvecParent;//
+  newPatient.vivre_deux_parents = FamalyData.mereEnVie || FamalyData.pereEnvie; // FamalyData.vivreAvecParent;//
   newPatient.mere_enceinte = FamalyData.mereEnceinte
     ? FamalyData.mereEnceinte
     : false;
@@ -235,11 +235,7 @@ export default function PatientData({ DataPatient, PrevStep }) {
               Ration Seche :
               <span style={{ color: "black" }}>
                 {" "}
-                {`${
-                  indentity.rationSeche
-                    ? "Oui"
-                    : "Non"
-                }`}
+                {`${indentity.rationSeche ? "Oui" : "Non"}`}
               </span>
             </InputLabel>
             <InputLabel>
