@@ -34,6 +34,7 @@ import CardBlue2 from "../components/_dashboard/app/CardBlue2";
 import CardStockMatieres from "src/components/_dashboard/app/CardStockMatieres";
 import DefaultPage from "../components/DefaultPage";
 import image from "../utils/undraw_doctors_reports.svg";
+import { isUndefined } from "lodash-es";
 
 // ----------------------------------------------------------------------
 
@@ -50,7 +51,6 @@ export default function DashboardApp() {
       const response = await Axios.get(
         `https://kesho-api.herokuapp.com/reporting`,
         {
-          //http://localhost:7000/reporting
           headers: {
             "Content-Type": "application/json",
             Authorization: `bearer ${localStorage.getItem("token")}`,
@@ -134,7 +134,7 @@ export default function DashboardApp() {
             },
           }
         );
-        console.log(reports.nombre_garcon_now[0]);
+
         const data = await response.data;
         setReports(await data);
         setButtonLoader(false);
@@ -166,20 +166,20 @@ export default function DashboardApp() {
               <Container maxWidth="xl">
                 <Box sx={{ pb: 5 }}>
                   <Typography variant="h4">
-                    Reporting{" "}
+                    Reporting
                     {displayDate ? (
                       <>
-                        du{" "}
+                        du
                         <span className={classes.labelRoot}>
                           {moment(startingDate).format("DD MMM YYYY")}
-                        </span>{" "}
-                        au{" "}
+                        </span>
+                        au
                         <span className={classes.labelRoot}>
                           {moment(endingDate).format("DD MMM YYYY")}
                         </span>
                       </>
                     ) : (
-                      <span className={classes.labelRoot}>{currentMonth}</span>
+                      <span className={classes.labelRoot}> {currentMonth}</span>
                     )}
                   </Typography>
                 </Box>
@@ -234,15 +234,29 @@ export default function DashboardApp() {
                   <Grid item xs={12} sm={6} md={3}>
                     <CardBleu
                       title="Total"
-                      nombreM={reports.nombre_garcon[0].nombre_garcon}
-                      nombreF={reports.nombre_fille[0].nombre_fille}
+                      nombreM={0}
+                      nombreF={
+                        reports.nombre_fille[0].nombre_fille === null
+                          ? 0
+                          : reports.nombre_fille[0].nombre_fille
+                      }
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={3}>
                     <CardBleu
                       title="En cours"
-                      nombreM={0} //reports.nombre_garcon_now[0].nombre_garcon_now
-                      nombreF={0} //reports.nombre_fille_now[0].nombre_fille_now
+                      nombreM={
+                        reports.nombre_garcon_now[0].nombre_garcon_now ===
+                        null
+                          ? 0
+                          : reports.nombre_garcon_now[0].nombre_garcon_now
+                      } //reports.nombre_garcon_now[0].nombre_garcon_now
+                      nombreF={
+                        reports.nombre_fille_now[0].nombre_fille_now ===
+                        null
+                          ? 0
+                          : reports.nombre_fille_now[0].nombre_fille_now
+                      } //reports.nombre_fille_now[0].nombre_fille_now
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={3}>
@@ -250,10 +264,17 @@ export default function DashboardApp() {
                       title="MAC"
                       nombreM={
                         reports.chronique_nombre_garcon[0]
-                          .chronique_nombre_garcon
+                          .chronique_nombre_garcon === null
+                          ? 0
+                          : reports.chronique_nombre_garcon[0]
+                              .chronique_nombre_garcon
                       }
                       nombreF={
-                        reports.chronique_nombre_fille[0].chronique_nombre_fille
+                        reports.chronique_nombre_fille[0]
+                          .chronique_nombre_fille === null
+                          ? 0
+                          : reports.chronique_nombre_fille[0]
+                              .chronique_nombre_fille
                       }
                     />
                   </Grid>
@@ -262,11 +283,17 @@ export default function DashboardApp() {
                       title="MAS-K"
                       nombreM={
                         reports.sereve_kwashiorkor_nombre_garcon[0]
-                          .sereve_kwashiorkor_nombre_garcon
+                          .sereve_kwashiorkor_nombre_garcon === null
+                          ? 0
+                          : reports.sereve_kwashiorkor_nombre_garcon[0]
+                              .sereve_kwashiorkor_nombre_garcon
                       }
                       nombreF={
                         reports.sereve_kwashiorkor_nombre_fille[0]
-                          .sereve_kwashiorkor_nombre_fille
+                          .sereve_kwashiorkor_nombre_fille === null
+                          ? 0
+                          : reports.sereve_kwashiorkor_nombre_fille[0]
+                              .sereve_kwashiorkor_nombre_fille
                       }
                     />
                   </Grid>
@@ -275,11 +302,17 @@ export default function DashboardApp() {
                       title="MAS-M"
                       nombreM={
                         reports.sereve_marasme_nombre_garcon[0]
-                          .sereve_marasme_nombre_garcon
+                          .sereve_marasme_nombre_garcon === null
+                          ? 0
+                          : reports.sereve_marasme_nombre_garcon[0]
+                              .sereve_marasme_nombre_garcon
                       }
                       nombreF={
                         reports.sereve_marasme_nombre_fille[0]
-                          .sereve_marasme_nombre_fille
+                          .sereve_marasme_nombre_fille === null
+                          ? 0
+                          : reports.sereve_marasme_nombre_fille[0]
+                              .sereve_marasme_nombre_fille
                       }
                     />
                   </Grid>
@@ -287,10 +320,17 @@ export default function DashboardApp() {
                     <CardBlue2
                       title="MAM"
                       nombreM={
-                        reports.moderee_nombre_garcon[0].moderee_nombre_garcon
+                        reports.moderee_nombre_garcon[0]
+                          .moderee_nombre_garcon === null
+                          ? 0
+                          : reports.moderee_nombre_garcon[0]
+                              .moderee_nombre_garcon
                       }
                       nombreF={
-                        reports.moderee_nombre_fille[0].moderee_nombre_fille
+                        reports.moderee_nombre_fille[0].moderee_nombre_fille ===
+                        null
+                          ? 0
+                          : reports.moderee_nombre_fille[0].moderee_nombre_fille
                       }
                     />
                   </Grid>
@@ -298,9 +338,17 @@ export default function DashboardApp() {
                     <CardVert
                       title="Guéris"
                       nombreM={
-                        reports.nombre_garcon_gueri[0].nombre_garcon_gueri
-                      }
-                      nombreF={reports.nombre_fille_gueri[0].nombre_fille_gueri}
+                        reports.nombre_garcon_gueri[0].nombre_garcon_gueri ===
+                        null
+                          ? 0
+                          : reports.nombre_garcon_gueri[0].nombre_garcon_gueri
+                      } //{reports.nombre_garcon_gueri[0].nombre_garcon_gueri}
+                      nombreF={
+                        reports.nombre_fille_guerie[0].nombre_fille_guerie ===
+                        null
+                          ? 0
+                          : reports.nombre_fille_guerie[0].nombre_fille_guerie
+                      } //{reports.nombre_fille_gueri[0].nombre_fille_gueri}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={3}>
@@ -308,12 +356,18 @@ export default function DashboardApp() {
                       title="En UNT"
                       nombreM={
                         reports.nombre_garcon_transferer[0]
-                          .nombre_garcon_transferer
-                      }
+                          .nombre_garcon_transferer === null
+                          ? 0
+                          : reports.nombre_garcon_transferer[0]
+                              .nombre_garcon_transferer
+                      } //{reports.nombre_garcon_transferer[0].nombre_garcon_transferer}
                       nombreF={
                         reports.nombre_fille_transferer[0]
-                          .nombre_fille_transferer
-                      }
+                          .nombre_fille_transferer === null
+                          ? 0
+                          : reports.nombre_fille_transferer[0]
+                              .nombre_fille_transferer
+                      } //{reports.nombre_fille_transferer[0].nombre_fille_transferer}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={3}>

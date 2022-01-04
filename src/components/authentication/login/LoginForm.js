@@ -61,7 +61,7 @@ export default function LoginForm() {
     onSubmit: ({ email, password }) => {
       setErrorWord(false);
       setLoadingButton(true);
-      Axios.post("https://kesho-congo-api.herokuapp.com/auth/login", {
+      Axios.post("https://kesho-api.herokuapp.com/auth/login", {
         email,
         password,
       })

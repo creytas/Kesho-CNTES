@@ -107,7 +107,10 @@ export default function PatientData({ DataPatient, PrevStep }) {
   newPatient.type_statut_marital =
     FamalyData.pereMariage === "" ? "non marié" : FamalyData.pereMariage;
   newPatient.taille_menage = FamalyData.tailleMenage;
-  newPatient.vivre_deux_parents = FamalyData.mereEnVie || FamalyData.pereEnvie; // FamalyData.vivreAvecParent;//
+  newPatient.vivre_deux_parents =
+    FamalyData.mereEnVie === "true" || FamalyData.pereEnvie === "true"
+      ? "true"
+      : "false"; // FamalyData.vivreAvecParent;//
   newPatient.mere_enceinte = FamalyData.mereEnceinte
     ? FamalyData.mereEnceinte
     : false;

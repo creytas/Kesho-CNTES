@@ -95,7 +95,7 @@ export default function PersonnelAddFrom() {
     }) => {
       setLoader(true);
       Axios.post(
-        `https://kesho-congo-api.herokuapp.com/user/register`,
+        `https://kesho-api.herokuapp.com/user/register`,
         {
           email: myEmail,
           password: myPassword,
@@ -116,7 +116,7 @@ export default function PersonnelAddFrom() {
         .then((response) => {
           setLoader(false);
           const message = response.data;
-          console.log("Yves", message);
+          console.log(localStorage.getItem("name"), message);
           fakeAuth.login(() => {
             navigate(from);
             navigate("/dashboard/personnel", { replace: true });
