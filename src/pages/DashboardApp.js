@@ -166,14 +166,14 @@ export default function DashboardApp() {
               <Container maxWidth="xl">
                 <Box sx={{ pb: 5 }}>
                   <Typography variant="h4">
-                    Reporting
+                    Reporting{" "}
                     {displayDate ? (
                       <>
-                        du
+                        du{" "}
                         <span className={classes.labelRoot}>
                           {moment(startingDate).format("DD MMM YYYY")}
-                        </span>
-                        au
+                        </span>{" "}
+                        au{" "}
                         <span className={classes.labelRoot}>
                           {moment(endingDate).format("DD MMM YYYY")}
                         </span>
@@ -464,7 +464,9 @@ export default function DashboardApp() {
                       icon="fluent:molecule-24-regular"
                       title="Ext. foliaires"
                       nombre={
-                        reports.extrait_foliaires === null ? 0 : reports.extrait_foliaires.qte_matiere
+                        reports.extrait_foliaires === null
+                          ? 0
+                          : reports.extrait_foliaires.qte_matiere
                       }
                     />
                   </Grid>
