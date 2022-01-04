@@ -246,14 +246,12 @@ export default function DashboardApp() {
                     <CardBleu
                       title="En cours"
                       nombreM={
-                        reports.nombre_garcon_now[0].nombre_garcon_now ===
-                        null
+                        reports.nombre_garcon_now[0].nombre_garcon_now === null
                           ? 0
                           : reports.nombre_garcon_now[0].nombre_garcon_now
                       } //reports.nombre_garcon_now[0].nombre_garcon_now
                       nombreF={
-                        reports.nombre_fille_now[0].nombre_fille_now ===
-                        null
+                        reports.nombre_fille_now[0].nombre_fille_now === null
                           ? 0
                           : reports.nombre_fille_now[0].nombre_fille_now
                       } //reports.nombre_fille_now[0].nombre_fille_now
@@ -338,16 +336,14 @@ export default function DashboardApp() {
                     <CardVert
                       title="Guéris"
                       nombreM={
-                        reports.nombre_garcon_gueri[0].nombre_garcon_gueri ===
-                        null
+                        reports.nombre_garcon_gueri === null
                           ? 0
-                          : reports.nombre_garcon_gueri[0].nombre_garcon_gueri
+                          : reports.nombre_garcon_gueri
                       } //{reports.nombre_garcon_gueri[0].nombre_garcon_gueri}
                       nombreF={
-                        reports.nombre_fille_guerie[0].nombre_fille_guerie ===
-                        null
+                        reports.nombre_fille_guerie === null
                           ? 0
-                          : reports.nombre_fille_guerie[0].nombre_fille_guerie
+                          : reports.nombre_fille_guerie
                       } //{reports.nombre_fille_gueri[0].nombre_fille_gueri}
                     />
                   </Grid>
@@ -355,18 +351,14 @@ export default function DashboardApp() {
                     <CardRouge
                       title="En UNT"
                       nombreM={
-                        reports.nombre_garcon_transferer[0]
-                          .nombre_garcon_transferer === null
+                        reports.nombre_garcon_transferer === null
                           ? 0
-                          : reports.nombre_garcon_transferer[0]
-                              .nombre_garcon_transferer
+                          : reports.nombre_garcon_transferer
                       } //{reports.nombre_garcon_transferer[0].nombre_garcon_transferer}
                       nombreF={
-                        reports.nombre_fille_transferer[0]
-                          .nombre_fille_transferer === null
+                        reports.nombre_fille_transferer === null
                           ? 0
-                          : reports.nombre_fille_transferer[0]
-                              .nombre_fille_transferer
+                          : reports.nombre_fille_transferer
                       } //{reports.nombre_fille_transferer[0].nombre_fille_transferer}
                     />
                   </Grid>
@@ -426,56 +418,74 @@ export default function DashboardApp() {
                     <CardStockMatieres
                       icon="mdi:corn"
                       title="Maïs"
-                      nombre={reports.mais === null ? 0 : 250} //reports.mais.qte_matiere
+                      nombre={
+                        reports.mais === null ? 0 : reports.mais.qte_matiere
+                      }
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={3}>
                     <CardStockMatieres
                       icon="carbon:wheat"
                       title="Sorgho"
-                      nombre={235}
+                      nombre={
+                        reports.sorgho === null ? 0 : reports.sorgho.qte_matiere
+                      }
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={3}>
                     <CardStockMatieres
                       icon="mdi:seed"
                       title="Soja"
-                      nombre={247}
+                      nombre={
+                        reports.soja === null ? 0 : reports.soja.qte_matiere
+                      }
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={3}>
                     <CardStockMatieres
                       icon="mdi:spoon-sugar"
                       title="Sucre"
-                      nombre={5}
+                      nombre={
+                        reports.sucre === null ? 0 : reports.sucre.qte_matiere
+                      }
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={3}>
                     <CardStockMatieres
                       icon="ri:oil-fill"
                       title="Huiles"
-                      nombre={5}
+                      nombre={
+                        reports.huiles === null ? 0 : reports.huiles.qte_matiere
+                      }
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={3}>
                     <CardStockMatieres
                       icon="fluent:molecule-24-regular"
                       title="Ext. foliaires"
-                      nombre={5}
+                      nombre={
+                        reports.extrait_foliaires === null ? 0 : reports.extrait_foliaires.qte_matiere
+                      }
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={3}>
                     <CardStockMatieres
                       icon="fa-solid:soap"
                       title="Savon"
-                      nombre={5}
+                      nombre={
+                        reports.savon === null ? 0 : reports.savon.qte_matiere
+                      }
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={3}>
                     <CardStockMatieres
                       icon="simple-line-icons:energy"
                       title="Briq. energ"
-                      nombre={5}
+                      nombre={
+                        reports.briquettes === null
+                          ? 0
+                          : reports.briquettes.qte_matiere
+                      }
                     />
                   </Grid>
                 </Grid>
