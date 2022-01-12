@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import * as Yup from "yup";
 import { useNavigate, useLocation } from "react-router-dom";
 import { styled } from "@material-ui/core/styles";
@@ -22,16 +22,18 @@ const Box = styled("div")(() => ({
 }));
 
 export default function AddOperationForm() {
-  const produits = [
-    { id_produit: 1, libelle_produit: "soja" },
-    { id_produit: 2, libelle_produit: "mais" },
-    { id_produit: 3, libelle_produit: "sorgho" },
-    { id_produit: 4, libelle_produit: "extrait foliaire" },
-    { id_produit: 5, libelle_produit: "sucre" },
-    { id_produit: 6, libelle_produit: "briquette energetique" },
-    { id_produit: 7, libelle_produit: "huiles" },
-    { id_produit: 8, libelle_produit: "savon" },
-  ];
+  ///matiere/CNTES/all
+  // const produits = [
+  //   { id_produit: 1, libelle_produit: "soja" },
+  //   { id_produit: 2, libelle_produit: "maïs" },
+  //   { id_produit: 3, libelle_produit: "sorgho" },
+  //   { id_produit: 4, libelle_produit: "extrait foliaire" },
+  //   { id_produit: 5, libelle_produit: "sucre" },
+  //   { id_produit: 6, libelle_produit: "briquette energetique" },
+  //   { id_produit: 7, libelle_produit: "huiles" },
+  //   { id_produit: 8, libelle_produit: "savon" },
+  // ];
+
   const useStyles = makeStyles(() => ({
     labelRoot: {
       "&&": {
@@ -42,6 +44,29 @@ export default function AddOperationForm() {
   const classes = useStyles();
   const navigate = useNavigate();
   const [error, setError] = useState(false);
+
+  const [matieres, setMatieres] = useState([]);
+
+  const getMatieres = `https://kesho-api.herokuapp.com/matiere/CNTES/all`;
+
+  const options = {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      Authorization: `bearer ${localStorage.getItem("token")}`,
+    },
+  };
+
+  useEffect(() => {
+    fetch(getMatieres, options)
+      .then((response) => response.json())
+      .then((data) => {
+        setMatieres(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
   const [loader, setLoader] = useState(false);
 
   const RegisterSchema = Yup.object().shape({
@@ -59,7 +84,7 @@ export default function AddOperationForm() {
     enableReinitialize: false,
     initialValues: {
       dateOperation: "",
-      matiere: "",
+      matiere: [],
       typeOperation: "",
       quantite: 0,
       commentaire: "",
@@ -74,7 +99,7 @@ export default function AddOperationForm() {
     }) => {
       setLoader(true);
       Axios.post(
-        `https://kesho-congo-api.herokuapp.com/stock/operation`,
+        `https://kesho-api.herokuapp.com/stock/operation`,
         {
           date_operation: dateOperation,
           matiere_id: matiere,
@@ -156,13 +181,12 @@ export default function AddOperationForm() {
               error={Boolean(touched.middleName && errors.middleName)}
               helperText={touched.middleName && errors.middleName}
             />
-            {produits.map((produit) => 
-                <Material
-                  id_produit={produit.id_produit}
-                  libelle_produit={produit.libelle_produit}
-                />
-              
-            )}
+            {matieres.map((matiere) => (
+              <Material
+                id={matiere.id}
+                libelle_matiere={matiere.libelle_matiere}
+              />
+            ))}
             <LoadingButton
               fullWidth
               size="large"

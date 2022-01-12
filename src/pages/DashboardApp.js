@@ -3,6 +3,7 @@ import { Navigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useFormik, Form, FormikProvider } from "formik";
 import moment from "moment";
+import "moment/locale/fr";
 // material
 import {
   Box,
@@ -45,7 +46,9 @@ export default function DashboardApp() {
   const [loader, setLoader] = useState(true);
   const [buttonLoader, setButtonLoader] = useState(false);
   const [displayDate, setDisplayDate] = useState(false);
-  const currentMonth = moment().format("MMMM");
+
+  const currentMonth = moment().locale("fr").format("MMMM").toUpperCase();
+  console.log(currentMonth);
   useEffect(async () => {
     try {
       const response = await Axios.get(
@@ -171,11 +174,15 @@ export default function DashboardApp() {
                       <>
                         du{" "}
                         <span className={classes.labelRoot}>
-                          {moment(startingDate).format("DD MMM YYYY")}
+                          {moment(startingDate)
+                            .format("DD MMM YYYY")
+                            .toUpperCase()}
                         </span>{" "}
                         au{" "}
                         <span className={classes.labelRoot}>
-                          {moment(endingDate).format("DD MMM YYYY")}
+                          {moment(endingDate)
+                            .format("DD MMM YYYY")
+                            .toUpperCase()}
                         </span>
                       </>
                     ) : (

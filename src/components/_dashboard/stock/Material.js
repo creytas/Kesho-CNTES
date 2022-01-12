@@ -11,13 +11,13 @@ import { useFormik, Form, FormikProvider } from "formik";
 import * as Yup from "yup";
 import { name } from "faker/locale/de_AT";
 
-export default function Material({ id_produit, libelle_produit }) {
+export default function Material({ id, libelle_matiere }) {
   const [enable, setEnable] = useState(true);
   const [matieres, setMatieres] = useState([]);
 
   const RegisterSchema = Yup.object().shape({
-    qte_produit: Yup.number(),
-    id_produit: Yup.number(),
+    qte_operation: Yup.number(),
+    id: Yup.number(),
   });
   const handleChangeCheck = () => {
     console.log("true");
@@ -26,6 +26,12 @@ export default function Material({ id_produit, libelle_produit }) {
 
   const handleChangeTextField = () => {
     console.log("textfield");
+    const matiere = {
+      id: Checkbox.value,
+      qte_operation: TextField.value,
+    };
+
+    setMatieres(matiere);
   };
 
   return (
@@ -38,19 +44,15 @@ export default function Material({ id_produit, libelle_produit }) {
         {" "}
         <FormControlLabel
           control={
-            <Checkbox
-              onChange={handleChangeCheck}
-              name={`id_` + id_produit}
-              value={id_produit}
-            />
+            <Checkbox onChange={handleChangeCheck} name="id" value={id} />
           }
-          label={libelle_produit}
+          label={libelle_matiere}
         />
         <TextField
           fullWidth
           label="Quantite"
           onChange={handleChangeTextField}
-          name={`qte_` + id_produit}
+          name="qte_operation"
           disabled={enable}
           // error={Boolean(touched.quantite && errors.quantite)}
           // helperText={touched.quantite && errors.quantite}
