@@ -99,7 +99,7 @@ export default function AddOperationForm() {
     }) => {
       setLoader(true);
       Axios.post(
-        `https://kesho-api.herokuapp.com/stock/operation`,
+        `https://kesho-api.herokuapp.com/operation`,
         {
           date_operation: dateOperation,
           matiere_id: matiere,

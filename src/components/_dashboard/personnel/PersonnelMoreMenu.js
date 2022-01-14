@@ -52,7 +52,7 @@ export default function PersonnelListToolbar({ value }) {
   const { from } = location.state || { from: { pathname: '/dashboard/app' } };
   const handleDeleteClick = () => {
     setLoader(true);
-    Axios.delete(`https://kesho-congo-api.herokuapp.com/user?id_user=${value}`, {
+    Axios.delete(`https://kesho-api.herokuapp.com/user?id_user=${value}`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `bearer ${localStorage.getItem('token')}`
@@ -94,7 +94,7 @@ export default function PersonnelListToolbar({ value }) {
     setLoader(true);
     Axios.request({
       method: 'PUT',
-      url: `https://kesho-congo-api.herokuapp.com/user/status?id_user=${value}`,
+      url: `https://kesho-api.herokuapp.com/user/status?id_user=${value}`,
       data: {
         statut: statutPersonnel
       },

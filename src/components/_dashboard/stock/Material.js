@@ -20,14 +20,14 @@ export default function Material({ id, libelle_matiere }) {
     id: Yup.number(),
   });
   const handleChangeCheck = () => {
-    console.log("true");
+    console.log("id" + id.value);
     setEnable(!enable);
   };
 
   const handleChangeTextField = () => {
     console.log("textfield");
     const matiere = {
-      id: Checkbox.value,
+      id: id.value,
       qte_operation: TextField.value,
     };
 

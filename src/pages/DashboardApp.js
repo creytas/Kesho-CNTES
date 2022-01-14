@@ -426,7 +426,9 @@ export default function DashboardApp() {
                       icon="mdi:corn"
                       title="Maïs"
                       nombre={
-                        reports.mais === null ? 0 : reports.mais.qte_matiere
+                        reports.mais === null
+                          ? 0
+                          : reports.mais.qte_matiere / 1000
                       }
                     />
                   </Grid>
@@ -435,7 +437,9 @@ export default function DashboardApp() {
                       icon="carbon:wheat"
                       title="Sorgho"
                       nombre={
-                        reports.sorgho === null ? 0 : reports.sorgho.qte_matiere
+                        reports.sorgho === null
+                          ? 0
+                          : reports.sorgho.qte_matiere / 1000
                       }
                     />
                   </Grid>
@@ -444,7 +448,9 @@ export default function DashboardApp() {
                       icon="mdi:seed"
                       title="Soja"
                       nombre={
-                        reports.soja === null ? 0 : reports.soja.qte_matiere
+                        reports.soja === null
+                          ? 0
+                          : reports.soja.qte_matiere / 1000
                       }
                     />
                   </Grid>
@@ -453,7 +459,9 @@ export default function DashboardApp() {
                       icon="mdi:spoon-sugar"
                       title="Sucre"
                       nombre={
-                        reports.sucre === null ? 0 : reports.sucre.qte_matiere
+                        reports.sucre === null
+                          ? 0
+                          : reports.sucre.qte_matiere / 1000
                       }
                     />
                   </Grid>
@@ -462,7 +470,9 @@ export default function DashboardApp() {
                       icon="ri:oil-fill"
                       title="Huiles"
                       nombre={
-                        reports.huiles === null ? 0 : reports.huiles.qte_matiere
+                        reports.huiles === null
+                          ? 0
+                          : reports.huiles.qte_matiere / 1000
                       }
                     />
                   </Grid>
@@ -473,7 +483,7 @@ export default function DashboardApp() {
                       nombre={
                         reports.extrait_foliaires === null
                           ? 0
-                          : reports.extrait_foliaires.qte_matiere
+                          : reports.extrait_foliaires.qte_matiere / 1000
                       }
                     />
                   </Grid>
@@ -482,7 +492,9 @@ export default function DashboardApp() {
                       icon="fa-solid:soap"
                       title="Savon"
                       nombre={
-                        reports.savon === null ? 0 : reports.savon.qte_matiere
+                        reports.savon === null
+                          ? 0
+                          : reports.savon.qte_matiere / 1000
                       }
                     />
                   </Grid>
@@ -493,7 +505,7 @@ export default function DashboardApp() {
                       nombre={
                         reports.briquettes === null
                           ? 0
-                          : reports.briquettes.qte_matiere
+                          : reports.briquettes.qte_matiere / 1000
                       }
                     />
                   </Grid>
