@@ -11,7 +11,7 @@ import { useFormik, Form, FormikProvider } from "formik";
 import * as Yup from "yup";
 import { name } from "faker/locale/de_AT";
 
-export default function Material({ id, libelle_matiere }) {
+export default function Material({ id, libelle_matiere, handleChange }) {
   const [enable, setEnable] = useState(true);
   const [matieres, setMatieres] = useState([]);
 
@@ -20,19 +20,18 @@ export default function Material({ id, libelle_matiere }) {
     id: Yup.number(),
   });
   const handleChangeCheck = () => {
-    console.log("id" + id.value);
     setEnable(!enable);
   };
 
-  const handleChangeTextField = () => {
-    console.log("textfield");
-    const matiere = {
-      id: id.value,
-      qte_operation: TextField.value,
-    };
+  // const handleChangeTextField = () => {
+  //   console.log("textfield");
+  //   const matiere = {
+  //     id: id.value,
+  //     qte_operation: TextField.value,
+  //   };
 
-    setMatieres(matiere);
-  };
+  //   setMatieres(matiere);
+  // };
 
   return (
     <>
@@ -51,9 +50,9 @@ export default function Material({ id, libelle_matiere }) {
         <TextField
           fullWidth
           label="Quantite"
-          onChange={handleChangeTextField}
           name="qte_operation"
           disabled={enable}
+          onBlur={handleChange}
           // error={Boolean(touched.quantite && errors.quantite)}
           // helperText={touched.quantite && errors.quantite}
         />

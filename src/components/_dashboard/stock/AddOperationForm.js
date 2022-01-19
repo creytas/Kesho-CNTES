@@ -7,7 +7,13 @@ import { useFormik, Form, FormikProvider } from "formik";
 import Axios from "axios";
 import Material from "./Material";
 // material
-import { Stack, TextField, Select } from "@material-ui/core";
+import {
+  Stack,
+  TextField,
+  Select,
+  FormControlLabel,
+  Checkbox,
+} from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
 import { LoadingButton } from "@material-ui/lab";
 import { makeStyles } from "@material-ui/styles";
@@ -46,6 +52,7 @@ export default function AddOperationForm() {
   const [error, setError] = useState(false);
 
   const [matieres, setMatieres] = useState([]);
+  const [operation, setOperation] = useState([]);
 
   const getMatieres = `https://kesho-api.herokuapp.com/matiere/CNTES/all`;
 
@@ -71,9 +78,8 @@ export default function AddOperationForm() {
 
   const RegisterSchema = Yup.object().shape({
     dateOperation: Yup.date().required("Date requise"),
-    matiere: Yup.array().required(),
+    operations: Yup.array().required(),
     typeOperation: Yup.string().required("type d'operation requis"),
-    quantite: Yup.number().required(),
     commentaire: Yup.string().required("Justifiez l'operation"),
   });
 
@@ -84,50 +90,45 @@ export default function AddOperationForm() {
     enableReinitialize: false,
     initialValues: {
       dateOperation: "",
-      matiere: [],
+      operations: [],
       typeOperation: "",
-      quantite: 0,
       commentaire: "",
     },
     validationSchema: RegisterSchema,
-    onSubmit: ({
-      dateOperation,
-      matiere,
-      typeOperation,
-      quantite,
-      commentaire,
-    }) => {
+    onSubmit: ({ dateOperation, operations, typeOperation, commentaire }) => {
+      console.log(
+        `{ ${dateOperation} | ${operations[0].id} | ${typeOperation} | ${commentaire} }`
+      );
       setLoader(true);
-      Axios.post(
-        `https://kesho-api.herokuapp.com/operation`,
-        {
-          date_operation: dateOperation,
-          matiere_id: matiere,
-          type_operation: typeOperation,
-          qte_operation: quantite,
-          commentaire_operation: commentaire,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      )
-        .then((response) => {
-          setLoader(false);
-          const message = response.data;
-          console.log("Yves", message);
-          fakeAuth.login(() => {
-            navigate(from);
-            navigate("/dashboard/stock", { replace: true });
-          });
-        })
-        .catch((err) => {
-          setError(true);
-          setLoader(false);
-          console.log(err);
-        });
+      // Axios.post(
+      //   `https://kesho-api.herokuapp.com/operation`,
+      //   {
+      //     date_operation: dateOperation,
+      //     matieres: operation,
+      //     type_operation: typeOperation,
+      //     commentaire_operation: commentaire,
+      //   },
+      //   {
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //       Authorization: `bearer ${localStorage.getItem("token")}`,
+      //     },
+      //   }
+      // )
+      //   .then((response) => {
+      //     setLoader(false);
+      //     const message = response.data;
+      //     console.log("Yves", message);
+      //     fakeAuth.login(() => {
+      //       navigate(from);
+      //       navigate("/dashboard/stock", { replace: true });
+      //     });
+      //   })
+      //   .catch((err) => {
+      //     setError(true);
+      //     setLoader(false);
+      //     console.log(err);
+      //   });
     },
   });
   const {
@@ -140,9 +141,10 @@ export default function AddOperationForm() {
   } = formik;
   const handleChangeDateOperation = (event) => {
     const { value } = event.target;
-    console.log(value);
     setFieldValue("dateOperation", value);
   };
+
+  //console.log(operation);
   return (
     <FormikProvider value={formik}>
       <Box>
@@ -164,29 +166,43 @@ export default function AddOperationForm() {
             />{" "}
             <Select
               native
-              value={values.status}
-              {...getFieldProps("status")}
-              error={Boolean(touched.status && errors.status)}
+              value={values.typeOperation}
+              {...getFieldProps("typeOperation")}
+              error={Boolean(touched.typeOperation && errors.typeOperation)}
             >
               <option value="" selected disabled hidden>
-                Type operation
+                Type operation {console.log(values.typeOperation)}
               </option>
               <option value="entrée">Entrée</option>
               <option value="sortie">Sortie</option>
             </Select>
-            <TextField
-              fullWidth
-              label="Raison"
-              {...getFieldProps("middleName")}
-              error={Boolean(touched.middleName && errors.middleName)}
-              helperText={touched.middleName && errors.middleName}
-            />
             {matieres.map((matiere) => (
               <Material
                 id={matiere.id}
                 libelle_matiere={matiere.libelle_matiere}
+                handleChange={(event) => {
+                  const { value } = event.target;
+                  const mat = {
+                    id: matiere.id,
+                    qte_operation: value,
+                  };
+                  setOperation([...operation, mat]);
+                  setFieldValue("operations", operation);
+                  console.log(operation);
+                }}
               />
             ))}
+            <TextField
+              fullWidth
+              label="Raison"
+              {...getFieldProps("commentaire")}
+              error={Boolean(touched.commentaire && errors.commentaire)}
+              helperText={touched.commentaire && errors.commentaire}
+            />
+            <FormControlLabel
+              control={<Checkbox />}
+              label="Confirmez-vous cette operation"
+            />
             <LoadingButton
               fullWidth
               size="large"
