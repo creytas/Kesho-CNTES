@@ -1,48 +1,53 @@
-import * as Yup from 'yup';
-import React, { useState, useEffect } from 'react';
+import * as Yup from "yup";
+import React, { useState, useEffect } from "react";
 
-import { Link as RouterLink, Navigate, useLocation, useNavigate } from 'react-router-dom';
-import './Details.css';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { Icon } from '@iconify/react';
-import { makeStyles } from '@material-ui/styles';
-import { Button } from '@material-ui/core';
-import { LoadingButton } from '@material-ui/lab';
-import Box from '@material-ui/core/Box';
-import Axios from 'axios';
-import moment from 'moment';
-import { useFormik, Form, FormikProvider } from 'formik';
-import Chart from '../../components/charts/chart/Chart';
-import PatientCard from '../../components/patientCard/PatientCard';
-import AddAnthro from '../../components/addAnthro/AddAnthro';
-import MoreDetails from './MoreDetails';
-import { fakeAuth } from '../../fakeAuth';
+import {
+  Link as RouterLink,
+  Navigate,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
+import "./Details.css";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { Icon } from "@iconify/react";
+import { makeStyles } from "@material-ui/styles";
+import { Button } from "@material-ui/core";
+import { LoadingButton } from "@material-ui/lab";
+import Box from "@material-ui/core/Box";
+import Axios from "axios";
+import moment from "moment";
+import { useFormik, Form, FormikProvider } from "formik";
+import Chart from "../../components/charts/chart/Chart";
+import PatientCard from "../../components/patientCard/PatientCard";
+import AddAnthro from "../../components/addAnthro/AddAnthro";
+import MoreDetails from "./MoreDetails";
+import { fakeAuth } from "../../fakeAuth";
 
 export default function Details() {
-  console.log('hobed', moment().toDate('MM/DD/YYYY'));
+  console.log("hobed", moment().toDate("MM/DD/YYYY"));
   const location = useLocation();
   const navigate = useNavigate();
-  const { from } = location.state || { from: { pathname: '/dashboard/app' } };
+  const { from } = location.state || { from: { pathname: "/dashboard/app" } };
   const [loader, setLoader] = useState(true);
   const [transferUNT, setTransferUNT] = useState(false);
   const [onePatient, setOnePatient] = useState([]);
   const [anthro, setAnthro] = useState([]);
-  const [isAuth, setIsAuth] = useState(localStorage.getItem('token'));
-  const myId = location.pathname.split('/')[4];
+  const [isAuth, setIsAuth] = useState(localStorage.getItem("token"));
+  const myId = location.pathname.split("/")[4];
   useEffect(async () => {
     try {
       const response = await Axios.get(
-        `https://kesho-congo-api.herokuapp.com/patient?id_patient=${myId}`,
+        `https://kesho-api.herokuapp.com/patient?id_patient=${myId}`,
         {
           headers: {
-            'Content-Type': 'application/json',
-            Authorization: `bearer ${localStorage.getItem('token')}`
-          }
+            "Content-Type": "application/json",
+            Authorization: `bearer ${localStorage.getItem("token")}`,
+          },
         }
       );
       const data = await response.data;
@@ -64,27 +69,29 @@ export default function Details() {
     onSubmit: () => {
       setTransferUNT(true);
       Axios.put(
-        `https://kesho-congo-api.herokuapp.com/patient/transfert?id_patient=${myId}`,
+        `https://kesho-api.herokuapp.com/patient/transfert?id_patient=${myId}`,
         {},
         {
           headers: {
-            'Content-Type': 'application/json',
-            Authorization: `bearer ${localStorage.getItem('token')}`
-          }
+            "Content-Type": "application/json",
+            Authorization: `bearer ${localStorage.getItem("token")}`,
+          },
         }
       )
         .then(() => {
           setTransferUNT(false);
           fakeAuth.login(() => {
             navigate(from);
-            navigate(`/dashboard/patient/detail_patient/${myId}`, { replace: true });
+            navigate(`/dashboard/patient/detail_patient/${myId}`, {
+              replace: true,
+            });
           });
         })
         .catch((err) => {
-          console.log('mon erreur 2', err);
+          console.log("mon erreur 2", err);
           setTransferUNT(false);
         });
-    }
+    },
   });
   const { handleSubmit } = formik;
   // -------------------------------------------------
@@ -94,16 +101,24 @@ export default function Details() {
   const height = [];
   const weight = [];
   const putInPB = (arr) => {
-    anthro.map((item) => arr.push({ name: item.date_examen, Valeur: item.peri_brachial }));
+    anthro.map((item) =>
+      arr.push({ name: item.date_examen, Valeur: item.peri_brachial })
+    );
   };
   const putInPC = (arr) => {
-    anthro.map((item) => arr.push({ name: item.date_examen, Valeur: item.peri_cranien }));
+    anthro.map((item) =>
+      arr.push({ name: item.date_examen, Valeur: item.peri_cranien })
+    );
   };
   const putInT = (arr) => {
-    anthro.map((item) => arr.push({ name: item.date_examen, Valeur: item.taille }));
+    anthro.map((item) =>
+      arr.push({ name: item.date_examen, Valeur: item.taille })
+    );
   };
   const putInP = (arr) => {
-    anthro.map((item) => arr.push({ name: item.date_examen, Valeur: item.poids }));
+    anthro.map((item) =>
+      arr.push({ name: item.date_examen, Valeur: item.poids })
+    );
   };
 
   putInPB(brachialPerim);
@@ -116,26 +131,26 @@ export default function Details() {
   }, []);
   const useStyles = makeStyles(() => ({
     root: {
-      display: 'flex',
-      position: 'relative',
+      display: "flex",
+      position: "relative",
       // left: '50%',
       // flexDirection: 'column',
-      justifyContent: 'center',
-      top: '50%'
+      justifyContent: "center",
+      top: "50%",
     },
     labelRoot: {
-      '&&': {
-        color: 'red'
-      }
+      "&&": {
+        color: "red",
+      },
     },
     div: {
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      width: '78%',
-      position: 'relative',
-      left: '5%'
-    }
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "space-between",
+      width: "78%",
+      position: "relative",
+      left: "5%",
+    },
   }));
   const classes = useStyles();
   const [open, setOpen] = useState(false);
@@ -162,7 +177,7 @@ export default function Details() {
               >
                 Retour
               </Button>
-              <Box sx={{ position: 'absolute', left: '100%' }}>
+              <Box sx={{ position: "absolute", left: "100%" }}>
                 <FormikProvider value={formik}>
                   <Form onSubmit={handleSubmit}>
                     <LoadingButton
@@ -194,7 +209,9 @@ export default function Details() {
                   number={onePatient.Patient.telephone}
                   tutor={onePatient.Famille.nom_tuteur}
                   location={onePatient.Patient.provenance_patient}
-                  malnutrition={onePatient.Anthropometrique[0].type_malnutrition}
+                  malnutrition={
+                    onePatient.Anthropometrique[0].type_malnutrition
+                  }
                   transfer={onePatient.Patient.transferer_unt}
                 />
                 <br />
@@ -224,14 +241,18 @@ export default function Details() {
                   <Chart
                     data={weight}
                     dataKey="Valeur"
-                    title={`Poids: ${weight.reverse()[weight.length - 1].Valeur} kg`}
+                    title={`Poids: ${
+                      weight.reverse()[weight.length - 1].Valeur
+                    } kg`}
                   />
                 </div>
                 <div className="productRightCard">
                   <Chart
                     data={height}
                     dataKey="Valeur"
-                    title={`Taille: ${height.reverse()[height.length - 1].Valeur} cm`}
+                    title={`Taille: ${
+                      height.reverse()[height.length - 1].Valeur
+                    } cm`}
                   />
                 </div>
               </div>
@@ -251,7 +272,8 @@ export default function Details() {
             </DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
-                Le patient étant malade, sera declaré transferé en UNT dans notre base de données.
+                Le patient étant malade, sera declaré transferé en UNT dans
+                notre base de données.
               </DialogContentText>
             </DialogContent>
             <DialogActions>
