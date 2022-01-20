@@ -144,7 +144,7 @@ export default function PatientForm({
     initialValues: {
       rationSeche: patientFormData.rationSeche
         ? patientFormData.rationSeche
-        : "",
+        : "false",
       taille: patientFormData.taille ? patientFormData.taille : "",
       poidsActuel: patientFormData.poidsActuel
         ? patientFormData.poidsActuel

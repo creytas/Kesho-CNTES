@@ -202,7 +202,7 @@ export default function Patient() {
   const refButtonRefresh = useRef(null);
   useEffect(() => {
     fetch(
-      `https://kesho-api.herokuapp.com/operation/all?limit_start=${start}&limit_end=${5}`,
+      `https://kesho-api.herokuapp.com/operation/?limit_start=${start}&limit_end=${5}`,
       {
         method: "GET",
         headers: {
@@ -228,7 +228,7 @@ export default function Patient() {
         setLoadingData(false);
       });
   }, [start, numberOfElement]);
-  console.log("donnees patients :", operationsList, numberOfElement);
+  console.log(`donnees operations : ${operationsList}`);
 
   useEffect(() => {
     fetch(`https://kesho-api.herokuapp.com/operation/export`, {
@@ -260,7 +260,9 @@ export default function Patient() {
     FileSaver.saveAs(data, fileName + fileExtension);
   };
 
-  const exportedFileName = `keshoCongoPatients${moment().format("DDMMMMYYYY")}`;
+  const exportedFileName = `keshoCongoOperations${moment().format(
+    "DDMMMMYYYY"
+  )}`;
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");

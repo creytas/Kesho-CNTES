@@ -29,6 +29,7 @@ export default function PatientData({ DataPatient, PrevStep }) {
   const { indentity, CauseMalnutrition, FamalyData } = DataPatient;
   console.log(DataPatient);
   const newPatient = {};
+  newPatient.ration_seche = indentity.rationSeche;
   newPatient.age_fin_allaitement =
     indentity.ageFinAllaitement === "" ? 6 : indentity.ageFinAllaitement;
   newPatient.allaitement_6mois = indentity.allaitementExclusifSixMois; // bool

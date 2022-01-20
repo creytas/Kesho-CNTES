@@ -100,35 +100,35 @@ export default function AddOperationForm() {
         `{ ${dateOperation} | ${operations[0].id} | ${typeOperation} | ${commentaire} }`
       );
       setLoader(true);
-      // Axios.post(
-      //   `https://kesho-api.herokuapp.com/operation`,
-      //   {
-      //     date_operation: dateOperation,
-      //     matieres: operation,
-      //     type_operation: typeOperation,
-      //     commentaire_operation: commentaire,
-      //   },
-      //   {
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //       Authorization: `bearer ${localStorage.getItem("token")}`,
-      //     },
-      //   }
-      // )
-      //   .then((response) => {
-      //     setLoader(false);
-      //     const message = response.data;
-      //     console.log("Yves", message);
-      //     fakeAuth.login(() => {
-      //       navigate(from);
-      //       navigate("/dashboard/stock", { replace: true });
-      //     });
-      //   })
-      //   .catch((err) => {
-      //     setError(true);
-      //     setLoader(false);
-      //     console.log(err);
-      //   });
+      Axios.post(
+        `https://kesho-api.herokuapp.com/operation`,
+        {
+          date_operation: dateOperation,
+          matieres: operations,
+          type_operation: typeOperation,
+          commentaire_operation: commentaire,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
+        .then((response) => {
+          setLoader(false);
+          const message = response.data;
+          console.log(message);
+          fakeAuth.login(() => {
+            navigate(from);
+            navigate("/dashboard/stock", { replace: true });
+          });
+        })
+        .catch((err) => {
+          setError(true);
+          setLoader(false);
+          console.log(err);
+        });
     },
   });
   const {
