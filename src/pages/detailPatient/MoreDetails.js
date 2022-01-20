@@ -1,9 +1,9 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-nested-ternary */
 /* no-nested-ternary */
-import React, { useState, useEffect } from 'react';
-import { filter } from 'lodash';
-import moment from 'moment';
+import React, { useState, useEffect } from "react";
+import { filter } from "lodash";
+import moment from "moment";
 // import { Link as useLocation } from 'react-router-dom';
 
 // material
@@ -19,28 +19,31 @@ import {
   Container,
   Typography,
   TableContainer,
-  TablePagination
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import Badge from '@material-ui/core/Badge';
+  TablePagination,
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
+import LinearProgress from "@material-ui/core/LinearProgress";
+import Badge from "@material-ui/core/Badge";
 // import { makeStyles } from '@material-ui/styles';
-import SearchNotFound from '../../components/SearchNotFound';
+import SearchNotFound from "../../components/SearchNotFound";
 // import Scrollbar from '/../../components/Scrollbar';
-import Scrollbar from '../../components/Scrollbar';
+import Scrollbar from "../../components/Scrollbar";
 
-import Page from '../../components/Page';
-import Label from '../../components/Label';
-import { PersonnelListHead, PersonnelListToolbar } from '../../components/_dashboard/personnel';
+import Page from "../../components/Page";
+import Label from "../../components/Label";
+import {
+  PersonnelListHead,
+  PersonnelListToolbar,
+} from "../../components/_dashboard/personnel";
 
 const TABLE_HEAD = [
-  { id: 'NE', label: 'Consulté(e) par', alignRight: false },
-  { id: 'DN', label: 'Date', alignRight: false },
-  { id: 'SE', label: 'PB(cm)', alignRight: false },
-  { id: 'DC', label: 'PC(cm)', alignRight: false },
-  { id: 'SxE', label: 'Poids(kg)', alignRight: false },
-  { id: 'SxE', label: 'Taille(cm)', alignRight: false },
-  { id: 'SxE', label: 'Malnutrition', alignRight: false }
+  { id: "NE", label: "Consulté(e) par", alignRight: false },
+  { id: "DN", label: "Date", alignRight: false },
+  { id: "SE", label: "PB(cm)", alignRight: false },
+  { id: "DC", label: "PC(cm)", alignRight: false },
+  { id: "SxE", label: "Poids(kg)", alignRight: false },
+  { id: "SxE", label: "Taille(cm)", alignRight: false },
+  { id: "SxE", label: "Malnutrition", alignRight: false },
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -54,7 +57,7 @@ function descendingComparator(a, b, orderBy) {
 }
 
 function getComparator(order, orderBy) {
-  return order === 'desc'
+  return order === "desc"
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
@@ -69,7 +72,8 @@ function applySortFilter(array, comparator, query) {
   if (query) {
     return filter(
       array,
-      (_user) => _user.user.nom_user.toLowerCase().indexOf(query.toLowerCase()) !== -1
+      (_user) =>
+        _user.user.nom_user.toLowerCase().indexOf(query.toLowerCase()) !== -1
     );
   }
   return stabilizedThis.map((el) => el[0]);
@@ -77,11 +81,11 @@ function applySortFilter(array, comparator, query) {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '100%',
-    '& > * + *': {
-      marginTop: theme.spacing(2)
-    }
-  }
+    width: "100%",
+    "& > * + *": {
+      marginTop: theme.spacing(2),
+    },
+  },
 }));
 
 export default function MoreDetails({ id }) {
@@ -93,14 +97,14 @@ export default function MoreDetails({ id }) {
   const [anthro, setAnthro] = useState([]);
   const [loader, setLoader] = useState(true);
 
-  const getUsers = `https://kesho-congo-api.herokuapp.com/patient/detail?id_patient=${myId}`;
+  const getUsers = `https://kesho-api.herokuapp.com/patient/detail?id_patient=${myId}`;
 
   const options = {
-    method: 'GET',
+    method: "GET",
     headers: {
-      Accept: 'application/json',
-      Authorization: `bearer ${localStorage.getItem('token')}`
-    }
+      Accept: "application/json",
+      Authorization: `bearer ${localStorage.getItem("token")}`,
+    },
   };
 
   useEffect(() => {
@@ -118,16 +122,16 @@ export default function MoreDetails({ id }) {
   }, []);
 
   const [page, setPage] = useState(0);
-  const [order, setOrder] = useState('asc');
+  const [order, setOrder] = useState("asc");
   const [selected, setSelected] = useState([]);
-  const [orderBy, setOrderBy] = useState('nom_user');
-  const [filterName, setFilterName] = useState('');
+  const [orderBy, setOrderBy] = useState("nom_user");
+  const [filterName, setFilterName] = useState("");
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const handleRequestSort = (event, property) => {
     // console.log(property);
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
 
@@ -171,12 +175,17 @@ export default function MoreDetails({ id }) {
     setFilterName(event.target.value);
   };
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - usersList.length) : 0;
+  const emptyRows =
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - usersList.length) : 0;
 
-  const filteredUsers = applySortFilter(usersList, getComparator(order, orderBy), filterName);
+  const filteredUsers = applySortFilter(
+    usersList,
+    getComparator(order, orderBy),
+    filterName
+  );
 
   const isUserNotFound = filteredUsers.length === 0;
-  const [isAuth, setIsAuth] = useState(localStorage.getItem('token'));
+  const [isAuth, setIsAuth] = useState(localStorage.getItem("token"));
   useEffect(() => {
     setIsAuth(isAuth);
   }, [isAuth]);
@@ -210,11 +219,20 @@ export default function MoreDetails({ id }) {
                   />
                   <TableBody>
                     {filteredUsers
-                      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
                       .map((consultant, i) => {
-                        const { id_user, nom_user, prenom_user, transferer_unt } = consultant.user;
+                        const {
+                          id_user,
+                          nom_user,
+                          prenom_user,
+                          transferer_unt,
+                        } = consultant.user;
 
-                        const isItemSelected = selected.indexOf(nom_user) !== -1;
+                        const isItemSelected =
+                          selected.indexOf(nom_user) !== -1;
 
                         return (
                           <TableRow
@@ -227,11 +245,21 @@ export default function MoreDetails({ id }) {
                             <TableCell padding="checkbox">
                               <Checkbox
                                 checked={isItemSelected}
-                                onChange={(event) => handleClick(event, nom_user)}
+                                onChange={(event) =>
+                                  handleClick(event, nom_user)
+                                }
                               />
                             </TableCell>
-                            <TableCell component="th" scope="row" padding="none">
-                              <Stack direction="row" alignItems="center" spacing={2}>
+                            <TableCell
+                              component="th"
+                              scope="row"
+                              padding="none"
+                            >
+                              <Stack
+                                direction="row"
+                                alignItems="center"
+                                spacing={2}
+                              >
                                 <Avatar
                                   alt={nom_user}
                                   src={`/static/mock-images/avatars/avatar_${id_user}.jpg`}
@@ -242,7 +270,7 @@ export default function MoreDetails({ id }) {
                               </Stack>
                             </TableCell>
                             <TableCell>
-                              {moment(anthro[i].createdAt).format('DD/MM/YYYY')}
+                              {moment(anthro[i].createdAt).format("DD/MM/YYYY")}
                             </TableCell>
                             <TableCell> {anthro[i].peri_brachial}</TableCell>
                             <TableCell>{anthro[i].peri_cranien}</TableCell>
@@ -255,22 +283,22 @@ export default function MoreDetails({ id }) {
                                   &nbsp;&nbsp;
                                 </>
                               ) : (
-                                ''
+                                ""
                               )}
                               <Label
                                 variant="outlined"
                                 sx={{
                                   color: `${
-                                    anthro[i].type_malnutrition === 'MAC'
-                                      ? '#D32F2F'
-                                      : anthro[i].type_malnutrition === 'MAM'
-                                      ? '#ffb74d'
-                                      : anthro[i].type_malnutrition === 'MAS-K'
-                                      ? '#e57373'
-                                      : anthro[i].type_malnutrition === 'MAS-M'
-                                      ? '#f57c00'
-                                      : '#4CAF50'
-                                  }`
+                                    anthro[i].type_malnutrition === "MAC"
+                                      ? "#D32F2F"
+                                      : anthro[i].type_malnutrition === "MAM"
+                                      ? "#ffb74d"
+                                      : anthro[i].type_malnutrition === "MAS-K"
+                                      ? "#e57373"
+                                      : anthro[i].type_malnutrition === "MAS-M"
+                                      ? "#f57c00"
+                                      : "#4CAF50"
+                                  }`,
                                 }}
                               >
                                 {anthro[i].type_malnutrition}
