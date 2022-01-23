@@ -258,7 +258,7 @@ export default function Patient() {
     refButtonRefresh.current.value = "";
     refButtonRefresh.current.value = "";
     setLoadingData(true);
-    setStart(3);
+    setStart(0);
     setNumberOfElement(0);
   };
   const filteredPatient = patientsList;
