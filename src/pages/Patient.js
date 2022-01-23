@@ -125,6 +125,7 @@ export default function Patient() {
     )
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         const { Patients, nombre_patient } = data;
         setNumberOfElement(
           numberOfElement === 0 ? Patients.length : numberOfElement
@@ -254,7 +255,6 @@ export default function Patient() {
   };
   const handleClickRefresh = () => {
     setFilterName("");
-    console.dir(refButtonRefresh.current.value);
     refButtonRefresh.current.value = "";
     refButtonRefresh.current.value = "";
     setLoadingData(true);
@@ -450,6 +450,7 @@ export default function Patient() {
                                       <TableCell align="center">
                                         {prenom_patient}
                                       </TableCell>
+                                      {console.log(date_naissance)}
                                       <TableCell align="center">
                                         {moment(date_naissance).format(
                                           "DD/MM/YYYY"

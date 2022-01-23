@@ -241,7 +241,11 @@ export default function DashboardApp() {
                   <Grid item xs={12} sm={6} md={3}>
                     <CardBleu
                       title="Total"
-                      nombreM={0}
+                      nombreM={
+                        reports.nombre_garcon[0].nombre_garcon === null
+                          ? 0
+                          : reports.nombre_garcon[0].nombre_garcon
+                      }
                       nombreF={
                         reports.nombre_fille[0].nombre_fille === null
                           ? 0
