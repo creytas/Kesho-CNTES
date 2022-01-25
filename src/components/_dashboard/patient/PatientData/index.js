@@ -18,6 +18,8 @@ import Axios from "axios";
 import { LoadingButton } from "@material-ui/lab";
 import Label from "../../../Label";
 import { identity } from "lodash-es";
+import moment from "moment";
+import { format } from "date-fns";
 
 PatientData.propTypes = {
   DataPatient: propTypes.object,
@@ -162,6 +164,11 @@ export default function PatientData({ DataPatient, PrevStep }) {
   newPatient.nom_tuteur = FamalyData.nomTuteur;
   newPatient.declarer_gueri = false;
   newPatient.date_naissance_tuteur = FamalyData.dateNaissanceChefMenage;
+  const formatDate = (date) => {
+    let formatted_date =
+      date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
+    return formatted_date;
+  };
   const handleSubmit = () => {
     setBtnLoading(true);
     Axios.request({
@@ -411,7 +418,9 @@ export default function PatientData({ DataPatient, PrevStep }) {
               EIG:
               <span style={{ color: "black" }}>
                 {" "}
-                {CauseMalnutrition.eig} ans
+                {CauseMalnutrition.eig >= 12
+                  ? `${CauseMalnutrition.eig / 12} ans`
+                  : `${CauseMalnutrition.eig} mois`}
               </span>
             </InputLabel>
             <InputLabel>
@@ -650,31 +659,6 @@ export default function PatientData({ DataPatient, PrevStep }) {
               <span style={{ color: "black" }}>{`${
                 CauseMalnutrition.TbcChezParent === "true" ? "Oui" : "Non"
               }`}</span>
-            </InputLabel>
-            <InputLabel>
-              TBC traité :
-              <span style={{ color: "black" }}>{`${
-                CauseMalnutrition.TbcTraiter === "undifined"
-                  ? "TBC inéxistant"
-                  : CauseMalnutrition.TbcTraiter
-              }`}</span>
-            </InputLabel>
-            <InputLabel>
-              TBC déclaré guérie :
-              <span style={{ color: "black" }}>
-                {`${
-                  CauseMalnutrition.TbcGuerie === "undefined"
-                    ? "TBC inéxistant"
-                    : CauseMalnutrition.TbcGuerie
-                }`}
-              </span>
-            </InputLabel>
-            <InputLabel>
-              MatcdMasn :
-              <span style={{ color: "black" }}>
-                {" "}
-                {CauseMalnutrition.MatcdMas}
-              </span>
             </InputLabel>
           </Card>
         </Grid>

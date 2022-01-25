@@ -1064,8 +1064,8 @@ export default function FamilleForm({
                 <option value="Autre ethnie du sud-kivu">
                   Autre ethnie du sud-kivu
                 </option>
-                <option value="Autre ethnie du pay et autres">
-                  Autre ethnie du pay et autres
+                <option value="Autre ethnie du pays et autres">
+                  Autre ethnie du pays et autres
                 </option>
               </Select>
               <RadioGroup
