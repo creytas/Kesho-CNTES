@@ -95,10 +95,10 @@ export default function AddOperationForm() {
       commentaire: "",
     },
     validationSchema: RegisterSchema,
-    onSubmit: ({ dateOperation, operations, typeOperation, commentaire }) => {
-      console.log(
-        `{ ${dateOperation} | ${operations[0].id} | ${typeOperation} | ${commentaire} }`
-      );
+    onSubmit: (
+      { dateOperation, operations, typeOperation, commentaire },
+      event
+    ) => {
       setLoader(true);
       Axios.post(
         `https://kesho-api.herokuapp.com/operation`,

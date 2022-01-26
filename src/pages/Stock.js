@@ -191,7 +191,7 @@ export default function Patient() {
   const [order, setOrder] = useState("asc");
   const [selected, setSelected] = useState([]);
   const [orderBy, setOrderBy] = useState("nom_patient");
-  const [filterName, setFilterName] = useState("");
+  const [filterDate, setFilterDate] = useState("");
   const [numberOfElement, setNumberOfElement] = useState(0);
   const [start, setStart] = useState(0);
   const [loadingData, setLoadingData] = useState(false);
@@ -202,7 +202,7 @@ export default function Patient() {
   const refButtonRefresh = useRef(null);
   useEffect(() => {
     fetch(
-      `https://kesho-api.herokuapp.com/operation/?limit_start=${start}&limit_end=${5}`,
+      `https://kesho-api.herokuapp.com/operation/affectation/CNTES/?limit_start=${start}&limit_end=${10}`,
       {
         method: "GET",
         headers: {
@@ -213,7 +213,7 @@ export default function Patient() {
     )
       .then((response) => response.json())
       .then((data) => {
-        const { Operations, nombre_operations } = data;
+        const Operations = data;
         setNumberOfElement(
           numberOfElement === 0 ? Operations.length : numberOfElement
         );
@@ -305,7 +305,7 @@ export default function Patient() {
 
   // -------------------FOrmik----------------------------
   const SearchSchema = Yup.object().shape({
-    searchValue: Yup.string().required("Entrez un nom"),
+    searchValue: Yup.date().required("Entrez une date"),
   });
   const formik = useFormik({
     enableReinitialize: true,
@@ -317,9 +317,9 @@ export default function Patient() {
       setLoadingButton(true);
       try {
         const response = await Axios.post(
-          "https://kesho-api.herokuapp.com/operation/search",
+          "https://kesho-api.herokuapp.com/operation/affectation/CNTES/search",
           {
-            nom_patient: searchValue,
+            date_operation: searchValue,
           },
           {
             headers: {
@@ -340,15 +340,12 @@ export default function Patient() {
   });
   const { handleSubmit, setFieldValue } = formik;
 
-  const handleFilterByName = (event) => {
+  const handleFilterByDate = (event) => {
     setFieldValue("searchValue", event.target.value);
-    setFilterName(event.target.value);
+    setFilterDate(event.target.value);
   };
   const handleClickRefresh = () => {
-    setFilterName("");
-    console.dir(refButtonRefresh.current.value);
-    refButtonRefresh.current.value = "";
-    refButtonRefresh.current.value = "";
+    setFilterDate("");
     setLoadingData(true);
     setStart(3);
     setNumberOfElement(0);
@@ -362,7 +359,7 @@ export default function Patient() {
     setIsAuth(isAuth);
   }, [isAuth]);
   const component = "add_Operation";
-
+  console.log(operationsList);
   return isAuth ? (
     <>
       {loader ? (
@@ -442,9 +439,9 @@ export default function Patient() {
                             </LoadingButton>
                             <SearchStyle
                               type="date"
-                              value={filterName}
+                              value={filterDate}
                               inputRef={refButtonRefresh}
-                              onChange={handleFilterByName}
+                              onChange={handleFilterByDate}
                               placeholder="Tapez une date"
                             />
                           </Form>
@@ -495,8 +492,8 @@ export default function Patient() {
 
                                   return (
                                     <TableRow
-                                      component={RouterLink}
-                                      to={`detail_patient/${id_operation}`}
+                                      // component={RouterLink}
+                                      // to={`detail_patient/${id_operation}`}
                                       className={classes.patientRow}
                                       hover
                                       key={id_operation}
@@ -554,7 +551,7 @@ export default function Patient() {
                                     colSpan={6}
                                     sx={{ py: 3 }}
                                   >
-                                    <SearchNotFound searchQuery={filterName} />
+                                    <SearchNotFound searchQuery={filterDate} />
                                   </TableCell>
                                 </TableRow>
                               </TableBody>
