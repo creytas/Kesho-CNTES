@@ -10,6 +10,7 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
+import Badge from "@material-ui/core/Badge";
 import {
   Card,
   Table,
@@ -110,7 +111,8 @@ export default function Personnel() {
   const [usersList, setUsersList] = useState([]);
   const classes = useStyles();
 
-  const getUsers = `https://kesho-api.herokuapp.com/user/all`;
+  //const getUsers = `https://kesho-api.herokuapp.com/user/all`;
+  const getUsers = `https://kesho-api.herokuapp.com/presence`;
 
   const options = {
     method: "GET",
@@ -125,7 +127,8 @@ export default function Personnel() {
       .then((response) => response.json())
       .then((data) => {
         setLoader(false);
-        setUsersList(data);
+        setUsersList(data[0]);
+        console.log(data[0]);
       })
       .catch(() => {
         setLoader(false);
@@ -277,6 +280,7 @@ export default function Personnel() {
                                 email,
                                 sexe_user,
                                 statut,
+                                attendance,
                               } = user;
                               const isItemSelected =
                                 selected.indexOf(nom_user) !== -1;
@@ -319,7 +323,20 @@ export default function Personnel() {
                                   </TableCell>
                                   <TableCell>{prenom_user}</TableCell>
                                   <TableCell> {email}</TableCell>
-                                  <TableCell>{statut}</TableCell>
+                                  <TableCell>
+                                    {attendance === "P" ? (
+                                      <>
+                                        <Badge color="success" variant="dot" />
+                                        &nbsp;&nbsp;
+                                      </>
+                                    ) : (
+                                      <>
+                                        <Badge color="error" variant="dot" />
+                                        &nbsp;&nbsp;
+                                      </>
+                                    )}{" "}
+                                    {statut}
+                                  </TableCell>
                                   <TableCell>{sexe_user}</TableCell>
                                   <TableCell>
                                     <PersonnelMoreMenu value={id_user} />
