@@ -207,16 +207,12 @@ export default function PersonnelListToolbar({ value }) {
                     spacing={1}
                   >
                     <Stack direction={{ xs: 'row', sm: 'column' }}>
-                    <FormControlLabel
+                      <FormControlLabel
                         value="Coordonateur"
                         control={<Radio />}
                         label="Coordonateur"
                       />
-                      <FormControlLabel
-                        value="Medécin"
-                        control={<Radio />}
-                        label="Medécin"
-                      />
+                      <FormControlLabel value="Medécin" control={<Radio />} label="Medécin" />
                       <FormControlLabel
                         value="Nutritionniste"
                         control={<Radio />}
@@ -236,6 +232,21 @@ export default function PersonnelListToolbar({ value }) {
                         value="Animateur"
                         control={<Radio />}
                         label="Animateur(trice)"
+                      />
+                      <FormControlLabel
+                        value="Chargé de la logistique"
+                        control={<Radio />}
+                        label="Chargé(e) de la logistique"
+                      />
+                      <FormControlLabel
+                        value="Chargé des finances"
+                        control={<Radio />}
+                        label="Chargé(e) des finances"
+                      />
+                      <FormControlLabel
+                        value="Chargé des programmes"
+                        control={<Radio />}
+                        label="Chargé(e) des programmes"
                       />
                     </Stack>
                   </Stack>

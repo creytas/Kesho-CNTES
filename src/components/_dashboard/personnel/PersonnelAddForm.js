@@ -190,6 +190,9 @@ export default function PersonnelAddFrom() {
               <option value="Nutritionniste">Nutritionniste</option>
               <option value="Ass. Nutritionnel">Assistant(e) Nutritionnel(le)</option>
               <option value="Ass. Sanitaire">Assistant(e) Sanitaire</option>
+              <option value="Chargé de la logistique">Chargé(e) de la logistique</option>
+              <option value="Chargé des finances">Chargé(e) des finances</option>
+              <option value="Chargé des programmes">Chargé(e) des programmes</option>
               <option value="Animateur">Animateur(trice)</option>
             </Select>
 

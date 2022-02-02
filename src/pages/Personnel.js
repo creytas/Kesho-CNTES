@@ -1,16 +1,11 @@
 /* eslint-disable camelcase */
 
-import { filter } from "lodash";
-import { Icon } from "@iconify/react";
-import { useState, useEffect } from "react";
-import plusFill from "@iconify/icons-eva/plus-fill";
-import {
-  Link as RouterLink,
-  Navigate,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
-import Badge from "@material-ui/core/Badge";
+import { filter } from 'lodash';
+import { Icon } from '@iconify/react';
+import { useState, useEffect } from 'react';
+import plusFill from '@iconify/icons-eva/plus-fill';
+import { Link as RouterLink, Navigate, useLocation, useNavigate } from 'react-router-dom';
+import Badge from '@material-ui/core/Badge';
 import {
   Card,
   Table,
@@ -24,29 +19,29 @@ import {
   Container,
   Typography,
   TableContainer,
-  TablePagination,
-} from "@material-ui/core";
-import { makeStyles } from "@material-ui/styles";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Page from "../components/Page";
-import Scrollbar from "../components/Scrollbar";
-import SearchNotFound from "../components/SearchNotFound";
+  TablePagination
+} from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Page from '../components/Page';
+import Scrollbar from '../components/Scrollbar';
+import SearchNotFound from '../components/SearchNotFound';
 import {
   PersonnelListHead,
   PersonnelListToolbar,
-  PersonnelMoreMenu,
-} from "../components/_dashboard/personnel";
-import { fakeAuth } from "../fakeAuth";
-import DefaultPage from "../components/DefaultPage";
-import image from "../utils/undraw_doctors.svg";
+  PersonnelMoreMenu
+} from '../components/_dashboard/personnel';
+import { fakeAuth } from '../fakeAuth';
+import DefaultPage from '../components/DefaultPage';
+import image from '../utils/undraw_doctors.svg';
 
 const TABLE_HEAD = [
-  { id: "NE", label: "Nom", alignRight: false },
-  { id: "DN", label: "Prénom", alignRight: false },
-  { id: "SE", label: "Email", alignRight: false },
-  { id: "DC", label: "Statut", alignRight: false },
-  { id: "SxE", label: "Sexe", alignRight: false },
-  { id: "" },
+  { id: 'NE', label: 'Nom', alignRight: false },
+  { id: 'DN', label: 'Prénom', alignRight: false },
+  { id: 'SE', label: 'Email', alignRight: false },
+  { id: 'DC', label: 'Statut', alignRight: false },
+  { id: 'SxE', label: 'Sexe', alignRight: false },
+  { id: '' }
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -60,7 +55,7 @@ function descendingComparator(a, b, orderBy) {
 }
 
 function getComparator(order, orderBy) {
-  return order === "desc"
+  return order === 'desc'
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
@@ -75,8 +70,7 @@ function applySortFilter(array, comparator, query) {
   if (query) {
     return filter(
       array,
-      (_user) =>
-        _user.nom_user.toLowerCase().indexOf(query.toLowerCase()) !== -1
+      (_user) => _user.nom_user.toLowerCase().indexOf(query.toLowerCase()) !== -1
     );
   }
   return stabilizedThis.map((el) => el[0]);
@@ -84,26 +78,26 @@ function applySortFilter(array, comparator, query) {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex",
-    position: "relative",
-    justifyContent: "center",
-    top: "50%",
+    display: 'flex',
+    position: 'relative',
+    justifyContent: 'center',
+    top: '50%'
   },
   labelRoot: {
-    "&&": {
-      color: "red",
+    '&&': {
+      color: 'red'
     },
     container: {
-      display: "flex",
-      flexWrap: "wrap",
-      justifyContent: "space-between",
+      display: 'flex',
+      flexWrap: 'wrap',
+      justifyContent: 'space-between'
     },
     textField: {
       marginLeft: theme.spacing(1),
       marginRight: theme.spacing(1),
-      width: 200,
-    },
-  },
+      width: 200
+    }
+  }
 }));
 
 export default function Personnel() {
@@ -115,11 +109,11 @@ export default function Personnel() {
   const getUsers = `https://kesho-api.herokuapp.com/presence`;
 
   const options = {
-    method: "GET",
+    method: 'GET',
     headers: {
-      Accept: "application/json",
-      Authorization: `bearer ${localStorage.getItem("token")}`,
-    },
+      Accept: 'application/json',
+      Authorization: `bearer ${localStorage.getItem('token')}`
+    }
   };
 
   useEffect(() => {
@@ -145,16 +139,16 @@ export default function Personnel() {
   // ----------------------------------------------------------------------
 
   const [page, setPage] = useState(0);
-  const [order, setOrder] = useState("asc");
+  const [order, setOrder] = useState('asc');
   const [selected, setSelected] = useState([]);
-  const [orderBy, setOrderBy] = useState("nom_user");
-  const [filterName, setFilterName] = useState("");
+  const [orderBy, setOrderBy] = useState('nom_user');
+  const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(50);
 
   const handleRequestSort = (event, property) => {
     // console.log(property);
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
   const handleSelectAllClick = (event) => {
@@ -197,24 +191,19 @@ export default function Personnel() {
     setFilterName(event.target.value);
   };
 
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - usersList.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - usersList.length) : 0;
 
-  const filteredUsers = applySortFilter(
-    usersList,
-    getComparator(order, orderBy),
-    filterName
-  );
+  const filteredUsers = applySortFilter(usersList, getComparator(order, orderBy), filterName);
 
   const isUserNotFound = filteredUsers.length === 0;
   const location = useLocation();
   const navigate = useNavigate();
-  const { from } = location.state || { from: { pathname: "/dashboard/app" } };
-  const [isAuth, setIsAuth] = useState(localStorage.getItem("token"));
+  const { from } = location.state || { from: { pathname: '/dashboard/app' } };
+  const [isAuth, setIsAuth] = useState(localStorage.getItem('token'));
   useEffect(() => {
     setIsAuth(isAuth);
   }, [isAuth]);
-  const component = "add_Personnel";
+  const component = 'add_Personnel';
 
   return isAuth ? (
     <>
@@ -229,12 +218,7 @@ export default function Personnel() {
           ) : (
             <Page>
               <Container>
-                <Stack
-                  direction="row"
-                  alignItems="center"
-                  justifyContent="space-between"
-                  mb={5}
-                >
+                <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
                   <Typography variant="h4" gutterBottom>
                     Personnels
                   </Typography>
@@ -268,10 +252,7 @@ export default function Personnel() {
                         />
                         <TableBody>
                           {filteredUsers
-                            .slice(
-                              page * rowsPerPage,
-                              page * rowsPerPage + rowsPerPage
-                            )
+                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((user) => {
                               const {
                                 id_user,
@@ -280,16 +261,15 @@ export default function Personnel() {
                                 email,
                                 sexe_user,
                                 statut,
-                                attendance,
+                                attendance
                               } = user;
-                              const isItemSelected =
-                                selected.indexOf(nom_user) !== -1;
+                              const isItemSelected = selected.indexOf(nom_user) !== -1;
 
                               return (
                                 <TableRow
                                   hover
                                   key={id_user}
-                                  sx={{ cursor: "pointer" }}
+                                  sx={{ cursor: 'pointer' }}
                                   role="checkbox"
                                   selected={isItemSelected}
                                   aria-checked={isItemSelected}
@@ -297,21 +277,11 @@ export default function Personnel() {
                                   <TableCell padding="checkbox">
                                     <Checkbox
                                       checked={isItemSelected}
-                                      onChange={(event) =>
-                                        handleClick(event, nom_user)
-                                      }
+                                      onChange={(event) => handleClick(event, nom_user)}
                                     />
                                   </TableCell>
-                                  <TableCell
-                                    component="th"
-                                    scope="row"
-                                    padding="none"
-                                  >
-                                    <Stack
-                                      direction="row"
-                                      alignItems="center"
-                                      spacing={2}
-                                    >
+                                  <TableCell component="th" scope="row" padding="none">
+                                    <Stack direction="row" alignItems="center" spacing={2}>
                                       <Avatar
                                         alt={nom_user}
                                         src={`/static/mock-images/avatars/avatar_${id_user}.jpg`}
@@ -324,7 +294,7 @@ export default function Personnel() {
                                   <TableCell>{prenom_user}</TableCell>
                                   <TableCell> {email}</TableCell>
                                   <TableCell>
-                                    {attendance === "P" ? (
+                                    {attendance === 'P' ? (
                                       <>
                                         <Badge color="success" variant="dot" />
                                         &nbsp;&nbsp;
@@ -334,7 +304,7 @@ export default function Personnel() {
                                         <Badge color="error" variant="dot" />
                                         &nbsp;&nbsp;
                                       </>
-                                    )}{" "}
+                                    )}{' '}
                                     {statut}
                                   </TableCell>
                                   <TableCell>{sexe_user}</TableCell>
@@ -353,11 +323,7 @@ export default function Personnel() {
                         {isUserNotFound && (
                           <TableBody>
                             <TableRow>
-                              <TableCell
-                                align="center"
-                                colSpan={6}
-                                sx={{ py: 3 }}
-                              >
+                              <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
                                 <SearchNotFound searchQuery={filterName} />
                               </TableCell>
                             </TableRow>
