@@ -185,9 +185,12 @@ export default function PersonnelAddFrom() {
               <option value="" selected disabled hidden>
                 Statut
               </option>
+              <option value="Coordonateur">Coordonateur</option>
               <option value="Médecin">Médecin</option>
-              <option value="Infirmier">Infirmier</option>
               <option value="Nutritionniste">Nutritionniste</option>
+              <option value="Ass. Nutritionnel">Assistant(e) Nutritionnel(le)</option>
+              <option value="Ass. Sanitaire">Assistant(e) Sanitaire</option>
+              <option value="Animateur">Animateur(trice)</option>
             </Select>
 
             <TextField
