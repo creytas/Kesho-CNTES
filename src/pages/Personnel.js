@@ -126,11 +126,6 @@ export default function Personnel() {
       })
       .catch(() => {
         setLoader(false);
-        // fakeAuth.login(() => {
-        //   navigate(from);
-        //   navigate("/dashboard/app", { replace: true });
-        //   setLoader(false);
-        // });
       });
   }, []);
 
@@ -255,20 +250,20 @@ export default function Personnel() {
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((user) => {
                               const {
-                                id_user,
+                                id,
                                 nom_user,
                                 prenom_user,
                                 email,
                                 sexe_user,
                                 statut,
-                                attendance
+                                attendance_state
                               } = user;
                               const isItemSelected = selected.indexOf(nom_user) !== -1;
 
                               return (
                                 <TableRow
                                   hover
-                                  key={id_user}
+                                  key={id}
                                   sx={{ cursor: 'pointer' }}
                                   role="checkbox"
                                   selected={isItemSelected}
@@ -284,7 +279,7 @@ export default function Personnel() {
                                     <Stack direction="row" alignItems="center" spacing={2}>
                                       <Avatar
                                         alt={nom_user}
-                                        src={`/static/mock-images/avatars/avatar_${id_user}.jpg`}
+                                        src={`/static/mock-images/avatars/avatar_${id}.jpg`}
                                       />
                                       <Typography variant="subtitle2" noWrap>
                                         {nom_user}
@@ -294,22 +289,17 @@ export default function Personnel() {
                                   <TableCell>{prenom_user}</TableCell>
                                   <TableCell> {email}</TableCell>
                                   <TableCell>
-                                    {attendance === 'P' ? (
-                                      <>
-                                        <Badge color="success" variant="dot" />
-                                        &nbsp;&nbsp;
-                                      </>
-                                    ) : (
-                                      <>
-                                        <Badge color="error" variant="dot" />
-                                        &nbsp;&nbsp;
-                                      </>
-                                    )}{' '}
+                                    <Badge
+                                      style={{ marginRight: '5px' }}
+                                      color={attendance_state === 'P' ? 'success' : 'error'}
+                                      variant="dot"
+                                    />
+                                    &nbsp;&nbsp;
                                     {statut}
                                   </TableCell>
                                   <TableCell>{sexe_user}</TableCell>
                                   <TableCell>
-                                    <PersonnelMoreMenu value={id_user} />
+                                    <PersonnelMoreMenu value={id} />
                                   </TableCell>
                                 </TableRow>
                               );

@@ -124,9 +124,7 @@ export default function PersonnelAddFrom() {
     oldPassword: Yup.string().required('Confirmez votre mot de passe '),
     newPassword: Yup.string().required('Confirmez votre mot de passe ')
   });
-  const getUrl = `https://kesho-api.herokuapp.com/user?id_user=${localStorage.getItem(
-    'id_user'
-  )}`;
+  const getUrl = `https://kesho-api.herokuapp.com/user?id=${localStorage.getItem('id')}`;
 
   const options = {
     method: 'GET',
@@ -162,7 +160,7 @@ export default function PersonnelAddFrom() {
       setLoader2(true);
       setErrorWord(false);
       Axios.put(
-        `https://kesho-api.herokuapp.com/user?id_user=${localStorage.getItem('id_user')}`,
+        `https://kesho-api.herokuapp.com/user?id=${localStorage.getItem('id')}`,
         {
           password: newPassword,
           old_password: oldPassword,

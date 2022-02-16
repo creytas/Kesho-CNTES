@@ -1,22 +1,16 @@
-import * as Yup from "yup";
-import { useState } from "react";
-import Axios from "axios";
-import { Link as RouterLink, useNavigate, useLocation } from "react-router-dom";
-import { useFormik, Form, FormikProvider } from "formik";
-import { Icon } from "@iconify/react";
-import eyeFill from "@iconify/icons-eva/eye-fill";
-import eyeOffFill from "@iconify/icons-eva/eye-off-fill";
+import * as Yup from 'yup';
+import { useState } from 'react';
+import Axios from 'axios';
+import { Link as RouterLink, useNavigate, useLocation } from 'react-router-dom';
+import { useFormik, Form, FormikProvider } from 'formik';
+import { Icon } from '@iconify/react';
+import eyeFill from '@iconify/icons-eva/eye-fill';
+import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
 // material
-import {
-  Link,
-  Stack,
-  TextField,
-  IconButton,
-  InputAdornment,
-} from "@material-ui/core";
-import { LoadingButton } from "@material-ui/lab";
-import { makeStyles } from "@material-ui/styles";
-import { fakeAuth } from "../../../fakeAuth";
+import { Link, Stack, TextField, IconButton, InputAdornment } from '@material-ui/core';
+import { LoadingButton } from '@material-ui/lab';
+import { makeStyles } from '@material-ui/styles';
+import { fakeAuth } from '../../../fakeAuth';
 
 export default function LoginForm() {
   const [loadingButton, setLoadingButton] = useState(false);
@@ -27,56 +21,55 @@ export default function LoginForm() {
 
   const location = useLocation();
 
-  const { from } = location.state || { from: { pathname: "/dashboard/app" } };
+  const { from } = location.state || { from: { pathname: '/dashboard/app' } };
   const [showPassword, setShowPassword] = useState(false);
   const useStyles = makeStyles(() => ({
     root: {
-      position: "absolute",
-      left: "73%",
+      position: 'absolute',
+      left: '73%'
       // transform: 'translate(-50%,0)'
     },
     labelRoot: {
-      "&&": {
-        color: "red",
-      },
-    },
+      '&&': {
+        color: 'red'
+      }
+    }
   }));
   const classes = useStyles();
 
   const LoginSchema = Yup.object().shape({
-    email: Yup.string()
-      .email("Votre mail doit être valide")
-      .required("Email requis"),
+    email: Yup.string().email('Votre mail doit être valide').required('Email requis'),
     password: Yup.string()
-      .min(1, "Le mot de passe doit contenir au moins 8 caractères")
-      .required("Mot de passe requis"),
+      .min(1, 'Le mot de passe doit contenir au moins 8 caractères')
+      .required('Mot de passe requis')
   });
   const formik = useFormik({
     initialValues: {
-      email: "",
-      password: "",
-      remember: true,
+      email: '',
+      password: '',
+      remember: true
     },
     validationSchema: LoginSchema,
     onSubmit: ({ email, password }) => {
       setErrorWord(false);
       setLoadingButton(true);
-      Axios.post("https://kesho-api.herokuapp.com/auth/login", {
+      Axios.post('https://kesho-api.herokuapp.com/auth/login', {
         email,
-        password,
+        password
       })
         .then((response) => {
-          const { token, name, isAdmin, id_user, status } = response.data;
-          localStorage.setItem("token", token);
+          const { token, name, isAdmin, id_user, id, status } = response.data;
+          localStorage.setItem('token', token);
           console.log(token);
-          localStorage.setItem("name", name);
-          localStorage.setItem("isAdmin", isAdmin);
-          localStorage.setItem("id_user", id_user);
-          localStorage.setItem("status", status);
+          localStorage.setItem('name', name);
+          localStorage.setItem('isAdmin', isAdmin);
+          localStorage.setItem('id_user', id_user);
+          localStorage.setItem('id', id);
+          localStorage.setItem('status', status);
           setLoadingButton(false);
           fakeAuth.login(() => {
             navigate(from);
-            navigate("/dashboard/app", { replace: true });
+            navigate('/dashboard/app', { replace: true });
           });
         })
         .catch((err) => {
@@ -84,7 +77,7 @@ export default function LoginForm() {
           setErrorWord(true);
           setLoadingButton(false);
         });
-    },
+    }
   });
   const { errors, touched, getFieldProps } = formik;
   const handleShowPassword = () => {
@@ -100,7 +93,7 @@ export default function LoginForm() {
             autoComplete="username"
             type="email"
             label="Adresse mail"
-            {...getFieldProps("email")}
+            {...getFieldProps('email')}
             error={Boolean(touched.email && errors.email)}
             helperText={touched.email && errors.email}
             onChange={formik.handleChange}
@@ -110,9 +103,9 @@ export default function LoginForm() {
           <TextField
             fullWidth
             autoComplete="current-password"
-            type={showPassword ? "text" : "password"}
+            type={showPassword ? 'text' : 'password'}
             label="Mot de passe"
-            {...getFieldProps("password")}
+            {...getFieldProps('password')}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -120,7 +113,7 @@ export default function LoginForm() {
                     <Icon icon={showPassword ? eyeFill : eyeOffFill} />
                   </IconButton>
                 </InputAdornment>
-              ),
+              )
             }}
             error={Boolean(touched.password && errors.password)}
             helperText={touched.password && errors.password}
@@ -129,27 +122,16 @@ export default function LoginForm() {
           />
         </Stack>
 
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-          sx={{ my: 2 }}
-        >
-          <Link
-            component={RouterLink}
-            variant="subtitle2"
-            to="renitialiser_psw"
-          >
+        <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
+          <Link component={RouterLink} variant="subtitle2" to="renitialiser_psw">
             mot de passe oublié?
           </Link>
         </Stack>
 
         {errorWord ? (
-          <span className={classes.labelRoot}>
-            Adresse mail ou mot de passe incorrecte
-          </span>
+          <span className={classes.labelRoot}>Adresse mail ou mot de passe incorrecte</span>
         ) : (
-          ""
+          ''
         )}
         <br />
         <br />
