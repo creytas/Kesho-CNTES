@@ -198,7 +198,7 @@ export default function Details() {
             <div className="product">
               <div className="productLeft">
                 <PatientCard
-                  name={`${onePatient.Patient.nom_patient} ${onePatient.Patient.prenom_patient}`}
+                  name={`${onePatient.Patient.nom_patient} ${onePatient.Patient.postnom_patient}`}
                   sex={onePatient.Patient.sexe_patient}
                   age={
                     onePatient.PatientAge[0].ageEnMois <= 59
@@ -255,6 +255,71 @@ export default function Details() {
                     } cm`}
                   />
                 </div>
+                {Math.round(onePatient.PatientAge[0].ageEnAnnee) > 5 ? (
+                  <></>
+                ) : onePatient.Patient.sexe_patient === "M" ? (
+                  <div className="buttonCard">
+                    <a
+                      href="https://cdn.who.int/media/docs/default-source/child-growth/child-growth-standards/indicators/length-height-for-age/cht-lhfa-boys-z-0-5.pdf"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      rapport taille - age
+                    </a>
+                    <a
+                      href="https://cdn.who.int/media/docs/default-source/child-growth/child-growth-standards/indicators/weight-for-age/cht-wfa-boys-z-0-5.pdf"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      rapport poids - age
+                    </a>
+                    <a
+                      href="https://cdn.who.int/media/docs/default-source/child-growth/child-growth-standards/indicators/weight-for-length-height/cht-wflh-boys-z-0-5.pdf"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      rapport poids - taille
+                    </a>
+                    <a
+                      href="https://cdn.who.int/media/docs/default-source/child-growth/child-growth-standards/indicators/body-mass-index-for-age/cht-bfa-boys-z-0-5.pdf"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      indice de masse corporel
+                    </a>
+                  </div>
+                ) : (
+                  <div className="buttonCard">
+                    <a
+                      href="https://cdn.who.int/media/docs/default-source/child-growth/child-growth-standards/indicators/length-height-for-age/cht-lhfa-girls-z-0-5.pdf"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      rapport taille - age
+                    </a>
+                    <a
+                      href="https://cdn.who.int/media/docs/default-source/child-growth/child-growth-standards/indicators/weight-for-age/cht-wfa-girls-z-0-5.pdf"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      rapport poids - age
+                    </a>
+                    <a
+                      href="https://cdn.who.int/media/docs/default-source/child-growth/child-growth-standards/indicators/weight-for-length-height/cht-wflh-girls-z-0-5.pdf"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      rapport poids - taille
+                    </a>
+                    <a
+                      href="https://cdn.who.int/media/docs/default-source/child-growth/child-growth-standards/indicators/body-mass-index-for-age/cht-bfa-girls-z-0-5.pdf"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      indice de masse corporel
+                    </a>
+                  </div>
+                )}
               </div>
             </div>
           </Box>
