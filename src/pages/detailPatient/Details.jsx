@@ -56,6 +56,7 @@ export default function Details() {
       setAnthro(PatientBrachial);
       setOnePatient(Patient);
       setLoader(false);
+      console.log(anthro.commentaires);
     } catch (err) {
       console.log(err);
     }
@@ -100,6 +101,9 @@ export default function Details() {
   const cranianPerim = [];
   const height = [];
   const weight = [];
+  const comments = [];
+  const admission = [];
+  const healing = [];
   const putInPB = (arr) => {
     anthro.map((item) =>
       arr.push({ name: item.date_examen, Valeur: item.peri_brachial })
@@ -120,11 +124,29 @@ export default function Details() {
       arr.push({ name: item.date_examen, Valeur: item.poids })
     );
   };
+  const putInAdmission = (arr) => {
+    anthro.map((item) =>
+      arr.push({ name: item.date_examen, Valeur: item.date_admission_patient })
+    );
+  };
+  const putInHealing = (arr) => {
+    anthro.map((item) =>
+      arr.push({ name: item.date_examen, Valeur: item.date_guerison_patient })
+    );
+  };
+  const putInComments = (arr) => {
+    anthro.map((item) =>
+      arr.push({ name: item.date_examen, Valeur: item.commentaires })
+    );
+  };
 
   putInPB(brachialPerim);
   putInPC(cranianPerim);
   putInT(height);
   putInP(weight);
+  putInAdmission(admission);
+  putInHealing(healing);
+  putInComments(comments);
 
   useEffect(() => {
     setIsAuth(isAuth);
@@ -209,6 +231,11 @@ export default function Details() {
                   number={onePatient.Patient.telephone}
                   tutor={onePatient.Famille.nom_tuteur}
                   location={onePatient.Patient.provenance_patient}
+                  healing={onePatient.Anthropometrique[0].date_guerison_patient}
+                  admission={
+                    onePatient.Anthropometrique[0].date_admission_patient
+                  }
+                  comments={onePatient.Anthropometrique[0].commentaires}
                   malnutrition={
                     onePatient.Anthropometrique[0].type_malnutrition
                   }

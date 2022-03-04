@@ -1,28 +1,34 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable camelcase */
 /* no-nested-ternary */
-import './PatientCard.css';
-import { CalendarToday, PhoneAndroid } from '@material-ui/icons';
-import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
-import ChildCareIcon from '@material-ui/icons/ChildCare';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
-import { TableCell } from '@material-ui/core';
-import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
-import Badge from '@material-ui/core/Badge';
-import moment from 'moment';
-import Label from '../Label';
+import "./PatientCard.css";
+import { CalendarToday, PhoneAndroid } from "@material-ui/icons";
+import LocalHospitalIcon from "@material-ui/icons/LocalHospital";
+import ChildCareIcon from "@material-ui/icons/ChildCare";
+import LocationOnIcon from "@material-ui/icons/LocationOn";
+import SpeakerNotes from "@material-ui/icons/Assignment";
+import Laying from "@material-ui/icons/ArrowBack";
+import Flying from "@material-ui/icons/ArrowForward";
+import { TableCell } from "@material-ui/core";
+import EmojiPeopleIcon from "@material-ui/icons/EmojiPeople";
+import Badge from "@material-ui/core/Badge";
+import moment from "moment";
+import Label from "../Label";
 
 const PatientCard = ({
   name,
   sex,
   age,
   birthdate,
+  admission,
+  healing,
+  comments,
   number,
   tutor,
   location,
   id,
   malnutrition,
-  transfer
+  transfer,
 }) => (
   <div className="userShow">
     <div className="userShowTop">
@@ -41,11 +47,21 @@ const PatientCard = ({
       </div>
       <div className="userShowInfo">
         <CalendarToday className="userShowIcon" />
-        <span className="userShowInfoTitle">{moment(birthdate).format('DD/MM/YYYY')}</span>
+        <span className="userShowInfoTitle">
+          {moment(birthdate).format("DD/MM/YYYY")}
+        </span>
+      </div>
+      <div className="userShowInfo">
+        <Laying className="userShowIcon" />
+        <span className="userShowInfoTitle">
+          {moment(admission).format("DD/MM/YYYY")}
+        </span>
       </div>
       <div className="userShowInfo">
         <PhoneAndroid className="userShowIcon" />
-        <span className="userShowInfoTitle">{number}</span>
+        <span className="userShowInfoTitle">
+          {number === "" ? "Non renseigné" : number}
+        </span>
       </div>
       <div className="userShowInfo">
         <EmojiPeopleIcon className="userShowIcon" />
@@ -56,32 +72,48 @@ const PatientCard = ({
         <span className="userShowInfoTitle">{location}</span>
       </div>
       <div className="userShowInfo">
+        <SpeakerNotes className="userShowIcon" />
+        <span className="userShowInfoTitle">
+          {comments === "" ? "Aucun comment" : comments}
+        </span>
+      </div>
+      {malnutrition === "Gueri" ? (
+        <div className="userShowInfo">
+          <Flying className="userShowIcon" />
+          <span className="userShowInfoTitle">
+            {moment(healing).format("DD/MM/YYYY")}
+          </span>
+        </div>
+      ) : (
+        ""
+      )}
+      <div className="userShowInfo">
         <LocalHospitalIcon className="userShowIcon" />
 
         <TableCell align="left">
           {transfer ? (
             <>
               <Badge color="error" variant="dot" />
-              &nbsp;{' '}
+              &nbsp;{" "}
             </>
           ) : (
-            ''
+            ""
           )}
 
           <Label
             variant="contained"
             sx={{
               color: `${
-                malnutrition === 'MAC'
-                  ? '#D32F2F'
-                  : malnutrition === 'MAM'
-                  ? '#ffb74d'
-                  : malnutrition === 'MAS-K'
-                  ? '#e57373'
-                  : malnutrition === 'MAS-M'
-                  ? '#f57c00'
-                  : '#4CAF50'
-              }`
+                malnutrition === "MAC"
+                  ? "#D32F2F"
+                  : malnutrition === "MAM"
+                  ? "#ffb74d"
+                  : malnutrition === "MAS-K"
+                  ? "#e57373"
+                  : malnutrition === "MAS-M"
+                  ? "#f57c00"
+                  : "#4CAF50"
+              }`,
             }}
           >
             {malnutrition}
