@@ -8,6 +8,7 @@ import { useFormik, Form, FormikProvider } from "formik";
 import {
   Stack,
   TextField,
+  TextareaAutosize,
   // Typography,
   FormControlLabel,
   Radio,
@@ -20,6 +21,7 @@ import {
   // getCheckboxUtilityClass
 } from "@material-ui/core";
 import { LoadingButton } from "@material-ui/lab";
+import style from "./patient.module.css";
 
 // ----------------------------------------------------------------------
 PatientForm.propTypes = {
@@ -33,25 +35,25 @@ export default function PatientForm({
   SetDataPatient,
   patientFormData,
 }) {
-  const [allaitement, setAllaitement] = useState(true);
-  const [provenance, setProvenance] = useState(true);
-  const [modeArriver, setModeArriver] = useState(true);
-  const [traitementNutri, setTraitementNutri] = useState(true);
+  const [allaitement, setAllaitement] = useState(false);
+  const [provenance, setProvenance] = useState(false);
+  const [modeArriver, setModeArriver] = useState(false);
+  const [traitementNutri, setTraitementNutri] = useState(false);
 
   const [position] = useState(0);
 
   useEffect(() => {
     window.scroll(position, position);
-    // console.log(dateNow.getFullYear() - 90);
-    // console.log(dateNow.toDateString());
   }, [position]);
 
   const date = new Date();
-  // const dateNow = date.parse(`${date.getFullYear}-${date.getMonth()}-${date.getDate()}`);
-  // console.log(Date.now());
-  // console.log(Date.now());
   const RegisterSchema = Yup.object().shape({
-    rationSeche: Yup.boolean().required("Champs requis"),
+    dateAdmissionPatient: Yup.date().required("Date d'admission requis"),
+    dateGuerisonPatient: Yup.date(),
+    firstPicture: Yup.string(),
+    lastPicture: Yup.string(),
+    commentaires: Yup.string(),
+    rationSeche: Yup.boolean(),
     taille: Yup.number("Un chiffre requis")
       .positive("La valeur doit être positive")
       .min(10, "Taille minimum 10 Cm")
@@ -71,19 +73,17 @@ export default function PatientForm({
     poidsActuel: Yup.number("Il ne doit contenir que de chiffre")
       .min(2, "Minimun 2 Kg")
       .positive("Le nombre doit être positive")
-      .required("Poinds requis"),
-    perimetreCranien: Yup.number("un chiffre requis")
-      .positive()
-      .min(10, "Minimum 10 Cm")
-      .max(10000, "Maximum 10000 Cm")
-      .required("Perimetre cranien requis"),
-    transfererUnt: Yup.string().trim().min(2, "Min 2 caractère").required(),
+      .required("Poids requis"),
+    perimetreCranien: Yup.number("un chiffre requis").max(
+      10000,
+      "Maximum 10000 Cm"
+    ),
+    transfererUnt: Yup.string().trim().min(2, "Min 2 caractère"),
     fistNamePatient: Yup.string()
       .min(2, "Min 2 caractère")
       .max(25)
       .matches(/[A-Za-z]/, "Il ne doit contenir que de lettre")
-      .trim()
-      .required("requis"),
+      .trim(),
     perimetreBrachail: Yup.number("un chiffre requis")
       .positive()
       .min(5, "Minimum 5")
@@ -95,29 +95,20 @@ export default function PatientForm({
       .matches(/[A-Za-z]/, "Il ne doit contenir que de lettre")
       .trim()
       .required("requis"),
-    telephone: Yup.string()
-      .matches(/^(\+243|0)[0-9]{9}$/g, "+243813030011 ou 0813030011")
-      .required("requis"),
+    telephone: Yup.string().matches(
+      /^(\+243|0)[0-9]{9}$/g,
+      "+243813030011 ou 0813030011"
+    ),
     diversificationAliment: Yup.number("un nombre")
       .positive("nombre positif")
-      .min(2, "Minimum 2")
-      .required("requis"),
+      .min(2, "Minimum 2"),
     sexePatient: Yup.string().trim().required("requis"),
     dataNaissancePatient: Yup.date("intervalle entre")
       .min(date.getFullYear() - 90, `Age minimum ${date.getFullYear()}` - 90)
       .required("requis"),
-    constitutionAliment: Yup.string()
-      .trim()
-      .min(2, "Min 2 caractère")
-      .required("requis"),
-    provenancePatient: Yup.string()
-      .trim()
-      .min(2, "Min 2 caractère")
-      .required("requis"),
-    modeArriver: Yup.string()
-      .trim()
-      .min(2, "Min 2 caractère")
-      .required("requis"),
+    constitutionAliment: Yup.string().trim().min(2, "Min 2 caractère"),
+    provenancePatient: Yup.string().trim().min(2, "Min 2 caractère"),
+    modeArriver: Yup.string().trim().min(2, "Min 2 caractère"),
     typeMalnutrition: Yup.string()
       .trim()
       .min(2, "Minimum 2 caractère")
@@ -126,15 +117,9 @@ export default function PatientForm({
       .positive()
       .min(900, "Minimum 900 gr")
       .required("requis"),
-    traitementNutritionnel: Yup.string()
-      .trim()
-      .min(2, "Minimum 2 caractère")
-      .required("requis"),
+    traitementNutritionnel: Yup.string().trim().min(2, "Minimum 2 caractère"),
     traitementNutritionnelAutre: Yup.string().min(5).trim(),
-    adressePatient: Yup.string()
-      .trim()
-      .min(2, "Min 2 caractère")
-      .required("adresse requis"),
+    adressePatient: Yup.string().trim().min(2, "Min 2 caractère"),
     ExplicationProvenance: Yup.string().min(2, "Min 2 caractère").trim(),
     ageFinAllaitement: Yup.number()
       .min(1, "Minimum 1 mois")
@@ -142,6 +127,21 @@ export default function PatientForm({
   });
   const formik = useFormik({
     initialValues: {
+      dateAdmissionPatient: patientFormData.dateAdmissionPatient
+        ? patientFormData.dateAdmissionPatient
+        : new Date(),
+      dateGuerisonPatient: patientFormData.dateGuerisonPatient
+        ? patientFormData.dateGuerisonPatient
+        : new Date(),
+      firstPicture: patientFormData.firstPicture
+        ? patientFormData.firstPicture
+        : "",
+      lastPicture: patientFormData.lastPicture
+        ? patientFormData.lastPicture
+        : "",
+      commentaires: patientFormData.commentaires
+        ? patientFormData.commentaires
+        : "",
       rationSeche: patientFormData.rationSeche
         ? patientFormData.rationSeche
         : "false",
@@ -256,6 +256,12 @@ export default function PatientForm({
     setFieldValue("fistNamePatient", value);
     patientFormData.setPrenomPatient(value);
   };
+  const handleChangeCommentaires = (event) => {
+    const { value } = event.target;
+    setFieldValue("commentaires", value);
+    patientFormData.setCommentaires(value);
+  };
+
   const handleAllaitementExclusifSixMoix = (event) => {
     const { value } = event.target;
     setFieldValue("allaitementExclusifSixMois", value);
@@ -300,7 +306,12 @@ export default function PatientForm({
       setTraitementNutri(true);
     }
   };
-
+  const handleChangeDateAdmission = (event) => {
+    const { value } = event.target;
+    setFieldValue("dateAdmissionPatient", value);
+    patientFormData.setDateAdmissionPatient(value);
+    console.log(value);
+  };
   const handleChangeAdressePatient = (event) => {
     const { value } = event.target;
     setFieldValue("adressePatient", value);
@@ -370,7 +381,6 @@ export default function PatientForm({
     const { value } = event.target;
     setFieldValue("dataNaissancePatient", value);
     patientFormData.setDataNaissancePatient(value);
-    console.log(value);
   };
   const handleChangeTypeMalnutrition = (event) => {
     const { value } = event.target;
@@ -412,6 +422,24 @@ export default function PatientForm({
               <Stack spacing={3}>
                 <TextField
                   sx={{ padding: "2px" }}
+                  type="date"
+                  // fullWidth
+                  label="Date d'admission"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  value={patientFormData.dateAdmissionPatient}
+                  onChange={handleChangeDateAdmission}
+                  // {...getFieldProps('dataNaissancePatient')}
+                  helperText={
+                    touched.dateAdmissionPatient && errors.dateAdmissionPatient
+                  }
+                  error={Boolean(
+                    touched.dateAdmissionPatient && errors.dateAdmissionPatient
+                  )}
+                />
+                <TextField
+                  sx={{ padding: "2px" }}
                   // fullWidth
                   autoFocus
                   label="Prénom ex: Kevin"
@@ -447,54 +475,6 @@ export default function PatientForm({
                     touched.postNomPatient && errors.postNomPatient
                   )}
                   helperText={touched.postNomPatient && errors.postNomPatient}
-                />
-                <TextField
-                  sx={{ padding: "2px" }}
-                  // fullWidth
-                  autoComplete="tel"
-                  type="tel"
-                  label="Téléphone ex:+243850157817"
-                  value={patientFormData.telephone}
-                  onChange={handleChangeTelephone}
-                  // {...getFieldProps('telephone')}
-                  error={Boolean(touched.telephone && errors.telephone)}
-                  helperText={touched.telephone && errors.telephone}
-                />
-                <TextField
-                  sx={{ padding: "2px" }}
-                  // fullWidth
-                  label="Adresse "
-                  value={patientFormData.adressePatient}
-                  // defaultValue={DataPatient.adressePatient}
-                  onChange={handleChangeAdressePatient}
-                  // {...getFieldProps('adressePatient')}
-                  helperText={touched.adressePatient && errors.adressePatient}
-                  error={Boolean(
-                    touched.adressePatient && errors.adressePatient
-                  )}
-                />
-                <TextField
-                  sx={{ padding: "2px" }}
-                  // fullWidth
-                  label="Poids naissance (gr) ex:1500"
-                  value={patientFormData.poidsNaissance}
-                  onChange={handleChangePoidsnaissance}
-                  // {...getFieldProps('poidsNaissance')}
-                  helperText={touched.poidsNaissance && errors.poidsNaissance}
-                  error={Boolean(
-                    touched.poidsNaissance && errors.poidsNaissance
-                  )}
-                />
-                <TextField
-                  // fullWidth
-                  sx={{ padding: "2px" }}
-                  //  defaultValue={DataPatient.poidsActuel}
-                  value={patientFormData.poidsActuel}
-                  onChange={handleChangePoidsActuel}
-                  label="Poids actuelle (kg) ex:20"
-                  // {...getFieldProps('poidsActuel')}
-                  helperText={touched.poidsActuel && errors.poidsActuel}
-                  error={Boolean(touched.poidsActuel && errors.poidsActuel)}
                 />
                 <RadioGroup
                   // {...getFieldProps('sexePatient')}
@@ -548,142 +528,18 @@ export default function PatientForm({
                     </Stack>
                   </Stack>
                 </RadioGroup>
-                <Select
-                  sx={{ padding: "2px" }}
-                  native
-                  // {...getFieldProps('modeArriver')}
-                  selected={patientFormData.modeArriverPatient}
-                  onChange={handleChangeModeArriver}
-                  error={Boolean(touched.modeArriver && errors.modeArriver)}
-                  helperText={touched.modeArriver && errors.modeArriver}
-                >
-                  <option value="" selected disabled hidden>
-                    {`${
-                      patientFormData.modeArriverPatient
-                        ? patientFormData.modeArriverPatient
-                        : "Mode d'arrivé"
-                    }`}
-                  </option>
-                  <option value="De la maison">De la maison</option>
-                  <option value="UNT">UNT</option>
-                  <option value="Autres">Autres</option>
-                </Select>
                 <TextField
                   sx={{ padding: "2px" }}
                   // fullWidth
-                  label="Si le mode d'arrivé est autre veuillez préciser"
-                  // {...getFieldProps('ExplicationAutre')}
-                  value={patientFormData.ExplicationAutre}
-                  onChange={handleChangeExplicationAutre}
-                  disabled={modeArriver}
-                  helperText={
-                    touched.ExplicationAutre && errors.ExplicationAutre
-                  }
-                  error={
-                    Boolean(
-                      touched.ExplicationAutre && errors.ExplicationAutre
-                    ) ||
-                    Boolean(
-                      values.modeArriver === "Autres" &&
-                        values.ExplicationAutre === ""
-                    )
-                  }
+                  autoComplete="tel"
+                  type="tel"
+                  label="Téléphone ex:+243850157817"
+                  value={patientFormData.telephone}
+                  onChange={handleChangeTelephone}
+                  // {...getFieldProps('telephone')}
+                  error={Boolean(touched.telephone && errors.telephone)}
+                  helperText={touched.telephone && errors.telephone}
                 />
-                <Select
-                  sx={{ padding: "2px" }}
-                  native
-                  // {...getFieldProps('traitementNutritionnel')}
-                  onChange={handleChangeTraitementNutritionnel}
-                  helperText={
-                    touched.traitementNutritionnel &&
-                    errors.traitementNutritionnel
-                  }
-                  error={Boolean(
-                    touched.traitementNutritionnel &&
-                      errors.traitementNutritionnel
-                  )}
-                >
-                  <option value="" selected disabled hidden>
-                    Traitement nutritionnel
-                  </option>
-                  <option value="ATPE">ATPE</option>
-                  <option value="Plumpy-nut">Plumpy-nut</option>
-                  <option value="Autres">Autres</option>
-                </Select>
-                <TextField
-                  sx={{ padding: "2px" }}
-                  // fullWidth
-                  label="Si le traitement nutritionnel est autre veuillez préciser"
-                  // defaultValue={DataPatient.traitementNutritionnelAutre}
-                  onChange={handleChangeNutritionnelAutre}
-                  value={patientFormData.fistNamePatient}
-                  disabled={traitementNutri}
-                  helperText={
-                    touched.traitementNutritionnelAutre &&
-                    errors.traitementNutritionnelAutre
-                  }
-                  // {...getFieldProps('traitementNutritionnelAutre')}
-                  error={
-                    Boolean(
-                      touched.traitementNutritionnelAutre &&
-                        errors.traitementNutritionnelAutre
-                    ) ||
-                    Boolean(
-                      values.traitementNutritionnel === "Autres" &&
-                        values.traitementNutritionnelAutre === ""
-                    )
-                  }
-                />
-                <RadioGroup
-                  onChange={handleChangeRationPatient}
-                  error={Boolean(touched.rationSeche && errors.rationSeche)}
-                  helperText={touched.rationSeche && errors.rationSeche}
-                  // setValues={  DataPatient.Sexe}
-                >
-                  <Stack
-                    direction={{ xs: "column", md: "column", sm: "row" }}
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      paddingLeft: "10px",
-                      border: `${
-                        Boolean(touched.rationSeche && errors.rationSeche) &&
-                        "1px solid red"
-                      }`,
-                      borderRadius: `${
-                        Boolean(touched.rationSeche && errors.rationSeche) &&
-                        "10px"
-                      }`,
-                    }}
-                    spacing={1}
-                  >
-                    <FormLabel component="label">Ration seche:</FormLabel>
-                    <Stack direction={{ xs: "row", sm: "row" }}>
-                      <FormControlLabel
-                        value="true"
-                        control={
-                          <Radio
-                            checked={patientFormData.rationSeche === "true"}
-                          />
-                        }
-                        label="OUI"
-                      />
-                      <FormControlLabel
-                        value="false"
-                        control={
-                          <Radio
-                            checked={patientFormData.rationSeche === "false"}
-                          />
-                        }
-                        label="NON"
-                      />
-                    </Stack>
-                  </Stack>
-                </RadioGroup>
-              </Stack>
-            </Grid>
-            <Grid item xs={11} sm={6} md={6}>
-              <Stack spacing={3}>
                 <Select
                   native
                   sx={{ padding: "2px" }}
@@ -731,6 +587,75 @@ export default function PatientForm({
                     errors.ExplicationProvenance
                   }
                 />
+                <Select
+                  sx={{ padding: "2px" }}
+                  native
+                  // {...getFieldProps('modeArriver')}
+                  selected={patientFormData.modeArriverPatient}
+                  onChange={handleChangeModeArriver}
+                  error={Boolean(touched.modeArriver && errors.modeArriver)}
+                  helperText={touched.modeArriver && errors.modeArriver}
+                >
+                  <option value="" selected disabled hidden>
+                    {`${
+                      patientFormData.modeArriverPatient
+                        ? patientFormData.modeArriverPatient
+                        : "Mode d'arrivé"
+                    }`}
+                  </option>
+                  <option value="De la maison">De la maison</option>
+                  <option value="UNT">UNT</option>
+                  <option value="Autres">Autres</option>
+                </Select>
+                <TextField
+                  sx={{ padding: "2px" }}
+                  // fullWidth
+                  label="Si le mode d'arrivé est autre veuillez préciser"
+                  // {...getFieldProps('ExplicationAutre')}
+                  value={patientFormData.ExplicationAutre}
+                  onChange={handleChangeExplicationAutre}
+                  disabled={modeArriver}
+                  helperText={
+                    touched.ExplicationAutre && errors.ExplicationAutre
+                  }
+                  error={
+                    Boolean(
+                      touched.ExplicationAutre && errors.ExplicationAutre
+                    ) ||
+                    Boolean(
+                      values.modeArriver === "Autres" &&
+                        values.ExplicationAutre === ""
+                    )
+                  }
+                />
+
+                <TextField
+                  sx={{ padding: "2px" }}
+                  // fullWidth
+                  label="Adresse "
+                  value={patientFormData.adressePatient}
+                  // defaultValue={DataPatient.adressePatient}
+                  onChange={handleChangeAdressePatient}
+                  // {...getFieldProps('adressePatient')}
+                  helperText={touched.adressePatient && errors.adressePatient}
+                  error={Boolean(
+                    touched.adressePatient && errors.adressePatient
+                  )}
+                />
+                <TextareaAutosize
+                  minRows={8}
+                  maxRows={8}
+                  value={patientFormData.commentaires}
+                  onChange={handleChangeCommentaires}
+                  placeholder="Observations sur le patient"
+                  className={style.textarea}
+                  helperText={touched.commentaires && errors.commentaires}
+                  error={Boolean(touched.commentaires && errors.commentaires)}
+                />
+              </Stack>
+            </Grid>
+            <Grid item xs={11} sm={6} md={6}>
+              <Stack spacing={3}>
                 {/* <InputLabel>Date de naissance</InputLabel> */}
                 <TextField
                   sx={{ padding: "2px" }}
@@ -750,6 +675,7 @@ export default function PatientForm({
                     touched.dataNaissancePatient && errors.dataNaissancePatient
                   )}
                 />
+
                 <RadioGroup
                   // {...getFieldProps('allaitementExclusifSixMois')}
                   helperText={
@@ -840,6 +766,30 @@ export default function PatientForm({
                 <TextField
                   sx={{ padding: "2px" }}
                   // fullWidth
+                  label="Poids naissance (gr) ex:1500"
+                  value={patientFormData.poidsNaissance}
+                  onChange={handleChangePoidsnaissance}
+                  // {...getFieldProps('poidsNaissance')}
+                  helperText={touched.poidsNaissance && errors.poidsNaissance}
+                  error={Boolean(
+                    touched.poidsNaissance && errors.poidsNaissance
+                  )}
+                />
+                <TextField
+                  // fullWidth
+                  sx={{ padding: "2px" }}
+                  //  defaultValue={DataPatient.poidsActuel}
+                  value={patientFormData.poidsActuel}
+                  onChange={handleChangePoidsActuel}
+                  label="Poids actuel (kg) ex:20"
+                  // {...getFieldProps('poidsActuel')}
+                  helperText={touched.poidsActuel && errors.poidsActuel}
+                  error={Boolean(touched.poidsActuel && errors.poidsActuel)}
+                />
+
+                <TextField
+                  sx={{ padding: "2px" }}
+                  // fullWidth
                   label="Périmètre crânien (Cm) ex:40"
                   value={patientFormData.perimetreCranien}
                   onChange={handleChangePerimetreCranien}
@@ -913,6 +863,52 @@ export default function PatientForm({
                   )}
                 />
                 <RadioGroup
+                  onChange={handleChangeRationPatient}
+                  error={Boolean(touched.rationSeche && errors.rationSeche)}
+                  helperText={touched.rationSeche && errors.rationSeche}
+                  // setValues={  DataPatient.Sexe}
+                >
+                  <Stack
+                    direction={{ xs: "column", md: "column", sm: "row" }}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      paddingLeft: "10px",
+                      border: `${
+                        Boolean(touched.rationSeche && errors.rationSeche) &&
+                        "1px solid red"
+                      }`,
+                      borderRadius: `${
+                        Boolean(touched.rationSeche && errors.rationSeche) &&
+                        "10px"
+                      }`,
+                    }}
+                    spacing={1}
+                  >
+                    <FormLabel component="label">Oedème:</FormLabel>
+                    <Stack direction={{ xs: "row", sm: "row" }}>
+                      <FormControlLabel
+                        value="true"
+                        control={
+                          <Radio
+                            checked={patientFormData.rationSeche === "true"}
+                          />
+                        }
+                        label="Oui"
+                      />
+                      <FormControlLabel
+                        value="false"
+                        control={
+                          <Radio
+                            checked={patientFormData.rationSeche === "false"}
+                          />
+                        }
+                        label="Non"
+                      />
+                    </Stack>
+                  </Stack>
+                </RadioGroup>
+                <RadioGroup
                   // {...getFieldProps('transfererUnt')}
                   onChange={handleChangeTransfererUnt}
                   helperText={touched.transfererUnt && errors.transfererUnt}
@@ -966,6 +962,70 @@ export default function PatientForm({
                     </Stack>
                   </Stack>
                 </RadioGroup>
+                {patientFormData.sexePatient === "M" ? (
+                  <div className="buttonCard">
+                    <a
+                      href="https://cdn.who.int/media/docs/default-source/child-growth/child-growth-standards/indicators/length-height-for-age/cht-lhfa-boys-z-0-5.pdf"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      rapport taille - age
+                    </a>
+                    <a
+                      href="https://cdn.who.int/media/docs/default-source/child-growth/child-growth-standards/indicators/weight-for-age/cht-wfa-boys-z-0-5.pdf"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      rapport poids - age
+                    </a>
+                    <a
+                      href="https://cdn.who.int/media/docs/default-source/child-growth/child-growth-standards/indicators/weight-for-length-height/cht-wflh-boys-z-0-5.pdf"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      rapport poids - taille
+                    </a>
+                    <a
+                      href="https://cdn.who.int/media/docs/default-source/child-growth/child-growth-standards/indicators/body-mass-index-for-age/cht-bfa-boys-z-0-5.pdf"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      IMC
+                    </a>
+                  </div>
+                ) : (
+                  <div className="buttonCard">
+                    <a
+                      href="https://cdn.who.int/media/docs/default-source/child-growth/child-growth-standards/indicators/length-height-for-age/cht-lhfa-girls-z-0-5.pdf"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      rapport taille - age
+                    </a>
+                    <a
+                      href="https://cdn.who.int/media/docs/default-source/child-growth/child-growth-standards/indicators/weight-for-age/cht-wfa-girls-z-0-5.pdf"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      rapport poids - age
+                    </a>
+                    <a
+                      href="https://cdn.who.int/media/docs/default-source/child-growth/child-growth-standards/indicators/weight-for-length-height/cht-wflh-girls-z-0-5.pdf"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      rapport poids - taille
+                    </a>
+                    <a
+                      href="https://cdn.who.int/media/docs/default-source/child-growth/child-growth-standards/indicators/body-mass-index-for-age/cht-bfa-girls-z-0-5.pdf"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      IMC
+                    </a>
+                  </div>
+                )}
+
                 <Select
                   native
                   sx={{ padding: "2px" }}
@@ -992,6 +1052,51 @@ export default function PatientForm({
                   </option>
                   <option value="MAC">Malnutrition Aigue Chronique</option>
                 </Select>
+                <Select
+                  sx={{ padding: "2px" }}
+                  native
+                  // {...getFieldProps('traitementNutritionnel')}
+                  onChange={handleChangeTraitementNutritionnel}
+                  helperText={
+                    touched.traitementNutritionnel &&
+                    errors.traitementNutritionnel
+                  }
+                  error={Boolean(
+                    touched.traitementNutritionnel &&
+                      errors.traitementNutritionnel
+                  )}
+                >
+                  <option value="" selected disabled hidden>
+                    Traitement nutritionnel
+                  </option>
+                  <option value="ATPE">ATPE</option>
+                  <option value="Plumpy-nut">Plumpy-nut</option>
+                  <option value="Autres">Autres</option>
+                </Select>
+                <TextField
+                  sx={{ padding: "2px" }}
+                  // fullWidth
+                  label="Si le traitement nutritionnel est autre veuillez préciser"
+                  // defaultValue={DataPatient.traitementNutritionnelAutre}
+                  onChange={handleChangeNutritionnelAutre}
+                  value={patientFormData.fistNamePatient}
+                  disabled={traitementNutri}
+                  helperText={
+                    touched.traitementNutritionnelAutre &&
+                    errors.traitementNutritionnelAutre
+                  }
+                  // {...getFieldProps('traitementNutritionnelAutre')}
+                  error={
+                    Boolean(
+                      touched.traitementNutritionnelAutre &&
+                        errors.traitementNutritionnelAutre
+                    ) ||
+                    Boolean(
+                      values.traitementNutritionnel === "Autres" &&
+                        values.traitementNutritionnelAutre === ""
+                    )
+                  }
+                />
               </Stack>
             </Grid>
             <Stack

@@ -21,6 +21,31 @@
   left: 50%;
   transform: translate(-50%, 0);
 }
+.buttonCard{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: relative;
+  width: 100%;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+.buttonCard a{
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5%;
+  margin: 2.5%;
+  font-weight: 600;
+  text-decoration: none;
+  border: 2px solid ;
+  border-radius: 8px;
+}
+.buttonCard a:hover{
+background-color: #00AB55;
+color: #fff;
+}
 
 @media screen and (max-width: 900px) {
   .product {

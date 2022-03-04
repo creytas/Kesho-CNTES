@@ -19,6 +19,11 @@ export default function NewPatient() {
   const [taille, setTaille] = useState("");
   const [poidsActuel, setPoidsActuel] = useState("");
   const [rationSeche, setRationSeche] = useState("");
+  const [dateAdmissionPatient, setDateAdmissionPatient] = useState("");
+  const [dateGuerisonPatient, setDateGuerisonPatient] = useState("");
+  const [firstPicture, setFirstPicture] = useState("");
+  const [lastPicture, setLastPicture] = useState("");
+  const [commentaires, setCommentaires] = useState("");
   const [perimetreCranien, setPerimetreCranien] = useState("");
   const [prenomPatient, setPrenomPatient] = useState("");
   const [nomPatient, setNomPatient] = useState("");
@@ -133,6 +138,11 @@ export default function NewPatient() {
       setPoidsActuel,
       setTraitementNutritionnelAutre,
       setRationSeche,
+      setDateAdmissionPatient,
+      setDateGuerisonPatient,
+      setFirstPicture,
+      setLastPicture,
+      setCommentaires,
       setAgeFinAllaitement,
       setProvenancePatient,
       setConstitutionAliment,
@@ -150,6 +160,11 @@ export default function NewPatient() {
       poidsActuel,
       perimetreCranien,
       rationSeche,
+      dateAdmissionPatient,
+      dateGuerisonPatient,
+      firstPicture,
+      lastPicture,
+      commentaires,
       prenomPatient,
       nomPatient,
       postNomPatient,
@@ -306,6 +321,11 @@ export default function NewPatient() {
             setTaille={setTaille}
             setPerimetreCranien={setPerimetreCranien}
             setRationSeche={setRationSeche}
+            setDateAdmissionPatient={setDateAdmissionPatient}
+            setDateGuerisonPatient={setDateGuerisonPatient}
+            setFirstPicture={setFirstPicture}
+            setLastPicture={setLastPicture}
+            setCommentaires={setCommentaires}
             setModeArriverPatient={setModeArriverPatient}
             setPoidsActuel={setPoidsActuel}
             setTraitementNutritionnelAutre={setTraitementNutritionnelAutre}

@@ -178,7 +178,7 @@ export default function PersonnelAddFrom() {
         .then((response) => {
           const message = response.data;
           setLoader2(false);
-          console.log('Yves', message);
+          console.log('Message', message);
           fakeAuth.login(() => {
             navigate(from);
             navigate('/dashboard/app', { replace: true });

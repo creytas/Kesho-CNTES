@@ -1,0 +1,17 @@
+.textarea{
+    width: 100%;
+    resize: none;
+    padding: 2%;
+    font-family: inherit;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.textarea:hover{
+    border: 1px solid #000;
+}
+.textarea:focus{
+    outline: none;
+    border:2px solid #00ab55; 
+}
