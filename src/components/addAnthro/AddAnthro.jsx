@@ -1,12 +1,24 @@
 import * as Yup from "yup";
+import { useState } from "react";
 import { useFormik, Form, FormikProvider } from "formik";
 import { useNavigate, useLocation } from "react-router-dom";
 
 // material
-import { Stack, TextField, Select, styled } from "@material-ui/core";
+import {
+  Stack,
+  TextField,
+  Select,
+  styled,
+  TextareaAutosize,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+  FormLabel,
+} from "@material-ui/core";
 import { LoadingButton } from "@material-ui/lab";
 import Axios from "axios";
 import { fakeAuth } from "../../fakeAuth";
+import style from "../_dashboard/patient/PatientForm/patient.module.css";
 
 // ----------------------------------------------------------------------
 const Div = styled("div")(() => ({
@@ -35,7 +47,7 @@ const SubDivContenaire = styled("div")(() => ({
   justifyContent: "center",
 }));
 
-export default function AddAnthro({ id }) {
+export default function AddAnthro({ id, admission }) {
   const location = useLocation();
   const navigate = useNavigate();
   const { from } = location.state || { from: { pathname: "/dashboard/app" } };
@@ -43,9 +55,11 @@ export default function AddAnthro({ id }) {
     weight: Yup.number().required("Poids requis"),
     height: Yup.number().required("Taille requise"),
     brachial: Yup.number().required("Périmètre brachial requis"),
-    cranian: Yup.number().required("Périmètre cranien requis"),
+    cranian: Yup.number(),
     malnutrition: Yup.string().required(),
     ration: Yup.boolean(),
+    commentaires: Yup.string(),
+    admission: Yup.date(),
   });
 
   const formik = useFormik({
@@ -55,11 +69,22 @@ export default function AddAnthro({ id }) {
       brachial: "",
       cranian: "",
       malnutrition: "",
-      ration: "true",
+      ration: "false",
+      commentaires: "",
+      admission: admission,
       // checked: false
     },
     validationSchema: RegisterSchema,
-    onSubmit: ({ weight, height, brachial, cranian, malnutrition, ration }) => {
+    onSubmit: ({
+      weight,
+      height,
+      brachial,
+      cranian,
+      malnutrition,
+      ration,
+      commentaires,
+      admission,
+    }) => {
       Axios.post(
         `https://kesho-api.herokuapp.com/anthropometrique?id_patient=${id}`,
         {
@@ -69,6 +94,8 @@ export default function AddAnthro({ id }) {
           taille: height,
           type_malnutrition: malnutrition,
           ration_seche: ration,
+          commentaires: commentaires,
+          date_admission_patient:admission
           // declarer_gueri: checked
         },
         {
@@ -92,8 +119,22 @@ export default function AddAnthro({ id }) {
     },
   });
 
-  const { errors, touched, handleSubmit, isSubmitting, getFieldProps, values } =
-    formik;
+  const {
+    errors,
+    setFieldValue,
+    touched,
+    handleSubmit,
+    isSubmitting,
+    getFieldProps,
+    values,
+  } = formik;
+  const [rationSeche, setRationSeche] = useState("false");
+  const handleChangeRationPatient = (event) => {
+    const { value } = event.target;
+    setFieldValue("ration", value);
+    setRationSeche(value);
+    console.log(rationSeche);
+  };
   return (
     <FormikProvider value={formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
@@ -136,6 +177,43 @@ export default function AddAnthro({ id }) {
                 helperText={touched.brachial && errors.brachial}
                 error={Boolean(touched.brachial && errors.brachial)}
               />
+              <RadioGroup
+                onChange={handleChangeRationPatient}
+                error={Boolean(touched.ration && errors.ration)}
+                helperText={touched.ration && errors.ration}
+                // setValues={  DataPatient.Sexe}
+              >
+                <Stack
+                  direction={{ xs: "column", md: "column", sm: "row" }}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    paddingLeft: "10px",
+                    border: `${
+                      Boolean(touched.ration && errors.ration) &&
+                      "1px solid red"
+                    }`,
+                    borderRadius: `${
+                      Boolean(touched.ration && errors.ration) && "10px"
+                    }`,
+                  }}
+                  spacing={1}
+                >
+                  <FormLabel component="label">Oedème:</FormLabel>
+                  <Stack direction={{ xs: "row", sm: "row" }}>
+                    <FormControlLabel
+                      value="false"
+                      control={<Radio checked={values.ration === "false"} />}
+                      label="Oui"
+                    />
+                    <FormControlLabel
+                      value="true"
+                      control={<Radio checked={values.ration === "true"} />}
+                      label="Non"
+                    />
+                  </Stack>
+                </Stack>
+              </RadioGroup>
               <Select
                 native
                 sx={{ width: "100%", padding: "2px" }}
@@ -154,6 +232,16 @@ export default function AddAnthro({ id }) {
                 <option value="MAC">Malnutrition aigue chronique</option>
                 <option value="Guéri">Declaré guéri</option>
               </Select>
+              <TextareaAutosize
+                minRows={8}
+                maxRows={8}
+                value={values.commentaires}
+                {...getFieldProps("commentaires")}
+                placeholder="Observations sur le patient"
+                className={style.textarea}
+                helperText={touched.commentaires && errors.commentaires}
+                error={Boolean(touched.commentaires && errors.commentaires)}
+              />
               <LoadingButton
                 type="submit"
                 variant="contained"

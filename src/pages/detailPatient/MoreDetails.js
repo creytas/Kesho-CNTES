@@ -114,9 +114,11 @@ export default function MoreDetails({ id }) {
         setAnthro(data.Anthropometrique);
         setUsersList(data.consultants);
         setLoader(false);
+        console.log(anthro);
       })
       .catch((error) => {
         console.log(error);
+        console.log(anthro);
         setLoader(false);
       });
   }, []);

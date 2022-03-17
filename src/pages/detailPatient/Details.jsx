@@ -232,9 +232,9 @@ export default function Details() {
                   tutor={onePatient.Famille.nom_tuteur}
                   location={onePatient.Patient.provenance_patient}
                   healing={onePatient.Anthropometrique[0].date_guerison_patient}
-                  admission={
-                    onePatient.Anthropometrique[0].date_admission_patient
-                  }
+                  // admission={
+                  //   onePatient.Anthropometrique[0].date_admission_patient
+                  // }
                   comments={onePatient.Anthropometrique[0].commentaires}
                   malnutrition={
                     onePatient.Anthropometrique[0].type_malnutrition
@@ -243,7 +243,12 @@ export default function Details() {
                 />
                 <br />
                 <br />
-                <AddAnthro id={myId} />
+                <AddAnthro
+                  id={myId}
+                  admission={
+                    onePatient.Anthropometrique[0].date_admission_patient
+                  }
+                />
               </div>
               <div className="productRight">
                 <div className="productRightCard">
