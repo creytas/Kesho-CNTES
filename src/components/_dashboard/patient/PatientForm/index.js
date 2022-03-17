@@ -56,7 +56,7 @@ export default function PatientForm({
     rationSeche: Yup.boolean(),
     taille: Yup.number("Un chiffre requis")
       .positive("La valeur doit être positive")
-      .min(10, "Taille minimum 10 Cm")
+      .min(1, "Taille minimum 1 Cm")
       .max(400, "Taille maximum 400 Cm")
       .required("Taille requis"),
     ExplicationAutre: Yup.string().trim().min(2, "Minimum 2 caractère"),
