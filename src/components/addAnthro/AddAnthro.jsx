@@ -238,7 +238,7 @@ export default function AddAnthro({ id, admission }) {
                 <option value="MAS-K">
                   Malnutrition aigue sévère kwashiorkor
                 </option>
-                <option value="MAC">Malnutrition aigue chronique</option>
+                <option value="MC">Malnutrition chronique</option>
                 <option value="Guéri">Declaré guéri</option>
               </Select>
               <TextareaAutosize

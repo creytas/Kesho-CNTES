@@ -291,7 +291,7 @@ export default function MoreDetails({ id }) {
                                 variant="outlined"
                                 sx={{
                                   color: `${
-                                    anthro[i].type_malnutrition === "MAC"
+                                    anthro[i].type_malnutrition === "MC"
                                       ? "#D32F2F"
                                       : anthro[i].type_malnutrition === "MAM"
                                       ? "#ffb74d"

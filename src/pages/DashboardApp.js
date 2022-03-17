@@ -270,7 +270,7 @@ export default function DashboardApp() {
                   </Grid>
                   <Grid item xs={12} sm={6} md={3}>
                     <CardRouge
-                      title="MAC"
+                      title="MC"
                       nombreM={
                         reports.chronique_nombre_garcon[0]
                           .chronique_nombre_garcon === null

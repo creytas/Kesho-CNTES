@@ -111,7 +111,7 @@ export default function AppCurrentVisits() {
       theme.palette.warning.main,
       theme.palette.primary.main,
     ],
-    labels: ["MAC", "MAS", "MAM", "Guéris"],
+    labels: ["MC", "MAS", "MAM", "Guéris"],
     stroke: { colors: [theme.palette.background.paper] },
     legend: { floating: true, horizontalAlign: "center" },
     dataLabels: { enabled: true, dropShadow: { enabled: false } },

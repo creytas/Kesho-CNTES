@@ -104,7 +104,7 @@ const PatientCard = ({
             variant="contained"
             sx={{
               color: `${
-                malnutrition === "MAC"
+                malnutrition === "MC"
                   ? "#D32F2F"
                   : malnutrition === "MAM"
                   ? "#ffb74d"

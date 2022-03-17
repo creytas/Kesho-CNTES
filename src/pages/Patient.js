@@ -481,7 +481,7 @@ export default function Patient() {
                                           variant="outlined"
                                           sx={{
                                             color: `${
-                                              type_malnutrition === "MAC"
+                                              type_malnutrition === "MC"
                                                 ? "#D32F2F"
                                                 : type_malnutrition === "MAM"
                                                 ? "#ffb74d"

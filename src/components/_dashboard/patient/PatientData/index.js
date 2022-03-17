@@ -233,7 +233,7 @@ export default function PatientData({ DataPatient, PrevStep }) {
               variant="filled"
               sx={{
                 color: `${
-                  indentity.typeMalnutrition === "MAC"
+                  indentity.typeMalnutrition === "MC"
                     ? "#d32f2f"
                     : indentity.typeMalnutrition === "MAM"
                     ? "#1565c0"
@@ -429,9 +429,7 @@ export default function PatientData({ DataPatient, PrevStep }) {
               Transfert en UNT:
               <span style={{ color: "black" }}>
                 {" "}
-                {indentity.transfererUnt === "true"
-                  ? "Oui"
-                  : "Aucun"}
+                {indentity.transfererUnt === "true" ? "Oui" : "Aucun"}
               </span>
             </InputLabel>
             <Typography sx={{ fontWeight: "900", fontSize: "larger" }}>

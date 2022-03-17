@@ -63,7 +63,7 @@ export default function AppWebsiteVisits() {
       data: repData.map((i) => i[0].nombre_patient),
     },
     {
-      name: "MAC",
+      name: "MC",
       type: "line",
       data: macData.map((i) => i[0].chronique_nombre),
     },

@@ -1050,7 +1050,7 @@ export default function PatientForm({
                   <option value="MAS-M">
                     Malnutrition Aigue Sévère Marasme
                   </option>
-                  <option value="MAC">Malnutrition Aigue Chronique</option>
+                  <option value="MC">Malnutrition Chronique</option>
                 </Select>
                 <Select
                   sx={{ padding: "2px" }}
