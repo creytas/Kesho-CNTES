@@ -1071,6 +1071,7 @@ export default function PatientForm({
                   </option>
                   <option value="ATPE">ATPE</option>
                   <option value="Plumpy-nut">Plumpy-nut</option>
+                  <option value="MaSoSo">MaSoSo</option>
                   <option value="Autres">Autres</option>
                 </Select>
                 <TextField
