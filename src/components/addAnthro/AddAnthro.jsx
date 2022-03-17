@@ -85,6 +85,15 @@ export default function AddAnthro({ id, admission }) {
       commentaires,
       admission,
     }) => {
+      console.log({
+        weight,
+        height,
+        brachial,
+        cranian,
+        malnutrition,
+        ration,
+        commentaires,
+      });
       Axios.post(
         `https://kesho-api.herokuapp.com/anthropometrique?id_patient=${id}`,
         {
@@ -95,7 +104,7 @@ export default function AddAnthro({ id, admission }) {
           type_malnutrition: malnutrition,
           ration_seche: ration,
           commentaires: commentaires,
-          date_admission_patient:admission
+          date_admission_patient: admission,
           // declarer_gueri: checked
         },
         {
