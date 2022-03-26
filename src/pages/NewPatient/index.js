@@ -19,6 +19,7 @@ export default function NewPatient() {
   const [taille, setTaille] = useState("");
   const [poidsActuel, setPoidsActuel] = useState("");
   const [rationSeche, setRationSeche] = useState("");
+  const [typeOedeme, setTypeOedeme] = useState("");
   const [dateAdmissionPatient, setDateAdmissionPatient] = useState("");
   const [dateGuerisonPatient, setDateGuerisonPatient] = useState("");
   const [firstPicture, setFirstPicture] = useState("");
@@ -50,13 +51,13 @@ export default function NewPatient() {
   const [transfererUnt, setTransfererUnt] = useState("");
 
   // _______________Form famille_________________
-  const [vivreAvecParent, setVivreAvecParent] = useState("");
+  const [vivreAvecParents, setVivreAvecParents] = useState("");
   const [typeContraceptionModerne, setTypeContraceptionModerne] = useState("");
   const [contraceptionMere, setContraceptionMere] = useState("");
   const [professionMere, setProfessionMere] = useState("");
-  const [nomTuteur, setNomTuteur] = useState("");
+  const [tuteur, setTuteur] = useState("");
   const [dateNaissanceMere, setDateNaissanceMere] = useState("");
-  const [mereEnceinte, setMereEnceinte] = useState("");
+  const [etatMere, setEtatMere] = useState("");
   const [possederTeleRadio, setPossederTeleRadio] = useState("");
   const [proffessionChefMenage, setProffessionChefMenage] = useState("");
   const [scolariteMere, setScolariteMere] = useState("");
@@ -138,6 +139,7 @@ export default function NewPatient() {
       setPoidsActuel,
       setTraitementNutritionnelAutre,
       setRationSeche,
+      setTypeOedeme,
       setDateAdmissionPatient,
       setDateGuerisonPatient,
       setFirstPicture,
@@ -160,6 +162,7 @@ export default function NewPatient() {
       poidsActuel,
       perimetreCranien,
       rationSeche,
+      typeOedeme,
       dateAdmissionPatient,
       dateGuerisonPatient,
       firstPicture,
@@ -255,20 +258,20 @@ export default function NewPatient() {
       setListAtb,
       atb,
       setAtb,
-      vivreAvecParent,
-      setVivreAvecParent,
+      vivreAvecParents,
+      setVivreAvecParents,
       typeContraceptionModerne,
       setTypeContraceptionModerne,
       contraceptionMere,
       setContraceptionMere,
       professionMere,
       setProfessionMere,
-      nomTuteur,
-      setNomTuteur,
+      tuteur,
+      setTuteur,
       dateNaissanceMere,
       setDateNaissanceMere,
-      mereEnceinte,
-      setMereEnceinte,
+      etatMere,
+      setEtatMere,
       possederTeleRadio,
       setPossederTeleRadio,
       proffessionChefMenage,

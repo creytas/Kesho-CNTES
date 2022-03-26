@@ -36,6 +36,7 @@ export default function PatientForm({
   patientFormData,
 }) {
   const [allaitement, setAllaitement] = useState(false);
+  const [oedeme, setOedeme] = useState(false);
   const [provenance, setProvenance] = useState(false);
   const [modeArriver, setModeArriver] = useState(false);
   const [traitementNutri, setTraitementNutri] = useState(false);
@@ -54,6 +55,7 @@ export default function PatientForm({
     lastPicture: Yup.string(),
     commentaires: Yup.string(),
     rationSeche: Yup.boolean(),
+    typeOedeme: Yup.string(),
     taille: Yup.number("Un chiffre requis")
       .positive("La valeur doit être positive")
       .min(1, "Taille minimum 1 Cm")
@@ -145,6 +147,7 @@ export default function PatientForm({
       rationSeche: patientFormData.rationSeche
         ? patientFormData.rationSeche
         : "false",
+      typeOedeme: patientFormData.typeOedeme ? patientFormData.typeOedeme : "",
       taille: patientFormData.taille ? patientFormData.taille : "",
       poidsActuel: patientFormData.poidsActuel
         ? patientFormData.poidsActuel
@@ -402,6 +405,11 @@ export default function PatientForm({
     setFieldValue("ExplicationProvenance", value);
     patientFormData.setExplicationProvenance(value);
   };
+  const handleChangeTypeOedeme = (event) => {
+    const { value } = event.target;
+    setFieldValue("typeOedeme", value);
+    patientFormData.setTypeOedeme(value);
+  };
   const handleChangeTransfererUnt = (event) => {
     const { value } = event.target;
     setFieldValue("transfererUnt", value);
@@ -412,6 +420,11 @@ export default function PatientForm({
     setFieldValue("rationSeche", value);
     patientFormData.setRationSeche(value);
     console.log(patientFormData.rationSeche);
+    if (value === "true") {
+      setOedeme(true);
+    } else {
+      setOedeme(false);
+    }
   };
   return (
     <>
@@ -628,7 +641,6 @@ export default function PatientForm({
                     )
                   }
                 />
-
                 <TextField
                   sx={{ padding: "2px" }}
                   // fullWidth
@@ -908,6 +920,27 @@ export default function PatientForm({
                     </Stack>
                   </Stack>
                 </RadioGroup>
+                <Select
+                  sx={{ padding: "2px" }}
+                  native
+                  // {...getFieldProps('modeArriver')}
+                  selected={patientFormData.typeOedeme}
+                  onChange={handleChangeTypeOedeme}
+                  disabled={!oedeme}
+                  error={Boolean(touched.typeOedeme && errors.typeOedeme)}
+                  helperText={touched.typeOedeme && errors.typeOedeme}
+                >
+                  <option value="" selected disabled hidden>
+                    {`${
+                      patientFormData.typeOedeme
+                        ? patientFormData.typeOedeme
+                        : "Type d'Oedème"
+                    }`}
+                  </option>
+                  <option value="+">+</option>
+                  <option value="+ +">+ +</option>
+                  <option value="+ + +">+ + +</option>
+                </Select>
                 <RadioGroup
                   // {...getFieldProps('transfererUnt')}
                   onChange={handleChangeTransfererUnt}

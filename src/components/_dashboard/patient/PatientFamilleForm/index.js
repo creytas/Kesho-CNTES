@@ -36,6 +36,7 @@ export default function FamilleForm({
   PrevStep,
   patientFormFamille,
 }) {
+  const [avoirTuteur, setAvoirTuteur] = useState(false);
   const [statutMarital, setStatutMarital] = useState(true);
   const [contraceptionMeredisable, setContraceptionMeredisable] =
     useState(true);
@@ -58,15 +59,16 @@ export default function FamilleForm({
 
   // console.log(dateNow.getFullYear() - 90);
   const RegisterSchema = Yup.object().shape({
-    nomTuteur: Yup.string()
-      .min(2)
+    vivreAvecParents: Yup.boolean(),
+    tuteur: Yup.string()
+      .min(0)
       .max(25)
       .matches(/[A-Za-z]/)
       .trim(),
     dateNaissanceMere: Yup.number().positive(
       "l'âge de la mère doit être positif"
     ),
-    mereEnceinte: Yup.string(),
+    etatMere: Yup.string(),
     PossederTeleRadio: Yup.string(),
     ProffessionChefMenage: Yup.string(),
     scolariteMere: Yup.string(),
@@ -96,7 +98,9 @@ export default function FamilleForm({
 
   const formik = useFormik({
     initialValues: {
-      // vivreAvecParent: patientFormFamille.vivreAvecParent ? patientFormFamille.vivreAvecParent : '',
+      vivreAvecParents: patientFormFamille.vivreAvecParents
+        ? patientFormFamille.vivreAvecParent
+        : true,
       typeContraceptionModerne: patientFormFamille.typeContraceptionModerne
         ? patientFormFamille.contraceptionMere
         : "",
@@ -106,15 +110,11 @@ export default function FamilleForm({
       professionMere: patientFormFamille.professionMere
         ? patientFormFamille.professionMere
         : "",
-      nomTuteur: patientFormFamille.nomTuteur
-        ? patientFormFamille.nomTuteur
-        : "",
+      tuteur: patientFormFamille.tuteur ? patientFormFamille.tuteur : "",
       dateNaissanceMere: patientFormFamille.dateNaissanceMere
         ? patientFormFamille.dateNaissanceMere
         : 0,
-      mereEnceinte: patientFormFamille.mereEnceinte
-        ? patientFormFamille.mereEnceinte
-        : "",
+      etatMere: patientFormFamille.etatMere ? patientFormFamille.etatMere : "",
       PossederTeleRadio: patientFormFamille.possederTeleRadio
         ? patientFormFamille.possederTeleRadio
         : "",
@@ -165,9 +165,9 @@ export default function FamilleForm({
     },
     validationSchema: RegisterSchema,
     onSubmit: (FamalyData) => {
-      if (FamalyData.mereEnVie === "true" && FamalyData.mereEnceinte === "") {
-        throw alert("Veuillez preciser si la mère est enceinte ou pas");
-      }
+      // if (FamalyData.mereEnVie === "true" && FamalyData.etatMere === "") {
+      //   throw alert("Veuillez preciser l'etat de la mère");
+      // }
       if (
         FamalyData.statutMarital === "Mariée" &&
         FamalyData.pereMariage === ""
@@ -317,6 +317,17 @@ export default function FamilleForm({
     setFieldValue("tailleMenage", value);
     patientFormFamille.setTailleMenage(value);
   };
+  const handleVivreAvecParents = (event) => {
+    const { value } = event.target;
+    setFieldValue("vivreAvecParents", value);
+    patientFormFamille.setVivreAvecParents(value);
+    if (value === "true") {
+      setAvoirTuteur(true);
+    } else {
+      setAvoirTuteur(false);
+    }
+    console.log(value);
+  };
 
   // const handleVivreAvecParent = (event) => {
   //   const { value } = event.target;
@@ -324,10 +335,10 @@ export default function FamilleForm({
   //   patientFormFamille.setVivreAvecParent(value);
   // };
 
-  const handleNomTuteur = (event) => {
+  const handleTuteur = (event) => {
     const { value } = event.target;
-    setFieldValue("nomTuteur", value);
-    patientFormFamille.setNomTuteur(value);
+    setFieldValue("tuteur", value);
+    patientFormFamille.setTuteur(value);
   };
 
   const handleMereEnVie = (event) => {
@@ -344,10 +355,10 @@ export default function FamilleForm({
     patientFormFamille.setDateNaissanceMere(value);
   };
 
-  const handlemereEnceinte = (event) => {
+  const handleEtatMere = (event) => {
     const { value } = event.target;
-    setFieldValue("mereEnceinte", value);
-    patientFormFamille.setMereEnceinte(value);
+    setFieldValue("etatMere", value);
+    patientFormFamille.setEtatMere(value);
   };
 
   const handleScolariteMere = (event) => {
@@ -399,6 +410,7 @@ export default function FamilleForm({
     setFieldValue("listAtb", value);
     patientFormFamille.setListAtb(value);
   };
+
   return (
     <FormikProvider value={formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
@@ -416,15 +428,71 @@ export default function FamilleForm({
                 error={Boolean(touched.tailleMenage && errors.tailleMenage)}
               />
 
+              <RadioGroup
+                // {...getFieldProps('allaitementExclusifSixMois')}
+                helperText={touched.vivreAvecParents && errors.vivreAvecParents}
+                error={Boolean(
+                  touched.vivreAvecParents && errors.vivreAvecParents
+                )}
+                onChange={handleVivreAvecParents}
+              >
+                <Stack
+                  direction={{ xs: "column", sm: "column", md: "row" }}
+                  sx={{
+                    display: "flex",
+                    paddingLeft: "10px",
+                    alignItems: "center",
+                    border: `${
+                      Boolean(
+                        touched.vivreAvecParents && errors.vivreAvecParents
+                      ) && "1px solid red"
+                    }`,
+                    borderRadius: `${
+                      Boolean(
+                        touched.vivreAvecParents && errors.vivreAvecParents
+                      ) && "10px"
+                    }`,
+                  }}
+                  spacing={1}
+                >
+                  <FormLabel component="label">Vit avec ses parents:</FormLabel>
+                  <Stack direction={{ xs: "row", sm: "row" }}>
+                    <FormControlLabel
+                      value="true"
+                      control={
+                        <Radio
+                          checked={
+                            patientFormFamille.vivreAvecParents === "true"
+                          }
+                        />
+                      }
+                      label="Oui"
+                    />
+                    <FormControlLabel
+                      value="false"
+                      control={
+                        <Radio
+                          checked={
+                            patientFormFamille.vivreAvecParents === "false"
+                          }
+                        />
+                      }
+                      label="Non"
+                    />
+                  </Stack>
+                </Stack>
+              </RadioGroup>
+
               <TextField
-                value={patientFormFamille.nomTuteur}
+                value={patientFormFamille.tuteur}
                 sx={{ padding: "2px" }}
-                label="Nom de tuteur"
+                disabled={avoirTuteur}
+                label="Tuteur"
                 // required
-                onChange={handleNomTuteur}
-                // {...getFieldProps('nomTuteur')}
-                helperText={touched.nomTuteur && errors.nomTuteur}
-                error={Boolean(touched.nomTuteur && errors.nomTuteur)}
+                onChange={handleTuteur}
+                // {...getFieldProps('tuteur')}
+                helperText={touched.tuteur && errors.tuteur}
+                error={Boolean(touched.tuteur && errors.tuteur)}
               />
               <RadioGroup
                 // {...getFieldProps('mereEnVie')}
@@ -491,61 +559,30 @@ export default function FamilleForm({
                 )}
                 // helperText={touched.dateNaissanceMere && errors.dateNaissanceMere}
               />
-              <RadioGroup
+              <Select
+                sx={{ padding: "2px" }}
+                native
                 required
-                // {...getFieldProps('mereEnceinte')}
-                onChange={handlemereEnceinte}
-                helperText={touched.mereEnceinte && errors.mereEnceinte}
-                error={Boolean(touched.mereEnceinte && errors.mereEnceinte)}
+                disabled={mereEnceinteDisable}
+                onChange={handleEtatMere}
+                // {...getFieldProps('scolariteMere')}
+                error={Boolean(touched.etatMere && errors.etatMere)}
+                helperText={touched.etatMere && errors.etatMere}
               >
-                <Stack
-                  direction={{ xs: "column", sm: "row" }}
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    paddingLeft: "10px",
-                    border: `${
-                      (Boolean(touched.mereEnceinte && errors.mereEnceinte) ||
-                        Boolean(
-                          values.mereEnVie === "true" &&
-                            values.mereEnceinte === ""
-                        )) &&
-                      "1px solid red"
-                    }`,
-                    borderRadius: `${
-                      (Boolean(touched.mereEnceinte && errors.mereEnceinte) ||
-                        Boolean(
-                          values.mereEnVie === "true" &&
-                            values.mereEnceinte === ""
-                        )) &&
-                      "10px"
-                    }`,
-                  }}
-                  spacing={1}
-                >
-                  <FormLabel component="label">Mère enceinte :</FormLabel>
-                  <FormControlLabel
-                    value="true"
-                    disabled={mereEnceinteDisable}
-                    control={
-                      <Radio
-                        checked={patientFormFamille.mereEnceinte === "true"}
-                      />
-                    }
-                    label="Oui"
-                  />
-                  <FormControlLabel
-                    value="false"
-                    disabled={mereEnceinteDisable}
-                    control={
-                      <Radio
-                        checked={patientFormFamille.mereEnceinte === "false"}
-                      />
-                    }
-                    label="Non"
-                  />
-                </Stack>
-              </RadioGroup>
+                <option value="" selected disabled hidden>
+                  {`${
+                    patientFormFamille.etatMere
+                      ? patientFormFamille.etatMere
+                      : "Etat de la mère"
+                  }`}
+                </option>
+                <option value="Aucun">Aucun</option>
+                <option value="Enceinte">Enceinte</option>
+                <option value="Allaitante">Allaitante</option>
+                <option value="Enceinte et allaitante">
+                  Enceinte et allaitante
+                </option>
+              </Select>
               <Select
                 sx={{ padding: "2px" }}
                 native
@@ -643,6 +680,26 @@ export default function FamilleForm({
                   />
                 </Stack>
               </RadioGroup>
+              <TextField
+                value={patientFormFamille.dateNaissanceChefMenage}
+                sx={{ padding: "2px" }}
+                label="Age du Chef de ménage"
+                type="number"
+                // required
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                // {...getFieldProps('dateNaissanceChefMenage')}
+                onChange={handleDateNaissanceChefMenage}
+                helperText={
+                  touched.dateNaissanceChefMenage &&
+                  errors.dateNaissanceChefMenage
+                }
+                error={Boolean(
+                  touched.dateNaissanceChefMenage &&
+                    errors.dateNaissanceChefMenage
+                )}
+              />
               <Select
                 native
                 // required
@@ -679,26 +736,6 @@ export default function FamilleForm({
                 <option value="Cultivateur">Cultivateur</option>
                 <option value="Autre">autre</option>
               </Select>
-              <TextField
-                value={patientFormFamille.dateNaissanceChefMenage}
-                sx={{ padding: "2px" }}
-                label="Age du Chef de ménage"
-                type="number"
-                // required
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                // {...getFieldProps('dateNaissanceChefMenage')}
-                onChange={handleDateNaissanceChefMenage}
-                helperText={
-                  touched.dateNaissanceChefMenage &&
-                  errors.dateNaissanceChefMenage
-                }
-                error={Boolean(
-                  touched.dateNaissanceChefMenage &&
-                    errors.dateNaissanceChefMenage
-                )}
-              />
               <RadioGroup onChange={handlePossederTeleRadio}>
                 <Stack
                   direction={{ xs: "column", sm: "row" }}

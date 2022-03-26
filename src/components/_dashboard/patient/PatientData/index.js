@@ -32,6 +32,7 @@ export default function PatientData({ DataPatient, PrevStep }) {
   console.log(DataPatient);
   const newPatient = {};
   newPatient.ration_seche = indentity.rationSeche;
+  newPatient.type_oedeme = indentity.typeOedeme;
   newPatient.date_admission_patient = indentity.dateAdmissionPatient;
   newPatient.date_guerison_patient = indentity.dateGuerisonPatient;
   newPatient.first_picture = indentity.firstPicture;
@@ -108,19 +109,16 @@ export default function PatientData({ DataPatient, PrevStep }) {
     CauseMalnutrition.tbcTraiter === ""
       ? "pas de tbc"
       : CauseMalnutrition.tbcTraiter;
-
   newPatient.atb = FamalyData.atb === "false" ? "false" : "true"; // bool prise d'at
   newPatient.liste_atb = FamalyData.atb === "false" ? "" : FamalyData.listAtb; //  lesquels
   newPatient.type_statut_marital =
     FamalyData.pereMariage === "" ? "non marié" : FamalyData.pereMariage;
   newPatient.taille_menage = FamalyData.tailleMenage;
-  newPatient.vivre_deux_parents =
-    FamalyData.mereEnVie === "true" || FamalyData.pereEnvie === "true"
-      ? "true"
-      : "false"; // FamalyData.vivreAvecParent;//
-  newPatient.mere_enceinte = FamalyData.mereEnceinte
-    ? FamalyData.mereEnceinte
-    : false;
+  newPatient.vivre_deux_parents = FamalyData.vivreAvecParents
+    ? FamalyData.vivreAvecParents
+    : "true"; // FamalyData.vivreAvecParent;//
+  newPatient.tuteur = FamalyData.tuteur;
+  newPatient.etat_mere = FamalyData.etatMere ? FamalyData.etatMere : "Aucun";
   newPatient.mere_en_vie = FamalyData.mereEnVie;
   newPatient.pere_en_vie = FamalyData.pereEnvie;
   newPatient.profession_mere = FamalyData.professionMere;
@@ -165,7 +163,7 @@ export default function PatientData({ DataPatient, PrevStep }) {
       : CauseMalnutrition.dureeTraitementTbc;
   newPatient.tbc_declarer_finie =
     CauseMalnutrition.TbcGuerie === "" ? false : CauseMalnutrition.TbcGuerie;
-  newPatient.nom_tuteur = FamalyData.nomTuteur;
+  // newPatient.nom_tuteur = FamalyData.nomTuteur;
   newPatient.declarer_gueri = false;
   newPatient.age_tuteur = FamalyData.dateNaissanceChefMenage;
   console.log(newPatient);
@@ -258,85 +256,7 @@ export default function PatientData({ DataPatient, PrevStep }) {
                 {indentity.dataNaissancePatient}
               </span>
             </InputLabel>
-            <InputLabel>
-              Séjour en Neonat :{" "}
-              <span style={{ color: "black" }}>{`${
-                CauseMalnutrition.sejourNeo === "true" ? "Oui" : "Non"
-              }`}</span>
-            </InputLabel>
-            <InputLabel>
-              Poids naissance :
-              <span style={{ color: "black" }}>
-                {" "}
-                {indentity.poidsNaissance} g
-              </span>
-            </InputLabel>
-            <InputLabel>
-              Poids Actuel :
-              <span style={{ color: "black" }}> {indentity.poidsActuel}Kg</span>
-            </InputLabel>
-            <InputLabel>
-              Taille :
-              <span style={{ color: "black" }}> {indentity.taille} Cm</span>
-            </InputLabel>
-            <InputLabel>
-              Oedème :
-              <span style={{ color: "black" }}>
-                {" "}
-                {`${indentity.rationSeche ? "Oui" : "Non"}`}
-              </span>
-            </InputLabel>
 
-            <InputLabel>
-              Périmètre brachial :
-              <span style={{ color: "black" }}>
-                {" "}
-                {indentity.perimetreBrachail} Cm
-              </span>
-            </InputLabel>
-            <InputLabel>
-              Périmètre Cranien :
-              <span style={{ color: "black" }}>
-                {" "}
-                {indentity.perimetreCranien} Cm
-              </span>
-            </InputLabel>
-            <InputLabel>
-              Allaitement Exclusif:{" "}
-              <span style={{ color: "black" }}>
-                {`${
-                  indentity.allaitementExclusifSixMois
-                    ? "6 mois"
-                    : "plus ou moins"
-                }`}
-              </span>
-            </InputLabel>
-            <InputLabel>
-              Age diversification aliment :
-              <span style={{ color: "black" }}>
-                {" "}
-                {indentity.diversificationAliment === ""
-                  ? "0"
-                  : indentity.diversificationAliment}{" "}
-                mois
-              </span>
-            </InputLabel>
-            <InputLabel>
-              Constitution aliment:
-              <span style={{ color: "black" }}>
-                {" "}
-                {indentity.constitutionAliment === ""
-                  ? "Non renseigné"
-                  : indentity.constitutionAliment}
-              </span>
-            </InputLabel>
-            <InputLabel>
-              Consommation poisson :
-              <span style={{ color: "black" }}>
-                {" "}
-                {FamalyData.consommationPoisson ? "Non" : "Oui"}
-              </span>
-            </InputLabel>
             <InputLabel>
               Provenance :
               <span style={{ color: "black" }}>
@@ -366,6 +286,19 @@ export default function PatientData({ DataPatient, PrevStep }) {
                   : indentity.adressePatient}
               </span>
             </InputLabel>
+            <InputLabel>
+              Vit avec ses parents :{" "}
+              <span style={{ color: "black" }}>
+                {FamalyData.vivreAvecParents === "true" ? "Oui" : "Non"}
+              </span>
+            </InputLabel>
+            <InputLabel>
+              Tuteur :{" "}
+              <span style={{ color: "black" }}>
+                {FamalyData.tuteur ? FamalyData.tuteur : "Son père"}
+              </span>
+            </InputLabel>
+
             <InputLabel>
               Traitement Nutritionnel:
               <span style={{ color: "black" }}>
@@ -485,6 +418,89 @@ export default function PatientData({ DataPatient, PrevStep }) {
               </span>
             </InputLabel>
             <InputLabel>
+              Séjour en Neonat :{" "}
+              <span style={{ color: "black" }}>{`${
+                CauseMalnutrition.sejourNeo === "true" ? "Oui" : "Non"
+              }`}</span>
+            </InputLabel>
+            <InputLabel>
+              Poids naissance :
+              <span style={{ color: "black" }}>
+                {" "}
+                {indentity.poidsNaissance} g
+              </span>
+            </InputLabel>
+            <InputLabel>
+              Poids Actuel :
+              <span style={{ color: "black" }}> {indentity.poidsActuel}Kg</span>
+            </InputLabel>
+            <InputLabel>
+              Taille :
+              <span style={{ color: "black" }}> {indentity.taille} Cm</span>
+            </InputLabel>
+            <InputLabel>
+              Oedème :
+              <span style={{ color: "black" }}>
+                {" "}
+                {`${indentity.rationSeche ? "Oui" : "Non"}`}
+              </span>
+            </InputLabel>
+            <InputLabel>
+              Type d'oedème :
+              <span style={{ color: "black" }}> {indentity.typeOedeme}</span>
+            </InputLabel>
+            <InputLabel>
+              Périmètre brachial :
+              <span style={{ color: "black" }}>
+                {" "}
+                {indentity.perimetreBrachail} Cm
+              </span>
+            </InputLabel>
+            <InputLabel>
+              Périmètre Cranien :
+              <span style={{ color: "black" }}>
+                {" "}
+                {indentity.perimetreCranien} Cm
+              </span>
+            </InputLabel>
+            <InputLabel>
+              Allaitement Exclusif:{" "}
+              <span style={{ color: "black" }}>
+                {`${
+                  indentity.allaitementExclusifSixMois
+                    ? "6 mois"
+                    : "plus ou moins"
+                }`}
+              </span>
+            </InputLabel>
+            <InputLabel>
+              Age diversification aliment :
+              <span style={{ color: "black" }}>
+                {" "}
+                {indentity.diversificationAliment === ""
+                  ? "0"
+                  : indentity.diversificationAliment}{" "}
+                mois
+              </span>
+            </InputLabel>
+            <InputLabel>
+              Constitution aliment:
+              <span style={{ color: "black" }}>
+                {" "}
+                {indentity.constitutionAliment === ""
+                  ? "Non renseigné"
+                  : indentity.constitutionAliment}
+              </span>
+            </InputLabel>
+            <InputLabel>
+              Consommation poisson :
+              <span style={{ color: "black" }}>
+                {" "}
+                {FamalyData.consommationPoisson ? "Non" : "Oui"}
+              </span>
+            </InputLabel>
+
+            <InputLabel>
               ATCD Rougeole :
               <span style={{ color: "black" }}>
                 {" "}
@@ -557,27 +573,16 @@ export default function PatientData({ DataPatient, PrevStep }) {
             </Typography>
             <Typography>Père</Typography>
             <InputLabel>
-              Vit avec ses parents :{" "}
-              <span style={{ color: "black" }}>
-                {`${
-                  FamalyData.mereEnVie === "true" &&
-                  FamalyData.pereEnvie === "true"
-                    ? "Oui"
-                    : "Non"
-                }`}
-              </span>
-            </InputLabel>
-            <InputLabel>
-              Pere en vie :
+              Père en vie :
               <span style={{ color: "black" }}>
                 {" "}
                 {`${FamalyData.pereEnvie === "false" ? "Non" : "Oui"}`}
               </span>
             </InputLabel>
-            <InputLabel>
-              Nom chef Menage :
+            {/* <InputLabel>
+              Tuteur :
               <span style={{ color: "black" }}> {FamalyData.nomTuteur}</span>
-            </InputLabel>
+            </InputLabel> */}
             <InputLabel>
               Téléphone:
               <span style={{ color: "black" }}> {indentity.telephone}</span>
@@ -618,15 +623,15 @@ export default function PatientData({ DataPatient, PrevStep }) {
               </span>
             </InputLabel>
             <InputLabel>
-              Mère enceinte :{" "}
-              <span style={{ color: "black" }}>{`${
-                FamalyData.mereEnceinte === "false" ? "Non" : "Oui"
-              }`}</span>
+              Etat de la mère :{" "}
+              <span style={{ color: "black" }}>{FamalyData.etatMere}</span>
             </InputLabel>
             <InputLabel>
               Contraception mère :{" "}
               <span style={{ color: "black" }}>
-                {`${FamalyData.contraceptionMere ? "Non" : "Oui"}`}
+                {FamalyData.contraceptionMere
+                  ? FamalyData.contraceptionMere
+                  : "Aucune contraception"}
               </span>
             </InputLabel>
             <InputLabel>
