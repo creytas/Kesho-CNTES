@@ -48,6 +48,7 @@ const SubDivContenaire = styled("div")(() => ({
 }));
 
 export default function AddAnthro({ id, admission }) {
+  const [rationSeche, setRationSeche] = useState("false");
   const location = useLocation();
   const navigate = useNavigate();
   const { from } = location.state || { from: { pathname: "/dashboard/app" } };
@@ -58,6 +59,7 @@ export default function AddAnthro({ id, admission }) {
     cranian: Yup.number(),
     malnutrition: Yup.string().required(),
     ration: Yup.boolean(),
+    oedeme: Yup.string(),
     commentaires: Yup.string(),
     admission: Yup.date(),
   });
@@ -69,7 +71,8 @@ export default function AddAnthro({ id, admission }) {
       brachial: "",
       cranian: "",
       malnutrition: "",
-      ration: "false",
+      ration: rationSeche,
+      oedeme: "",
       commentaires: "",
       admission: admission,
       // checked: false
@@ -82,6 +85,7 @@ export default function AddAnthro({ id, admission }) {
       cranian,
       malnutrition,
       ration,
+      oedeme,
       commentaires,
       admission,
     }) => {
@@ -92,6 +96,8 @@ export default function AddAnthro({ id, admission }) {
         cranian,
         malnutrition,
         ration,
+        rationSeche,
+        oedeme,
         commentaires,
       });
       Axios.post(
@@ -103,6 +109,7 @@ export default function AddAnthro({ id, admission }) {
           taille: height,
           type_malnutrition: malnutrition,
           ration_seche: ration,
+          type_oedeme: oedeme,
           commentaires: commentaires,
           date_admission_patient: admission,
           // declarer_gueri: checked
@@ -137,11 +144,16 @@ export default function AddAnthro({ id, admission }) {
     getFieldProps,
     values,
   } = formik;
-  const [rationSeche, setRationSeche] = useState("false");
+
   const handleChangeRationPatient = (event) => {
     const { value } = event.target;
     setFieldValue("ration", value);
-    setRationSeche(value);
+    if (value === "true") {
+      setRationSeche(true);
+    } else {
+      setRationSeche(false);
+    }
+    //setRationSeche(value);
     console.log(rationSeche);
   };
   return (
@@ -211,18 +223,34 @@ export default function AddAnthro({ id, admission }) {
                   <FormLabel component="label">Oedème:</FormLabel>
                   <Stack direction={{ xs: "row", sm: "row" }}>
                     <FormControlLabel
-                      value="false"
-                      control={<Radio checked={values.ration === "false"} />}
+                      value="true"
+                      control={<Radio checked={values.ration === "true"} />}
                       label="Oui"
                     />
                     <FormControlLabel
-                      value="true"
-                      control={<Radio checked={values.ration === "true"} />}
+                      value="false"
+                      control={<Radio checked={values.ration === "false"} />}
                       label="Non"
                     />
                   </Stack>
                 </Stack>
               </RadioGroup>
+              <Select
+                sx={{ padding: "2px" }}
+                value={values.oedeme}
+                native
+                {...getFieldProps("oedeme")}
+                disabled={!rationSeche}
+                error={Boolean(touched.oedeme && errors.oedeme)}
+                helperText={touched.oedeme && errors.oedeme}
+              >
+                <option value="" selected disabled hidden>
+                  Type d'Oedème
+                </option>
+                <option value="+">+</option>
+                <option value="+ +">+ +</option>
+                <option value="+ + +">+ + +</option>
+              </Select>
               <Select
                 native
                 sx={{ width: "100%", padding: "2px" }}
