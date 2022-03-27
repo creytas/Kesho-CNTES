@@ -229,7 +229,7 @@ export default function Details() {
                   }
                   birthdate={onePatient.Patient.date_naissance_patient}
                   number={onePatient.Patient.telephone}
-                  tutor={onePatient.Famille.nom_tuteur}
+                  tutor={onePatient.Famille.tuteur}
                   location={onePatient.Patient.provenance_patient}
                   healing={onePatient.Anthropometrique[0].date_guerison_patient}
                   admission={

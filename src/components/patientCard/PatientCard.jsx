@@ -65,7 +65,9 @@ const PatientCard = ({
       </div>
       <div className="userShowInfo">
         <EmojiPeopleIcon className="userShowIcon" />
-        <span className="userShowInfoTitle">{tutor}</span>
+        <span className="userShowInfoTitle">
+          {tutor === "" ? "Non renseigné" : tutor}
+        </span>
       </div>
       <div className="userShowInfo">
         <LocationOnIcon className="userShowIcon" />
