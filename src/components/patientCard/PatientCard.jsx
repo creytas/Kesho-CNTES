@@ -54,7 +54,7 @@ const PatientCard = ({
       <div className="userShowInfo">
         <Laying className="userShowIcon" />
         <span className="userShowInfoTitle">
-          {moment(admission).format("DD/MM/YYYY")}
+          {moment(admission).format("dddd DD/MM/YYYY")}
         </span>
       </div>
       <div className="userShowInfo">

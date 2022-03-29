@@ -26,8 +26,8 @@ import { fakeAuth } from "../../fakeAuth";
 
 const MENU_OPTIONS = [
   {
-    label: "Accueil",
-    icon: `bx:bx-home-smile`,
+    label: "Publications",
+    icon: `mdi:account-edit-outline`,
     linkTo: "/",
   },
   {
