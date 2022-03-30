@@ -65,9 +65,7 @@ export default function FamilleForm({
       .max(25)
       .matches(/[A-Za-z]/)
       .trim(),
-    dateNaissanceMere: Yup.number().positive(
-      "l'âge de la mère doit être positif"
-    ),
+    dateNaissanceMere: Yup.number(),
     etatMere: Yup.string(),
     PossederTeleRadio: Yup.string(),
     ProffessionChefMenage: Yup.string(),
@@ -79,9 +77,7 @@ export default function FamilleForm({
     statutMarital: Yup.string(),
     typeContraceptionNaturel: Yup.string(),
     mereEnVie: Yup.string(),
-    dateNaissanceChefMenage: Yup.number().positive(
-      "l'âge du père doit être positif"
-    ),
+    dateNaissanceChefMenage: Yup.number(),
     // vivreAvecParent: Yup.string().required('champs requis'),
     Tribut: Yup.string(),
     Religion: Yup.string(),
@@ -793,6 +789,66 @@ export default function FamilleForm({
                 helperText={touched.NbrRepasJour && errors.NbrRepasJour}
                 error={Boolean(touched.NbrRepasJour && errors.NbrRepasJour)}
               />
+                            <RadioGroup
+                // {...getFieldProps('consommationPoisson')}
+                onChange={handleConsommationPoisson}
+                // required
+                helperText={
+                  touched.consommationPoisson && errors.consommationPoisson
+                }
+                error={Boolean(
+                  touched.consommationPoisson && errors.consommationPoisson
+                )}
+              >
+                <Stack
+                  direction={{ xs: "column", sm: "row" }}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    paddingLeft: "10px",
+                    border: `${
+                      Boolean(
+                        touched.consommationPoisson &&
+                          errors.consommationPoisson
+                      ) && "1px solid red"
+                    }`,
+                    borderRadius: `${
+                      Boolean(
+                        touched.consommationPoisson &&
+                          errors.consommationPoisson
+                      ) && "10px"
+                    }`,
+                  }}
+                  spacing={1}
+                >
+                  <FormLabel component="label">
+                    Consommation de poisson:
+                  </FormLabel>
+                  <FormControlLabel
+                    value="true"
+                    control={
+                      <Radio
+                        checked={
+                          patientFormFamille.consommationPoisson === "true"
+                        }
+                      />
+                    }
+                    label="Oui"
+                  />
+                  <FormControlLabel
+                    value="false"
+                    control={
+                      <Radio
+                        checked={
+                          patientFormFamille.consommationPoisson === "false"
+                        }
+                      />
+                    }
+                    label="Non"
+                  />
+                </Stack>
+              </RadioGroup>
+
             </Stack>
           </Grid>
           <Grid item xs={11} sm={6} md={6}>
@@ -858,6 +914,32 @@ export default function FamilleForm({
                   )
                 }
               />
+                            <Select
+                sx={{ padding: "2px" }}
+                native
+                // {...getFieldProps('Tribut')}
+                onChange={handleTribut}
+                helperText={touched.Tribut && errors.Tribut}
+                error={Boolean(touched.Tribut && errors.Tribut)}
+              >
+                <option value="" selected disabled hidden>
+                  {`${
+                    patientFormFamille.tribut
+                      ? patientFormFamille.tribut
+                      : "Tribu"
+                  }`}
+                </option>
+                <option value="Havu">Havu</option>
+                <option value="Shi">Shi</option>
+                <option value="Rega">Rega</option>
+                <option value="Autre ethnie du sud-kivu">
+                  Autre ethnie du sud-kivu
+                </option>
+                <option value="Autre ethnie du pays et autres">
+                  Autre ethnie du pays et autres
+                </option>
+              </Select>
+
               <RadioGroup
                 onChange={handleContraceptionMere}
                 error={Boolean(
@@ -1039,90 +1121,6 @@ export default function FamilleForm({
                 <option value="Ligature tubaire">Ligature tubaire</option>
                 <option value="Vasectomie">Vasectomie</option>
               </Select>
-              <Select
-                sx={{ padding: "2px" }}
-                native
-                // {...getFieldProps('Tribut')}
-                onChange={handleTribut}
-                helperText={touched.Tribut && errors.Tribut}
-                error={Boolean(touched.Tribut && errors.Tribut)}
-              >
-                <option value="" selected disabled hidden>
-                  {`${
-                    patientFormFamille.tribut
-                      ? patientFormFamille.tribut
-                      : "Tribu"
-                  }`}
-                </option>
-                <option value="Havu">Havu</option>
-                <option value="Shi">Shi</option>
-                <option value="Rega">Rega</option>
-                <option value="Autre ethnie du sud-kivu">
-                  Autre ethnie du sud-kivu
-                </option>
-                <option value="Autre ethnie du pays et autres">
-                  Autre ethnie du pays et autres
-                </option>
-              </Select>
-              <RadioGroup
-                // {...getFieldProps('consommationPoisson')}
-                onChange={handleConsommationPoisson}
-                // required
-                helperText={
-                  touched.consommationPoisson && errors.consommationPoisson
-                }
-                error={Boolean(
-                  touched.consommationPoisson && errors.consommationPoisson
-                )}
-              >
-                <Stack
-                  direction={{ xs: "column", sm: "row" }}
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    paddingLeft: "10px",
-                    border: `${
-                      Boolean(
-                        touched.consommationPoisson &&
-                          errors.consommationPoisson
-                      ) && "1px solid red"
-                    }`,
-                    borderRadius: `${
-                      Boolean(
-                        touched.consommationPoisson &&
-                          errors.consommationPoisson
-                      ) && "10px"
-                    }`,
-                  }}
-                  spacing={1}
-                >
-                  <FormLabel component="label">
-                    Consommation de poisson:
-                  </FormLabel>
-                  <FormControlLabel
-                    value="true"
-                    control={
-                      <Radio
-                        checked={
-                          patientFormFamille.consommationPoisson === "true"
-                        }
-                      />
-                    }
-                    label="Oui"
-                  />
-                  <FormControlLabel
-                    value="false"
-                    control={
-                      <Radio
-                        checked={
-                          patientFormFamille.consommationPoisson === "false"
-                        }
-                      />
-                    }
-                    label="Non"
-                  />
-                </Stack>
-              </RadioGroup>
               <Select
                 native
                 // required

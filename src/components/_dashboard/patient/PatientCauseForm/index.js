@@ -434,31 +434,6 @@ export default function CauseForm({
             <Select
               native
               fullWidth
-              autoFocus
-              sx={{ padding: "2px", marginTop: "24px" }}
-              // value={}
-              error={Boolean(
-                touched.lieuAccouchement && errors.lieuAccouchement
-              )}
-              onChange={handleLieuAccouchement}
-              // {...getFieldProps('lieuAccouchement')}
-            >
-              <option value="" selected disabled hidden>
-                {`${
-                  patientFormCause.lieuAccouchement
-                    ? patientFormCause.lieuAccouchement
-                    : "Lieu d'accouchement"
-                }`}
-              </option>
-              <option value="Voiture">Voiture</option>
-              <option value="domicile">domicile</option>
-              <option value="Structure sanitaire oui">
-                Structure sanitaire
-              </option>
-            </Select>
-            <Select
-              native
-              fullWidth
               // {...getFieldProps('termeGrossesse')}
               sx={{ marginTop: "24px" }}
               onChange={handleDureeTermeGrossesse}
@@ -475,35 +450,6 @@ export default function CauseForm({
               <option value="Prématuré ">Prématuré</option>
               <option value="A terme">A terme</option>
             </Select>
-            <Select
-              native
-              fullWidth
-              sx={{ marginTop: "24px" }}
-              onChange={handleAsphyxiePrerinatale}
-              helperText={
-                touched.asphyxiePrerinatale && errors.asphyxiePrerinatale
-              }
-              // {...getFieldProps('asphyxiePrerinatale')}
-              error={Boolean(
-                touched.asphyxiePrerinatale && errors.asphyxiePrerinatale
-              )}
-            >
-              <option value="" selected disabled hidden>
-                {`${
-                  patientFormCause.asphyxiePrerinatale
-                    ? patientFormCause.asphyxiePrerinatale
-                    : "Asphyxie périnatale"
-                }`}
-              </option>
-              <option value="pas de cri">pas de cri</option>
-              <option value="a crié spontanément oui">
-                a crié spontanément
-              </option>
-              <option value="cri après réanimation">
-                cri après réanimation
-              </option>
-            </Select>
-
             <RadioGroup
               // fullWidth
               sx={{ marginTop: "24px" }}
@@ -548,6 +494,69 @@ export default function CauseForm({
                 </Stack>
               </Stack>
             </RadioGroup>
+            <TextField
+              fullWidth
+              sx={{ padding: "2px", marginTop: "24px" }}
+              value={patientFormCause.eig}
+              label="EIG moyen (mois)"
+              // {...getFieldProps('eig')}
+              onChange={handleEig}
+              error={Boolean(touched.eig && errors.eig)}
+              helperText={touched.eig && errors.eig}
+            />
+            <Select
+              native
+              fullWidth
+              autoFocus
+              sx={{ padding: "2px", marginTop: "24px" }}
+              // value={}
+              error={Boolean(
+                touched.lieuAccouchement && errors.lieuAccouchement
+              )}
+              onChange={handleLieuAccouchement}
+              // {...getFieldProps('lieuAccouchement')}
+            >
+              <option value="" selected disabled hidden>
+                {`${
+                  patientFormCause.lieuAccouchement
+                    ? patientFormCause.lieuAccouchement
+                    : "Lieu d'accouchement"
+                }`}
+              </option>
+              <option value="Voiture">Voiture</option>
+              <option value="domicile">domicile</option>
+              <option value="Structure sanitaire oui">
+                Structure sanitaire
+              </option>
+            </Select>
+            <Select
+              native
+              fullWidth
+              sx={{ marginTop: "24px" }}
+              onChange={handleAsphyxiePrerinatale}
+              helperText={
+                touched.asphyxiePrerinatale && errors.asphyxiePrerinatale
+              }
+              // {...getFieldProps('asphyxiePrerinatale')}
+              error={Boolean(
+                touched.asphyxiePrerinatale && errors.asphyxiePrerinatale
+              )}
+            >
+              <option value="" selected disabled hidden>
+                {`${
+                  patientFormCause.asphyxiePrerinatale
+                    ? patientFormCause.asphyxiePrerinatale
+                    : "Asphyxie périnatale"
+                }`}
+              </option>
+              <option value="pas de cri">pas de cri</option>
+              <option value="a crié spontanément oui">
+                a crié spontanément
+              </option>
+              <option value="cri après réanimation">
+                cri après réanimation
+              </option>
+            </Select>
             <Select
               native
               fullWidth
@@ -634,50 +643,6 @@ export default function CauseForm({
               }
             />
             <RadioGroup
-              sx={{ padding: "2px", marginTop: "24px" }}
-              onChange={handleTerrainVih}
-              // {...getFieldProps('terrainVih')}
-              helperText={touched.terrainVih && errors.terrainVih}
-              error={Boolean(touched.terrainVih && errors.terrainVih)}
-            >
-              <Stack
-                direction={{ xs: "column", md: "row", sm: "row" }}
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  paddingLeft: "10px",
-                  border: `${
-                    Boolean(touched.terrainVih && errors.terrainVih) &&
-                    "1px solid red"
-                  }`,
-                  borderRadius: `${
-                    Boolean(touched.terrainVih && errors.terrainVih) && "10px"
-                  }`,
-                }}
-                spacing={1}
-              >
-                <FormLabel component="label">Terrain VIH connu:</FormLabel>
-                <Stack direction={{ xs: "row", sm: "row" }}>
-                  <FormControlLabel
-                    value="true"
-                    control={
-                      <Radio checked={patientFormCause.terrainVih === "true"} />
-                    }
-                    label="Oui"
-                  />
-                  <FormControlLabel
-                    value="false"
-                    control={
-                      <Radio
-                        checked={patientFormCause.terrainVih === "false"}
-                      />
-                    }
-                    label="Non"
-                  />
-                </Stack>
-              </Stack>
-            </RadioGroup>
-            <RadioGroup
               onChange={handleChangeHospitalisation}
               sx={{ marginTop: "24px" }}
               // {...getFieldProps('hospitalisationRecente')}
@@ -757,7 +722,49 @@ export default function CauseForm({
                 errors.diagnostiqueHospitalisation
               }
             />
-
+            <RadioGroup
+              required
+              // {...getFieldProps('atcdMas')}
+              sx={{ marginTop: "24px" }}
+              onChange={handleAtcdMas}
+              error={Boolean(touched.atcdMas && errors.atcdMas)}
+              // helperText={touched.atcdMas && errors.atcdMas}
+            >
+              <Stack
+                direction={{ xs: "column", md: "column", sm: "row" }}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  paddingLeft: "10px",
+                  border: `${
+                    Boolean(touched.atcdMas && errors.atcdMas) &&
+                    "1px solid red"
+                  }`,
+                  borderRadius: `${
+                    Boolean(touched.atcdMas && errors.atcdMas) && "10px"
+                  }`,
+                }}
+                spacing={1}
+              >
+                <FormLabel component="label">ATCD de MAS:</FormLabel>
+                <Stack direction={{ xs: "row", sm: "row" }}>
+                  <FormControlLabel
+                    value="true"
+                    control={
+                      <Radio checked={patientFormCause.atcdMas === "true"} />
+                    }
+                    label="Oui"
+                  />
+                  <FormControlLabel
+                    value="false"
+                    control={
+                      <Radio checked={patientFormCause.atcdMas === "false"} />
+                    }
+                    label="Non"
+                  />
+                </Stack>
+              </Stack>
+            </RadioGroup>
             <TextField
               sx={{ padding: "2px", marginTop: "24px" }}
               autoComplete="nbr"
@@ -842,16 +849,7 @@ export default function CauseForm({
           </Grid>
           <Grid item xs={10} sm={6} md={6}>
             {/* <Stack> */}
-            <TextField
-              fullWidth
-              sx={{ padding: "2px", marginTop: "24px" }}
-              value={patientFormCause.eig}
-              label="EIG moyen (mois)"
-              // {...getFieldProps('eig')}
-              onChange={handleEig}
-              error={Boolean(touched.eig && errors.eig)}
-              helperText={touched.eig && errors.eig}
-            />
+
             <TextField
               sx={{ padding: "2px", marginTop: "24px" }}
               label="Rang dans la fratrie"
@@ -872,49 +870,7 @@ export default function CauseForm({
               onChange={handleTailleFratrie}
               error={Boolean(touched.tailleFratrie && errors.tailleFratrie)}
             />
-            <RadioGroup
-              required
-              // {...getFieldProps('atcdMas')}
-              sx={{ marginTop: "24px" }}
-              onChange={handleAtcdMas}
-              error={Boolean(touched.atcdMas && errors.atcdMas)}
-              // helperText={touched.atcdMas && errors.atcdMas}
-            >
-              <Stack
-                direction={{ xs: "column", md: "column", sm: "row" }}
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  paddingLeft: "10px",
-                  border: `${
-                    Boolean(touched.atcdMas && errors.atcdMas) &&
-                    "1px solid red"
-                  }`,
-                  borderRadius: `${
-                    Boolean(touched.atcdMas && errors.atcdMas) && "10px"
-                  }`,
-                }}
-                spacing={1}
-              >
-                <FormLabel component="label">ATCD de MAS:</FormLabel>
-                <Stack direction={{ xs: "row", sm: "row" }}>
-                  <FormControlLabel
-                    value="true"
-                    control={
-                      <Radio checked={patientFormCause.atcdMas === "true"} />
-                    }
-                    label="Oui"
-                  />
-                  <FormControlLabel
-                    value="false"
-                    control={
-                      <Radio checked={patientFormCause.atcdMas === "false"} />
-                    }
-                    label="Non"
-                  />
-                </Stack>
-              </Stack>
-            </RadioGroup>
+
             <RadioGroup
               // fullWidth
               onChange={handleMasFratrie}
@@ -1061,6 +1017,50 @@ export default function CauseForm({
                         checked={
                           patientFormCause.vaccinationRougeole === "false"
                         }
+                      />
+                    }
+                    label="Non"
+                  />
+                </Stack>
+              </Stack>
+            </RadioGroup>
+            <RadioGroup
+              sx={{ padding: "2px", marginTop: "24px" }}
+              onChange={handleTerrainVih}
+              // {...getFieldProps('terrainVih')}
+              helperText={touched.terrainVih && errors.terrainVih}
+              error={Boolean(touched.terrainVih && errors.terrainVih)}
+            >
+              <Stack
+                direction={{ xs: "column", md: "row", sm: "row" }}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  paddingLeft: "10px",
+                  border: `${
+                    Boolean(touched.terrainVih && errors.terrainVih) &&
+                    "1px solid red"
+                  }`,
+                  borderRadius: `${
+                    Boolean(touched.terrainVih && errors.terrainVih) && "10px"
+                  }`,
+                }}
+                spacing={1}
+              >
+                <FormLabel component="label">Terrain VIH connu:</FormLabel>
+                <Stack direction={{ xs: "row", sm: "row" }}>
+                  <FormControlLabel
+                    value="true"
+                    control={
+                      <Radio checked={patientFormCause.terrainVih === "true"} />
+                    }
+                    label="Oui"
+                  />
+                  <FormControlLabel
+                    value="false"
+                    control={
+                      <Radio
+                        checked={patientFormCause.terrainVih === "false"}
                       />
                     }
                     label="Non"

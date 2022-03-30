@@ -283,7 +283,7 @@ export default function PatientForm({
     //   ? 'Proven patient'
     //   : patientFormData.ExplicationProvenance;
     // console.log(chai);
-    if (value === "Autres") {
+    if (value === "Hors ville") {
       setProvenance(false);
     } else {
       setProvenance(true);
@@ -546,7 +546,7 @@ export default function PatientForm({
                   // fullWidth
                   autoComplete="tel"
                   type="tel"
-                  label="Téléphone ex:+243850157817"
+                  label="Téléphone ex: +243850157817"
                   value={patientFormData.telephone}
                   onChange={handleChangeTelephone}
                   // {...getFieldProps('telephone')}
@@ -575,7 +575,6 @@ export default function PatientForm({
                   <option value="Bagira">Bagira</option>
                   <option value="Ibanda">Ibanda</option>
                   <option value="Hors ville">Hors ville</option>
-                  <option value="Autres">Autres</option>
                 </Select>
                 <TextField
                   sx={{ padding: "2px" }}
@@ -644,7 +643,7 @@ export default function PatientForm({
                 <TextField
                   sx={{ padding: "2px" }}
                   // fullWidth
-                  label="Adresse "
+                  label="Adresse ex: 15 Avenue Kandende Q/Lukunga"
                   value={patientFormData.adressePatient}
                   // defaultValue={DataPatient.adressePatient}
                   onChange={handleChangeAdressePatient}

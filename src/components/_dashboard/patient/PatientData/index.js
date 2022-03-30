@@ -298,16 +298,6 @@ export default function PatientData({ DataPatient, PrevStep }) {
                 {FamalyData.tuteur ? FamalyData.tuteur : "Son père"}
               </span>
             </InputLabel>
-
-            <InputLabel>
-              Traitement Nutritionnel:
-              <span style={{ color: "black" }}>
-                {" "}
-                {indentity.traitementNutritionnel === ""
-                  ? "Non renseigné"
-                  : indentity.traitementNutritionnel}
-              </span>
-            </InputLabel>
             <InputLabel>
               Prise d'ATB:
               <span style={{ color: "black" }}>
@@ -428,39 +418,6 @@ export default function PatientData({ DataPatient, PrevStep }) {
               <span style={{ color: "black" }}>
                 {" "}
                 {indentity.poidsNaissance} g
-              </span>
-            </InputLabel>
-            <InputLabel>
-              Poids Actuel :
-              <span style={{ color: "black" }}> {indentity.poidsActuel}Kg</span>
-            </InputLabel>
-            <InputLabel>
-              Taille :
-              <span style={{ color: "black" }}> {indentity.taille} Cm</span>
-            </InputLabel>
-            <InputLabel>
-              Oedème :
-              <span style={{ color: "black" }}>
-                {" "}
-                {`${indentity.rationSeche ? "Oui" : "Non"}`}
-              </span>
-            </InputLabel>
-            <InputLabel>
-              Type d'oedème :
-              <span style={{ color: "black" }}> {indentity.typeOedeme}</span>
-            </InputLabel>
-            <InputLabel>
-              Périmètre brachial :
-              <span style={{ color: "black" }}>
-                {" "}
-                {indentity.perimetreBrachail} Cm
-              </span>
-            </InputLabel>
-            <InputLabel>
-              Périmètre Cranien :
-              <span style={{ color: "black" }}>
-                {" "}
-                {indentity.perimetreCranien} Cm
               </span>
             </InputLabel>
             <InputLabel>
@@ -675,7 +632,7 @@ export default function PatientData({ DataPatient, PrevStep }) {
                 {FamalyData.professionMere}
               </span>
             </InputLabel>
-            <Typography>Autre</Typography>
+            <Typography>Ménage</Typography>
             <InputLabel>
               Taille ménage :
               <span style={{ color: "black" }}> {FamalyData.tailleMenage}</span>
@@ -706,6 +663,53 @@ export default function PatientData({ DataPatient, PrevStep }) {
               <span style={{ color: "black" }}>{`${
                 CauseMalnutrition.TbcChezParent === "true" ? "Oui" : "Non"
               }`}</span>
+            </InputLabel>
+            <Typography sx={{ fontWeight: "900", fontSize: "larger" }}>
+              Renseignements cliniques
+            </Typography>
+            <InputLabel>
+              Poids Actuel :
+              <span style={{ color: "black" }}> {indentity.poidsActuel}Kg</span>
+            </InputLabel>
+            <InputLabel>
+              Taille :
+              <span style={{ color: "black" }}> {indentity.taille} Cm</span>
+            </InputLabel>
+            <InputLabel>
+              Périmètre Cranien :
+              <span style={{ color: "black" }}>
+                {" "}
+                {indentity.perimetreCranien} Cm
+              </span>
+            </InputLabel>
+
+            <InputLabel>
+              Périmètre brachial :
+              <span style={{ color: "black" }}>
+                {" "}
+                {indentity.perimetreBrachail} Cm
+              </span>
+            </InputLabel>
+
+            <InputLabel>
+              Oedème :
+              <span style={{ color: "black" }}>
+                {" "}
+                {`${indentity.rationSeche ? "Oui" : "Non"}`}
+              </span>
+            </InputLabel>
+            <InputLabel>
+              Type d'oedème :
+              <span style={{ color: "black" }}> {indentity.typeOedeme}</span>
+            </InputLabel>
+            <InputLabel>
+              Traitement Nutritionnel:
+              <span style={{ color: "black" }}>
+                {" "}
+                {indentity.traitementNutritionnel === ""
+                  ? "Non renseigné"
+                  : indentity.traitementNutritionnel}
+              </span>
             </InputLabel>
           </Card>
         </Grid>
