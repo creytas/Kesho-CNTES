@@ -279,11 +279,7 @@ export default function PatientForm({
     const { value } = event.target;
     setFieldValue("provenancePatient", value);
     patientFormData.setProvenancePatient(value);
-    // const chai = patientFormData.ExplicationProvenance
-    //   ? 'Proven patient'
-    //   : patientFormData.ExplicationProvenance;
-    // console.log(chai);
-    if (value === "Hors ville") {
+    if (value === "Hors Ville") {
       setProvenance(false);
     } else {
       setProvenance(true);
@@ -419,13 +415,22 @@ export default function PatientForm({
     const { value } = event.target;
     setFieldValue("rationSeche", value);
     patientFormData.setRationSeche(value);
-    console.log(patientFormData.rationSeche);
     if (value === "true") {
       setOedeme(true);
     } else {
       setOedeme(false);
     }
   };
+  // const handleAllaitementExclusifSixMoix = (event) => {
+  //   const { value } = event.target;
+  //   setFieldValue("allaitementExclusifSixMois", value);
+  //   patientFormData.setAllaitementExclisifSixMois(value);
+  //   if (value === "true") {
+  //     setAllaitement(true);
+  //   } else {
+  //     setAllaitement(false);
+  //   }
+  // };
   return (
     <>
       <FormikProvider value={formik}>
@@ -553,51 +558,63 @@ export default function PatientForm({
                   error={Boolean(touched.telephone && errors.telephone)}
                   helperText={touched.telephone && errors.telephone}
                 />
+
                 <Select
-                  native
                   sx={{ padding: "2px" }}
-                  // {...getFieldProps('provenancePatient')}
+                  native
+                  // {...getFieldProps('modeArriver')}
+                  selected={patientFormData.provenancePatient}
                   onChange={handleChangeProvenance}
-                  // value={DataPatient.Provenace}
-                  helperText={
-                    touched.provenancePatient && errors.provenancePatient
-                  }
-                  error={Boolean(
-                    touched.provenancePatient && errors.provenancePatient
-                  )}
+                  error={Boolean(touched.provenance && errors.provenance)}
+                  helperText={touched.provenance && errors.provenance}
                 >
-                  <option defaultValue="" selected disabled hidden>
-                    {patientFormData.provenancePatient
-                      ? patientFormData.provenancePatient
-                      : "Provenance"}
+                  <option value="" selected disabled hidden>
+                    {`${
+                      patientFormData.provenancePatient
+                        ? patientFormData.provenancePatient
+                        : "Provenance"
+                    }`}
                   </option>
                   <option value="kadutu">Kadutu</option>
                   <option value="Bagira">Bagira</option>
                   <option value="Ibanda">Ibanda</option>
-                  <option value="Hors ville">Hors ville</option>
+                  <option value="Hors Ville">Hors Ville</option>
                 </Select>
                 <TextField
                   sx={{ padding: "2px" }}
                   // fullWidth
                   label="Si la provenance est autre veuillez préciser"
-                  // {...getFieldProps('ExplicationProvenance')}
+                  // {...getFieldProps('ExplicationAutre')}
                   value={patientFormData.ExplicationProvenance}
                   onChange={handleChangeExplicationProvenance}
                   disabled={provenance}
+                  helperText={
+                    touched.ExplicationProvenance &&
+                    errors.ExplicationProvenance
+                  }
                   error={
                     Boolean(
                       touched.ExplicationProvenance &&
                         errors.ExplicationProvenance
                     ) ||
                     Boolean(
-                      values.provenancePatient === "Autres" &&
+                      values.provenancePatient === "Hors Ville" &&
                         values.ExplicationProvenance === ""
                     )
                   }
-                  helperText={
-                    touched.ExplicationProvenance &&
-                    errors.ExplicationProvenance
-                  }
+                />
+                <TextField
+                  sx={{ padding: "2px" }}
+                  // fullWidth
+                  label="Adresse ex: 15 Avenue Kandende Q/Lukunga"
+                  value={patientFormData.adressePatient}
+                  // defaultValue={DataPatient.adressePatient}
+                  onChange={handleChangeAdressePatient}
+                  // {...getFieldProps('adressePatient')}
+                  helperText={touched.adressePatient && errors.adressePatient}
+                  error={Boolean(
+                    touched.adressePatient && errors.adressePatient
+                  )}
                 />
                 <Select
                   sx={{ padding: "2px" }}
@@ -640,19 +657,7 @@ export default function PatientForm({
                     )
                   }
                 />
-                <TextField
-                  sx={{ padding: "2px" }}
-                  // fullWidth
-                  label="Adresse ex: 15 Avenue Kandende Q/Lukunga"
-                  value={patientFormData.adressePatient}
-                  // defaultValue={DataPatient.adressePatient}
-                  onChange={handleChangeAdressePatient}
-                  // {...getFieldProps('adressePatient')}
-                  helperText={touched.adressePatient && errors.adressePatient}
-                  error={Boolean(
-                    touched.adressePatient && errors.adressePatient
-                  )}
-                />
+
                 <TextareaAutosize
                   minRows={8}
                   maxRows={8}
@@ -873,7 +878,7 @@ export default function PatientForm({
                     touched.constitutionAliment && errors.constitutionAliment
                   )}
                 />
-                <RadioGroup
+                {/* <RadioGroup
                   onChange={handleChangeRationPatient}
                   error={Boolean(touched.rationSeche && errors.rationSeche)}
                   helperText={touched.rationSeche && errors.rationSeche}
@@ -918,6 +923,52 @@ export default function PatientForm({
                       />
                     </Stack>
                   </Stack>
+                </RadioGroup> */}
+                <RadioGroup
+                  // {...getFieldProps('allaitementExclusifSixMois')}
+                  helperText={touched.rationSeche && errors.rationSeche}
+                  error={Boolean(touched.rationSeche && errors.rationSeche)}
+                  onChange={handleChangeRationPatient}
+                >
+                  <Stack
+                    direction={{ xs: "column", sm: "column", md: "row" }}
+                    sx={{
+                      display: "flex",
+                      paddingLeft: "10px",
+                      alignItems: "center",
+                      border: `${
+                        Boolean(touched.rationSeche && errors.rationSeche) &&
+                        "1px solid red"
+                      }`,
+                      borderRadius: `${
+                        Boolean(touched.rationSeche && errors.rationSeche) &&
+                        "10px"
+                      }`,
+                    }}
+                    spacing={1}
+                  >
+                    <FormLabel component="label">Oedème:</FormLabel>
+                    <Stack direction={{ xs: "row", sm: "row" }}>
+                      <FormControlLabel
+                        value="true"
+                        control={
+                          <Radio
+                            checked={patientFormData.rationSeche === "true"}
+                          />
+                        }
+                        label="Oui"
+                      />
+                      <FormControlLabel
+                        value="false"
+                        control={
+                          <Radio
+                            checked={patientFormData.rationSeche === "false"}
+                          />
+                        }
+                        label="Non"
+                      />
+                    </Stack>
+                  </Stack>
                 </RadioGroup>
                 <Select
                   sx={{ padding: "2px" }}
@@ -926,7 +977,12 @@ export default function PatientForm({
                   selected={patientFormData.typeOedeme}
                   onChange={handleChangeTypeOedeme}
                   disabled={!oedeme}
-                  error={Boolean(touched.typeOedeme && errors.typeOedeme)}
+                  error={
+                    Boolean(touched.typeOedeme && errors.typeOedeme) ||
+                    Boolean(
+                      values.rationSeche === "true" && values.typeOedeme === ""
+                    )
+                  }
                   helperText={touched.typeOedeme && errors.typeOedeme}
                 >
                   <option value="" selected disabled hidden>
