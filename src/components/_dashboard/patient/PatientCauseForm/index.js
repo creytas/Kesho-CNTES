@@ -48,6 +48,7 @@ export default function CauseForm({
     tbcGueriEtDuréTraitementDesabled,
     setTbcGueriEtDuréTraitementDesabled,
   ] = useState(true);
+  const [allaitement, setAllaitement] = useState(false);
 
   const [position] = useState(0);
   useEffect(() => {
@@ -85,6 +86,22 @@ export default function CauseForm({
     cocktailAtbDuree: Yup.string().trim().min(3),
     dureeTraitementProduitPlante: Yup.string().min(3),
     dpmAnormalPrecision: Yup.string().trim().min(10),
+    poidsNaissance: Yup.number()
+      .positive()
+      .min(900, "Minimum 900 gr")
+      .required("requis"),
+    allaitementExclusifSixMois: Yup.string()
+      .trim()
+      .min(2, "Min 2 caractère")
+      .required("Champs requis"),
+    ageFinAllaitement: Yup.number()
+      .min(1, "Minimum 1 mois")
+      .positive("champs doit être positive"),
+    diversificationAliment: Yup.number("un nombre")
+      .positive("nombre positif")
+      .min(2, "Minimum 2"),
+    constitutionAliment: Yup.string().trim().min(2, "Min 2 caractère"),
+    consommationPoisson: Yup.string(),
   });
 
   const formik = useFormik({
@@ -167,6 +184,24 @@ export default function CauseForm({
         patientFormCause.dureeTraitementProduitPlante
           ? patientFormCause.dureeTraitementProduitPlante
           : "",
+      poidsNaissance: patientFormCause.poidsNaissance
+        ? patientFormCause.poidsNaissance
+        : "",
+      allaitementExclusifSixMois: patientFormCause.AllaitementExclisifSixMois
+        ? patientFormCause.AllaitementExclisifSixMois
+        : "",
+      ageFinAllaitement: patientFormCause.ageFinAllaitement
+        ? patientFormCause.ageFinAllaitement
+        : "",
+      diversificationAliment: patientFormCause.diversificationAliment
+        ? patientFormCause.diversificationAliment
+        : "",
+      constitutionAliment: patientFormCause.constitutionAliment
+        ? patientFormCause.constitutionAliment
+        : "",
+      consommationPoisson: patientFormCause.consommationPoisson
+        ? patientFormCause.consommationPoisson
+        : "",
     },
     validationSchema: RegisterSchema,
     onSubmit: (CauseMalnutrition) => {
@@ -223,6 +258,14 @@ export default function CauseForm({
         CauseMalnutrition.cocktailAtbDuree === ""
       ) {
         throw alert("Veuillez préciser la durée du cocktail Atb");
+      }
+      if (
+        CauseMalnutrition.allaitementExclusifSixMois === "false" &&
+        CauseMalnutrition.ageFinAllaitement === ""
+      ) {
+        throw alert(
+          "Veuillez preciser le nombre l'age fin allaitment en (mois) "
+        );
       }
       SetDataPatient((current) => ({ ...current, CauseMalnutrition }));
       NextStep();
@@ -420,17 +463,58 @@ export default function CauseForm({
     setFieldValue("atcdDuTbcDansFratrie", value);
     patientFormCause.setAtcdDuTbcDansFratrie(value);
   };
-  // const handleAtcdDuTbcDansFratrie = (event) => {
-  //   const { value } = event.target;
-  //   setFieldValue('atcdDuTbcDansFratrie', value);
-  //   patientFormCause.setAtcdDuTbcDansFratrie(value);
-  // };
+  const handleChangePoidsnaissance = (event) => {
+    const { value } = event.target;
+    setFieldValue("poidsNaissance", value);
+    patientFormCause.setPoidsNaissance(value);
+  };
+  const handleAllaitementExclusifSixMoix = (event) => {
+    const { value } = event.target;
+    setFieldValue("allaitementExclusifSixMois", value);
+    patientFormCause.setAllaitementExclisifSixMois(value);
+    if (value === "true") {
+      setAllaitement(true);
+    } else {
+      setAllaitement(false);
+    }
+  };
+  const handleChangeAgeFinAllaitement = (event) => {
+    const { value } = event.target;
+    setFieldValue("ageFinAllaitement", value);
+    patientFormCause.setAgeFinAllaitement(value);
+  };
+  const handleChangeDiversificationAliment = (event) => {
+    const { value } = event.target;
+    setFieldValue("diversificationAliment", value);
+    patientFormCause.setDiversificationAliment(value);
+  };
+  const handleChangeConstitutionAliment = (event) => {
+    const { value } = event.target;
+    setFieldValue("constitutionAliment", value);
+    patientFormCause.setConstitutionAliment(value);
+  };
+  const handleConsommationPoisson = (event) => {
+    const { value } = event.target;
+    setFieldValue("consommationPoisson", value);
+    patientFormCause.setConsommationPoisson(value);
+  };
+
   return (
     <FormikProvider value={formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Grid container spacing={4}>
           <Grid item xs={10} sm={6} md={6}>
             {/* <Stack spacing={0}> */}
+            <TextField
+              fullWidth
+              sx={{ padding: "2px", marginTop: "24px" }}
+              value={patientFormCause.eig}
+              label="EIG moyen (mois)"
+              // {...getFieldProps('eig')}
+              onChange={handleEig}
+              error={Boolean(touched.eig && errors.eig)}
+              helperText={touched.eig && errors.eig}
+            />
             <Select
               native
               fullWidth
@@ -450,60 +534,6 @@ export default function CauseForm({
               <option value="Prématuré ">Prématuré</option>
               <option value="A terme">A terme</option>
             </Select>
-            <RadioGroup
-              // fullWidth
-              sx={{ marginTop: "24px" }}
-              error={Boolean(touched.sejourNeo && errors.sejourNeo)}
-              // helperText={touched.sejourNeo && errors.sejourNeo}
-              // {...getFieldProps('sejourNeo')}
-              onChange={handleSejourNeo}
-            >
-              <Stack
-                direction={{ xs: "column", sm: "row" }}
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  width: "100%",
-                  paddingLeft: "10px",
-                  border: `${
-                    Boolean(touched.sejourNeo && errors.sejourNeo) &&
-                    "1px solid red"
-                  }`,
-                  borderRadius: `${
-                    Boolean(touched.sejourNeo && errors.sejourNeo) && "10px"
-                  }`,
-                }}
-                spacing={1}
-              >
-                <FormLabel component="label">Séjour en néonat:</FormLabel>
-                <Stack direction={{ xs: "row", sm: "row" }}>
-                  <FormControlLabel
-                    value="true"
-                    control={
-                      <Radio checked={patientFormCause.sejourNeo === "true"} />
-                    }
-                    label="Oui"
-                  />
-                  <FormControlLabel
-                    value="false"
-                    control={
-                      <Radio checked={patientFormCause.sejourNeo === "false"} />
-                    }
-                    label="Non"
-                  />
-                </Stack>
-              </Stack>
-            </RadioGroup>
-            <TextField
-              fullWidth
-              sx={{ padding: "2px", marginTop: "24px" }}
-              value={patientFormCause.eig}
-              label="EIG moyen (mois)"
-              // {...getFieldProps('eig')}
-              onChange={handleEig}
-              error={Boolean(touched.eig && errors.eig)}
-              helperText={touched.eig && errors.eig}
-            />
             <Select
               native
               fullWidth
@@ -557,6 +587,50 @@ export default function CauseForm({
                 cri après réanimation
               </option>
             </Select>
+            <RadioGroup
+              // fullWidth
+              sx={{ marginTop: "24px" }}
+              error={Boolean(touched.sejourNeo && errors.sejourNeo)}
+              // helperText={touched.sejourNeo && errors.sejourNeo}
+              // {...getFieldProps('sejourNeo')}
+              onChange={handleSejourNeo}
+            >
+              <Stack
+                direction={{ xs: "column", sm: "row" }}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  width: "100%",
+                  paddingLeft: "10px",
+                  border: `${
+                    Boolean(touched.sejourNeo && errors.sejourNeo) &&
+                    "1px solid red"
+                  }`,
+                  borderRadius: `${
+                    Boolean(touched.sejourNeo && errors.sejourNeo) && "10px"
+                  }`,
+                }}
+                spacing={1}
+              >
+                <FormLabel component="label">Séjour en néonat:</FormLabel>
+                <Stack direction={{ xs: "row", sm: "row" }}>
+                  <FormControlLabel
+                    value="true"
+                    control={
+                      <Radio checked={patientFormCause.sejourNeo === "true"} />
+                    }
+                    label="Oui"
+                  />
+                  <FormControlLabel
+                    value="false"
+                    control={
+                      <Radio checked={patientFormCause.sejourNeo === "false"} />
+                    }
+                    label="Non"
+                  />
+                </Stack>
+              </Stack>
+            </RadioGroup>
             <Select
               native
               fullWidth
@@ -592,6 +666,187 @@ export default function CauseForm({
                 )
               }
             />
+            <TextField
+              sx={{ padding: "2px", marginTop: "24px" }}
+              fullWidth
+              label="Poids naissance (gr) ex:1500"
+              value={patientFormCause.poidsNaissance}
+              onChange={handleChangePoidsnaissance}
+              // {...getFieldProps('poidsNaissance')}
+              helperText={touched.poidsNaissance && errors.poidsNaissance}
+              error={Boolean(touched.poidsNaissance && errors.poidsNaissance)}
+            />
+            <RadioGroup
+              // {...getFieldProps('allaitementExclusifSixMois')}
+              sx={{ marginTop: "24px" }}
+              helperText={
+                touched.allaitementExclusifSixMois &&
+                errors.allaitementExclusifSixMois
+              }
+              error={Boolean(
+                touched.allaitementExclusifSixMois &&
+                  errors.allaitementExclusifSixMois
+              )}
+              onChange={handleAllaitementExclusifSixMoix}
+            >
+              <Stack
+                direction={{ xs: "column", sm: "column", md: "row" }}
+                sx={{
+                  display: "flex",
+                  paddingLeft: "10px",
+                  alignItems: "center",
+                  border: `${
+                    Boolean(
+                      touched.allaitementExclusifSixMois &&
+                        errors.allaitementExclusifSixMois
+                    ) && "1px solid red"
+                  }`,
+                  borderRadius: `${
+                    Boolean(
+                      touched.allaitementExclusifSixMois &&
+                        errors.allaitementExclusifSixMois
+                    ) && "10px"
+                  }`,
+                }}
+                spacing={1}
+              >
+                <FormLabel component="label">
+                  Allaitement exclusif 6 mois:
+                </FormLabel>
+                <Stack direction={{ xs: "row", sm: "row" }}>
+                  <FormControlLabel
+                    value="true"
+                    control={
+                      <Radio
+                        checked={
+                          patientFormCause.AllaitementExclisifSixMois === "true"
+                        }
+                      />
+                    }
+                    label="Oui"
+                  />
+                  <FormControlLabel
+                    value="false"
+                    control={
+                      <Radio
+                        checked={
+                          patientFormCause.AllaitementExclisifSixMois ===
+                          "false"
+                        }
+                      />
+                    }
+                    label="Non"
+                  />
+                </Stack>
+              </Stack>
+            </RadioGroup>
+            <TextField
+              sx={{ padding: "2px", marginTop: "24px" }}
+              fullWidth
+              disabled={allaitement}
+              // disabled={patientFormData.AllaitementExclisifSixMois}
+              label="Si non à quel âge fin allaitement (mois) ex:14"
+              onChange={handleChangeAgeFinAllaitement}
+              value={patientFormCause.ageFinAllaitement}
+              // {...getFieldProps('ageFinAllaitement')}
+              //  defaultValue={DataPatient.ageFinAllaitement}
+              helperText={touched.ageFinAllaitement && errors.ageFinAllaitement}
+              error={
+                Boolean(
+                  touched.ageFinAllaitement && errors.ageFinAllaitement
+                ) ||
+                Boolean(
+                  values.allaitementExclusifSixMois === "false" &&
+                    values.ageFinAllaitement === ""
+                )
+              }
+            />
+            <TextField
+              sx={{ padding: "2px", marginTop: "24px" }}
+              // required
+              fullWidth
+              label="Diversification alimentaire à quel âge (en mois) ex:20"
+              value={patientFormCause.diversificationAliment}
+              onChange={handleChangeDiversificationAliment}
+              // {...getFieldProps('diversificationAliment')}
+              // defaultValue={DataPatient.diversificationAliment}
+              helperText={
+                touched.diversificationAliment && errors.diversificationAliment
+              }
+              error={Boolean(
+                touched.diversificationAliment && errors.diversificationAliment
+              )}
+            />
+            <TextField
+              sx={{ padding: "2px", marginTop: "24px" }}
+              fullWidth
+              label="Constitution / type d’aliment"
+              value={patientFormCause.constitutionAliment}
+              onChange={handleChangeConstitutionAliment}
+              // {...getFieldProps('constitutionAliment')}
+              // defaultValue={DataPatient.constitutionAliment}
+              helperText={
+                touched.constitutionAliment && errors.constitutionAliment
+              }
+              error={Boolean(
+                touched.constitutionAliment && errors.constitutionAliment
+              )}
+            />
+            <RadioGroup
+              sx={{ marginTop: "24px" }}
+              // {...getFieldProps('consommationPoisson')}
+              onChange={handleConsommationPoisson}
+              // required
+              helperText={
+                touched.consommationPoisson && errors.consommationPoisson
+              }
+              error={Boolean(
+                touched.consommationPoisson && errors.consommationPoisson
+              )}
+            >
+              <Stack
+                direction={{ xs: "column", sm: "row" }}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  paddingLeft: "10px",
+                  border: `${
+                    Boolean(
+                      touched.consommationPoisson && errors.consommationPoisson
+                    ) && "1px solid red"
+                  }`,
+                  borderRadius: `${
+                    Boolean(
+                      touched.consommationPoisson && errors.consommationPoisson
+                    ) && "10px"
+                  }`,
+                }}
+                spacing={1}
+              >
+                <FormLabel component="label">
+                  Consommation de poisson:
+                </FormLabel>
+                <FormControlLabel
+                  value="true"
+                  control={
+                    <Radio
+                      checked={patientFormCause.consommationPoisson === "true"}
+                    />
+                  }
+                  label="Oui"
+                />
+                <FormControlLabel
+                  value="false"
+                  control={
+                    <Radio
+                      checked={patientFormCause.consommationPoisson === "false"}
+                    />
+                  }
+                  label="Non"
+                />
+              </Stack>
+            </RadioGroup>
+
             <Select
               native
               fullWidth
@@ -722,128 +977,6 @@ export default function CauseForm({
                 errors.diagnostiqueHospitalisation
               }
             />
-            <RadioGroup
-              required
-              // {...getFieldProps('atcdMas')}
-              sx={{ marginTop: "24px" }}
-              onChange={handleAtcdMas}
-              error={Boolean(touched.atcdMas && errors.atcdMas)}
-              // helperText={touched.atcdMas && errors.atcdMas}
-            >
-              <Stack
-                direction={{ xs: "column", md: "column", sm: "row" }}
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  paddingLeft: "10px",
-                  border: `${
-                    Boolean(touched.atcdMas && errors.atcdMas) &&
-                    "1px solid red"
-                  }`,
-                  borderRadius: `${
-                    Boolean(touched.atcdMas && errors.atcdMas) && "10px"
-                  }`,
-                }}
-                spacing={1}
-              >
-                <FormLabel component="label">ATCD de MAS:</FormLabel>
-                <Stack direction={{ xs: "row", sm: "row" }}>
-                  <FormControlLabel
-                    value="true"
-                    control={
-                      <Radio checked={patientFormCause.atcdMas === "true"} />
-                    }
-                    label="Oui"
-                  />
-                  <FormControlLabel
-                    value="false"
-                    control={
-                      <Radio checked={patientFormCause.atcdMas === "false"} />
-                    }
-                    label="Non"
-                  />
-                </Stack>
-              </Stack>
-            </RadioGroup>
-            <TextField
-              sx={{ padding: "2px", marginTop: "24px" }}
-              autoComplete="nbr"
-              fullWidth
-              type="text"
-              value={patientFormCause.nombreChute}
-              label="Nombre de rechute"
-              onChange={handleNombreChute}
-              // {...getFieldProps('nombreChute')}
-              helperText={touched.nombreChute && errors.nombreChute}
-              error={Boolean(touched.nombreChute && errors.nombreChute)}
-            />
-            <RadioGroup
-              sx={{ padding: "2px", marginTop: "24px" }}
-              // fullWidth
-              // {...getFieldProps('cocktailAtb')}
-              onChange={handlecocktailAtb}
-              error={Boolean(touched.cocktailAtb && errors.cocktailAtb)}
-              helperText={touched.cocktailAtb && errors.cocktailAtb}
-            >
-              <Stack
-                direction={{ xs: "column", md: "row", sm: "row" }}
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  paddingLeft: "10px",
-                  border: `${
-                    Boolean(touched.cocktailAtb && errors.cocktailAtb) &&
-                    "1px solid red"
-                  }`,
-                  borderRadius: `${
-                    Boolean(touched.cocktailAtb && errors.cocktailAtb) && "10px"
-                  }`,
-                }}
-                spacing={1}
-              >
-                <FormLabel component="label">
-                  Prise de cocktail d’ATB :{" "}
-                </FormLabel>
-                <Stack direction={{ xs: "row", sm: "row" }}>
-                  <FormControlLabel
-                    value="true"
-                    control={
-                      <Radio
-                        checked={patientFormCause.cocktailAtb === "true"}
-                      />
-                    }
-                    label="Oui"
-                  />
-                  <FormControlLabel
-                    value="false"
-                    control={
-                      <Radio
-                        checked={patientFormCause.cocktailAtb === "false"}
-                      />
-                    }
-                    label="Non"
-                  />
-                </Stack>
-              </Stack>
-            </RadioGroup>
-            <TextField
-              sx={{ padding: "2px", marginTop: "24px" }}
-              fullWidth
-              type="text"
-              value={patientFormCause.cocktailAtbDuree}
-              disabled={cocktailAtbDesabled}
-              label="Si notion de prise de cocktail est Oui, veuillez préciser la durée"
-              onChange={handleCocktailAtbDuree}
-              // {...getFieldProps('cocktailAtbDuree')}
-              helperText={touched.cocktailAtbDuree && errors.cocktailAtbDuree}
-              error={
-                Boolean(touched.cocktailAtbDuree && errors.cocktailAtbDuree) ||
-                Boolean(
-                  values.cocktailAtb === "true" &&
-                    values.cocktailAtbDuree === ""
-                )
-              }
-            />
 
             {/* </Stack> */}
           </Grid>
@@ -916,56 +1049,64 @@ export default function CauseForm({
                 </Stack>
               </Stack>
             </RadioGroup>
-
             <RadioGroup
-              sx={{ padding: "2px", marginTop: "24px" }}
-              // {...getFieldProps('atcdRougeole')}
-              onChange={handleAtcdRougeole}
-              helperText={touched.atcdRougeole && errors.atcdRougeole}
-              error={Boolean(touched.atcdRougeole && errors.atcdRougeole)}
+              required
+              // {...getFieldProps('atcdMas')}
+              sx={{ marginTop: "24px" }}
+              onChange={handleAtcdMas}
+              error={Boolean(touched.atcdMas && errors.atcdMas)}
+              // helperText={touched.atcdMas && errors.atcdMas}
             >
               <Stack
-                direction={{ xs: "column", sm: "column" }}
+                direction={{ xs: "column", md: "column", sm: "row" }}
                 sx={{
                   display: "flex",
-                  // alignItems: 'center',
+                  alignItems: "center",
                   paddingLeft: "10px",
                   border: `${
-                    Boolean(touched.atcdRougeole && errors.atcdRougeole) &&
+                    Boolean(touched.atcdMas && errors.atcdMas) &&
                     "1px solid red"
                   }`,
                   borderRadius: `${
-                    Boolean(touched.atcdRougeole && errors.atcdRougeole) &&
-                    "10px"
+                    Boolean(touched.atcdMas && errors.atcdMas) && "10px"
                   }`,
                 }}
                 spacing={1}
               >
-                <FormLabel component="label">
-                  ATCD de Rougeole dans la fratrie:
-                </FormLabel>
+                <FormLabel component="label">ATCD de MAS:</FormLabel>
                 <Stack direction={{ xs: "row", sm: "row" }}>
                   <FormControlLabel
                     value="true"
                     control={
-                      <Radio
-                        checked={patientFormCause.atcdRougeole === "true"}
-                      />
+                      <Radio checked={patientFormCause.atcdMas === "true"} />
                     }
                     label="Oui"
                   />
                   <FormControlLabel
                     value="false"
                     control={
-                      <Radio
-                        checked={patientFormCause.atcdRougeole === "false"}
-                      />
+                      <Radio checked={patientFormCause.atcdMas === "false"} />
                     }
                     label="Non"
                   />
                 </Stack>
               </Stack>
             </RadioGroup>
+            <TextField
+              sx={{ padding: "2px", marginTop: "24px" }}
+              autoComplete="nbr"
+              fullWidth
+              type="text"
+              value={patientFormCause.nombreChute}
+              label="Nombre de rechute"
+              onChange={handleNombreChute}
+              // {...getFieldProps('nombreChute')}
+              helperText={touched.nombreChute && errors.nombreChute}
+              error={
+                Boolean(touched.nombreChute && errors.nombreChute) ||
+                Boolean(values.atcdMas === "true" && values.nombreChute === "")
+              }
+            />
             <RadioGroup
               sx={{ padding: "2px", marginTop: "24px" }}
               // fullWidth
@@ -1024,6 +1165,56 @@ export default function CauseForm({
                 </Stack>
               </Stack>
             </RadioGroup>
+            <RadioGroup
+              sx={{ padding: "2px", marginTop: "24px" }}
+              // {...getFieldProps('atcdRougeole')}
+              onChange={handleAtcdRougeole}
+              helperText={touched.atcdRougeole && errors.atcdRougeole}
+              error={Boolean(touched.atcdRougeole && errors.atcdRougeole)}
+            >
+              <Stack
+                direction={{ xs: "column", sm: "column" }}
+                sx={{
+                  display: "flex",
+                  // alignItems: 'center',
+                  paddingLeft: "10px",
+                  border: `${
+                    Boolean(touched.atcdRougeole && errors.atcdRougeole) &&
+                    "1px solid red"
+                  }`,
+                  borderRadius: `${
+                    Boolean(touched.atcdRougeole && errors.atcdRougeole) &&
+                    "10px"
+                  }`,
+                }}
+                spacing={1}
+              >
+                <FormLabel component="label">
+                  ATCD de Rougeole dans la fratrie:
+                </FormLabel>
+                <Stack direction={{ xs: "row", sm: "row" }}>
+                  <FormControlLabel
+                    value="true"
+                    control={
+                      <Radio
+                        checked={patientFormCause.atcdRougeole === "true"}
+                      />
+                    }
+                    label="Oui"
+                  />
+                  <FormControlLabel
+                    value="false"
+                    control={
+                      <Radio
+                        checked={patientFormCause.atcdRougeole === "false"}
+                      />
+                    }
+                    label="Non"
+                  />
+                </Stack>
+              </Stack>
+            </RadioGroup>
+
             <RadioGroup
               sx={{ padding: "2px", marginTop: "24px" }}
               onChange={handleTerrainVih}
@@ -1374,6 +1565,74 @@ export default function CauseForm({
                 )
               }
             />
+            <RadioGroup
+              sx={{ padding: "2px", marginTop: "24px" }}
+              // fullWidth
+              // {...getFieldProps('cocktailAtb')}
+              onChange={handlecocktailAtb}
+              error={Boolean(touched.cocktailAtb && errors.cocktailAtb)}
+              helperText={touched.cocktailAtb && errors.cocktailAtb}
+            >
+              <Stack
+                direction={{ xs: "column", md: "row", sm: "row" }}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  paddingLeft: "10px",
+                  border: `${
+                    Boolean(touched.cocktailAtb && errors.cocktailAtb) &&
+                    "1px solid red"
+                  }`,
+                  borderRadius: `${
+                    Boolean(touched.cocktailAtb && errors.cocktailAtb) && "10px"
+                  }`,
+                }}
+                spacing={1}
+              >
+                <FormLabel component="label">
+                  Prise de cocktail d’ATB :{" "}
+                </FormLabel>
+                <Stack direction={{ xs: "row", sm: "row" }}>
+                  <FormControlLabel
+                    value="true"
+                    control={
+                      <Radio
+                        checked={patientFormCause.cocktailAtb === "true"}
+                      />
+                    }
+                    label="Oui"
+                  />
+                  <FormControlLabel
+                    value="false"
+                    control={
+                      <Radio
+                        checked={patientFormCause.cocktailAtb === "false"}
+                      />
+                    }
+                    label="Non"
+                  />
+                </Stack>
+              </Stack>
+            </RadioGroup>
+            <TextField
+              sx={{ padding: "2px", marginTop: "24px" }}
+              fullWidth
+              type="text"
+              value={patientFormCause.cocktailAtbDuree}
+              disabled={cocktailAtbDesabled}
+              label="Si notion de prise de cocktail est Oui, veuillez préciser la durée"
+              onChange={handleCocktailAtbDuree}
+              // {...getFieldProps('cocktailAtbDuree')}
+              helperText={touched.cocktailAtbDuree && errors.cocktailAtbDuree}
+              error={
+                Boolean(touched.cocktailAtbDuree && errors.cocktailAtbDuree) ||
+                Boolean(
+                  values.cocktailAtb === "true" &&
+                    values.cocktailAtbDuree === ""
+                )
+              }
+            />
+
             <RadioGroup
               sx={{ marginTop: "24px" }}
               onChange={handleChangePriseProduitBasePlante}

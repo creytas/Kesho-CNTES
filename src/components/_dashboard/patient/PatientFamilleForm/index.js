@@ -71,7 +71,7 @@ export default function FamilleForm({
     ProffessionChefMenage: Yup.string(),
     scolariteMere: Yup.string(),
     pereMariage: Yup.string(),
-    consommationPoisson: Yup.string(),
+    // consommationPoisson: Yup.string(),
     nbrFemme: Yup.number().min(2).max(99),
     NiveauSocioEconomique: Yup.string(),
     statutMarital: Yup.string(),
@@ -126,9 +126,9 @@ export default function FamilleForm({
       mereEnVie: patientFormFamille.mereEnVie
         ? patientFormFamille.mereEnVie
         : "",
-      consommationPoisson: patientFormFamille.consommationPoisson
-        ? patientFormFamille.consommationPoisson
-        : "",
+      // consommationPoisson: patientFormFamille.consommationPoisson
+      //   ? patientFormFamille.consommationPoisson
+      //   : "",
       typeContraceptionNaturel: patientFormFamille.typeContraceptionNaturel
         ? patientFormFamille.typeContraceptionNaturel
         : "",
@@ -284,11 +284,11 @@ export default function FamilleForm({
     // console.log(value);
   };
 
-  const handleConsommationPoisson = (event) => {
-    const { value } = event.target;
-    setFieldValue("consommationPoisson", value);
-    patientFormFamille.setConsommationPoisson(value);
-  };
+  // const handleConsommationPoisson = (event) => {
+  //   const { value } = event.target;
+  //   setFieldValue("consommationPoisson", value);
+  //   patientFormFamille.setConsommationPoisson(value);
+  // };
 
   const handleReligion = (event) => {
     const { value } = event.target;
@@ -789,7 +789,7 @@ export default function FamilleForm({
                 helperText={touched.NbrRepasJour && errors.NbrRepasJour}
                 error={Boolean(touched.NbrRepasJour && errors.NbrRepasJour)}
               />
-                            <RadioGroup
+                            {/* <RadioGroup
                 // {...getFieldProps('consommationPoisson')}
                 onChange={handleConsommationPoisson}
                 // required
@@ -847,7 +847,7 @@ export default function FamilleForm({
                     label="Non"
                   />
                 </Stack>
-              </RadioGroup>
+              </RadioGroup> */}
 
             </Stack>
           </Grid>

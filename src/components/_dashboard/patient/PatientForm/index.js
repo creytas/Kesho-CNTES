@@ -35,7 +35,7 @@ export default function PatientForm({
   SetDataPatient,
   patientFormData,
 }) {
-  const [allaitement, setAllaitement] = useState(false);
+  // const [allaitement, setAllaitement] = useState(false);
   const [oedeme, setOedeme] = useState(false);
   const [provenance, setProvenance] = useState(false);
   const [modeArriver, setModeArriver] = useState(false);
@@ -62,10 +62,10 @@ export default function PatientForm({
       .max(400, "Taille maximum 400 Cm")
       .required("Taille requis"),
     ExplicationAutre: Yup.string().trim().min(2, "Minimum 2 caractère"),
-    allaitementExclusifSixMois: Yup.string()
-      .trim()
-      .min(2, "Min 2 caractère")
-      .required("Champs requis"),
+    // allaitementExclusifSixMois: Yup.string()
+    //   .trim()
+    //   .min(2, "Min 2 caractère")
+    //   .required("Champs requis"),
     NomPatient: Yup.string()
       .min(2, "Min 2 caractère")
       .max(100, "Max 100 caractère")
@@ -101,31 +101,31 @@ export default function PatientForm({
       /^(\+243|0)[0-9]{9}$/g,
       "+243813030011 ou 0813030011"
     ),
-    diversificationAliment: Yup.number("un nombre")
-      .positive("nombre positif")
-      .min(2, "Minimum 2"),
+    // diversificationAliment: Yup.number("un nombre")
+    //   .positive("nombre positif")
+    //   .min(2, "Minimum 2"),
     sexePatient: Yup.string().trim().required("requis"),
     dataNaissancePatient: Yup.date("intervalle entre")
       .min(date.getFullYear() - 90, `Age minimum ${date.getFullYear()}` - 90)
       .required("requis"),
-    constitutionAliment: Yup.string().trim().min(2, "Min 2 caractère"),
+    // constitutionAliment: Yup.string().trim().min(2, "Min 2 caractère"),
     provenancePatient: Yup.string().trim().min(2, "Min 2 caractère"),
     modeArriver: Yup.string().trim().min(2, "Min 2 caractère"),
     typeMalnutrition: Yup.string()
       .trim()
       .min(2, "Minimum 2 caractère")
       .required("requis"),
-    poidsNaissance: Yup.number()
-      .positive()
-      .min(900, "Minimum 900 gr")
-      .required("requis"),
+    // poidsNaissance: Yup.number()
+    //   .positive()
+    //   .min(900, "Minimum 900 gr")
+    //   .required("requis"),
     traitementNutritionnel: Yup.string().trim().min(2, "Minimum 2 caractère"),
     traitementNutritionnelAutre: Yup.string().min(5).trim(),
     adressePatient: Yup.string().trim().min(2, "Min 2 caractère"),
     ExplicationProvenance: Yup.string().min(2, "Min 2 caractère").trim(),
-    ageFinAllaitement: Yup.number()
-      .min(1, "Minimum 1 mois")
-      .positive("champs doit être positive"),
+    // ageFinAllaitement: Yup.number()
+    //   .min(1, "Minimum 1 mois")
+    //   .positive("champs doit être positive"),
   });
   const formik = useFormik({
     initialValues: {
@@ -163,18 +163,18 @@ export default function PatientForm({
         ? patientFormData.postNomPatient
         : "",
       telephone: patientFormData.telephone ? patientFormData.telephone : "",
-      diversificationAliment: patientFormData.diversificationAliment
-        ? patientFormData.diversificationAliment
-        : "",
+      // diversificationAliment: patientFormData.diversificationAliment
+      //   ? patientFormData.diversificationAliment
+      //   : "",
       sexePatient: patientFormData.sexePatient
         ? patientFormData.sexePatient
         : "",
       dataNaissancePatient: patientFormData.dataNaissancePatient
         ? patientFormData.dataNaissancePatient
         : "",
-      constitutionAliment: patientFormData.constitutionAliment
-        ? patientFormData.constitutionAliment
-        : "",
+      // constitutionAliment: patientFormData.constitutionAliment
+      //   ? patientFormData.constitutionAliment
+      //   : "",
       provenancePatient: patientFormData.provenancePatient
         ? patientFormData.provenancePatient
         : "",
@@ -184,15 +184,15 @@ export default function PatientForm({
       modeArriver: patientFormData.modeArriverPatient
         ? patientFormData.modeArriverPatient
         : "",
-      ageFinAllaitement: patientFormData.ageFinAllaitement
-        ? patientFormData.ageFinAllaitement
-        : "",
+      // ageFinAllaitement: patientFormData.ageFinAllaitement
+      //   ? patientFormData.ageFinAllaitement
+      //   : "",
       traitementNutritionnelAutre: patientFormData.traitementNutritionnelAutre
         ? patientFormData.traitementNutritionnelAutre
         : "",
-      poidsNaissance: patientFormData.poidsNaissance
-        ? patientFormData.poidsNaissance
-        : "",
+      // poidsNaissance: patientFormData.poidsNaissance
+      //   ? patientFormData.poidsNaissance
+      //   : "",
       traitementNutritionnel: patientFormData.traitementNutritionnel
         ? patientFormData.traitementNutritionnel
         : "",
@@ -208,9 +208,9 @@ export default function PatientForm({
       ExplicationProvenance: patientFormData.ExplicationProvenance
         ? patientFormData.ExplicationProvenance
         : "",
-      allaitementExclusifSixMois: patientFormData.AllaitementExclisifSixMois
-        ? patientFormData.AllaitementExclisifSixMois
-        : "",
+      // allaitementExclusifSixMois: patientFormData.AllaitementExclisifSixMois
+      //   ? patientFormData.AllaitementExclisifSixMois
+      //   : "",
       transfererUnt: patientFormData.transfererUnt
         ? patientFormData.transfererUnt
         : "",
@@ -225,14 +225,14 @@ export default function PatientForm({
         ) {
           throw alert("Veuillez preciser la provenance du patient");
         }
-        if (
-          indentity.allaitementExclusifSixMois === "false" &&
-          indentity.ageFinAllaitement === ""
-        ) {
-          throw alert(
-            "Veuillez preciser le nombre l'age fin allaitment en (mois) "
-          );
-        }
+        // if (
+        //   indentity.allaitementExclusifSixMois === "false" &&
+        //   indentity.ageFinAllaitement === ""
+        // ) {
+        //   throw alert(
+        //     "Veuillez preciser le nombre l'age fin allaitment en (mois) "
+        //   );
+        // }
         if (
           indentity.modeArriver === "Autres" &&
           indentity.ExplicationAutre === ""
@@ -265,16 +265,16 @@ export default function PatientForm({
     patientFormData.setCommentaires(value);
   };
 
-  const handleAllaitementExclusifSixMoix = (event) => {
-    const { value } = event.target;
-    setFieldValue("allaitementExclusifSixMois", value);
-    patientFormData.setAllaitementExclisifSixMois(value);
-    if (value === "true") {
-      setAllaitement(true);
-    } else {
-      setAllaitement(false);
-    }
-  };
+  // const handleAllaitementExclusifSixMoix = (event) => {
+  //   const { value } = event.target;
+  //   setFieldValue("allaitementExclusifSixMois", value);
+  //   patientFormData.setAllaitementExclisifSixMois(value);
+  //   if (value === "true") {
+  //     setAllaitement(true);
+  //   } else {
+  //     setAllaitement(false);
+  //   }
+  // };
   const handleChangeProvenance = (event) => {
     const { value } = event.target;
     setFieldValue("provenancePatient", value);
@@ -321,11 +321,11 @@ export default function PatientForm({
     setFieldValue("sexePatient", value);
     patientFormData.setSexePatient(value);
   };
-  const handleChangeDiversificationAliment = (event) => {
-    const { value } = event.target;
-    setFieldValue("diversificationAliment", value);
-    patientFormData.setDiversificationAliment(value);
-  };
+  // const handleChangeDiversificationAliment = (event) => {
+  //   const { value } = event.target;
+  //   setFieldValue("diversificationAliment", value);
+  //   patientFormData.setDiversificationAliment(value);
+  // };
   const handleChangePostNomPatient = (event) => {
     const { value } = event.target;
     setFieldValue("postNomPatient", value);
@@ -361,21 +361,21 @@ export default function PatientForm({
     setFieldValue("traitementNutritionnelAutre", value);
     patientFormData.setTraitementNutritionnelAutre(value);
   };
-  const handleChangeAgeFinAllaitement = (event) => {
-    const { value } = event.target;
-    setFieldValue("ageFinAllaitement", value);
-    patientFormData.setAgeFinAllaitement(value);
-  };
-  const handleChangeConstitutionAliment = (event) => {
-    const { value } = event.target;
-    setFieldValue("constitutionAliment", value);
-    patientFormData.setConstitutionAliment(value);
-  };
-  const handleChangePoidsnaissance = (event) => {
-    const { value } = event.target;
-    setFieldValue("poidsNaissance", value);
-    patientFormData.setPoidsNaissance(value);
-  };
+  // const handleChangeAgeFinAllaitement = (event) => {
+  //   const { value } = event.target;
+  //   setFieldValue("ageFinAllaitement", value);
+  //   patientFormData.setAgeFinAllaitement(value);
+  // };
+  // const handleChangeConstitutionAliment = (event) => {
+  //   const { value } = event.target;
+  //   setFieldValue("constitutionAliment", value);
+  //   patientFormData.setConstitutionAliment(value);
+  // };
+  // const handleChangePoidsnaissance = (event) => {
+  //   const { value } = event.target;
+  //   setFieldValue("poidsNaissance", value);
+  //   patientFormData.setPoidsNaissance(value);
+  // };
   const handleChangeDateNaissance = (event) => {
     const { value } = event.target;
     setFieldValue("dataNaissancePatient", value);
@@ -692,7 +692,7 @@ export default function PatientForm({
                   )}
                 />
 
-                <RadioGroup
+                {/* <RadioGroup
                   // {...getFieldProps('allaitementExclusifSixMois')}
                   helperText={
                     touched.allaitementExclusifSixMois &&
@@ -755,8 +755,8 @@ export default function PatientForm({
                       />
                     </Stack>
                   </Stack>
-                </RadioGroup>
-                <TextField
+                </RadioGroup> */}
+                {/* <TextField
                   sx={{ padding: "2px" }}
                   // fullWidth
                   disabled={allaitement}
@@ -778,8 +778,8 @@ export default function PatientForm({
                         values.ageFinAllaitement === ""
                     )
                   }
-                />
-                <TextField
+                /> */}
+                {/* <TextField
                   sx={{ padding: "2px" }}
                   // fullWidth
                   label="Poids naissance (gr) ex:1500"
@@ -790,7 +790,7 @@ export default function PatientForm({
                   error={Boolean(
                     touched.poidsNaissance && errors.poidsNaissance
                   )}
-                />
+                /> */}
                 <TextField
                   // fullWidth
                   sx={{ padding: "2px" }}
@@ -846,7 +846,7 @@ export default function PatientForm({
                   error={Boolean(touched.taille && errors.taille)}
                   helperText={touched.taille && errors.taille}
                 />
-                <TextField
+                {/* <TextField
                   sx={{ padding: "2px" }}
                   // required
                   // fullWidth
@@ -863,8 +863,8 @@ export default function PatientForm({
                     touched.diversificationAliment &&
                       errors.diversificationAliment
                   )}
-                />
-                <TextField
+                /> */}
+                {/* <TextField
                   sx={{ padding: "2px" }}
                   label="Constitution/type d’aliment"
                   value={patientFormData.constitutionAliment}
@@ -877,7 +877,7 @@ export default function PatientForm({
                   error={Boolean(
                     touched.constitutionAliment && errors.constitutionAliment
                   )}
-                />
+                /> */}
                 {/* <RadioGroup
                   onChange={handleChangeRationPatient}
                   error={Boolean(touched.rationSeche && errors.rationSeche)}
@@ -1057,14 +1057,14 @@ export default function PatientForm({
                       target="_blank"
                       rel="noreferrer"
                     >
-                      rapport taille - age
+                      rapport taille - âge
                     </a>
                     <a
                       href="https://cdn.who.int/media/docs/default-source/child-growth/child-growth-standards/indicators/weight-for-age/cht-wfa-boys-z-0-5.pdf"
                       target="_blank"
                       rel="noreferrer"
                     >
-                      rapport poids - age
+                      rapport poids - âge
                     </a>
                     <a
                       href="https://cdn.who.int/media/docs/default-source/child-growth/child-growth-standards/indicators/weight-for-length-height/cht-wflh-boys-z-0-5.pdf"
@@ -1080,6 +1080,13 @@ export default function PatientForm({
                     >
                       IMC
                     </a>
+                    <a
+                      href="http://www.bamisagora.org/documents_pdf/07bb-La_Malnutrition-Tables_et_courbes_de_suivi.pdf"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Table Poids Cible
+                    </a>
                   </div>
                 ) : (
                   <div className="buttonCard">
@@ -1088,14 +1095,14 @@ export default function PatientForm({
                       target="_blank"
                       rel="noreferrer"
                     >
-                      rapport taille - age
+                      rapport taille - âge
                     </a>
                     <a
                       href="https://cdn.who.int/media/docs/default-source/child-growth/child-growth-standards/indicators/weight-for-age/cht-wfa-girls-z-0-5.pdf"
                       target="_blank"
                       rel="noreferrer"
                     >
-                      rapport poids - age
+                      rapport poids - âge
                     </a>
                     <a
                       href="https://cdn.who.int/media/docs/default-source/child-growth/child-growth-standards/indicators/weight-for-length-height/cht-wflh-girls-z-0-5.pdf"
@@ -1110,6 +1117,13 @@ export default function PatientForm({
                       rel="noreferrer"
                     >
                       IMC
+                    </a>
+                    <a
+                      href="http://www.bamisagora.org/documents_pdf/07bb-La_Malnutrition-Tables_et_courbes_de_suivi.pdf"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Table Poids Cible
                     </a>
                   </div>
                 )}
@@ -1132,11 +1146,22 @@ export default function PatientForm({
                       : "Forme de malnutrition"}
                   </option>
                   <option value="MAM">Malnutrition Aigue Modérée</option>
+                  <option value="MAM / FMC">
+                    Malnutrition Aigue Modérée / Fond de Malnutrition Chronique
+                  </option>
                   <option value="MAS-K">
                     Malnutrition Aigue Sévère Kwashiorkor
                   </option>
+                  <option value="MAS-K / FMC">
+                    Malnutrition Aigue Sévère Kwashiorkor / Fond de Malnutrition
+                    Chronique
+                  </option>
                   <option value="MAS-M">
                     Malnutrition Aigue Sévère Marasme
+                  </option>
+                  <option value="MAS-M / FMC">
+                    Malnutrition Aigue Sévère Marasme / Fond de Malnutrition
+                    Chronique
                   </option>
                   <option value="MC">Malnutrition Chronique</option>
                 </Select>

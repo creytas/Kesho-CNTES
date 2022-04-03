@@ -317,7 +317,14 @@ export default function Details() {
                       target="_blank"
                       rel="noreferrer"
                     >
-                      indice de masse corporel
+                      IMC
+                    </a>
+                    <a
+                      href="http://www.bamisagora.org/documents_pdf/07bb-La_Malnutrition-Tables_et_courbes_de_suivi.pdf"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Table Poids Cible
                     </a>
                   </div>
                 ) : (
@@ -348,7 +355,14 @@ export default function Details() {
                       target="_blank"
                       rel="noreferrer"
                     >
-                      indice de masse corporel
+                      IMC
+                    </a>
+                    <a
+                      href="http://www.bamisagora.org/documents_pdf/07bb-La_Malnutrition-Tables_et_courbes_de_suivi.pdf"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Table Poids Cible
                     </a>
                   </div>
                 )}

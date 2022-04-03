@@ -261,13 +261,24 @@ export default function AddAnthro({ id, admission }) {
                 <option value="" selected disabled hidden>
                   Type de malnutrition
                 </option>
-                <option value="MAM">Malnutrition aigue modérée</option>
-                <option value="MAS-M">Malnutrition aigue sévère marasme</option>
-                <option value="MAS-K">
-                  Malnutrition aigue sévère kwashiorkor
+                <option value="MAM">Malnutrition Aigue Modérée</option>
+                <option value="MAM / FMC">
+                  Malnutrition Aigue Modérée / Fond de Malnutrition Chronique
                 </option>
-                <option value="MC">Malnutrition chronique</option>
-                <option value="Guéri">Declaré guéri</option>
+                <option value="MAS-M">Malnutrition Aigue Sévère Marasme</option>
+                <option value="MAS-M / FMC">
+                  Malnutrition Aigue Sévère Marasme / Fond de Malnutrition
+                  Chronique
+                </option>
+                <option value="MAS-K">
+                Malnutrition Aigue Sévère Kwashiorkor
+                </option>
+                <option value="MAS-K / FMC">
+                  Malnutrition Aigue Sévère Kwashiorkor / Fond de Malnutrition
+                  Chronique
+                </option>
+                <option value="MC">Malnutrition Chronique</option>
+                <option value="Guéri">Declaré Guéri</option>
               </Select>
               <TextareaAutosize
                 minRows={8}

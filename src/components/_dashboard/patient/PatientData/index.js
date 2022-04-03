@@ -39,8 +39,10 @@ export default function PatientData({ DataPatient, PrevStep }) {
   newPatient.last_picture = indentity.lastPicture;
   newPatient.commentaires = indentity.commentaires;
   newPatient.age_fin_allaitement =
-    indentity.ageFinAllaitement === "" ? 6 : indentity.ageFinAllaitement;
-  newPatient.allaitement_6mois = indentity.allaitementExclusifSixMois; // bool
+    CauseMalnutrition.ageFinAllaitement === ""
+      ? 6
+      : CauseMalnutrition.ageFinAllaitement;
+  newPatient.allaitement_6mois = CauseMalnutrition.allaitementExclusifSixMois; // bool
   newPatient.peri_cranien = indentity.perimetreCranien;
   newPatient.peri_brachial = indentity.perimetreBrachail;
   newPatient.poids = indentity.poidsActuel;
@@ -61,9 +63,9 @@ export default function PatientData({ DataPatient, PrevStep }) {
     indentity.modeArrive === "Autres"
       ? indentity.ExplicationAutre
       : indentity.modeArriver;
-  newPatient.poids_naissance = indentity.poidsNaissance;
-  newPatient.diversification_aliment = indentity.diversificationAliment; // aquel age (mois)
-  newPatient.constitution_aliment = indentity.constitutionAliment;
+  newPatient.poids_naissance = CauseMalnutrition.poidsNaissance;
+  newPatient.diversification_aliment = CauseMalnutrition.diversificationAliment; // aquel age (mois)
+  newPatient.constitution_aliment = CauseMalnutrition.constitutionAliment;
   newPatient.telephone = indentity.telephone;
 
   newPatient.cocktail_atb = CauseMalnutrition.cocktailAtb; // bool
@@ -146,7 +148,7 @@ export default function PatientData({ DataPatient, PrevStep }) {
   newPatient.religion = FamalyData.Religion;
   newPatient.posseder_radio_tele = FamalyData.PossederTeleRadio;
   newPatient.nbre_repas = FamalyData.NbrRepasJour;
-  newPatient.consommation_poisson = FamalyData.consommationPoisson;
+  newPatient.consommation_poisson = CauseMalnutrition.consommationPoisson;
   newPatient.tbc_parents =
     CauseMalnutrition.tbcChezParent === ""
       ? false
@@ -343,8 +345,8 @@ export default function PatientData({ DataPatient, PrevStep }) {
               Durée prise de produit plante :
               <span style={{ color: "black" }}>
                 {" "}
-                {indentity.dureeProduitPlante
-                  ? indentity.dureeProduitPlante
+                {CauseMalnutrition.dureeProduitPlante
+                  ? CauseMalnutrition.dureeProduitPlante
                   : "Aucun produit pris"}
               </span>
             </InputLabel>
@@ -417,7 +419,7 @@ export default function PatientData({ DataPatient, PrevStep }) {
               Poids naissance :
               <span style={{ color: "black" }}>
                 {" "}
-                {indentity.poidsNaissance} g
+                {CauseMalnutrition.poidsNaissance} g
               </span>
             </InputLabel>
             <InputLabel>
@@ -434,9 +436,9 @@ export default function PatientData({ DataPatient, PrevStep }) {
               Age diversification aliment :
               <span style={{ color: "black" }}>
                 {" "}
-                {indentity.diversificationAliment === ""
+                {CauseMalnutrition.diversificationAliment === ""
                   ? "0"
-                  : indentity.diversificationAliment}{" "}
+                  : CauseMalnutrition.diversificationAliment}{" "}
                 mois
               </span>
             </InputLabel>
@@ -444,16 +446,18 @@ export default function PatientData({ DataPatient, PrevStep }) {
               Constitution aliment:
               <span style={{ color: "black" }}>
                 {" "}
-                {indentity.constitutionAliment === ""
+                {CauseMalnutrition.constitutionAliment === ""
                   ? "Non renseigné"
-                  : indentity.constitutionAliment}
+                  : CauseMalnutrition.constitutionAliment}
               </span>
             </InputLabel>
             <InputLabel>
               Consommation poisson :
               <span style={{ color: "black" }}>
                 {" "}
-                {FamalyData.consommationPoisson ? "Non" : "Oui"}
+                {CauseMalnutrition.consommationPoisson === "true"
+                  ? "Oui"
+                  : "Non"}
               </span>
             </InputLabel>
 
@@ -513,7 +517,9 @@ export default function PatientData({ DataPatient, PrevStep }) {
               Nombre de rechute :
               <span style={{ color: "black" }}>
                 {" "}
-                {CauseMalnutrition.nombreChute}
+                {CauseMalnutrition.nombreChute === ""
+                  ? "0"
+                  : CauseMalnutrition.nombreChute}
               </span>
             </InputLabel>
           </Card>
@@ -542,13 +548,20 @@ export default function PatientData({ DataPatient, PrevStep }) {
             </InputLabel> */}
             <InputLabel>
               Téléphone:
-              <span style={{ color: "black" }}> {indentity.telephone}</span>
+              <span style={{ color: "black" }}>
+                {" "}
+                {indentity.telephone === ""
+                  ? "Non renseigné"
+                  : indentity.telephone}
+              </span>
             </InputLabel>
             <InputLabel>
               Age du chef de menage :
               <span style={{ color: "black" }}>
                 {" "}
-                {FamalyData.dateNaissanceChefMenage} ans
+                {FamalyData.dateNaissanceChefMenage === ""
+                  ? "Non renseigné"
+                  : `${FamalyData.dateNaissanceChefMenage} ans`}
               </span>
             </InputLabel>
             <InputLabel>
@@ -562,7 +575,9 @@ export default function PatientData({ DataPatient, PrevStep }) {
               Profession :
               <span style={{ color: "black" }}>
                 {" "}
-                {FamalyData.ProffessionChefMenage}
+                {FamalyData.ProffessionChefMenage === ""
+                  ? "Non renseigné"
+                  : FamalyData.ProffessionChefMenage}
               </span>
             </InputLabel>
             <Typography>Mère</Typography>
@@ -581,7 +596,9 @@ export default function PatientData({ DataPatient, PrevStep }) {
             </InputLabel>
             <InputLabel>
               Etat de la mère :{" "}
-              <span style={{ color: "black" }}>{FamalyData.etatMere}</span>
+              <span style={{ color: "black" }}>
+                {FamalyData.etatMere === "" ? "Aucun" : FamalyData.etatMere}
+              </span>
             </InputLabel>
             <InputLabel>
               Contraception mère :{" "}
@@ -622,41 +639,62 @@ export default function PatientData({ DataPatient, PrevStep }) {
               Scolarité mère :
               <span style={{ color: "black" }}>
                 {" "}
-                {FamalyData.scolariteMere}
+                {FamalyData.scolariteMere === ""
+                  ? "Non renseigné"
+                  : FamalyData.scolariteMere}
               </span>
             </InputLabel>
             <InputLabel>
               Profession:
               <span style={{ color: "black" }}>
                 {" "}
-                {FamalyData.professionMere}
+                {FamalyData.professionMere === ""
+                  ? "Non renseigné"
+                  : FamalyData.professionMere}
               </span>
             </InputLabel>
             <Typography>Ménage</Typography>
             <InputLabel>
               Taille ménage :
-              <span style={{ color: "black" }}> {FamalyData.tailleMenage}</span>
+              <span style={{ color: "black" }}>
+                {" "}
+                {FamalyData.tailleMenage === ""
+                  ? "Non renseigné"
+                  : FamalyData.tailleMenage}
+              </span>
             </InputLabel>
             <InputLabel>
               Niveau socio :
               <span style={{ color: "black" }}>
                 {" "}
-                {FamalyData.NiveauSocioEconomique}
+                {FamalyData.NiveauSocioEconomique === ""
+                  ? "Non renseigné"
+                  : FamalyData.NiveauSocioEconomique}
               </span>
             </InputLabel>
             <InputLabel>
               Tribu :
-              <span style={{ color: "black" }}> {FamalyData.Tribut}</span>
+              <span style={{ color: "black" }}>
+                {" "}
+                {FamalyData.Tribut === "" ? "Non renseigné" : FamalyData.Tribut}
+              </span>
             </InputLabel>
             <InputLabel>
               Réligion :
-              <span style={{ color: "black" }}> {FamalyData.Religion}</span>
+              <span style={{ color: "black" }}>
+                {" "}
+                {FamalyData.Religion === ""
+                  ? "Non renseigné"
+                  : FamalyData.Religion}
+              </span>
             </InputLabel>
             <InputLabel>
               Terrain VIH :
-              <span style={{ color: "black" }}>{`${
-                CauseMalnutrition.terrainVih === "false" ? "Non" : "Oui"
-              }`}</span>
+              <span style={{ color: "black" }}>
+                {CauseMalnutrition.terrainVih === ""
+                  ? "Non renseigné"
+                  : FamalyData.terrainVih}
+              </span>
             </InputLabel>
             <InputLabel>
               TBC Chez Parents :
@@ -695,12 +733,17 @@ export default function PatientData({ DataPatient, PrevStep }) {
               Oedème :
               <span style={{ color: "black" }}>
                 {" "}
-                {`${indentity.rationSeche ? "Oui" : "Non"}`}
+                {indentity.rationSeche === "true" ? "Oui" : "Non"}
               </span>
             </InputLabel>
             <InputLabel>
               Type d'oedème :
-              <span style={{ color: "black" }}> {indentity.typeOedeme}</span>
+              <span style={{ color: "black" }}>
+                {" "}
+                {indentity.rationSeche === "true"
+                  ? indentity.typeOedeme
+                  : "Aucun oedème"}
+              </span>
             </InputLabel>
             <InputLabel>
               Traitement Nutritionnel:
