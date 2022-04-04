@@ -789,7 +789,7 @@ export default function FamilleForm({
                 helperText={touched.NbrRepasJour && errors.NbrRepasJour}
                 error={Boolean(touched.NbrRepasJour && errors.NbrRepasJour)}
               />
-                            {/* <RadioGroup
+              {/* <RadioGroup
                 // {...getFieldProps('consommationPoisson')}
                 onChange={handleConsommationPoisson}
                 // required
@@ -848,7 +848,6 @@ export default function FamilleForm({
                   />
                 </Stack>
               </RadioGroup> */}
-
             </Stack>
           </Grid>
           <Grid item xs={11} sm={6} md={6}>
@@ -914,7 +913,7 @@ export default function FamilleForm({
                   )
                 }
               />
-                            <Select
+              <Select
                 sx={{ padding: "2px" }}
                 native
                 // {...getFieldProps('Tribut')}
@@ -1235,7 +1234,7 @@ export default function FamilleForm({
           <LoadingButton
             type="submit"
             variant="contained"
-            loading={isSubmitting}
+            //loading={isSubmitting}
             size="large"
             sx={{ width: 200, marginLeft: "20px", marginTop: "20px" }}
           >

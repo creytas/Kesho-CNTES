@@ -68,6 +68,7 @@ export default function CauseForm({
     tbc: Yup.boolean(),
     hospitalisationRecente: Yup.string(),
     diagnostiqueHospitalisation: Yup.string().min(5).trim(),
+    transfererUnt: Yup.string().trim().min(2, "Min 2 caractère"),
     dureeTraitementTbc: Yup.string().min(3).trim(),
     termeGrossesse: Yup.string().trim(),
     calendrierVaccin: Yup.string(),
@@ -202,6 +203,9 @@ export default function CauseForm({
       consommationPoisson: patientFormCause.consommationPoisson
         ? patientFormCause.consommationPoisson
         : "",
+      transfererUnt: patientFormCause.transfererUnt
+        ? patientFormCause.transfererUnt
+        : "",
     },
     validationSchema: RegisterSchema,
     onSubmit: (CauseMalnutrition) => {
@@ -319,6 +323,11 @@ export default function CauseForm({
     } else {
       setcocktailAtbDesabled(true);
     }
+  };
+  const handleChangeTransfererUnt = (event) => {
+    const { value } = event.target;
+    setFieldValue("transfererUnt", value);
+    patientFormCause.setTransfererUnt(value);
   };
   const handleDpm = (event) => {
     const { value } = event.target;
@@ -977,7 +986,58 @@ export default function CauseForm({
                 errors.diagnostiqueHospitalisation
               }
             />
-
+            <RadioGroup
+              // {...getFieldProps('transfererUnt')}
+              onChange={handleChangeTransfererUnt}
+              helperText={touched.transfererUnt && errors.transfererUnt}
+              error={Boolean(touched.transfererUnt && errors.transfererUnt)}
+              // onChange={handleAllaitementExclusifSixMoix}
+            >
+              <Stack
+                direction={{ xs: "column", sm: "column", md: "row" }}
+                sx={{
+                  display: "flex",
+                  padding: "10px",
+                  alignItems: "center",
+                  border: `${
+                    Boolean(touched.transfererUnt && errors.transfererUnt) &&
+                    "1px solid red"
+                  }`,
+                  borderRadius: `${
+                    Boolean(touched.transfererUnt && errors.transfererUnt) &&
+                    "10px"
+                  }`,
+                }}
+                spacing={1}
+              >
+                <FormLabel
+                  component="label"
+                  // style={{ color: `${errors.allaitementExclusifSixMois && 'red'}` }}
+                >
+                  Transfert UNT:
+                </FormLabel>
+                <Stack direction={{ xs: "row", sm: "row" }}>
+                  <FormControlLabel
+                    value="true"
+                    control={
+                      <Radio
+                        checked={patientFormCause.transfererUnt === "true"}
+                      />
+                    }
+                    label="Oui"
+                  />
+                  <FormControlLabel
+                    value="false"
+                    control={
+                      <Radio
+                        checked={patientFormCause.transfererUnt === "false"}
+                      />
+                    }
+                    label="Non"
+                  />
+                </Stack>
+              </Stack>
+            </RadioGroup>
             {/* </Stack> */}
           </Grid>
           <Grid item xs={10} sm={6} md={6}>

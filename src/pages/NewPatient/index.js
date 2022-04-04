@@ -7,9 +7,11 @@ import Page from "../../components/Page";
 import {
   FamilleForm,
   CauseForm,
+  //  CliniqueForm,
   ShowDAtaPatient,
   PatientForm,
 } from "../../components/_dashboard/patient";
+import CliniqueForm from "src/components/_dashboard/patient/PatientCliniqueForm";
 import "./styledNewPatient.css";
 
 export default function NewPatient() {
@@ -129,40 +131,23 @@ export default function NewPatient() {
       setadressePatient,
       setSexePatient,
       setPostNomPatient,
-      setPerimetreBrachail,
       setPrenomPatient,
       setNomPatient,
-      setTaille,
-      setPerimetreCranien,
-      setModeArriverPatient,
-      setPoidsActuel,
-      setTraitementNutritionnelAutre,
-      setRationSeche,
-      setTypeOedeme,
       setDateAdmissionPatient,
       setDateGuerisonPatient,
       setFirstPicture,
       setLastPicture,
-      setCommentaires,
       setProvenancePatient,
-      setTraitementNutritionnel,
       setDataNaissancePatient,
-      setTypeMalnutrition,
       setExplicationAutre,
       setTelephone,
       setExplicationProvenance,
-      transfererUnt,
-      setTransfererUnt,
-      taille,
-      poidsActuel,
-      perimetreCranien,
-      rationSeche,
-      typeOedeme,
+      // transfererUnt,
+      // setTransfererUnt,
       dateAdmissionPatient,
       dateGuerisonPatient,
       firstPicture,
       lastPicture,
-      commentaires,
       prenomPatient,
       nomPatient,
       postNomPatient,
@@ -174,20 +159,37 @@ export default function NewPatient() {
       // constitutionAliment,
       // setConstitutionAliment,
       provenancePatient,
+      ExplicationProvenance,
       adressePatient,
       modeArriverPatient,
+      ExplicationAutre,
       // ageFinAllaitement,
       // setAgeFinAllaitement,
-      traitementNutritionnelAutre,
-      traitementNutritionnel,
-      perimetreBrachail,
-      typeMalnutrition,
-      ExplicationAutre,
-      ExplicationProvenance,
+      // taille,
+      // poidsActuel,
+      // perimetreBrachail,
+      // perimetreCranien,
+      // rationSeche,
+      // typeOedeme,
+      // typeMalnutrition,
+      // traitementNutritionnel,
+      // traitementNutritionnelAutre,
+      // commentaires,
+      // setTaille,
+      // setPoidsActuel,
+      // setPerimetreBrachail,
+      // setPerimetreCranien,
+      // setRationSeche,
+      // setTypeOedeme,
+      // setTypeMalnutrition,
+      // setTraitementNutritionnel,
+      // setTraitementNutritionnelAutre,
+      // setCommentaires,
       // AllaitementExclisifSixMois,
       // setAllaitementExclisifSixMois,
       // poidsNaissance,
       // setPoidsNaissance,
+      setModeArriverPatient,
     };
 
     const patientFormCause = {
@@ -243,6 +245,8 @@ export default function NewPatient() {
       setTerrainVih,
       nombreChute,
       setNombreChute,
+      transfererUnt,
+      setTransfererUnt,
       vaccinationRougeole,
       setVaccinationRougeole,
       eig,
@@ -319,6 +323,29 @@ export default function NewPatient() {
       contraceptionType,
       setContraceptionType,
     };
+    const patientClinicForm = {
+      taille,
+      poidsActuel,
+      perimetreBrachail,
+      perimetreCranien,
+      rationSeche,
+      typeOedeme,
+      typeMalnutrition,
+      traitementNutritionnel,
+      traitementNutritionnelAutre,
+      commentaires,
+      setTaille,
+      setPoidsActuel,
+      setPerimetreBrachail,
+      setPerimetreCranien,
+      setRationSeche,
+      setTypeOedeme,
+      setTypeMalnutrition,
+      setTraitementNutritionnel,
+      setTraitementNutritionnelAutre,
+      setCommentaires,
+    };
+
     switch (key) {
       case 1:
         return (
@@ -377,6 +404,16 @@ export default function NewPatient() {
         );
       case 4:
         return (
+          <CliniqueForm
+            PrevStep={PrevStep}
+            NextStep={NextStep}
+            DataPatient={DataPatient}
+            SetDataPatient={SetDataPatient}
+            patientClinicForm={patientClinicForm}
+          />
+        );
+      case 5:
+        return (
           <ShowDAtaPatient PrevStep={PrevStep} DataPatient={DataPatient} />
         );
       default:
@@ -409,6 +446,10 @@ export default function NewPatient() {
         />
         <div
           className={`progress-step  ${Step === 4 && "progress-step-active"}`}
+          data-title="Examen clinique"
+        />
+        <div
+          className={`progress-step  ${Step === 5 && "progress-step-active"}`}
           data-title="Valider"
         />
       </div>
