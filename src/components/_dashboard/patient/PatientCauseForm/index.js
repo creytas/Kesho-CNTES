@@ -49,7 +49,7 @@ export default function CauseForm({
     setTbcGueriEtDuréTraitementDesabled,
   ] = useState(true);
   const [allaitement, setAllaitement] = useState(false);
-
+  const [masDesabled, setMasDesabled] = useState(true);
   const [position] = useState(0);
   useEffect(() => {
     window.scroll(position, position);
@@ -431,6 +431,11 @@ export default function CauseForm({
     const { value } = event.target;
     setFieldValue("atcdMas", value);
     patientFormCause.setAtcdMas(value);
+    if (value === "true") {
+      setMasDesabled(true);
+    } else {
+      setMasDesabled(false);
+    }
   };
   const handleDpmAnormalPrecision = (event) => {
     const { value } = event.target;
@@ -1156,6 +1161,7 @@ export default function CauseForm({
               sx={{ padding: "2px", marginTop: "24px" }}
               autoComplete="nbr"
               fullWidth
+              disabled={!masDesabled}
               type="text"
               value={patientFormCause.nombreChute}
               label="Nombre de rechute"

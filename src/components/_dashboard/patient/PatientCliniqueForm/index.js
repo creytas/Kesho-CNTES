@@ -10,6 +10,7 @@ import {
   TextField,
   TextareaAutosize,
   // Typography,
+  Avatar,
   FormControlLabel,
   Radio,
   RadioGroup,
@@ -27,7 +28,7 @@ import style from "./patient.module.css";
 CliniqueForm.propTypes = {
   NextStep: propTypes.func,
   PrevStep: propTypes.func,
-  DataPatient: propTypes.func,
+  DataPatient: propTypes.object,
   SetDataPatient: propTypes.func,
   patientClinicForm: propTypes.any,
 };
@@ -42,6 +43,7 @@ export default function CliniqueForm({
   // const [allaitement, setAllaitement] = useState(false);
   const [oedeme, setOedeme] = useState(false);
   const [traitementNutri, setTraitementNutri] = useState(false);
+  const [url, setUrl] = useState("");
 
   const [position] = useState(0);
 
@@ -53,8 +55,8 @@ export default function CliniqueForm({
   const RegisterSchema = Yup.object().shape({
     // dateAdmissionPatient: Yup.date().required("Date d'admission requis"),
     // dateGuerisonPatient: Yup.date(),
-    // firstPicture: Yup.string(),
-    // lastPicture: Yup.string(),
+    firstPicture: Yup.string(),
+    //lastPicture: Yup.string(),
     commentaires: Yup.string(),
     rationSeche: Yup.boolean(),
     typeOedeme: Yup.string(),
@@ -137,9 +139,9 @@ export default function CliniqueForm({
       //   dateGuerisonPatient: patientClinicForm.dateGuerisonPatient
       //     ? patientClinicForm.dateGuerisonPatient
       //     : new Date(),
-      //   firstPicture: patientClinicForm.firstPicture
-      //     ? patientClinicForm.firstPicture
-      //     : "",
+      firstPicture: patientClinicForm.firstPicture
+        ? patientClinicForm.firstPicture
+        : "",
       //   lastPicture: patientClinicForm.lastPicture
       //     ? patientClinicForm.lastPicture
       //     : "",
@@ -426,6 +428,16 @@ export default function CliniqueForm({
       setOedeme(false);
     }
   };
+  const handleChangeFirstPicture = (event) => {
+    if (!event.target.files[0]) {
+      return;
+    }
+    setFieldValue("firstPicture", event.target.files[0]);
+    patientClinicForm.setFirstPicture(event.target.files[0]);
+    console.log(event.target.files[0]);
+
+    setUrl(URL.createObjectURL(event.target.files[0]));
+  };
   // const handleAllaitementExclusifSixMoix = (event) => {
   //   const { value } = event.target;
   //   setFieldValue("allaitementExclusifSixMois", value);
@@ -442,7 +454,13 @@ export default function CliniqueForm({
         <Form autoComplete="off" onSubmit={handleSubmit}>
           <Grid container spacing={3}>
             <Grid item xs={11} sm={6} md={6}>
-              <Stack spacing={3}>
+              <Stack
+                style={{
+                  border: "0px solid green",
+                  display: "flex",
+                  alignItems: "flex-start",
+                }}
+              >
                 {/* <TextField
                   sx={{ padding: "2px" }}
                   type="date"
@@ -673,6 +691,43 @@ export default function CliniqueForm({
                   helperText={touched.commentaires && errors.commentaires}
                   error={Boolean(touched.commentaires && errors.commentaires)}
                 /> */}
+                <input
+                  type="file"
+                  accept="image/png, image/jpeg"
+                  onChange={handleChangeFirstPicture}
+                  name="firstPicture"
+                  id="firstPicture"
+                  style={{ display: "none" }}
+                />
+                <label
+                  for="firstPicture"
+                  style={{
+                    width: "415px",
+                    height: "415px",
+                    margin: "auto",
+                  }}
+                >
+                  <Avatar
+                    alt="Child first picture"
+                    src={url}
+                    variant="rounded"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      border: "2.5px solid #000",
+                    }}
+                  />
+                  {/* <img
+                    id="preview"
+                    alt="Child first view"
+                    src={url}
+                    style={{
+                      border: "1px solid red",
+                      width: "300px",
+                      height: "300px",
+                    }}
+                  /> */}
+                </label>
               </Stack>
             </Grid>
             <Grid item xs={11} sm={6} md={6}>
@@ -1198,7 +1253,7 @@ export default function CliniqueForm({
                   label="Si le traitement nutritionnel est autre veuillez préciser"
                   // defaultValue={DataPatient.traitementNutritionnelAutre}
                   onChange={handleChangeNutritionnelAutre}
-                  value={patientClinicForm.fistNamePatient}
+                  value={patientClinicForm.traitementNutritionnelAutre}
                   disabled={traitementNutri}
                   helperText={
                     touched.traitementNutritionnelAutre &&

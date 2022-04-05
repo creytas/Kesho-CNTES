@@ -295,9 +295,18 @@ export default function MoreDetails({ id }) {
                                       ? "#D32F2F"
                                       : anthro[i].type_malnutrition === "MAM"
                                       ? "#ffb74d"
+                                      : anthro[i].type_malnutrition ===
+                                        "MAM / FMC"
+                                      ? "#ffb74d"
                                       : anthro[i].type_malnutrition === "MAS-K"
                                       ? "#e57373"
+                                      : anthro[i].type_malnutrition ===
+                                        "MAS-K / FMC"
+                                      ? "#e57373"
                                       : anthro[i].type_malnutrition === "MAS-M"
+                                      ? "#f57c00"
+                                      : anthro[i].type_malnutrition ===
+                                        "MAS-M / FMC"
                                       ? "#f57c00"
                                       : "#4CAF50"
                                   }`,

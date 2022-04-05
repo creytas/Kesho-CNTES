@@ -51,8 +51,8 @@ export default function PatientForm({
   const RegisterSchema = Yup.object().shape({
     dateAdmissionPatient: Yup.date().required("Date d'admission requis"),
     dateGuerisonPatient: Yup.date(),
-    firstPicture: Yup.string(),
-    lastPicture: Yup.string(),
+    // firstPicture: Yup.string(),
+    // lastPicture: Yup.string(),
     // commentaires: Yup.string(),
     // rationSeche: Yup.boolean(),
     // typeOedeme: Yup.string(),
@@ -135,12 +135,12 @@ export default function PatientForm({
       dateGuerisonPatient: patientFormData.dateGuerisonPatient
         ? patientFormData.dateGuerisonPatient
         : new Date(),
-      firstPicture: patientFormData.firstPicture
-        ? patientFormData.firstPicture
-        : "",
-      lastPicture: patientFormData.lastPicture
-        ? patientFormData.lastPicture
-        : "",
+      // firstPicture: patientFormData.firstPicture
+      //   ? patientFormData.firstPicture
+      //   : "",
+      // lastPicture: patientFormData.lastPicture
+      //   ? patientFormData.lastPicture
+      //   : "",
       // commentaires: patientFormData.commentaires
       //   ? patientFormData.commentaires
       //   : "",
@@ -436,7 +436,7 @@ export default function PatientForm({
       <FormikProvider value={formik}>
         <Form autoComplete="off" onSubmit={handleSubmit}>
           <Grid container spacing={3}>
-            <Grid item xs={11} sm={6} md={6}>
+            <Grid item xs={11} sm={11} md={11}>
               <Stack spacing={3}>
                 <TextField
                   sx={{ padding: "2px" }}
@@ -456,7 +456,7 @@ export default function PatientForm({
                     touched.dateAdmissionPatient && errors.dateAdmissionPatient
                   )}
                 />
-                                <TextField
+                <TextField
                   sx={{ padding: "2px" }}
                   type="date"
                   // fullWidth
@@ -1213,27 +1213,32 @@ export default function PatientForm({
                   }
                 /> */}
               </Stack>
-            </Grid>
-            <Stack
-              direction={{ xs: "column", sm: "row" }}
-              sx={{ display: "flex", justifyContent: "center", margin: "auto" }}
-            >
-              <LoadingButton
-                type="submit"
-                variant="contained"
-                size="large"
-                // loading={isSubmitting}
+              <Stack
+                direction={{ xs: "column", sm: "row" }}
                 sx={{
-                  justifyContent: "center",
-                  width: 200,
-                  margin: "auto",
-                  marginTop: "40px",
                   display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  width: "190%",
                 }}
               >
-                Suivant
-              </LoadingButton>
-            </Stack>
+                <LoadingButton
+                  type="submit"
+                  variant="contained"
+                  size="large"
+                  // loading={isSubmitting}
+                  sx={{
+                    justifyContent: "center",
+                    width: 200,
+                    margin: "auto",
+                    marginTop: "40px",
+                    display: "flex",
+                  }}
+                >
+                  Suivant
+                </LoadingButton>
+              </Stack>
+            </Grid>
           </Grid>
         </Form>
       </FormikProvider>

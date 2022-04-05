@@ -28,27 +28,27 @@ PatientData.propTypes = {
 export default function PatientData({ DataPatient, PrevStep }) {
   const [btnLoading, setBtnLoading] = useState(false);
   const navigate = useNavigate();
-  const { indentity, CauseMalnutrition, FamalyData } = DataPatient;
+  const { indentity, CauseMalnutrition, FamalyData, clinic } = DataPatient;
   console.log(DataPatient);
   const newPatient = {};
-  newPatient.ration_seche = indentity.rationSeche;
-  newPatient.type_oedeme = indentity.typeOedeme;
+  newPatient.ration_seche = clinic.rationSeche;
+  newPatient.type_oedeme = clinic.typeOedeme;
   newPatient.date_admission_patient = indentity.dateAdmissionPatient;
   newPatient.date_guerison_patient = indentity.dateGuerisonPatient;
   newPatient.first_picture = indentity.firstPicture;
   newPatient.last_picture = indentity.lastPicture;
-  newPatient.commentaires = indentity.commentaires;
+  newPatient.commentaires = clinic.commentaires;
   newPatient.age_fin_allaitement =
     CauseMalnutrition.ageFinAllaitement === ""
       ? 6
       : CauseMalnutrition.ageFinAllaitement;
   newPatient.allaitement_6mois = CauseMalnutrition.allaitementExclusifSixMois; // bool
-  newPatient.peri_cranien = indentity.perimetreCranien;
-  newPatient.peri_brachial = indentity.perimetreBrachail;
-  newPatient.poids = indentity.poidsActuel;
-  newPatient.taille = indentity.taille;
-  newPatient.transferer_unt = indentity.transfererUnt;
-  newPatient.type_malnutrition = indentity.typeMalnutrition;
+  newPatient.peri_cranien = clinic.perimetreCranien;
+  newPatient.peri_brachial = clinic.perimetreBrachail;
+  newPatient.poids = clinic.poidsActuel;
+  newPatient.taille = clinic.taille;
+  newPatient.transferer_unt = CauseMalnutrition.transfererUnt;
+  newPatient.type_malnutrition = clinic.typeMalnutrition;
   newPatient.nom_patient = indentity.NomPatient;
   newPatient.postnom_patient = indentity.postNomPatient;
   newPatient.prenom_patient = indentity.fistNamePatient;
@@ -77,7 +77,7 @@ export default function PatientData({ DataPatient, PrevStep }) {
       ? "Calendrier vaccinal à jour"
       : CauseMalnutrition.preciserCalendrierVaccinNonjour; //
   newPatient.atcd_mas = CauseMalnutrition.atcdMas;
-  newPatient.nbre_chute = CauseMalnutrition.nombreChute;
+  newPatient.nbre_chute = parseInt(CauseMalnutrition.nombreChute);
   newPatient.mas_fratrie = CauseMalnutrition.masFratrie;
   newPatient.terme_grossesse = CauseMalnutrition.termeGrossesse;
   newPatient.sejour_neonat = CauseMalnutrition.sejourNeo;
@@ -108,18 +108,17 @@ export default function PatientData({ DataPatient, PrevStep }) {
       ? "rien"
       : CauseMalnutrition.diagnostiqueHospitalisation;
   newPatient.traitement_nutri =
-    CauseMalnutrition.tbcTraiter === ""
-      ? "pas de tbc"
-      : CauseMalnutrition.tbcTraiter;
+    clinic.traitementNutritionnel === "Autres"
+      ? clinic.traitementNutritionnelAutre
+      : clinic.traitementNutritionnel;
   newPatient.atb = FamalyData.atb === "false" ? "false" : "true"; // bool prise d'at
   newPatient.liste_atb = FamalyData.atb === "false" ? "" : FamalyData.listAtb; //  lesquels
   newPatient.type_statut_marital =
     FamalyData.pereMariage === "" ? "non marié" : FamalyData.pereMariage;
   newPatient.taille_menage = FamalyData.tailleMenage;
-  newPatient.vivre_deux_parents = FamalyData.vivreAvecParents
-    ? FamalyData.vivreAvecParents
-    : "true"; // FamalyData.vivreAvecParent;//
-  newPatient.tuteur = FamalyData.tuteur;
+  newPatient.vivre_deux_parents =
+    FamalyData.vivreAvecParents === "" ? "true" : FamalyData.vivreAvecParents; // FamalyData.vivreAvecParent;//
+  newPatient.tuteur = FamalyData.tuteur === "" ? "Son père" : FamalyData.tuteur;
   newPatient.etat_mere = FamalyData.etatMere ? FamalyData.etatMere : "Aucun";
   newPatient.mere_en_vie = FamalyData.mereEnVie;
   newPatient.pere_en_vie = FamalyData.pereEnvie;
@@ -142,7 +141,7 @@ export default function PatientData({ DataPatient, PrevStep }) {
       : FamalyData.typeContraceptionModerne;
   newPatient.niveau_socioeconomique = FamalyData.NiveauSocioEconomique;
   newPatient.statut_marital =
-    FamalyData.statutMarital === "" ? "rien" : FamalyData.statutMarital;
+    FamalyData.statutMarital === "" ? "Aucun" : FamalyData.statutMarital;
   newPatient.nbre_femme_pere = FamalyData.nbrFemme ? FamalyData.nbrFemme : 1;
   newPatient.tribu = FamalyData.Tribut;
   newPatient.religion = FamalyData.Religion;
@@ -155,7 +154,7 @@ export default function PatientData({ DataPatient, PrevStep }) {
       : CauseMalnutrition.tbcChezParent;
   newPatient.tbc_chez =
     CauseMalnutrition.tbcChezParent === ""
-      ? "rien"
+      ? "Aucun"
       : CauseMalnutrition.tbcChezParent;
   newPatient.tbc_gueris =
     CauseMalnutrition.TbcGuerie === "" ? false : CauseMalnutrition.TbcGuerie;
@@ -165,7 +164,8 @@ export default function PatientData({ DataPatient, PrevStep }) {
       : CauseMalnutrition.dureeTraitementTbc;
   newPatient.tbc_declarer_finie =
     CauseMalnutrition.TbcGuerie === "" ? false : CauseMalnutrition.TbcGuerie;
-  // newPatient.nom_tuteur = FamalyData.nomTuteur;
+  newPatient.first_picture =
+    clinic.firstPicture === "" ? "" : clinic.firstPicture;
   newPatient.declarer_gueri = false;
   newPatient.age_tuteur = FamalyData.dateNaissanceChefMenage;
   console.log(newPatient);
@@ -233,19 +233,36 @@ export default function PatientData({ DataPatient, PrevStep }) {
               variant="filled"
               sx={{
                 color: `${
-                  indentity.typeMalnutrition === "MC"
-                    ? "#d32f2f"
-                    : indentity.typeMalnutrition === "MAM"
-                    ? "#1565c0"
-                    : indentity.typeMalnutrition === "MAS-K"
-                    ? "#ED6C02"
-                    : indentity.typeMalnutrition === "MAS-M"
-                    ? "#ef5350"
-                    : "#4caf50"
+                  clinic.typeMalnutrition === "MC"
+                    ? "#D32F2F"
+                    : clinic.typeMalnutrition === "MAM"
+                    ? "#ffb74d"
+                    : clinic.typeMalnutrition === "MAM / FMC"
+                    ? "#ffb74d"
+                    : clinic.typeMalnutrition === "MAS-K"
+                    ? "#e57373"
+                    : clinic.typeMalnutrition === "MAS-K / FMC"
+                    ? "#e57373"
+                    : clinic.typeMalnutrition === "MAS-M"
+                    ? "#f57c00"
+                    : clinic.typeMalnutrition === "MAS-M / FMC"
+                    ? "#f57c00"
+                    : "#4CAF50"
                 }`,
+                // color: `${
+                //   clinic.typeMalnutrition === "MC"
+                //     ? "#d32f2f"
+                //     : clinic.typeMalnutrition === "MAM"
+                //     ? "#1565c0"
+                //     : clinic.typeMalnutrition === "MAS-K"
+                //     ? "#ED6C02"
+                //     : clinic.typeMalnutrition === "MAS-M"
+                //     ? "#ef5350"
+                //     : "#4caf50"
+                // }`,
               }}
             >
-              {indentity.typeMalnutrition}
+              {clinic.typeMalnutrition}
             </Label>
             <InputLabel>
               Sexe :{" "}
@@ -603,9 +620,11 @@ export default function PatientData({ DataPatient, PrevStep }) {
             <InputLabel>
               Contraception mère :{" "}
               <span style={{ color: "black" }}>
-                {FamalyData.contraceptionMere
-                  ? FamalyData.contraceptionMere
-                  : "Aucune contraception"}
+                {FamalyData.contraceptionMere === ""
+                  ? "Aucune contraception"
+                  : FamalyData.contraceptionMere === true
+                  ? "Oui"
+                  : "Non"}
               </span>
             </InputLabel>
             <InputLabel>
@@ -691,33 +710,37 @@ export default function PatientData({ DataPatient, PrevStep }) {
             <InputLabel>
               Terrain VIH :
               <span style={{ color: "black" }}>
+                {" "}
                 {CauseMalnutrition.terrainVih === ""
                   ? "Non renseigné"
-                  : FamalyData.terrainVih}
+                  : CauseMalnutrition.terrainVih === "false"
+                  ? "Non"
+                  : "Oui"}
               </span>
             </InputLabel>
             <InputLabel>
               TBC Chez Parents :
-              <span style={{ color: "black" }}>{`${
-                CauseMalnutrition.TbcChezParent === "true" ? "Oui" : "Non"
-              }`}</span>
+              <span style={{ color: "black" }}>
+                {" "}
+                {CauseMalnutrition.TbcChezParent === "true" ? "Oui" : "Non"}
+              </span>
             </InputLabel>
             <Typography sx={{ fontWeight: "900", fontSize: "larger" }}>
               Renseignements cliniques
             </Typography>
             <InputLabel>
               Poids Actuel :
-              <span style={{ color: "black" }}> {indentity.poidsActuel}Kg</span>
+              <span style={{ color: "black" }}> {clinic.poidsActuel}Kg</span>
             </InputLabel>
             <InputLabel>
               Taille :
-              <span style={{ color: "black" }}> {indentity.taille} Cm</span>
+              <span style={{ color: "black" }}> {clinic.taille} Cm</span>
             </InputLabel>
             <InputLabel>
               Périmètre Cranien :
               <span style={{ color: "black" }}>
                 {" "}
-                {indentity.perimetreCranien} Cm
+                {clinic.perimetreCranien} Cm
               </span>
             </InputLabel>
 
@@ -725,7 +748,7 @@ export default function PatientData({ DataPatient, PrevStep }) {
               Périmètre brachial :
               <span style={{ color: "black" }}>
                 {" "}
-                {indentity.perimetreBrachail} Cm
+                {clinic.perimetreBrachail} Cm
               </span>
             </InputLabel>
 
@@ -733,15 +756,15 @@ export default function PatientData({ DataPatient, PrevStep }) {
               Oedème :
               <span style={{ color: "black" }}>
                 {" "}
-                {indentity.rationSeche === "true" ? "Oui" : "Non"}
+                {clinic.rationSeche === "true" ? "Oui" : "Non"}
               </span>
             </InputLabel>
             <InputLabel>
               Type d'oedème :
               <span style={{ color: "black" }}>
                 {" "}
-                {indentity.rationSeche === "true"
-                  ? indentity.typeOedeme
+                {clinic.rationSeche === "true"
+                  ? clinic.typeOedeme
                   : "Aucun oedème"}
               </span>
             </InputLabel>
@@ -749,9 +772,9 @@ export default function PatientData({ DataPatient, PrevStep }) {
               Traitement Nutritionnel:
               <span style={{ color: "black" }}>
                 {" "}
-                {indentity.traitementNutritionnel === ""
+                {clinic.traitementNutritionnel === ""
                   ? "Non renseigné"
-                  : indentity.traitementNutritionnel}
+                  : clinic.traitementNutritionnel}
               </span>
             </InputLabel>
           </Card>

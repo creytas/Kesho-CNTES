@@ -485,9 +485,18 @@ export default function Patient() {
                                                 ? "#D32F2F"
                                                 : type_malnutrition === "MAM"
                                                 ? "#ffb74d"
+                                                : type_malnutrition ===
+                                                  "MAM / FMC"
+                                                ? "#ffb74d"
                                                 : type_malnutrition === "MAS-K"
                                                 ? "#e57373"
+                                                : type_malnutrition ===
+                                                  "MAS-K / FMC"
+                                                ? "#e57373"
                                                 : type_malnutrition === "MAS-M"
+                                                ? "#f57c00"
+                                                : type_malnutrition ===
+                                                  "MAS-M / FMC"
                                                 ? "#f57c00"
                                                 : "#4CAF50"
                                             }`,
