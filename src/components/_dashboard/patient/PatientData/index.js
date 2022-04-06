@@ -30,6 +30,7 @@ export default function PatientData({ DataPatient, PrevStep }) {
   const navigate = useNavigate();
   const { indentity, CauseMalnutrition, FamalyData, clinic } = DataPatient;
   console.log(DataPatient);
+  // console.log(`url = ${DataPatient.clinic.firstPicture}`);
   const newPatient = {};
   newPatient.ration_seche = clinic.rationSeche;
   newPatient.type_oedeme = clinic.typeOedeme;
@@ -77,7 +78,10 @@ export default function PatientData({ DataPatient, PrevStep }) {
       ? "Calendrier vaccinal à jour"
       : CauseMalnutrition.preciserCalendrierVaccinNonjour; //
   newPatient.atcd_mas = CauseMalnutrition.atcdMas;
-  newPatient.nbre_chute = parseInt(CauseMalnutrition.nombreChute);
+  newPatient.nbre_chute =
+    CauseMalnutrition.nombreChute === ""
+      ? 0
+      : parseInt(CauseMalnutrition.nombreChute);
   newPatient.mas_fratrie = CauseMalnutrition.masFratrie;
   newPatient.terme_grossesse = CauseMalnutrition.termeGrossesse;
   newPatient.sejour_neonat = CauseMalnutrition.sejourNeo;

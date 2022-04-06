@@ -225,6 +225,14 @@ export default function CliniqueForm({
     onSubmit: (clinic) => {
       // const { fistNamePatient, NomPatient } = clinic;  clinic.allaitementExclusifSixMois === false && clinic.ageFinAllaitement === ''
       try {
+        // if (!url) {
+        //   return;
+        // }
+        console.log(`url: ${url}`);
+        // const urlToUploadStringified = uploadImage(url);
+        // setFieldValue("firstPicture", url);
+        // patientClinicForm.setFirstPicture(url);
+
         // if (
         //   clinic.provenancePatient === "Autres" &&
         //   clinic.ExplicationProvenance === ""
@@ -388,11 +396,7 @@ export default function CliniqueForm({
   //     setFieldValue("dataNaissancePatient", value);
   //     patientClinicForm.setDataNaissancePatient(value);
   //   };
-  const handleChangeTypeMalnutrition = (event) => {
-    const { value } = event.target;
-    setFieldValue("typeMalnutrition", value);
-    patientClinicForm.setTypeMalnutrition(value);
-  };
+
   //   const handleChangeExplicationAutre = (event) => {
   //     const { value } = event.target;
   //     setFieldValue("ExplicationAutre", value);
@@ -428,15 +432,42 @@ export default function CliniqueForm({
       setOedeme(false);
     }
   };
+
   const handleChangeFirstPicture = (event) => {
-    if (!event.target.files[0]) {
+    const file = event.target.files[0];
+    if (!file) {
       return;
     }
-    setFieldValue("firstPicture", event.target.files[0]);
-    patientClinicForm.setFirstPicture(event.target.files[0]);
-    console.log(event.target.files[0]);
-
-    setUrl(URL.createObjectURL(event.target.files[0]));
+    previewFile(file);
+    // setUrl(URL.createObjectURL(file));
+    // setFieldValue("firstPicture", url);
+    // patientClinicForm.setFirstPicture(file);
+    // console.log(`url state after setUrl : ${url}`);
+    // console.log(`url state after setFieldValue : ${url}`);
+    console.log(`FirstPicture Url : ${url}`);
+    // setUrl(URL.createObjectURL(patientClinicForm.firstPicture));
+  };
+  const previewFile = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setUrl(reader.result);
+    };
+    setFieldValue("firstPicture", url);
+    patientClinicForm.setFirstPicture(file);
+  };
+  // const uploadImage = (base64EncodedImage) => {
+  //   console.log(base64EncodedImage);
+  //   setUrl(base64EncodedImage);
+  //   setFieldValue("firstPicture", url);
+  //   patientClinicForm.setFirstPicture(url);
+  //   // const urlToUpload = JSON.stringify(base64EncodedImage);
+  //   // return base64EncodedImage;
+  // };
+  const handleChangeTypeMalnutrition = (event) => {
+    const { value } = event.target;
+    setFieldValue("typeMalnutrition", value);
+    patientClinicForm.setTypeMalnutrition(value);
   };
   // const handleAllaitementExclusifSixMoix = (event) => {
   //   const { value } = event.target;
@@ -448,6 +479,7 @@ export default function CliniqueForm({
   //     setAllaitement(false);
   //   }
   // };
+
   return (
     <>
       <FormikProvider value={formik}>
