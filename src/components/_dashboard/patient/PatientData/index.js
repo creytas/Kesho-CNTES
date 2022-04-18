@@ -30,14 +30,37 @@ export default function PatientData({ DataPatient, PrevStep }) {
   const navigate = useNavigate();
   const { indentity, CauseMalnutrition, FamalyData, clinic } = DataPatient;
   console.log(DataPatient);
-  // console.log(`url = ${DataPatient.clinic.firstPicture}`);
+  // const uploadImage = async () => {
+  //   const cloudinaryPhoto = new FormData();
+  //   cloudinaryPhoto.append("file", clinic.firstPicture);
+  //   cloudinaryPhoto.append("upload_preset", "pixToCloud");
+  //   // await Axios.request({
+  //   //   url: "https://api.cloudinary.com/v1_1/kda-cohorte-2021/image/upload",
+  //   //   method: "POST",
+  //   //   data: cloudinaryPhoto,
+  //   //   headers: {
+  //   //     "Content-Type": "multipart/form-data",
+  //   //     "Access-Control-Allow-Origin": "*",
+  //   //   },
+  //   // });
+  //   await Axios.post(
+  //     "https://api.cloudinary.com/v1_1/kda-cohorte-2021/image/upload",
+  //     cloudinaryPhoto
+  //   )
+  //     .then((res) => {
+  //       return res.data.url;
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }; // console.log(`url = ${DataPatient.clinic.firstPicture}`);
   const newPatient = {};
   newPatient.ration_seche = clinic.rationSeche;
   newPatient.type_oedeme = clinic.typeOedeme;
   newPatient.date_admission_patient = indentity.dateAdmissionPatient;
   newPatient.date_guerison_patient = indentity.dateGuerisonPatient;
-  newPatient.first_picture = indentity.firstPicture;
-  newPatient.last_picture = indentity.lastPicture;
+  // newPatient.first_picture = indentity.firstPicture;
+  // newPatient.last_picture = indentity.lastPicture;
   newPatient.commentaires = clinic.commentaires;
   newPatient.age_fin_allaitement =
     CauseMalnutrition.ageFinAllaitement === ""
@@ -169,7 +192,7 @@ export default function PatientData({ DataPatient, PrevStep }) {
   newPatient.tbc_declarer_finie =
     CauseMalnutrition.TbcGuerie === "" ? false : CauseMalnutrition.TbcGuerie;
   newPatient.first_picture =
-    clinic.firstPicture === "" ? "" : clinic.firstPicture;
+    clinic.firstPicture === "" ? "" : clinic.pictureUploaded;
   newPatient.declarer_gueri = false;
   newPatient.age_tuteur = FamalyData.dateNaissanceChefMenage;
   console.log(newPatient);
@@ -182,7 +205,7 @@ export default function PatientData({ DataPatient, PrevStep }) {
     setBtnLoading(true);
     Axios.request({
       method: "POST",
-      url: `https://kesho-api.herokuapp.com/patient`,
+      url: `http://localhost:7000/patient`,//`https://kesho-api.herokuapp.com/patient`,
       data: newPatient,
       headers: {
         "Content-Type": "application/json",

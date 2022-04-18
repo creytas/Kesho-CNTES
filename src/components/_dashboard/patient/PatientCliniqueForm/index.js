@@ -224,14 +224,14 @@ export default function CliniqueForm({
     validationSchema: RegisterSchema,
     onSubmit: (clinic) => {
       // const { fistNamePatient, NomPatient } = clinic;  clinic.allaitementExclusifSixMois === false && clinic.ageFinAllaitement === ''
+
       try {
-        // if (!url) {
-        //   return;
-        // }
-        console.log(`url: ${url}`);
-        // const urlToUploadStringified = uploadImage(url);
+        clinic.pictureUploaded = url;
         // setFieldValue("firstPicture", url);
         // patientClinicForm.setFirstPicture(url);
+        // const cloudinaryPhoto = async () => {
+        //   await
+        // };
 
         // if (
         //   clinic.provenancePatient === "Autres" &&
@@ -435,35 +435,25 @@ export default function CliniqueForm({
 
   const handleChangeFirstPicture = (event) => {
     const file = event.target.files[0];
-    if (!file) {
-      return;
+    setFieldValue("firstPicture", file);
+    if (!(touched.firstPicture && errors.firstPicture)) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        setUrl(reader.result);
+      };
+      // patientClinicForm.setFirstPicture(url);
     }
-    previewFile(file);
+    console.log(url);
+    // if (!file) {
+    //   return;
+    // }
     // setUrl(URL.createObjectURL(file));
-    // setFieldValue("firstPicture", url);
+    // setFieldValue("firstPicture", file);
     // patientClinicForm.setFirstPicture(file);
-    // console.log(`url state after setUrl : ${url}`);
-    // console.log(`url state after setFieldValue : ${url}`);
-    console.log(`FirstPicture Url : ${url}`);
-    // setUrl(URL.createObjectURL(patientClinicForm.firstPicture));
+    // console.log(file);
   };
-  const previewFile = (file) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      setUrl(reader.result);
-    };
-    setFieldValue("firstPicture", url);
-    patientClinicForm.setFirstPicture(file);
-  };
-  // const uploadImage = (base64EncodedImage) => {
-  //   console.log(base64EncodedImage);
-  //   setUrl(base64EncodedImage);
-  //   setFieldValue("firstPicture", url);
-  //   patientClinicForm.setFirstPicture(url);
-  //   // const urlToUpload = JSON.stringify(base64EncodedImage);
-  //   // return base64EncodedImage;
-  // };
+
   const handleChangeTypeMalnutrition = (event) => {
     const { value } = event.target;
     setFieldValue("typeMalnutrition", value);
