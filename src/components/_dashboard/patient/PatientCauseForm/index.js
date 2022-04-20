@@ -80,7 +80,7 @@ export default function CauseForm({
     terrainVih: Yup.string().trim(),
     nombreChute: Yup.number().min(0),
     vaccinationRougeole: Yup.string().trim(),
-    eig: Yup.number().min(1).positive(),
+    eig: Yup.number(),
     TbcGuerie: Yup.string().trim(),
     dpm: Yup.string(),
     cocktailAtb: Yup.string(),

@@ -205,7 +205,7 @@ export default function PatientData({ DataPatient, PrevStep }) {
     setBtnLoading(true);
     Axios.request({
       method: "POST",
-      url: `http://localhost:7000/patient`,//`https://kesho-api.herokuapp.com/patient`,
+      url: `https://kesho-api.herokuapp.com/patient`, //`https://kesho-api.herokuapp.com/patient`,
       data: newPatient,
       headers: {
         "Content-Type": "application/json",
