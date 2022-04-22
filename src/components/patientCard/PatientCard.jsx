@@ -9,13 +9,14 @@ import LocationOnIcon from "@material-ui/icons/LocationOn";
 import SpeakerNotes from "@material-ui/icons/Assignment";
 import Laying from "@material-ui/icons/ArrowBack";
 import Flying from "@material-ui/icons/ArrowForward";
-import { TableCell } from "@material-ui/core";
+import { TableCell, Avatar } from "@material-ui/core";
 import EmojiPeopleIcon from "@material-ui/icons/EmojiPeople";
 import Badge from "@material-ui/core/Badge";
 import moment from "moment";
 import Label from "../Label";
 
 const PatientCard = ({
+  firstPicture,
   name,
   sex,
   age,
@@ -32,8 +33,13 @@ const PatientCard = ({
 }) => (
   <div className="userShow">
     <div className="userShowTop">
-      {/* <Avatar alt={name} src={`/static/mock-images/avatars/avatar_${id}.jpg`} /> */}
-      <div className="userShowTopTitle">
+      <div className="userShowTopTitle" style={{ border: "0px solid red" }}>
+        <Avatar
+          sx={{ width: "250px", height: "250px", border: "0px solid red" }}
+          alt={name}
+          src={firstPicture === null || firstPicture === "" ? "" : firstPicture}
+        />
+
         <h2>
           <span className="userShowUsername">{name}</span>
         </h2>

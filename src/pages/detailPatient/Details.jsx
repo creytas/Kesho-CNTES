@@ -56,7 +56,7 @@ export default function Details() {
       setAnthro(PatientBrachial);
       setOnePatient(Patient);
       setLoader(false);
-      console.log(anthro.commentaires);
+      console.log(`patient picture: ${onePatient.Patient.first_picture}`);
     } catch (err) {
       console.log(err);
     }
@@ -180,6 +180,7 @@ export default function Details() {
   const handleClose = () => {
     setOpen(false);
   };
+  // console.log(onePatient.Patient.first_picture);
   return isAuth ? (
     <>
       {loader ? (
@@ -220,6 +221,7 @@ export default function Details() {
             <div className="product">
               <div className="productLeft">
                 <PatientCard
+                  firstPicture={onePatient.Anthropometrique[0].first_picture}
                   name={`${onePatient.Patient.nom_patient} ${onePatient.Patient.postnom_patient}`}
                   sex={onePatient.Patient.sexe_patient}
                   age={
