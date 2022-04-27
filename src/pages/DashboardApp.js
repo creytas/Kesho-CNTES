@@ -518,9 +518,7 @@ export default function DashboardApp() {
                       icon="fa-solid:bread-slice"
                       title="Pain"
                       nombre={
-                        reports.briquettes === null
-                          ? 0
-                          : reports.briquettes.qte_matiere / 1000
+                        reports.pain === null ? 0 : reports.pain.qte_matiere
                       }
                     />
                   </Grid>
@@ -529,9 +527,9 @@ export default function DashboardApp() {
                       icon="mdi:food-turkey"
                       title="Nourriture"
                       nombre={
-                        reports.briquettes === null
+                        reports.nourriture === null
                           ? 0
-                          : reports.briquettes.qte_matiere / 1000
+                          : reports.nourriture.qte_matiere / 1000
                       }
                     />
                   </Grid>
@@ -540,9 +538,9 @@ export default function DashboardApp() {
                       icon="ion:shirt-outline"
                       title="Vêtement"
                       nombre={
-                        reports.briquettes === null
+                        reports.vetement === null
                           ? 0
-                          : reports.briquettes.qte_matiere / 1000
+                          : reports.vetement.qte_matiere
                       }
                     />
                   </Grid>
@@ -551,9 +549,7 @@ export default function DashboardApp() {
                       icon="jam:eggs-f"
                       title="Oeufs"
                       nombre={
-                        reports.briquettes === null
-                          ? 0
-                          : reports.briquettes.qte_matiere / 1000
+                        reports.oeufs === null ? 0 : reports.oeufs.qte_matiere
                       }
                     />
                   </Grid>
