@@ -537,7 +537,7 @@ export default function DashboardApp() {
                   </Grid>
                   <Grid item xs={12} sm={6} md={3}>
                     <CardStockMatieres
-                      icon="simple-line-icons:energy"
+                      icon="ion:shirt-outline"
                       title="Vêtement"
                       nombre={
                         reports.briquettes === null
@@ -548,7 +548,7 @@ export default function DashboardApp() {
                   </Grid>
                   <Grid item xs={12} sm={6} md={3}>
                     <CardStockMatieres
-                      icon="simple-line-icons:energy"
+                      icon="jam:eggs-f"
                       title="Oeufs"
                       nombre={
                         reports.briquettes === null
