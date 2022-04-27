@@ -2,6 +2,9 @@
 /* eslint-disable camelcase */
 /* no-nested-ternary */
 import "./PatientCard.css";
+import { Link as RouterLink, Navigate, useLocation } from "react-router-dom";
+import { Icon } from "@iconify/react";
+import plusFill from "@iconify/icons-eva/plus-fill";
 import { CalendarToday, PhoneAndroid } from "@material-ui/icons";
 import LocalHospitalIcon from "@material-ui/icons/LocalHospital";
 import ChildCareIcon from "@material-ui/icons/ChildCare";
@@ -9,11 +12,13 @@ import LocationOnIcon from "@material-ui/icons/LocationOn";
 import SpeakerNotes from "@material-ui/icons/Assignment";
 import Laying from "@material-ui/icons/ArrowBack";
 import Flying from "@material-ui/icons/ArrowForward";
-import { TableCell, Avatar } from "@material-ui/core";
+import { TableCell, Avatar, Button } from "@material-ui/core";
 import EmojiPeopleIcon from "@material-ui/icons/EmojiPeople";
 import Badge from "@material-ui/core/Badge";
 import moment from "moment";
+import Update from "../../pages/detailPatient/Update";
 import Label from "../Label";
+const eyeIcon = "heroicons-solid:eye";
 
 const PatientCard = ({
   firstPicture,
@@ -28,6 +33,7 @@ const PatientCard = ({
   tutor,
   location,
   id,
+  id_patient,
   malnutrition,
   transfer,
 }) => (
@@ -135,6 +141,14 @@ const PatientCard = ({
         </TableCell>
         {/* <span className="userShowInfoTitle">{malnutrition}</span> */}
       </div>
+      <Button
+        variant="contained"
+        component={RouterLink}
+        to={`update`}
+        startIcon={<Icon icon={eyeIcon} />}
+      >
+        Voir plus
+      </Button>
     </div>
   </div>
 );

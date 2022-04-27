@@ -16,6 +16,7 @@ import NewPersonnel from "./pages/NewPersonnel";
 import PageDetail from "./pages/detailPatient/Details";
 import MoreDetail from "./pages/detailPatient/MoreDetails";
 import NewOperation from "./pages/NewOperation";
+import Update from "./pages/detailPatient/Update";
 
 // ----------------------------------------------------------------------
 
@@ -43,10 +44,15 @@ export default function Router() {
         { path: "app", element: <DashboardApp /> },
         { path: "personnel", element: <Personnel /> },
         { path: "stock", element: <Stock /> },
-        { path: "patient/detail_patient/:id", element: <PageDetail /> },
+        {
+          path: "patient/detail_patient/:id",
+          element: <PageDetail />,
+          children: [{ path: "update", element: <Update /> }],
+        },
         { path: "patient/detail_patient/more/:id", element: <MoreDetail /> },
+        // { path: "patient/detail_patient/more/:id/update" },
         { path: "patient/add_Patient", element: <NewPatient /> },
-        { path: "stock/add_Operation", element: < NewOperation/> },
+        { path: "stock/add_Operation", element: <NewOperation /> },
         { path: "personnel/add_Personnel", element: <NewPersonnel /> },
       ],
     },

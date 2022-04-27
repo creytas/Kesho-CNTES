@@ -29,9 +29,25 @@ export default function CardStockMatieres({ title, nombre, icon }) {
       <Icon icon={icon} style={{ fontSize: "50px" }} />
       <Typography variant="h3">{title}</Typography>
       <Typography variant="h3">
-        {fShortenNumber(nombre)} {title === "Huiles" ? "L" : "Kg"}
+        {fShortenNumber(nombre)}{" "}
+        {title === "Huiles"
+          ? "L"
+          : title === "Pain" || title === "Vêtement" || title === "Oeufs"
+          ? "Pces"
+          : "Kg"}
       </Typography>
-      <Typography variant="subtitle2" sx={{ opacity: 0.72 }}></Typography>
+      <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
+        {(title === "Maïs" && nombre * 1000 <= 42000) ||
+        (title === "Sorgho" && nombre * 1000 <= 21000) ||
+        (title === "Soja" && nombre * 1000 <= 21000) ||
+        (title === "Sucre" && nombre * 1000 <= 11000) ||
+        (title === "Huiles" && nombre * 1000 <= 5000) ||
+        (title === "Ext. foliaires" && nombre * 1000 <= 2300) ||
+        (title === "Briq. energ" && nombre * 1000 <= 10000) ||
+        (title === "Savon" && nombre * 1000 <= 700)
+          ? "SEUIL CRITIQUE ATTEINT"
+          : ""}
+      </Typography>
     </RootStyle>
   );
 }

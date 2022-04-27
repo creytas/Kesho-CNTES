@@ -513,6 +513,50 @@ export default function DashboardApp() {
                       }
                     />
                   </Grid>
+                  <Grid item xs={12} sm={6} md={3}>
+                    <CardStockMatieres
+                      icon="fa-solid:bread-slice"
+                      title="Pain"
+                      nombre={
+                        reports.briquettes === null
+                          ? 0
+                          : reports.briquettes.qte_matiere / 1000
+                      }
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={3}>
+                    <CardStockMatieres
+                      icon="mdi:food-turkey"
+                      title="Nourriture"
+                      nombre={
+                        reports.briquettes === null
+                          ? 0
+                          : reports.briquettes.qte_matiere / 1000
+                      }
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={3}>
+                    <CardStockMatieres
+                      icon="simple-line-icons:energy"
+                      title="Vêtement"
+                      nombre={
+                        reports.briquettes === null
+                          ? 0
+                          : reports.briquettes.qte_matiere / 1000
+                      }
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={3}>
+                    <CardStockMatieres
+                      icon="simple-line-icons:energy"
+                      title="Oeufs"
+                      nombre={
+                        reports.briquettes === null
+                          ? 0
+                          : reports.briquettes.qte_matiere / 1000
+                      }
+                    />
+                  </Grid>
                 </Grid>
               </Container>
             </Page>

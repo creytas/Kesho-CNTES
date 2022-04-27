@@ -142,6 +142,7 @@ export default function AddOperationForm() {
   const handleChangeDateOperation = (event) => {
     const { value } = event.target;
     setFieldValue("dateOperation", value);
+    console.log(value);
   };
 
   //console.log(operation);
