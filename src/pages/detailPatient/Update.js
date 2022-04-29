@@ -39,9 +39,37 @@ export default function Update({ id }) {
 
   return (
     <div>
+      <h1>Update {id}</h1>
       <FormikProvider value={formik}>
         <Form autoComplete="off" onSubmit={handleSubmit}>
-          Update {id}
+          <Grid container spacing={2}>
+            <Grid item xs={11} sm={5} md={5}>
+              <Card
+                sx={{
+                  margin: 1,
+                  padding: 2,
+                }}
+              >
+                <Stack
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    flexWrap: "nowrap",
+                    gap: "14px",
+                  }}
+                >
+                  <div style={{ border: `1px solid black` }}>
+                    <Avatar variant="circle" sizes="50" alt="avant" src={``} />
+                  </div>
+                  <div style={{ border: `1px solid black` }}>
+                    <Avatar variant="circle" sizes="50" alt="apres" src={``} />
+                  </div>
+                </Stack>
+              </Card>
+            </Grid>
+          </Grid>
         </Form>
       </FormikProvider>
     </div>

@@ -43,6 +43,7 @@ export default function CauseForm({
   const [calendrierVaccinDesabled, setCalendrierVaccinDesabled] =
     useState(true);
   const [cocktailAtbDesabled, setcocktailAtbDesabled] = useState(true);
+  const [listAtbDisable, setListAtbDisable] = useState(true);
   const [dpmDesabled, setdpmDesabled] = useState(true);
   const [
     tbcGueriEtDuréTraitementDesabled,
@@ -85,6 +86,8 @@ export default function CauseForm({
     dpm: Yup.string(),
     cocktailAtb: Yup.string(),
     cocktailAtbDuree: Yup.string().trim().min(3),
+    listAtb: Yup.string().min(4),
+    atb: Yup.boolean(),
     dureeTraitementProduitPlante: Yup.string().min(3),
     dpmAnormalPrecision: Yup.string().trim().min(10),
     poidsNaissance: Yup.number()
@@ -120,6 +123,8 @@ export default function CauseForm({
       cocktailAtb: patientFormCause.cocktailAtb
         ? patientFormCause.cocktailAtb
         : "",
+      listAtb: patientFormCause.listAtb ? patientFormCause.listAtb : "",
+      atb: patientFormCause.atb ? patientFormCause.atb : "false",
       atcdMas: patientFormCause.atcdMas ? patientFormCause.atcdMas : "",
       atcdRougeole: patientFormCause.atcdRougeole
         ? patientFormCause.atcdRougeole
@@ -264,6 +269,12 @@ export default function CauseForm({
         throw alert("Veuillez préciser la durée du cocktail Atb");
       }
       if (
+        CauseMalnutrition.atb === "true" &&
+        CauseMalnutrition.listAtb === ""
+      ) {
+        throw alert("Veuillez preciser la liste de ATB");
+      }
+      if (
         CauseMalnutrition.allaitementExclusifSixMois === "false" &&
         CauseMalnutrition.ageFinAllaitement === ""
       ) {
@@ -324,6 +335,19 @@ export default function CauseForm({
       setcocktailAtbDesabled(true);
     }
   };
+  const handleAtb = (event) => {
+    const { value } = event.target;
+    setFieldValue("atb", value);
+    patientFormCause.setAtb(value);
+    if (value === "true") setListAtbDisable(false);
+    else setListAtbDisable(true);
+  };
+  const handleListAtb = (event) => {
+    const { value } = event.target;
+    setFieldValue("listAtb", value);
+    patientFormCause.setListAtb(value);
+  };
+
   const handleChangeTransfererUnt = (event) => {
     const { value } = event.target;
     setFieldValue("transfererUnt", value);
@@ -1632,6 +1656,55 @@ export default function CauseForm({
               }
             />
             <RadioGroup
+              // {...getFieldProps('mereEnVie')}
+              sx={{ marginTop: "24px" }}
+              onChange={handleAtb}
+            >
+              <Stack
+                direction={{ xs: "column", sm: "row" }}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  paddingLeft: "10px",
+                  border: `${
+                    Boolean(touched.atb && errors.atb) && "1px solid red"
+                  }`,
+                  borderRadius: `${
+                    Boolean(touched.atb && errors.atb) && "10px"
+                  }`,
+                }}
+                spacing={1}
+              >
+                <FormLabel component="label">Prise ATB:</FormLabel>
+                <FormControlLabel
+                  value="true"
+                  fullWidth
+                  control={<Radio checked={patientFormCause.atb === "true"} />}
+                  label="Oui"
+                />
+                <FormControlLabel
+                  value="false"
+                  fullWidth
+                  control={<Radio checked={patientFormCause.atb === "false"} />}
+                  label="Non"
+                />
+              </Stack>
+            </RadioGroup>
+            <TextField
+              fullWidth
+              value={patientFormCause.listAtb}
+              sx={{ padding: "2px", marginTop: "24px" }} //sx={{ marginTop: "24px" }}
+              disabled={listAtbDisable}
+              label="Liste ATB pris"
+              helperText={touched.listAtb && errors.listAtb}
+              onChange={handleListAtb}
+              error={
+                Boolean(touched.listAtb && errors.listAtb) ||
+                Boolean(values.atb === "true" && values.listAtb === "")
+              }
+            />
+
+            <RadioGroup
               sx={{ padding: "2px", marginTop: "24px" }}
               // fullWidth
               // {...getFieldProps('cocktailAtb')}
@@ -1656,7 +1729,7 @@ export default function CauseForm({
                 spacing={1}
               >
                 <FormLabel component="label">
-                  Prise de cocktail d’ATB :{" "}
+                  Prise de cocktail d’ATB Machangé :{" "}
                 </FormLabel>
                 <Stack direction={{ xs: "row", sm: "row" }}>
                   <FormControlLabel

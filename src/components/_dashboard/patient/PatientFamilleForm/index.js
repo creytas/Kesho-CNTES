@@ -46,7 +46,7 @@ export default function FamilleForm({
     useState(true);
   const [mereEnceinteDisable, setMereEnceinteDisable] = useState(true);
   const [statutMaritalDisable, setStatutMaritalDisable] = useState(true);
-  const [listAtbDisable, setListAtbDisable] = useState(true);
+  // const [listAtbDisable, setListAtbDisable] = useState(true);
 
   const [position] = useState(0);
   useEffect(() => {
@@ -88,8 +88,8 @@ export default function FamilleForm({
     tailleMenage: Yup.number().min(2).max(99),
     contraceptionMere: Yup.string(),
     professionMere: Yup.string(),
-    listAtb: Yup.string().min(4),
-    atb: Yup.boolean(),
+    // listAtb: Yup.string().min(4),
+    // atb: Yup.boolean(),
   });
 
   const formik = useFormik({
@@ -156,8 +156,8 @@ export default function FamilleForm({
       contraceptionType: patientFormFamille.contraceptionType
         ? patientFormFamille.contraceptionType
         : "",
-      listAtb: patientFormFamille.listAtb ? patientFormFamille.listAtb : "",
-      atb: patientFormFamille.atb ? patientFormFamille.atb : "false",
+      // listAtb: patientFormFamille.listAtb ? patientFormFamille.listAtb : "",
+      // atb: patientFormFamille.atb ? patientFormFamille.atb : "false",
     },
     validationSchema: RegisterSchema,
     onSubmit: (FamalyData) => {
@@ -200,9 +200,9 @@ export default function FamilleForm({
           "Veuillez preciser le type de contraception moderne et moderne"
         );
       }
-      if (FamalyData.atb === "true" && FamalyData.listAtb === "") {
-        throw alert("Veuillez preciser la liste de ATB");
-      }
+      // if (FamalyData.atb === "true" && FamalyData.listAtb === "") {
+      //   throw alert("Veuillez preciser la liste de ATB");
+      // }
       SetDataPatient((current) => ({ ...current, FamalyData }));
       NextStep();
     },
@@ -393,19 +393,19 @@ export default function FamilleForm({
     patientFormFamille.setPossederTeleRadio(value);
   };
 
-  const handleAtb = (event) => {
-    const { value } = event.target;
-    setFieldValue("atb", value);
-    patientFormFamille.setAtb(value);
-    if (value === "true") setListAtbDisable(false);
-    else setListAtbDisable(true);
-  };
+  // const handleAtb = (event) => {
+  //   const { value } = event.target;
+  //   setFieldValue("atb", value);
+  //   patientFormFamille.setAtb(value);
+  //   if (value === "true") setListAtbDisable(false);
+  //   else setListAtbDisable(true);
+  // };
 
-  const handleListAtb = (event) => {
-    const { value } = event.target;
-    setFieldValue("listAtb", value);
-    patientFormFamille.setListAtb(value);
-  };
+  // const handleListAtb = (event) => {
+  //   const { value } = event.target;
+  //   setFieldValue("listAtb", value);
+  //   patientFormFamille.setListAtb(value);
+  // };
 
   return (
     <FormikProvider value={formik}>
@@ -732,122 +732,6 @@ export default function FamilleForm({
                 <option value="Cultivateur">Cultivateur</option>
                 <option value="Autre">autre</option>
               </Select>
-              <RadioGroup onChange={handlePossederTeleRadio}>
-                <Stack
-                  direction={{ xs: "column", sm: "row" }}
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    paddingLeft: "10px",
-                    border: `${
-                      Boolean(
-                        touched.PossederTeleRadio && errors.PossederTeleRadio
-                      ) && "1px solid red"
-                    }`,
-                    borderRadius: `${
-                      Boolean(
-                        touched.PossederTeleRadio && errors.PossederTeleRadio
-                      ) && "10px"
-                    }`,
-                  }}
-                  spacing={1}
-                >
-                  <FormLabel component="label">
-                    Posséder radio ou télé:
-                  </FormLabel>
-                  <FormControlLabel
-                    value="true"
-                    control={
-                      <Radio
-                        checked={
-                          patientFormFamille.possederTeleRadio === "true"
-                        }
-                      />
-                    }
-                    label="Oui"
-                  />
-                  <FormControlLabel
-                    value="false"
-                    control={
-                      <Radio
-                        checked={
-                          patientFormFamille.possederTeleRadio === "false"
-                        }
-                      />
-                    }
-                    label="Non"
-                  />
-                </Stack>
-              </RadioGroup>
-              <TextField
-                value={patientFormFamille.NbrRepasJour}
-                sx={{ padding: "2px" }}
-                // required
-                label="Nombre de repas par jour"
-                onChange={handleNbrRepasJour}
-                // {...getFieldProps('NbrRepasJour')}
-                helperText={touched.NbrRepasJour && errors.NbrRepasJour}
-                error={Boolean(touched.NbrRepasJour && errors.NbrRepasJour)}
-              />
-              {/* <RadioGroup
-                // {...getFieldProps('consommationPoisson')}
-                onChange={handleConsommationPoisson}
-                // required
-                helperText={
-                  touched.consommationPoisson && errors.consommationPoisson
-                }
-                error={Boolean(
-                  touched.consommationPoisson && errors.consommationPoisson
-                )}
-              >
-                <Stack
-                  direction={{ xs: "column", sm: "row" }}
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    paddingLeft: "10px",
-                    border: `${
-                      Boolean(
-                        touched.consommationPoisson &&
-                          errors.consommationPoisson
-                      ) && "1px solid red"
-                    }`,
-                    borderRadius: `${
-                      Boolean(
-                        touched.consommationPoisson &&
-                          errors.consommationPoisson
-                      ) && "10px"
-                    }`,
-                  }}
-                  spacing={1}
-                >
-                  <FormLabel component="label">
-                    Consommation de poisson:
-                  </FormLabel>
-                  <FormControlLabel
-                    value="true"
-                    control={
-                      <Radio
-                        checked={
-                          patientFormFamille.consommationPoisson === "true"
-                        }
-                      />
-                    }
-                    label="Oui"
-                  />
-                  <FormControlLabel
-                    value="false"
-                    control={
-                      <Radio
-                        checked={
-                          patientFormFamille.consommationPoisson === "false"
-                        }
-                      />
-                    }
-                    label="Non"
-                  />
-                </Stack>
-              </RadioGroup> */}
             </Stack>
           </Grid>
           <Grid item xs={11} sm={6} md={6}>
@@ -1163,12 +1047,9 @@ export default function FamilleForm({
                 </option>
                 <option value="Bas">Bas(Inferieur a 1$ )</option>
                 <option value="Moyen">Moyen(5 dollars )</option>
-                <option value="Universitaire">Bon(Supérieur a 5$ )</option>
+                <option value="Bon">Bon(Supérieur a 5$ )</option>
               </Select>
-              <RadioGroup
-                // {...getFieldProps('mereEnVie')}
-                onChange={handleAtb}
-              >
+              <RadioGroup onChange={handlePossederTeleRadio}>
                 <Stack
                   direction={{ xs: "column", sm: "row" }}
                   sx={{
@@ -1176,42 +1057,54 @@ export default function FamilleForm({
                     alignItems: "center",
                     paddingLeft: "10px",
                     border: `${
-                      Boolean(touched.atb && errors.atb) && "1px solid red"
+                      Boolean(
+                        touched.PossederTeleRadio && errors.PossederTeleRadio
+                      ) && "1px solid red"
                     }`,
                     borderRadius: `${
-                      Boolean(touched.atb && errors.atb) && "10px"
+                      Boolean(
+                        touched.PossederTeleRadio && errors.PossederTeleRadio
+                      ) && "10px"
                     }`,
                   }}
                   spacing={1}
                 >
-                  <FormLabel component="label">Prise ATB:</FormLabel>
+                  <FormLabel component="label">
+                    Posséder radio ou télé:
+                  </FormLabel>
                   <FormControlLabel
                     value="true"
                     control={
-                      <Radio checked={patientFormFamille.atb === "true"} />
+                      <Radio
+                        checked={
+                          patientFormFamille.possederTeleRadio === "true"
+                        }
+                      />
                     }
                     label="Oui"
                   />
                   <FormControlLabel
                     value="false"
                     control={
-                      <Radio checked={patientFormFamille.atb === "false"} />
+                      <Radio
+                        checked={
+                          patientFormFamille.possederTeleRadio === "false"
+                        }
+                      />
                     }
                     label="Non"
                   />
                 </Stack>
               </RadioGroup>
               <TextField
-                value={patientFormFamille.listAtb}
+                value={patientFormFamille.NbrRepasJour}
                 sx={{ padding: "2px" }}
-                disabled={listAtbDisable}
-                label="Liste ATB pris"
-                helperText={touched.listAtb && errors.listAtb}
-                onChange={handleListAtb}
-                error={
-                  Boolean(touched.listAtb && errors.listAtb) ||
-                  Boolean(values.atb === "true" && values.listAtb === "")
-                }
+                // required
+                label="Nombre de repas par jour"
+                onChange={handleNbrRepasJour}
+                // {...getFieldProps('NbrRepasJour')}
+                helperText={touched.NbrRepasJour && errors.NbrRepasJour}
+                error={Boolean(touched.NbrRepasJour && errors.NbrRepasJour)}
               />
             </Stack>
           </Grid>

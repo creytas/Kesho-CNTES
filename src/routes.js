@@ -47,10 +47,10 @@ export default function Router() {
         {
           path: "patient/detail_patient/:id",
           element: <PageDetail />,
-          children: [{ path: "update", element: <Update /> }],
+          // children: [{ path: "update", element: <Update /> }],
         },
         { path: "patient/detail_patient/more/:id", element: <MoreDetail /> },
-        // { path: "patient/detail_patient/more/:id/update" },
+        { path: "patient/update_patient", element: <Update /> },
         { path: "patient/add_Patient", element: <NewPatient /> },
         { path: "stock/add_Operation", element: <NewOperation /> },
         { path: "personnel/add_Personnel", element: <NewPersonnel /> },

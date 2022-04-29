@@ -30,30 +30,6 @@ export default function PatientData({ DataPatient, PrevStep }) {
   const navigate = useNavigate();
   const { indentity, CauseMalnutrition, FamalyData, clinic } = DataPatient;
   console.log(DataPatient);
-  // const uploadImage = async () => {
-  //   const cloudinaryPhoto = new FormData();
-  //   cloudinaryPhoto.append("file", clinic.firstPicture);
-  //   cloudinaryPhoto.append("upload_preset", "pixToCloud");
-  //   // await Axios.request({
-  //   //   url: "https://api.cloudinary.com/v1_1/kda-cohorte-2021/image/upload",
-  //   //   method: "POST",
-  //   //   data: cloudinaryPhoto,
-  //   //   headers: {
-  //   //     "Content-Type": "multipart/form-data",
-  //   //     "Access-Control-Allow-Origin": "*",
-  //   //   },
-  //   // });
-  //   await Axios.post(
-  //     "https://api.cloudinary.com/v1_1/kda-cohorte-2021/image/upload",
-  //     cloudinaryPhoto
-  //   )
-  //     .then((res) => {
-  //       return res.data.url;
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }; // console.log(`url = ${DataPatient.clinic.firstPicture}`);
   const newPatient = {};
   newPatient.ration_seche = clinic.rationSeche;
   newPatient.type_oedeme = clinic.typeOedeme;

@@ -144,7 +144,7 @@ const PatientCard = ({
       <Button
         variant="contained"
         component={RouterLink}
-        to={`update`}
+        to={`update_patient`}
         startIcon={<Icon icon={eyeIcon} />}
       >
         Voir plus

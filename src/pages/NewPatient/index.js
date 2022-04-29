@@ -213,6 +213,10 @@ export default function NewPatient() {
       setCocktailAtbDuree,
       cocktailAtb,
       setCocktailAtb,
+      listAtb,
+      setListAtb,
+      atb,
+      setAtb,
       atcdMas,
       setAtcdMas,
       atcdRougeole,
@@ -270,10 +274,10 @@ export default function NewPatient() {
     };
 
     const patientFormFamille = {
-      listAtb,
-      setListAtb,
-      atb,
-      setAtb,
+      // listAtb,
+      // setListAtb,
+      // atb,
+      // setAtb,
       vivreAvecParents,
       setVivreAvecParents,
       typeContraceptionModerne,
