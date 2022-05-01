@@ -400,6 +400,19 @@ export default function Update({ id }) {
                     className="inputDisabled"
                   />
                 </InputLabel>
+                {!identityEnabled === true ? (
+                  <></>
+                ) : (
+                  <LoadingButton
+                    type="submit"
+                    variant="contained"
+                    loading={isSubmitting}
+                    size="large"
+                    sx={{ width: 200, marginLeft: "20px", marginTop: "20px" }}
+                  >
+                    Mettre à jour
+                  </LoadingButton>
+                )}
                 <Stack sx={{ margin: `10% auto`, border: `1px solid blue` }}>
                   <Typography
                     sx={{
