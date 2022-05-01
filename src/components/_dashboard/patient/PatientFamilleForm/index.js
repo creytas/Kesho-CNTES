@@ -752,7 +752,7 @@ export default function FamilleForm({
                       : "Statut marital"
                   }`}
                 </option>
-                <option value="non mariée">Non mariée</option>
+                <option value="Non mariée">Non mariée</option>
                 <option value="Mariée">Mariée</option>
                 <option value="Separée ou divorcée">Separée ou divorcée</option>
                 <option value="Veuve">Veuve</option>
@@ -1045,9 +1045,9 @@ export default function FamilleForm({
                       : "Niveau socio-économique"
                   }`}
                 </option>
-                <option value="Bas">Bas(Inferieur a 1$ )</option>
-                <option value="Moyen">Moyen(5 dollars )</option>
-                <option value="Bon">Bon(Supérieur a 5$ )</option>
+                <option value="Bas">Bas (Inferieur à 1$)</option>
+                <option value="Moyen">Moyen (5$)</option>
+                <option value="Bon">Bon (Supérieur à 5$)</option>
               </Select>
               <RadioGroup onChange={handlePossederTeleRadio}>
                 <Stack

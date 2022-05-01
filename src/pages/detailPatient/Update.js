@@ -883,7 +883,7 @@ export default function Update({ id }) {
                   Age de la mère :{" "}
                   <input
                     type="text"
-                    name="firstName"
+                    name="ageMere"
                     disabled={!mereEnabled}
                     className="inputDisabled"
                   />
@@ -897,11 +897,21 @@ export default function Update({ id }) {
                   }}
                 >
                   Statut marital :{" "}
-                  <input
+                  <select
+                    className="selectDisabled"
+                    disabled={!mereEnabled}
+                    name="statutMaritalMere"
+                  >
+                    <option value="Non mariée">Non mariée</option>
+                    <option value="Mariée">Mariée</option>
+                    <option value="Divorcée">Divorcée</option>
+                    <option value="Veuve">Veuve</option>
+                  </select>
+                  {/* <input
                     type="text"
                     name="diversificcation"
                     className="inputDisabled"
-                  />
+                  /> */}
                 </InputLabel>{" "}
                 <InputLabel
                   sx={{
@@ -915,12 +925,13 @@ export default function Update({ id }) {
                   <select
                     className="selectDisabled"
                     disabled={!mereEnabled}
-                    name="lieuAccouch"
+                    name="etatMere"
                   >
-                    <option value="Voiture">Voiture</option>
-                    <option value="Docmicile">Docmicile</option>
-                    <option value="Structure sanitaire">
-                      Structure sanitaire
+                    <option value="Aucun">Aucun</option>
+                    <option value="Enceinte">Enceinte</option>
+                    <option value="Allaitante">Allaitante</option>
+                    <option value="Enceinte et Allaitante">
+                      Enceinte et Allaitante
                     </option>
                   </select>
                   {/* <input
@@ -938,51 +949,11 @@ export default function Update({ id }) {
                     marginTop: `0.5%`,
                   }}
                 >
-                  Contraception mère :{" "}
-                  {/* <input type="text" name="gender" className="inputDisabled" /> */}
-                  <select
-                    className="selectDisabled"
-                    disabled={!mereEnabled}
-                    name="asphixieperi"
-                  >
-                    <option value="Pas de cri">Pas de cri</option>
-                    <option value="A crié spontanément">
-                      A crié spontanément
-                    </option>
-                    <option value="Cri apres réanimation">
-                      Cri apres réanimation
-                    </option>
-                  </select>
-                </InputLabel>
-                <InputLabel
-                  sx={{
-                    width: `100%`,
-                    display: `flex`,
-                    alignItems: `center`,
-                    marginTop: `0.5%`,
-                  }}
-                >
-                  Type contraception :{" "}
-                  <input
-                    type="text"
-                    name="dpm"
-                    disabled={!mereEnabled}
-                    className="inputDisabled"
-                  />
-                </InputLabel>
-                <InputLabel
-                  sx={{
-                    width: `100%`,
-                    display: `flex`,
-                    alignItems: `center`,
-                    marginTop: `0.5%`,
-                  }}
-                >
                   Contraception :{" "}
                   <select
                     className="selectDisabled"
                     disabled={!mereEnabled}
-                    name="neonat"
+                    name="contraception"
                   >
                     <option value="Oui">Oui</option>
                     <option value="Non">Non</option>
@@ -1002,13 +973,66 @@ export default function Update({ id }) {
                     marginTop: `0.5%`,
                   }}
                 >
-                  Scolarité mère :{" "}
+                  Type contraception :{" "}
+                  <select
+                    className="selectDisabled"
+                    disabled={!mereEnabled}
+                    name="moyenContraception"
+                  >
+                    <option value="Naturel">Naturel</option>
+                    <option value="Moderne">Moderne</option>
+                    <option value="Naturel et Moderne">
+                      Naturel et Moderne
+                    </option>
+                  </select>
+                  {/* <input
+                    type="text"
+                    name="moyenContraception"
+                    disabled={!mereEnabled}
+                    className="inputDisabled"
+                  /> */}
+                </InputLabel>
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  Methode de contraception :{" "}
                   <input
+                    type="text"
+                    name="methodContraception"
+                    disabled={!mereEnabled}
+                    className="inputDisabled"
+                  />
+                </InputLabel>
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  Scolarité mère :{" "}
+                  <select
+                    className="selectDisabled"
+                    disabled={!mereEnabled}
+                    name="scolariteMere"
+                  >
+                    <option value="Analphabète">Analphabète</option>
+                    <option value="Primaire">Primaire</option>
+                    <option value="Secondaire">Secondaire</option>
+                    <option value="Universitaire">Universitaire</option>
+                  </select>
+                  {/* <input
                     type="text"
                     name="poids"
                     disabled={!mereEnabled}
                     className="inputDisabled"
-                  />
+                  /> */}
                 </InputLabel>{" "}
                 <InputLabel
                   sx={{
@@ -1019,12 +1043,36 @@ export default function Update({ id }) {
                   }}
                 >
                   Profession :{" "}
-                  <input
+                  <select
+                    className="selectDisabled"
+                    disabled={!mereEnabled}
+                    name="professionMere"
+                  >
+                    <option value="Ménagère">Ménagère</option>
+                    <option value="Salariée formelle,infirmière,Ong,enseignante">
+                      Salariée formelle (infirmière, enseignante, ONG.)
+                    </option>
+                    <option value="Travail à temps partiel (maçonne, menuisière)">
+                      Travail à temps partiel (maçonne, menuisière)
+                    </option>
+                    <option value="Business (exploitante minier, petit commerce, etc.) ">
+                      Business (exploitante minier, petit commerce, etc.)
+                    </option>
+                    <option value="Militaire/Policière">
+                      Militaire/Policière
+                    </option>
+                    <option value="Sans profession (sans emploi)">
+                      Sans profession (sans emploi)
+                    </option>
+                    <option value="Cultivatrice">Cultivatrice</option>
+                    <option value="Autre">Autre</option>
+                  </select>
+                  {/* <input
                     type="text"
                     name="allaitement"
                     disabled={!mereEnabled}
                     className="inputDisabled"
-                  />
+                  /> */}
                 </InputLabel>{" "}
                 {!mereEnabled === true ? (
                   <></>
@@ -1069,7 +1117,7 @@ export default function Update({ id }) {
                   <select
                     className="selectDisabled"
                     disabled={!pereEnabled}
-                    name="mereVit"
+                    name="pereVit"
                   >
                     <option value="Oui">Oui</option>
                     <option value="Non">Non</option>
@@ -1086,7 +1134,7 @@ export default function Update({ id }) {
                   Age du Chef de ménage :{" "}
                   <input
                     type="text"
-                    name="firstName"
+                    name="agePere"
                     disabled={!pereEnabled}
                     className="inputDisabled"
                   />
@@ -1100,23 +1148,12 @@ export default function Update({ id }) {
                   }}
                 >
                   Téléphone :{" "}
-                  <select
-                    className="selectDisabled"
-                    disabled={!pereEnabled}
-                    name="lieuAccouch"
-                  >
-                    <option value="Voiture">Voiture</option>
-                    <option value="Docmicile">Docmicile</option>
-                    <option value="Structure sanitaire">
-                      Structure sanitaire
-                    </option>
-                  </select>
-                  {/* <input
+                  <input
                     type="text"
-                    name="lastName"
+                    name="tel"
                     disabled={!pereEnabled}
                     className="inputDisabled"
-                  /> */}
+                  />
                 </InputLabel>
                 <InputLabel
                   sx={{
@@ -1127,12 +1164,35 @@ export default function Update({ id }) {
                   }}
                 >
                   Profession :{" "}
-                  <input
+                  <select
+                    className="selectDisabled"
+                    disabled={!pereEnabled}
+                    name="professionPere"
+                  >
+                    <option value="Salarié formel,infirmier,Ong,enseignant">
+                      Salarié formel (infirmier, enseignant, ONG.)
+                    </option>
+                    <option value="Travail à temps partiel (maçon, menuisier)">
+                      Travail à temps partiel (maçon, menuisier)
+                    </option>
+                    <option value="Business (exploitant minier, petit commerce, etc.) ">
+                      Business (exploitant minier, petit commerce, etc.)
+                    </option>
+                    <option value="Militaire/Policier">
+                      Militaire/Policier
+                    </option>
+                    <option value="Sans profession (sans emploi)">
+                      Sans profession (sans emploi)
+                    </option>
+                    <option value="Cultivateur">Cultivateur</option>
+                    <option value="Autre">Autre</option>
+                  </select>
+                  {/* <input
                     type="text"
                     name="allaitement"
                     disabled={!pereEnabled}
                     className="inputDisabled"
-                  />
+                  /> */}
                 </InputLabel>{" "}
                 <InputLabel
                   sx={{
@@ -1143,20 +1203,11 @@ export default function Update({ id }) {
                   }}
                 >
                   Nombre de femme :{" "}
-                  {/* <input type="text" name="gender" className="inputDisabled" /> */}
-                  <select
-                    className="selectDisabled"
-                    disabled={!pereEnabled}
-                    name="asphixieperi"
-                  >
-                    <option value="Pas de cri">Pas de cri</option>
-                    <option value="A crié spontanément">
-                      A crié spontanément
-                    </option>
-                    <option value="Cri apres réanimation">
-                      Cri apres réanimation
-                    </option>
-                  </select>
+                  <input
+                    type="text"
+                    name="nombreFemmes"
+                    className="inputDisabled"
+                  />
                 </InputLabel>
                 {!pereEnabled === true ? (
                   <></>
@@ -1198,14 +1249,12 @@ export default function Update({ id }) {
                   }}
                 >
                   Taille ménage :{" "}
-                  <select
-                    className="selectDisabled"
-                    disabled={!pereEnabled}
-                    name="mereVit"
-                  >
-                    <option value="Oui">Oui</option>
-                    <option value="Non">Non</option>
-                  </select>
+                  <input
+                    type="text"
+                    name="taillesMenage"
+                    disabled={!menageEnabled}
+                    className="inputDisabled"
+                  />
                 </InputLabel>
                 <InputLabel
                   sx={{
@@ -1216,12 +1265,21 @@ export default function Update({ id }) {
                   }}
                 >
                   Tribu :{" "}
-                  <input
-                    type="text"
-                    name="firstName"
-                    disabled={!pereEnabled}
-                    className="inputDisabled"
-                  />
+                  <select
+                    className="selectDisabled"
+                    disabled={!menageEnabled}
+                    name="tribu"
+                  >
+                    <option value="Havu">Havu</option>
+                    <option value="Shi">Shi</option>
+                    <option value="Rega">Rega</option>
+                    <option value="Autre ethnie du sud-kivu">
+                      Autre ethnie du sud-kivu
+                    </option>
+                    <option value="Autre ethnie du pays et autres">
+                      Autre ethnie du pays et autres
+                    </option>
+                  </select>
                 </InputLabel>
                 <InputLabel
                   sx={{
@@ -1234,14 +1292,13 @@ export default function Update({ id }) {
                   Réligion :{" "}
                   <select
                     className="selectDisabled"
-                    disabled={!pereEnabled}
-                    name="lieuAccouch"
+                    disabled={!menageEnabled}
+                    name="religion"
                   >
-                    <option value="Voiture">Voiture</option>
-                    <option value="Docmicile">Docmicile</option>
-                    <option value="Structure sanitaire">
-                      Structure sanitaire
-                    </option>
+                    <option value="Catholique">Catholique</option>
+                    <option value="Protestant">Protestant</option>
+                    <option value="Musulman">Musulman</option>
+                    <option value="Autres">Autres</option>
                   </select>
                   {/* <input
                     type="text"
@@ -1259,12 +1316,21 @@ export default function Update({ id }) {
                   }}
                 >
                   Niveau socio-eco :{" "}
-                  <input
+                  <select
+                    className="selectDisabled"
+                    disabled={!menageEnabled}
+                    name="niveauSocioEco"
+                  >
+                    <option value="Bas">Bas (Inferieur à 1$)</option>
+                    <option value="Moyen">Moyen (5$)</option>
+                    <option value="Bon">Bon (Supérieur à 5$)</option>
+                  </select>
+                  {/* <input
                     type="text"
                     name="allaitement"
                     disabled={!pereEnabled}
                     className="inputDisabled"
-                  />
+                  /> */}
                 </InputLabel>{" "}
                 <InputLabel
                   sx={{
@@ -1275,20 +1341,12 @@ export default function Update({ id }) {
                   }}
                 >
                   Nombre repas journalier :{" "}
-                  {/* <input type="text" name="gender" className="inputDisabled" /> */}
-                  <select
-                    className="selectDisabled"
-                    disabled={!pereEnabled}
-                    name="asphixieperi"
-                  >
-                    <option value="Pas de cri">Pas de cri</option>
-                    <option value="A crié spontanément">
-                      A crié spontanément
-                    </option>
-                    <option value="Cri apres réanimation">
-                      Cri apres réanimation
-                    </option>
-                  </select>
+                  <input
+                    type="text"
+                    name="nombreRepas"
+                    disabled={!menageEnabled}
+                    className="inputDisabled"
+                  />
                 </InputLabel>
                 <InputLabel
                   sx={{
@@ -1302,16 +1360,11 @@ export default function Update({ id }) {
                   {/* <input type="text" name="gender" className="inputDisabled" /> */}
                   <select
                     className="selectDisabled"
-                    disabled={!pereEnabled}
-                    name="asphixieperi"
+                    disabled={!menageEnabled}
+                    name="possessionTV"
                   >
-                    <option value="Pas de cri">Pas de cri</option>
-                    <option value="A crié spontanément">
-                      A crié spontanément
-                    </option>
-                    <option value="Cri apres réanimation">
-                      Cri apres réanimation
-                    </option>
+                    <option value="Oui">Oui</option>
+                    <option value="Non">Non</option>
                   </select>
                 </InputLabel>
                 <InputLabel
@@ -1326,16 +1379,11 @@ export default function Update({ id }) {
                   {/* <input type="text" name="gender" className="inputDisabled" /> */}
                   <select
                     className="selectDisabled"
-                    disabled={!pereEnabled}
-                    name="asphixieperi"
+                    disabled={!menageEnabled}
+                    name="possessionTV"
                   >
-                    <option value="Pas de cri">Pas de cri</option>
-                    <option value="A crié spontanément">
-                      A crié spontanément
-                    </option>
-                    <option value="Cri apres réanimation">
-                      Cri apres réanimation
-                    </option>
+                    <option value="Oui">Oui</option>
+                    <option value="Non">Non</option>
                   </select>
                 </InputLabel>
                 <InputLabel
@@ -1350,16 +1398,11 @@ export default function Update({ id }) {
                   {/* <input type="text" name="gender" className="inputDisabled" /> */}
                   <select
                     className="selectDisabled"
-                    disabled={!pereEnabled}
-                    name="asphixieperi"
+                    disabled={!menageEnabled}
+                    name="possessionTV"
                   >
-                    <option value="Pas de cri">Pas de cri</option>
-                    <option value="A crié spontanément">
-                      A crié spontanément
-                    </option>
-                    <option value="Cri apres réanimation">
-                      Cri apres réanimation
-                    </option>
+                    <option value="Oui">Oui</option>
+                    <option value="Non">Non</option>
                   </select>
                 </InputLabel>
                 <InputLabel
@@ -1374,16 +1417,11 @@ export default function Update({ id }) {
                   {/* <input type="text" name="gender" className="inputDisabled" /> */}
                   <select
                     className="selectDisabled"
-                    disabled={!pereEnabled}
-                    name="asphixieperi"
+                    disabled={!menageEnabled}
+                    name="possessionTV"
                   >
-                    <option value="Pas de cri">Pas de cri</option>
-                    <option value="A crié spontanément">
-                      A crié spontanément
-                    </option>
-                    <option value="Cri apres réanimation">
-                      Cri apres réanimation
-                    </option>
+                    <option value="Oui">Oui</option>
+                    <option value="Non">Non</option>
                   </select>
                 </InputLabel>
                 <InputLabel
@@ -1392,22 +1430,18 @@ export default function Update({ id }) {
                     display: `flex`,
                     alignItems: `center`,
                     marginTop: `0.5%`,
+                    marginBottom: "25px",
                   }}
                 >
                   ATCD de Rougeole dans la fratrie :{" "}
                   {/* <input type="text" name="gender" className="inputDisabled" /> */}
                   <select
                     className="selectDisabled"
-                    disabled={!pereEnabled}
-                    name="asphixieperi"
+                    disabled={!menageEnabled}
+                    name="possessionTV"
                   >
-                    <option value="Pas de cri">Pas de cri</option>
-                    <option value="A crié spontanément">
-                      A crié spontanément
-                    </option>
-                    <option value="Cri apres réanimation">
-                      Cri apres réanimation
-                    </option>
+                    <option value="Oui">Oui</option>
+                    <option value="Non">Non</option>
                   </select>
                 </InputLabel>
                 {!menageEnabled === true ? (
@@ -1418,7 +1452,11 @@ export default function Update({ id }) {
                     variant="contained"
                     loading={isSubmitting}
                     size="large"
-                    sx={{ width: 200, marginLeft: "20px", marginTop: "20px" }}
+                    sx={{
+                      width: 200,
+                      marginLeft: "20px",
+                      marginBottom: "25px",
+                    }}
                   >
                     Mettre à jour
                   </LoadingButton>
