@@ -50,7 +50,7 @@ export default function Router() {
           // children: [{ path: "update", element: <Update /> }],
         },
         { path: "patient/detail_patient/more/:id", element: <MoreDetail /> },
-        { path: "patient/update_patient", element: <Update /> },
+        { path: "patient/update_patient/:id", element: <Update /> },
         { path: "patient/add_Patient", element: <NewPatient /> },
         { path: "stock/add_Operation", element: <NewOperation /> },
         { path: "personnel/add_Personnel", element: <NewPersonnel /> },

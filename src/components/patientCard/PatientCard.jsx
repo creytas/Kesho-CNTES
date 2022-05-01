@@ -141,14 +141,14 @@ const PatientCard = ({
         </TableCell>
         {/* <span className="userShowInfoTitle">{malnutrition}</span> */}
       </div>
-      <Button
+      {/* <Button
         variant="contained"
         component={RouterLink}
         to={`update_patient`}
         startIcon={<Icon icon={eyeIcon} />}
       >
         Voir plus
-      </Button>
+      </Button> */}
     </div>
   </div>
 );

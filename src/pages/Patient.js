@@ -44,6 +44,7 @@ import { PatientListHead } from "../components/_dashboard/patient";
 import Label from "../components/Label";
 import DefaultPage from "../components/DefaultPage";
 import image from "../utils/undraw_doctors_aids.svg";
+import { PatientMoreMenu } from "../components/_dashboard/patient";
 
 const TABLE_HEAD = [
   { id: "NE", label: "Nom", alignLeft: true },
@@ -406,8 +407,6 @@ export default function Patient() {
 
                                   return (
                                     <TableRow
-                                      component={RouterLink}
-                                      to={`detail_patient/${id_patient}`}
                                       className={classes.patientRow}
                                       hover
                                       key={id_patient}
@@ -442,12 +441,20 @@ export default function Patient() {
                                           <Typography
                                             variant="subtitle2"
                                             noWrap
+                                            component={RouterLink}
+                                            to={`detail_patient/${id_patient}`}
+                                            sx={{ textDecoration: "none" }}
                                           >
                                             {nom_patient}
                                           </Typography>
                                         </Stack>
                                       </TableCell>
-                                      <TableCell align="center">
+                                      <TableCell
+                                        align="center"
+                                        component={RouterLink}
+                                        to={`detail_patient/${id_patient}`}
+                                        sx={{ textDecoration: "none" }}
+                                      >
                                         {prenom_patient}
                                       </TableCell>
                                       {console.log(date_naissance)}
@@ -507,6 +514,12 @@ export default function Patient() {
                                       </TableCell>
                                       <TableCell align="left">
                                         {nom_consultant} {postnom_consultant}
+                                      </TableCell>
+                                      <TableCell>
+                                        <PatientMoreMenu
+                                          value={id_patient}
+                                          id_patient={id_patient}
+                                        />
                                       </TableCell>
                                     </TableRow>
                                   );

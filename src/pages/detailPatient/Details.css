@@ -46,6 +46,26 @@
 background-color: #00AB55;
 color: #fff;
 }
+.inputDisabled{
+  border:none;
+  padding: 2%;
+  font-family: "Public Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #637381;
+}
+.selectDisabled {
+  background-color: transparent;
+  border: none;
+  padding: 2%;
+  font-family: "Public Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #637381;
+}
+.inputDisabled:focus{
+  outline: none;
+}
 
 @media screen and (max-width: 900px) {
   .product {
