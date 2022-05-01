@@ -30,6 +30,7 @@ import style from "./Details.css";
 
 export default function Update({ id }) {
   const [identityEnabled, setIdentityEnabled] = useState(false);
+  const [malnutritionEnabled, setMalnutritionEnabled] = useState(false);
   const date = new Date();
   const RegisterSchema = Yup.object().shape({});
 
@@ -413,22 +414,6 @@ export default function Update({ id }) {
                     Mettre à jour
                   </LoadingButton>
                 )}
-                <Stack sx={{ margin: `10% auto`, border: `1px solid blue` }}>
-                  <Typography
-                    sx={{
-                      fontWeight: "900",
-                      fontSize: "larger",
-                      width: `100%`,
-                      display: "flex",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    Causes malnutrition
-                    <Button sx={{ border: `0px solid red` }}>
-                      <Edit />
-                    </Button>
-                  </Typography>
-                </Stack>
               </Card>
             </Grid>
             <Grid
@@ -436,32 +421,343 @@ export default function Update({ id }) {
               xs={11}
               sm={5}
               md={5}
-              sx={{ display: `flex`, border: `3px solid green` }}
+              sx={{ display: `flex`, border: `0px solid green` }}
             >
               <Card
                 sx={{
                   margin: 1,
                   padding: 2,
-                  border: `3px solid red`,
+                  border: `0px solid red`,
                 }}
               >
-                <Stack
+                <Typography
                   sx={{
+                    width: `100%`,
                     display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
                     justifyContent: "space-between",
-                    flexWrap: "nowrap",
-                    gap: "14px",
+                    fontWeight: "900",
+                    fontSize: "larger",
+                    marginBottom: "0.5%",
                   }}
                 >
-                  <div style={{ border: `1px solid black`, width: `50%` }}>
-                    <Avatar alt="avant" src={``} variant="square" />
-                  </div>
-                  <div style={{ border: `1px solid black`, width: `50%` }}>
-                    <Avatar alt="apres" src={``} variant="square" />
-                  </div>
-                </Stack>
+                  Cause malnutrition
+                  <Button
+                    sx={{ border: `0px solid red` }}
+                    onClick={(e) => {
+                      setMalnutritionEnabled(!malnutritionEnabled);
+                    }}
+                  >
+                    <Edit />
+                  </Button>
+                </Typography>
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0%`,
+                  }}
+                >
+                  Terme grossesse :{" "}
+                  <input
+                    type="text"
+                    name="firstName"
+                    disabled={!malnutritionEnabled}
+                    className="inputDisabled"
+                  />
+                </InputLabel>
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  EIG :{" "}
+                  <input
+                    type="text"
+                    name="firstName"
+                    disabled={!malnutritionEnabled}
+                    className="inputDisabled"
+                  />
+                </InputLabel>
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  Lieu d'accouchement :{" "}
+                  <input
+                    type="text"
+                    name="lastName"
+                    disabled={!malnutritionEnabled}
+                    className="inputDisabled"
+                  />
+                </InputLabel>
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  Asphyxie périnatale :{" "}
+                  {/* <input type="text" name="gender" className="inputDisabled" /> */}
+                  <select
+                    className="selectDisabled"
+                    disabled={!malnutritionEnabled}
+                    name="gender"
+                  >
+                    <option value="M">M</option>
+                    <option value="F">F</option>
+                  </select>
+                </InputLabel>
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  DPM :{" "}
+                  <input
+                    type="date"
+                    name="birthdate"
+                    disabled={!malnutritionEnabled}
+                    className="inputDisabled"
+                  />
+                </InputLabel>
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  Séjour en Neonat :{" "}
+                  <input
+                    type="text"
+                    name="arrival"
+                    disabled={!malnutritionEnabled}
+                    className="inputDisabled"
+                  />
+                </InputLabel>
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  Poids naissance :{" "}
+                  <input
+                    type="text"
+                    name="arrivalMode"
+                    disabled={!malnutritionEnabled}
+                    className="inputDisabled"
+                  />
+                </InputLabel>{" "}
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  Allaitement Exclusif :{" "}
+                  <input
+                    type="text"
+                    name="adress"
+                    disabled={!malnutritionEnabled}
+                    className="inputDisabled"
+                  />
+                </InputLabel>{" "}
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  Age diversification aliment :{" "}
+                  <select
+                    className="selectDisabled"
+                    disabled={!malnutritionEnabled}
+                    name="liveWithParents"
+                  >
+                    <option value="Oui">Oui</option>
+                    <option value="Non">Non</option>
+                  </select>
+                  {/* <input
+                    type="text"
+                    name="liveWithParents"
+                    className="inputDisabled"
+                  /> */}
+                </InputLabel>{" "}
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  Constitution aliment :{" "}
+                  <input
+                    type="text"
+                    name="tutor"
+                    disabled={!malnutritionEnabled}
+                    className="inputDisabled"
+                  />
+                </InputLabel>{" "}
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  Consommation poisson :{" "}
+                  <input
+                    type="text"
+                    name="rankInSiblings"
+                    disabled={!malnutritionEnabled}
+                    className="inputDisabled"
+                  />
+                </InputLabel>{" "}
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  Calendrier vaccinal :{" "}
+                  <input
+                    type="text"
+                    name="siblingsNumber"
+                    disabled={!malnutritionEnabled}
+                    className="inputDisabled"
+                  />
+                </InputLabel>{" "}
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  ATCD Rougeole :{" "}
+                  <input
+                    type="text"
+                    name="siblingsNumber"
+                    disabled={!malnutritionEnabled}
+                    className="inputDisabled"
+                  />
+                </InputLabel>{" "}
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  ATCD MAS :{" "}
+                  <input
+                    type="text"
+                    name="siblingsNumber"
+                    disabled={!malnutritionEnabled}
+                    className="inputDisabled"
+                  />
+                </InputLabel>{" "}
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  ATCD TBC :{" "}
+                  <input
+                    type="text"
+                    name="siblingsNumber"
+                    disabled={!malnutritionEnabled}
+                    className="inputDisabled"
+                  />
+                </InputLabel>{" "}
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  Transfert en UNT :{" "}
+                  <input
+                    type="text"
+                    name="transferToUNT"
+                    className="inputDisabled"
+                  />
+                </InputLabel>
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  Hospitalisation recente :{" "}
+                  <input
+                    type="text"
+                    name="transferToUNT"
+                    className="inputDisabled"
+                  />
+                </InputLabel>
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  Diagnostique Hospitalisation :{" "}
+                  <input
+                    type="text"
+                    name="transferToUNT"
+                    className="inputDisabled"
+                  />
+                </InputLabel>
+                {!malnutritionEnabled === true ? (
+                  <></>
+                ) : (
+                  <LoadingButton
+                    type="submit"
+                    variant="contained"
+                    loading={isSubmitting}
+                    size="large"
+                    sx={{ width: 200, marginLeft: "20px", marginTop: "20px" }}
+                  >
+                    Mettre à jour
+                  </LoadingButton>
+                )}
               </Card>
             </Grid>{" "}
             <Grid
