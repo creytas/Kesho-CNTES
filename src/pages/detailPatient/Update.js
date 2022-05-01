@@ -31,6 +31,9 @@ import style from "./Details.css";
 export default function Update({ id }) {
   const [identityEnabled, setIdentityEnabled] = useState(false);
   const [malnutritionEnabled, setMalnutritionEnabled] = useState(false);
+  const [mereEnabled, setMereEnabled] = useState(false);
+  const [pereEnabled, setPereEnabled] = useState(false);
+  const [menageEnabled, setMenageEnabled] = useState(false);
   const date = new Date();
   const RegisterSchema = Yup.object().shape({});
 
@@ -386,21 +389,6 @@ export default function Update({ id }) {
                     className="inputDisabled"
                   />
                 </InputLabel>{" "}
-                <InputLabel
-                  sx={{
-                    width: `100%`,
-                    display: `flex`,
-                    alignItems: `center`,
-                    marginTop: `0.5%`,
-                  }}
-                >
-                  Transfert en UNT :{" "}
-                  <input
-                    type="text"
-                    name="transferToUNT"
-                    className="inputDisabled"
-                  />
-                </InputLabel>
                 {!identityEnabled === true ? (
                   <></>
                 ) : (
@@ -459,12 +447,14 @@ export default function Update({ id }) {
                   }}
                 >
                   Terme grossesse :{" "}
-                  <input
-                    type="text"
-                    name="firstName"
+                  <select
+                    className="selectDisabled"
                     disabled={!malnutritionEnabled}
-                    className="inputDisabled"
-                  />
+                    name="termeGros"
+                  >
+                    <option value="A terme">A terme</option>
+                    <option value="Prématuré">Prématuré</option>
+                  </select>
                 </InputLabel>
                 <InputLabel
                   sx={{
@@ -491,12 +481,23 @@ export default function Update({ id }) {
                   }}
                 >
                   Lieu d'accouchement :{" "}
-                  <input
+                  <select
+                    className="selectDisabled"
+                    disabled={!malnutritionEnabled}
+                    name="lieuAccouch"
+                  >
+                    <option value="Voiture">Voiture</option>
+                    <option value="Docmicile">Docmicile</option>
+                    <option value="Structure sanitaire">
+                      Structure sanitaire
+                    </option>
+                  </select>
+                  {/* <input
                     type="text"
                     name="lastName"
                     disabled={!malnutritionEnabled}
                     className="inputDisabled"
-                  />
+                  /> */}
                 </InputLabel>
                 <InputLabel
                   sx={{
@@ -511,10 +512,15 @@ export default function Update({ id }) {
                   <select
                     className="selectDisabled"
                     disabled={!malnutritionEnabled}
-                    name="gender"
+                    name="asphixieperi"
                   >
-                    <option value="M">M</option>
-                    <option value="F">F</option>
+                    <option value="Pas de cri">Pas de cri</option>
+                    <option value="A crié spontanément">
+                      A crié spontanément
+                    </option>
+                    <option value="Cri apres réanimation">
+                      Cri apres réanimation
+                    </option>
                   </select>
                 </InputLabel>
                 <InputLabel
@@ -527,8 +533,8 @@ export default function Update({ id }) {
                 >
                   DPM :{" "}
                   <input
-                    type="date"
-                    name="birthdate"
+                    type="text"
+                    name="dpm"
                     disabled={!malnutritionEnabled}
                     className="inputDisabled"
                   />
@@ -542,12 +548,20 @@ export default function Update({ id }) {
                   }}
                 >
                   Séjour en Neonat :{" "}
-                  <input
+                  <select
+                    className="selectDisabled"
+                    disabled={!malnutritionEnabled}
+                    name="neonat"
+                  >
+                    <option value="Oui">Oui</option>
+                    <option value="Non">Non</option>
+                  </select>
+                  {/* <input
                     type="text"
                     name="arrival"
                     disabled={!malnutritionEnabled}
                     className="inputDisabled"
-                  />
+                  /> */}
                 </InputLabel>
                 <InputLabel
                   sx={{
@@ -560,7 +574,7 @@ export default function Update({ id }) {
                   Poids naissance :{" "}
                   <input
                     type="text"
-                    name="arrivalMode"
+                    name="poids"
                     disabled={!malnutritionEnabled}
                     className="inputDisabled"
                   />
@@ -576,7 +590,7 @@ export default function Update({ id }) {
                   Allaitement Exclusif :{" "}
                   <input
                     type="text"
-                    name="adress"
+                    name="allaitement"
                     disabled={!malnutritionEnabled}
                     className="inputDisabled"
                   />
@@ -590,19 +604,11 @@ export default function Update({ id }) {
                   }}
                 >
                   Age diversification aliment :{" "}
-                  <select
-                    className="selectDisabled"
-                    disabled={!malnutritionEnabled}
-                    name="liveWithParents"
-                  >
-                    <option value="Oui">Oui</option>
-                    <option value="Non">Non</option>
-                  </select>
-                  {/* <input
+                  <input
                     type="text"
-                    name="liveWithParents"
+                    name="diversificcation"
                     className="inputDisabled"
-                  /> */}
+                  />
                 </InputLabel>{" "}
                 <InputLabel
                   sx={{
@@ -615,7 +621,7 @@ export default function Update({ id }) {
                   Constitution aliment :{" "}
                   <input
                     type="text"
-                    name="tutor"
+                    name="constitution"
                     disabled={!malnutritionEnabled}
                     className="inputDisabled"
                   />
@@ -629,12 +635,20 @@ export default function Update({ id }) {
                   }}
                 >
                   Consommation poisson :{" "}
-                  <input
+                  <select
+                    className="selectDisabled"
+                    disabled={!malnutritionEnabled}
+                    name="consoPoisson"
+                  >
+                    <option value="Oui">Oui</option>
+                    <option value="Non">Non</option>
+                  </select>
+                  {/* <input
                     type="text"
                     name="rankInSiblings"
                     disabled={!malnutritionEnabled}
                     className="inputDisabled"
-                  />
+                  /> */}
                 </InputLabel>{" "}
                 <InputLabel
                   sx={{
@@ -661,12 +675,20 @@ export default function Update({ id }) {
                   }}
                 >
                   ATCD Rougeole :{" "}
-                  <input
+                  <select
+                    className="selectDisabled"
+                    disabled={!malnutritionEnabled}
+                    name="atcdRougeole"
+                  >
+                    <option value="Oui">Oui</option>
+                    <option value="Non">Non</option>
+                  </select>
+                  {/* <input
                     type="text"
                     name="siblingsNumber"
                     disabled={!malnutritionEnabled}
                     className="inputDisabled"
-                  />
+                  /> */}
                 </InputLabel>{" "}
                 <InputLabel
                   sx={{
@@ -677,12 +699,20 @@ export default function Update({ id }) {
                   }}
                 >
                   ATCD MAS :{" "}
-                  <input
+                  <select
+                    className="selectDisabled"
+                    disabled={!malnutritionEnabled}
+                    name="atcdMas"
+                  >
+                    <option value="Oui">Oui</option>
+                    <option value="Non">Non</option>
+                  </select>
+                  {/* <input
                     type="text"
                     name="siblingsNumber"
                     disabled={!malnutritionEnabled}
                     className="inputDisabled"
-                  />
+                  /> */}
                 </InputLabel>{" "}
                 <InputLabel
                   sx={{
@@ -693,12 +723,20 @@ export default function Update({ id }) {
                   }}
                 >
                   ATCD TBC :{" "}
-                  <input
+                  <select
+                    className="selectDisabled"
+                    disabled={!malnutritionEnabled}
+                    name="atcdTBC"
+                  >
+                    <option value="Oui">Oui</option>
+                    <option value="Non">Non</option>
+                  </select>
+                  {/* <input
                     type="text"
                     name="siblingsNumber"
                     disabled={!malnutritionEnabled}
                     className="inputDisabled"
-                  />
+                  /> */}
                 </InputLabel>{" "}
                 <InputLabel
                   sx={{
@@ -709,11 +747,19 @@ export default function Update({ id }) {
                   }}
                 >
                   Transfert en UNT :{" "}
-                  <input
+                  <select
+                    className="selectDisabled"
+                    disabled={!malnutritionEnabled}
+                    name="transferToUNT"
+                  >
+                    <option value="Oui">Oui</option>
+                    <option value="Non">Non</option>
+                  </select>
+                  {/* <input
                     type="text"
                     name="transferToUNT"
                     className="inputDisabled"
-                  />
+                  /> */}
                 </InputLabel>
                 <InputLabel
                   sx={{
@@ -724,11 +770,19 @@ export default function Update({ id }) {
                   }}
                 >
                   Hospitalisation recente :{" "}
-                  <input
+                  <select
+                    className="selectDisabled"
+                    disabled={!malnutritionEnabled}
+                    name="hospital"
+                  >
+                    <option value="Oui">Oui</option>
+                    <option value="Non">Non</option>
+                  </select>
+                  {/* <input
                     type="text"
                     name="transferToUNT"
                     className="inputDisabled"
-                  />
+                  /> */}
                 </InputLabel>
                 <InputLabel
                   sx={{
@@ -739,11 +793,7 @@ export default function Update({ id }) {
                   }}
                 >
                   Diagnostique Hospitalisation :{" "}
-                  <input
-                    type="text"
-                    name="transferToUNT"
-                    className="inputDisabled"
-                  />
+                  <input type="text" name="diagno" className="inputDisabled" />
                 </InputLabel>
                 {!malnutritionEnabled === true ? (
                   <></>
@@ -765,32 +815,614 @@ export default function Update({ id }) {
               xs={11}
               sm={5}
               md={5}
-              sx={{ display: `flex`, border: `3px solid green` }}
+              sx={{ display: `flex`, border: `0px solid green` }}
             >
               <Card
                 sx={{
                   margin: 1,
                   padding: 2,
-                  border: `3px solid red`,
+                  border: `0px solid red`,
                 }}
               >
-                <Stack
+                <Typography
                   sx={{
+                    width: `100%`,
                     display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
                     justifyContent: "space-between",
-                    flexWrap: "nowrap",
-                    gap: "14px",
+                    fontWeight: "900",
+                    fontSize: "larger",
+                    marginBottom: "0.5%",
                   }}
                 >
-                  <div style={{ border: `1px solid black`, width: `50%` }}>
-                    <Avatar alt="avant" src={``} variant="square" />
-                  </div>
-                  <div style={{ border: `1px solid black`, width: `50%` }}>
-                    <Avatar alt="apres" src={``} variant="square" />
-                  </div>
-                </Stack>
+                  Famille
+                </Typography>
+                <Typography
+                  sx={{
+                    width: `100%`,
+                    display: "flex",
+                    justifyContent: "space-between",
+                    marginBottom: "0.5%",
+                  }}
+                >
+                  Mère
+                  <Button
+                    sx={{ border: `0px solid red` }}
+                    onClick={(e) => {
+                      setMereEnabled(!mereEnabled);
+                    }}
+                  >
+                    <Edit />
+                  </Button>
+                </Typography>
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0%`,
+                  }}
+                >
+                  Mère en vie :{" "}
+                  <select
+                    className="selectDisabled"
+                    disabled={!mereEnabled}
+                    name="mereVit"
+                  >
+                    <option value="Oui">Oui</option>
+                    <option value="Non">Non</option>
+                  </select>
+                </InputLabel>
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  Age de la mère :{" "}
+                  <input
+                    type="text"
+                    name="firstName"
+                    disabled={!mereEnabled}
+                    className="inputDisabled"
+                  />
+                </InputLabel>
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  Statut marital :{" "}
+                  <input
+                    type="text"
+                    name="diversificcation"
+                    className="inputDisabled"
+                  />
+                </InputLabel>{" "}
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  Etat de la mère :{" "}
+                  <select
+                    className="selectDisabled"
+                    disabled={!mereEnabled}
+                    name="lieuAccouch"
+                  >
+                    <option value="Voiture">Voiture</option>
+                    <option value="Docmicile">Docmicile</option>
+                    <option value="Structure sanitaire">
+                      Structure sanitaire
+                    </option>
+                  </select>
+                  {/* <input
+                    type="text"
+                    name="lastName"
+                    disabled={!mereEnabled}
+                    className="inputDisabled"
+                  /> */}
+                </InputLabel>
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  Contraception mère :{" "}
+                  {/* <input type="text" name="gender" className="inputDisabled" /> */}
+                  <select
+                    className="selectDisabled"
+                    disabled={!mereEnabled}
+                    name="asphixieperi"
+                  >
+                    <option value="Pas de cri">Pas de cri</option>
+                    <option value="A crié spontanément">
+                      A crié spontanément
+                    </option>
+                    <option value="Cri apres réanimation">
+                      Cri apres réanimation
+                    </option>
+                  </select>
+                </InputLabel>
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  Type contraception :{" "}
+                  <input
+                    type="text"
+                    name="dpm"
+                    disabled={!mereEnabled}
+                    className="inputDisabled"
+                  />
+                </InputLabel>
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  Contraception :{" "}
+                  <select
+                    className="selectDisabled"
+                    disabled={!mereEnabled}
+                    name="neonat"
+                  >
+                    <option value="Oui">Oui</option>
+                    <option value="Non">Non</option>
+                  </select>
+                  {/* <input
+                    type="text"
+                    name="arrival"
+                    disabled={!mereEnabled}
+                    className="inputDisabled"
+                  /> */}
+                </InputLabel>
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  Scolarité mère :{" "}
+                  <input
+                    type="text"
+                    name="poids"
+                    disabled={!mereEnabled}
+                    className="inputDisabled"
+                  />
+                </InputLabel>{" "}
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  Profession :{" "}
+                  <input
+                    type="text"
+                    name="allaitement"
+                    disabled={!mereEnabled}
+                    className="inputDisabled"
+                  />
+                </InputLabel>{" "}
+                {!mereEnabled === true ? (
+                  <></>
+                ) : (
+                  <LoadingButton
+                    type="submit"
+                    variant="contained"
+                    loading={isSubmitting}
+                    size="large"
+                    sx={{ width: 200, marginLeft: "20px", marginTop: "20px" }}
+                  >
+                    Mettre à jour
+                  </LoadingButton>
+                )}
+                <Typography
+                  sx={{
+                    width: `100%`,
+                    display: "flex",
+                    justifyContent: "space-between",
+                    marginTop: "5%",
+                  }}
+                >
+                  Père
+                  <Button
+                    sx={{ border: `0px solid red` }}
+                    onClick={(e) => {
+                      setPereEnabled(!pereEnabled);
+                    }}
+                  >
+                    <Edit />
+                  </Button>
+                </Typography>
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0%`,
+                  }}
+                >
+                  Père en vie :{" "}
+                  <select
+                    className="selectDisabled"
+                    disabled={!pereEnabled}
+                    name="mereVit"
+                  >
+                    <option value="Oui">Oui</option>
+                    <option value="Non">Non</option>
+                  </select>
+                </InputLabel>
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  Age du Chef de ménage :{" "}
+                  <input
+                    type="text"
+                    name="firstName"
+                    disabled={!pereEnabled}
+                    className="inputDisabled"
+                  />
+                </InputLabel>
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  Téléphone :{" "}
+                  <select
+                    className="selectDisabled"
+                    disabled={!pereEnabled}
+                    name="lieuAccouch"
+                  >
+                    <option value="Voiture">Voiture</option>
+                    <option value="Docmicile">Docmicile</option>
+                    <option value="Structure sanitaire">
+                      Structure sanitaire
+                    </option>
+                  </select>
+                  {/* <input
+                    type="text"
+                    name="lastName"
+                    disabled={!pereEnabled}
+                    className="inputDisabled"
+                  /> */}
+                </InputLabel>
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  Profession :{" "}
+                  <input
+                    type="text"
+                    name="allaitement"
+                    disabled={!pereEnabled}
+                    className="inputDisabled"
+                  />
+                </InputLabel>{" "}
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  Nombre de femme :{" "}
+                  {/* <input type="text" name="gender" className="inputDisabled" /> */}
+                  <select
+                    className="selectDisabled"
+                    disabled={!pereEnabled}
+                    name="asphixieperi"
+                  >
+                    <option value="Pas de cri">Pas de cri</option>
+                    <option value="A crié spontanément">
+                      A crié spontanément
+                    </option>
+                    <option value="Cri apres réanimation">
+                      Cri apres réanimation
+                    </option>
+                  </select>
+                </InputLabel>
+                {!pereEnabled === true ? (
+                  <></>
+                ) : (
+                  <LoadingButton
+                    type="submit"
+                    variant="contained"
+                    loading={isSubmitting}
+                    size="large"
+                    sx={{ width: 200, marginLeft: "20px", marginTop: "20px" }}
+                  >
+                    Mettre à jour
+                  </LoadingButton>
+                )}
+                <Typography
+                  sx={{
+                    width: `100%`,
+                    display: "flex",
+                    justifyContent: "space-between",
+                    marginTop: "5%",
+                  }}
+                >
+                  Ménage
+                  <Button
+                    sx={{ border: `0px solid red` }}
+                    onClick={(e) => {
+                      setMenageEnabled(!menageEnabled);
+                    }}
+                  >
+                    <Edit />
+                  </Button>
+                </Typography>
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0%`,
+                  }}
+                >
+                  Taille ménage :{" "}
+                  <select
+                    className="selectDisabled"
+                    disabled={!pereEnabled}
+                    name="mereVit"
+                  >
+                    <option value="Oui">Oui</option>
+                    <option value="Non">Non</option>
+                  </select>
+                </InputLabel>
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  Tribu :{" "}
+                  <input
+                    type="text"
+                    name="firstName"
+                    disabled={!pereEnabled}
+                    className="inputDisabled"
+                  />
+                </InputLabel>
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  Réligion :{" "}
+                  <select
+                    className="selectDisabled"
+                    disabled={!pereEnabled}
+                    name="lieuAccouch"
+                  >
+                    <option value="Voiture">Voiture</option>
+                    <option value="Docmicile">Docmicile</option>
+                    <option value="Structure sanitaire">
+                      Structure sanitaire
+                    </option>
+                  </select>
+                  {/* <input
+                    type="text"
+                    name="lastName"
+                    disabled={!pereEnabled}
+                    className="inputDisabled"
+                  /> */}
+                </InputLabel>
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  Niveau socio-eco :{" "}
+                  <input
+                    type="text"
+                    name="allaitement"
+                    disabled={!pereEnabled}
+                    className="inputDisabled"
+                  />
+                </InputLabel>{" "}
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  Nombre repas journalier :{" "}
+                  {/* <input type="text" name="gender" className="inputDisabled" /> */}
+                  <select
+                    className="selectDisabled"
+                    disabled={!pereEnabled}
+                    name="asphixieperi"
+                  >
+                    <option value="Pas de cri">Pas de cri</option>
+                    <option value="A crié spontanément">
+                      A crié spontanément
+                    </option>
+                    <option value="Cri apres réanimation">
+                      Cri apres réanimation
+                    </option>
+                  </select>
+                </InputLabel>
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  Possession Tele/Radio :{" "}
+                  {/* <input type="text" name="gender" className="inputDisabled" /> */}
+                  <select
+                    className="selectDisabled"
+                    disabled={!pereEnabled}
+                    name="asphixieperi"
+                  >
+                    <option value="Pas de cri">Pas de cri</option>
+                    <option value="A crié spontanément">
+                      A crié spontanément
+                    </option>
+                    <option value="Cri apres réanimation">
+                      Cri apres réanimation
+                    </option>
+                  </select>
+                </InputLabel>
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  Terrain VIH :{" "}
+                  {/* <input type="text" name="gender" className="inputDisabled" /> */}
+                  <select
+                    className="selectDisabled"
+                    disabled={!pereEnabled}
+                    name="asphixieperi"
+                  >
+                    <option value="Pas de cri">Pas de cri</option>
+                    <option value="A crié spontanément">
+                      A crié spontanément
+                    </option>
+                    <option value="Cri apres réanimation">
+                      Cri apres réanimation
+                    </option>
+                  </select>
+                </InputLabel>
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  TBC Chez Parents :{" "}
+                  {/* <input type="text" name="gender" className="inputDisabled" /> */}
+                  <select
+                    className="selectDisabled"
+                    disabled={!pereEnabled}
+                    name="asphixieperi"
+                  >
+                    <option value="Pas de cri">Pas de cri</option>
+                    <option value="A crié spontanément">
+                      A crié spontanément
+                    </option>
+                    <option value="Cri apres réanimation">
+                      Cri apres réanimation
+                    </option>
+                  </select>
+                </InputLabel>
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  ATCD de TBC dans la fratrie :{" "}
+                  {/* <input type="text" name="gender" className="inputDisabled" /> */}
+                  <select
+                    className="selectDisabled"
+                    disabled={!pereEnabled}
+                    name="asphixieperi"
+                  >
+                    <option value="Pas de cri">Pas de cri</option>
+                    <option value="A crié spontanément">
+                      A crié spontanément
+                    </option>
+                    <option value="Cri apres réanimation">
+                      Cri apres réanimation
+                    </option>
+                  </select>
+                </InputLabel>
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  ATCD de Rougeole dans la fratrie :{" "}
+                  {/* <input type="text" name="gender" className="inputDisabled" /> */}
+                  <select
+                    className="selectDisabled"
+                    disabled={!pereEnabled}
+                    name="asphixieperi"
+                  >
+                    <option value="Pas de cri">Pas de cri</option>
+                    <option value="A crié spontanément">
+                      A crié spontanément
+                    </option>
+                    <option value="Cri apres réanimation">
+                      Cri apres réanimation
+                    </option>
+                  </select>
+                </InputLabel>
+                {!menageEnabled === true ? (
+                  <></>
+                ) : (
+                  <LoadingButton
+                    type="submit"
+                    variant="contained"
+                    loading={isSubmitting}
+                    size="large"
+                    sx={{ width: 200, marginLeft: "20px", marginTop: "20px" }}
+                  >
+                    Mettre à jour
+                  </LoadingButton>
+                )}
               </Card>
             </Grid>
           </Grid>
