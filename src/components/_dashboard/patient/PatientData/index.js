@@ -321,19 +321,19 @@ export default function PatientData({ DataPatient, PrevStep }) {
               </span>
             </InputLabel>
             <InputLabel>
-              Prise d'ATB:
+              Prise récente d'ATB:
               <span style={{ color: "black" }}>
                 {" "}
-                {FamalyData.atb === "false" ? "Aucun ATB pris" : "Oui"}
+                {CauseMalnutrition.atb === "false" ? "Aucun ATB pris" : "Oui"}
               </span>
             </InputLabel>
             <InputLabel>
               Liste d'ATB pris:
               <span style={{ color: "black" }}>
                 {" "}
-                {FamalyData.listAtb === ""
+                {CauseMalnutrition.listAtb === ""
                   ? "Aucun ATB pris"
-                  : FamalyData.listAtb}
+                  : CauseMalnutrition.listAtb}
               </span>
             </InputLabel>
             <InputLabel>
@@ -362,19 +362,10 @@ export default function PatientData({ DataPatient, PrevStep }) {
               </span>
             </InputLabel>
             <InputLabel>
-              Durée prise de produit plante :
+              ATCD hospitalisation en UNTI:
               <span style={{ color: "black" }}>
                 {" "}
-                {CauseMalnutrition.dureeProduitPlante
-                  ? CauseMalnutrition.dureeProduitPlante
-                  : "Aucun produit pris"}
-              </span>
-            </InputLabel>
-            <InputLabel>
-              Transfert en UNT:
-              <span style={{ color: "black" }}>
-                {" "}
-                {indentity.transfererUnt === "true" ? "Oui" : "Aucun"}
+                {CauseMalnutrition.transfererUnt === "true" ? "Oui" : "Aucun"}
               </span>
             </InputLabel>
             <Typography sx={{ fontWeight: "900", fontSize: "larger" }}>
@@ -424,9 +415,9 @@ export default function PatientData({ DataPatient, PrevStep }) {
                 {" "}
                 {CauseMalnutrition.dpm === ""
                   ? "Non renseigné"
-                  : CauseMalnutrition.dpm === "Normal"
-                  ? CauseMalnutrition.dpm
-                  : CauseMalnutrition.DpmAnormalPrecision}
+                  : CauseMalnutrition.dpm === "Anormal"
+                  ? CauseMalnutrition.dpmAnormalPrecision
+                  : CauseMalnutrition.dpm}
               </span>
             </InputLabel>
             <InputLabel>
@@ -445,11 +436,9 @@ export default function PatientData({ DataPatient, PrevStep }) {
             <InputLabel>
               Allaitement Exclusif:{" "}
               <span style={{ color: "black" }}>
-                {`${
-                  indentity.allaitementExclusifSixMois
-                    ? "6 mois"
-                    : "plus ou moins"
-                }`}
+                {CauseMalnutrition.allaitementExclusifSixMois === "true"
+                  ? "6 mois"
+                  : `${CauseMalnutrition.ageFinAllaitement}  mois`}
               </span>
             </InputLabel>
             <InputLabel>
@@ -686,7 +675,7 @@ export default function PatientData({ DataPatient, PrevStep }) {
               </span>
             </InputLabel>
             <InputLabel>
-              Niveau socio :
+              Niveau socio-économique:
               <span style={{ color: "black" }}>
                 {" "}
                 {FamalyData.NiveauSocioEconomique === ""

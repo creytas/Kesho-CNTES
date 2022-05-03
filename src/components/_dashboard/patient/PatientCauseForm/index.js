@@ -1043,7 +1043,7 @@ export default function CauseForm({
                   component="label"
                   // style={{ color: `${errors.allaitementExclusifSixMois && 'red'}` }}
                 >
-                  Transfert UNT:
+                  ATCD hospitalisation en UNTI:
                 </FormLabel>
                 <Stack direction={{ xs: "row", sm: "row" }}>
                   <FormControlLabel
@@ -1675,7 +1675,7 @@ export default function CauseForm({
                 }}
                 spacing={1}
               >
-                <FormLabel component="label">Prise ATB:</FormLabel>
+                <FormLabel component="label">Prise récente d'ATB:</FormLabel>
                 <FormControlLabel
                   value="true"
                   fullWidth

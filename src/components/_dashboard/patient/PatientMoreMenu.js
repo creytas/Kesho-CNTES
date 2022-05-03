@@ -82,6 +82,7 @@ export default function PatientMoreMenu({ id_patient }) {
         open={isOpen}
         anchorEl={ref.current}
         onClose={() => setIsOpen(false)}
+        vissee
         PaperProps={{
           sx: { width: 189, maxWidth: "100%", py: 3 },
         }}
@@ -103,7 +104,9 @@ export default function PatientMoreMenu({ id_patient }) {
               }}
             >
               <Icon icon={eyeFill} width={40} height={25} />
-              <Typography variant="h6">Voir plus</Typography>
+              <Typography variant="h6" sx={{ fontWeight: "400" }}>
+                Voir plus
+              </Typography>
             </div>
           </ListItemIcon>
         </MenuItem>
@@ -121,7 +124,9 @@ export default function PatientMoreMenu({ id_patient }) {
               }}
             >
               <Icon icon={deleteFill} width={40} height={25} />
-              <Typography variant="h6">Supprimer</Typography>
+              <Typography variant="h6" sx={{ fontWeight: "400" }}>
+                Supprimer
+              </Typography>
             </div>
           </ListItemIcon>
           <Dialog
