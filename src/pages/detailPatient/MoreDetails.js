@@ -35,6 +35,7 @@ import {
   PersonnelListHead,
   PersonnelListToolbar,
 } from "../../components/_dashboard/personnel";
+import AnthroMoreMenu from "../../components/_dashboard/patient/AnthroMoreMenu";
 
 const TABLE_HEAD = [
   { id: "NE", label: "Consulté(e) par", alignRight: false },
@@ -314,6 +315,9 @@ export default function MoreDetails({ id }) {
                               >
                                 {anthro[i].type_malnutrition}
                               </Label>
+                            </TableCell>
+                            <TableCell>
+                              <AnthroMoreMenu value={id} />
                             </TableCell>
                           </TableRow>
                         );

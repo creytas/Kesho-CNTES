@@ -25,6 +25,7 @@ import { useFormik, Form, FormikProvider } from "formik";
 import Chart from "../../components/charts/chart/Chart";
 import PatientCard from "../../components/patientCard/PatientCard";
 import AddAnthro from "../../components/addAnthro/AddAnthro";
+//import AnthroMoreMenu from "../../components/anthroMoreMenu/AnthroMoreMenu";
 import MoreDetails from "./MoreDetails";
 import { fakeAuth } from "../../fakeAuth";
 

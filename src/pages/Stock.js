@@ -1,17 +1,17 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable camelcase */
 /* no-nested-ternary */
-import * as Yup from 'yup';
-import { Icon } from '@iconify/react';
-import { useState, useEffect, useRef } from 'react';
-import plusFill from '@iconify/icons-eva/plus-fill';
-import { Link as RouterLink, Navigate, useLocation } from 'react-router-dom';
-import Axios from 'axios';
-import { useFormik, Form, FormikProvider } from 'formik';
-import moment from 'moment';
+import * as Yup from "yup";
+import { Icon } from "@iconify/react";
+import { useState, useEffect, useRef } from "react";
+import plusFill from "@iconify/icons-eva/plus-fill";
+import { Link as RouterLink, Navigate, useLocation } from "react-router-dom";
+import Axios from "axios";
+import { useFormik, Form, FormikProvider } from "formik";
+import moment from "moment";
 // ----------Excele Export-----------------------------
-import * as FileSaver from 'file-saver';
-import * as XLSX from 'xlsx';
+import * as FileSaver from "file-saver";
+import * as XLSX from "xlsx";
 import {
   Card,
   Table,
@@ -25,203 +25,115 @@ import {
   Typography,
   TableContainer,
   OutlinedInput,
-  Toolbar
-} from '@material-ui/core';
-import Badge from '@material-ui/core/Badge';
-import { styled } from '@material-ui/core/styles';
-import { makeStyles } from '@material-ui/styles';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { LoadingButton } from '@material-ui/lab';
-import SearchIcon from '@material-ui/icons/Search';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
-import RefreshIcon from '@material-ui/icons/Refresh';
-import { GrFormPrevious, GrFormNext } from 'react-icons/gr';
-import Page from '../components/Page';
-import Scrollbar from '../components/Scrollbar';
-import SearchNotFound from '../components/SearchNotFound';
-import { PatientListHead } from '../components/_dashboard/patient';
-import DefaultPage from '../components/DefaultPage';
-import image from '../utils/undraw_doctors_stock.svg';
+  Toolbar,
+} from "@material-ui/core";
+import Badge from "@material-ui/core/Badge";
+import { styled } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/styles";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { LoadingButton } from "@material-ui/lab";
+import SearchIcon from "@material-ui/icons/Search";
+import IconButton from "@material-ui/core/IconButton";
+import Tooltip from "@material-ui/core/Tooltip";
+import RefreshIcon from "@material-ui/icons/Refresh";
+import { GrFormPrevious, GrFormNext } from "react-icons/gr";
+import Page from "../components/Page";
+import Scrollbar from "../components/Scrollbar";
+import SearchNotFound from "../components/SearchNotFound";
+import { PatientListHead } from "../components/_dashboard/patient";
+import DefaultPage from "../components/DefaultPage";
+import image from "../utils/undraw_doctors_stock.svg";
+import StockMoreMenu from "src/components/_dashboard/stock/StockMoreMenu";
 
 const TABLE_HEAD = [
-  { id: 'DO', label: 'Date', alignLeft: true },
-  { id: 'MO', label: 'Matiere', alignRight: false },
-  { id: 'TO', label: 'Type opération', alignRight: false },
-  { id: 'QTE', label: 'Quantité', alignRight: false },
-  { id: 'CO', label: 'Commentaire', alignRight: false }
+  { id: "DO", label: "Date", alignLeft: true },
+  { id: "MO", label: "Matiere", alignRight: false },
+  { id: "TO", label: "Type opération", alignRight: false },
+  { id: "QTE", label: "Quantité", alignRight: false },
+  { id: "CO", label: "Commentaire", alignRight: false },
 ];
 const useStyles = makeStyles(() => ({
   root: {
-    display: 'flex',
-    position: 'relative',
-    justifyContent: 'center',
-    top: '50%'
+    display: "flex",
+    position: "relative",
+    justifyContent: "center",
+    top: "50%",
   },
   loading: {
     minWidth: 800,
-    minHeight: '200px',
-    display: 'flex',
-    position: 'relative',
-    justifyContent: 'center',
-    margin: 'auto',
-    top: '50%'
+    minHeight: "200px",
+    display: "flex",
+    position: "relative",
+    justifyContent: "center",
+    margin: "auto",
+    top: "50%",
   },
   labelRoot: {
-    '&&': {
-      color: 'red'
-    }
+    "&&": {
+      color: "red",
+    },
   },
   button: {
-    textAlign: 'center',
-    position: 'absolute',
-    left: '30%'
+    textAlign: "center",
+    position: "absolute",
+    left: "30%",
   },
   patientRow: {
-    cursor: 'pointer',
-    textDecoration: 'none'
-  }
+    cursor: "pointer",
+    textDecoration: "none",
+  },
 }));
 const RootStyle = styled(Toolbar)(({ theme }) => ({
   height: 96,
-  display: 'flex',
-  justifyContent: 'space-between',
-  padding: theme.spacing(0, 1, 0, 3)
+  display: "flex",
+  justifyContent: "space-between",
+  padding: theme.spacing(0, 1, 0, 3),
 }));
 
 const SearchStyle = styled(OutlinedInput)(() => ({
-  width: 240
+  width: 240,
 }));
 
 export default function Patient() {
-  // const operations = [
-  //   {
-  //     id_operation: 1,
-  //     date_operation: `12/10/2021`,
-  //     matiere: `maïs`,
-  //     type_operation: `entrée`,
-  //     quantite: 250,
-  //     commentaire: `achat sac de maïs`,
-  //   },
-  //   {
-  //     id_operation: 2,
-  //     date_operation: `12/12/2021`,
-  //     matiere: `soja`,
-  //     type_operation: `sortie`,
-  //     quantite: 2,
-  //     commentaire: `cuisson bouillie`,
-  //   },
-  //   {
-  //     id_operation: 3,
-  //     date_operation: `12/12/2021`,
-  //     matiere: `extrait foliaire`,
-  //     type_operation: `sortie`,
-  //     quantite: 0.25,
-  //     commentaire: `cuisson bouillie`,
-  //   },
-  //   {
-  //     id_operation: 4,
-  //     date_operation: `12/12/2021`,
-  //     matiere: `sorgho`,
-  //     type_operation: `entrée`,
-  //     quantite: 250,
-  //     commentaire: `achat sac de sorgho`,
-  //   },
-  //   {
-  //     id_operation: 4,
-  //     date_operation: `12/12/2021`,
-  //     matiere: `sucre`,
-  //     type_operation: `entrée`,
-  //     quantite: 250,
-  //     commentaire: `achat sac de sucre`,
-  //   },
-  //   {
-  //     id_operation: 5,
-  //     date_operation: `12/12/2021`,
-  //     matiere: `extrait foliaire`,
-  //     type_operation: `entrée`,
-  //     quantite: 1500,
-  //     commentaire: `reception extrait foliaire`,
-  //   },
-  //   {
-  //     id_operation: 6,
-  //     date_operation: `12/12/2021`,
-  //     matiere: `huiles`,
-  //     type_operation: `entrée`,
-  //     quantite: 25,
-  //     commentaire: `achat bidon 25L huile`,
-  //   },
-  //   {
-  //     id_operation: 7,
-  //     date_operation: `12/12/2021`,
-  //     matiere: `savon`,
-  //     type_operation: `entrée`,
-  //     quantite: 250,
-  //     commentaire: `achat savon OMO`,
-  //   },
-  //   {
-  //     id_operation: 8,
-  //     date_operation: `12/13/2021`,
-  //     matiere: `briquette energetique`,
-  //     type_operation: `sortie`,
-  //     quantite: 1,
-  //     commentaire: `cuisson bouillie`,
-  //   },
-  //   {
-  //     id_operation: 9,
-  //     date_operation: `12/12/2021`,
-  //     matiere: `briquette energetique`,
-  //     type_operation: `entrée`,
-  //     quantite: 250,
-  //     commentaire: `achat briquette energetique`,
-  //   },
-  //   {
-  //     id_operation: 10,
-  //     date_operation: `12/13/2021`,
-  //     matiere: `savon`,
-  //     type_operation: `sortie`,
-  //     quantite: 0.1,
-  //     commentaire: `netoyage des habits et ustensiles`,
-  //   },
-  // ];
-
   const [operationsList, setOperationsList] = useState([]);
   const [allData, setAllData] = useState([]);
   const [lenghtData, setLenghtData] = useState(0);
-  const [order, setOrder] = useState('asc');
+  const [order, setOrder] = useState("asc");
   const [selected, setSelected] = useState([]);
-  const [orderBy, setOrderBy] = useState('nom_patient');
-  const [filterDate, setFilterDate] = useState('');
+  const [orderBy, setOrderBy] = useState("nom_patient");
+  const [filterDate, setFilterDate] = useState("");
   const [numberOfElement, setNumberOfElement] = useState(0);
   const [start, setStart] = useState(0);
   const [loadingData, setLoadingData] = useState(false);
   const [loader, setLoader] = useState(true);
   const [loadingButton, setLoadingButton] = useState(false);
-  const [searchedValue, setSearchedValue] = useState('');
+  const [searchedValue, setSearchedValue] = useState("");
   const classes = useStyles();
   const refButtonRefresh = useRef(null);
   useEffect(() => {
     fetch(
       `https://kesho-api.herokuapp.com/operation/affectation/CNTES/?limit_start=${start}&limit_end=${10}`,
       {
-        method: 'GET',
+        method: "GET",
         headers: {
-          Accept: 'application/json',
-          Authorization: `bearer ${localStorage.getItem('token')}`
-        }
+          Accept: "application/json",
+          Authorization: `bearer ${localStorage.getItem("token")}`,
+        },
       }
     )
       .then((response) => response.json())
       .then((data) => {
         const Operations = data.operations;
-        setNumberOfElement(numberOfElement === 0 ? Operations.length : numberOfElement);
+        setNumberOfElement(
+          numberOfElement === 0 ? Operations.length : numberOfElement
+        );
         setLenghtData(data.data_amount);
         setOperationsList(Operations);
         setLoader(false);
         setLoadingData(false);
       })
       .catch((error) => {
-        console.error('MyError:', error);
+        console.error("MyError:", error);
         setLoader(false);
         setLoadingData(false);
       });
@@ -230,11 +142,11 @@ export default function Patient() {
 
   useEffect(() => {
     fetch(`https://kesho-api.herokuapp.com/operation/export`, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        Accept: 'application/json',
-        Authorization: `bearer ${localStorage.getItem('token')}`
-      }
+        Accept: "application/json",
+        Authorization: `bearer ${localStorage.getItem("token")}`,
+      },
     })
       .then((response) => response.json())
       .then((data) => {
@@ -247,21 +159,23 @@ export default function Patient() {
 
   // ------Excel Export-----------------
   const fileType =
-    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-  const fileExtension = '.xlsx';
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+  const fileExtension = ".xlsx";
 
   const exportToCSV = (apiData, fileName) => {
     const ws = XLSX.utils.json_to_sheet(apiData);
-    const wb = { Sheets: { data: ws }, SheetNames: ['data'] };
-    const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+    const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
+    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
     const data = new Blob([excelBuffer], { type: fileType });
     FileSaver.saveAs(data, fileName + fileExtension);
   };
 
-  const exportedFileName = `keshoCongoOperations${moment().format('DDMMMMYYYY')}`;
+  const exportedFileName = `keshoCongoOperations${moment().format(
+    "DDMMMMYYYY"
+  )}`;
   const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
 
@@ -287,57 +201,61 @@ export default function Patient() {
     if (numberOfElement < lenghtData) {
       setLoadingData(true);
       const step =
-        numberOfElement + 3 > lenghtData ? lenghtData - numberOfElement + 1 : operationsList.length;
+        numberOfElement + 3 > lenghtData
+          ? lenghtData - numberOfElement + 1
+          : operationsList.length;
       setStart((prevState) => prevState + step);
       const number =
-        numberOfElement + 3 > lenghtData ? lenghtData - numberOfElement : operationsList.length;
+        numberOfElement + 3 > lenghtData
+          ? lenghtData - numberOfElement
+          : operationsList.length;
       setNumberOfElement((prevState) => prevState + number);
     }
   };
 
   // -------------------FOrmik----------------------------
   const SearchSchema = Yup.object().shape({
-    searchValue: Yup.date().required('Entrez une date')
+    searchValue: Yup.date().required("Entrez une date"),
   });
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      searchValue: searchedValue
+      searchValue: searchedValue,
     },
     validationSchema: SearchSchema,
     onSubmit: async ({ searchValue }) => {
       setLoadingButton(true);
       try {
         const response = await Axios.post(
-          'https://kesho-api.herokuapp.com/operation/affectation/CNTES/search',
+          "https://kesho-api.herokuapp.com/operation/affectation/CNTES/search",
           {
-            date_operation: searchValue
+            date_operation: searchValue,
           },
           {
             headers: {
-              'Content-Type': 'application/json',
-              Authorization: `bearer ${localStorage.getItem('token')}`
-            }
+              "Content-Type": "application/json",
+              Authorization: `bearer ${localStorage.getItem("token")}`,
+            },
           }
         );
         const output = await response.data;
-        setSearchedValue('');
+        setSearchedValue("");
         setLoadingButton(false);
         setOperationsList(output);
       } catch (err) {
-        console.log('message error :', err.message);
+        console.log("message error :", err.message);
         setLoadingButton(false);
       }
-    }
+    },
   });
   const { handleSubmit, setFieldValue } = formik;
 
   const handleFilterByDate = (event) => {
-    setFieldValue('searchValue', event.target.value);
+    setFieldValue("searchValue", event.target.value);
     setFilterDate(event.target.value);
   };
   const handleClickRefresh = () => {
-    setFilterDate('');
+    setFilterDate("");
     setLoadingData(true);
     setStart(3);
     setNumberOfElement(0);
@@ -345,12 +263,12 @@ export default function Patient() {
   const filteredPatient = operationsList;
 
   const location = useLocation();
-  const [isAuth, setIsAuth] = useState(localStorage.getItem('token'));
+  const [isAuth, setIsAuth] = useState(localStorage.getItem("token"));
 
   useEffect(() => {
     setIsAuth(isAuth);
   }, [isAuth]);
-  const component = 'add_Operation';
+  const component = "add_Operation";
   console.log(operationsList);
   return isAuth ? (
     <>
@@ -365,7 +283,12 @@ export default function Patient() {
           ) : (
             <Page>
               <Container>
-                <Stack direction="row" alignItems="center" justifyContent="space-between" mb={2}>
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  justifyContent="space-between"
+                  mb={2}
+                >
                   <Typography variant="h4" gutterBottom>
                     Stocks
                   </Typography>
@@ -393,9 +316,9 @@ export default function Patient() {
                   <RootStyle
                     sx={{
                       ...(selected.length > 0 && {
-                        color: 'primary.main',
-                        bgcolor: 'primary.lighter'
-                      })
+                        color: "primary.main",
+                        bgcolor: "primary.lighter",
+                      }),
                     }}
                   >
                     {selected.length > 0 ? (
@@ -408,8 +331,8 @@ export default function Patient() {
                           <Form onSubmit={handleSubmit}>
                             <LoadingButton
                               style={{
-                                width: 'auto',
-                                height: '55px'
+                                width: "auto",
+                                height: "55px",
                               }}
                               variant="contained"
                               color="primary"
@@ -433,7 +356,11 @@ export default function Patient() {
                             />
                           </Form>
                         </FormikProvider>
-                        <Tooltip title="Rafraîchir" color="primary" onClick={handleClickRefresh}>
+                        <Tooltip
+                          title="Rafraîchir"
+                          color="primary"
+                          onClick={handleClickRefresh}
+                        >
                           <IconButton>
                             <RefreshIcon />
                           </IconButton>
@@ -468,9 +395,10 @@ export default function Patient() {
                                     quantite,
                                     type_operation,
                                     commentaire,
-                                    id_operation
+                                    id_operation,
                                   } = row;
-                                  const isItemSelected = selected.indexOf(date_operation) !== -1;
+                                  const isItemSelected =
+                                    selected.indexOf(date_operation) !== -1;
 
                                   return (
                                     <TableRow
@@ -485,26 +413,45 @@ export default function Patient() {
                                       aria-checked={isItemSelected}
                                     >
                                       <TableCell padding="left">
-                                        <TableCell padding="checkbox" variant="subtitle2" noWrap>
+                                        <TableCell
+                                          padding="checkbox"
+                                          variant="subtitle2"
+                                          noWrap
+                                        >
                                           {i + 1}
                                         </TableCell>
                                       </TableCell>
                                       <TableCell align="left">
-                                        {moment(date_operation).format('DD/MM/YYYY')}
+                                        {moment(date_operation).format(
+                                          "DD/MM/YYYY"
+                                        )}
                                       </TableCell>
-                                      <TableCell align="left">{matiere}</TableCell>
+                                      <TableCell align="left">
+                                        {matiere}
+                                      </TableCell>
                                       <TableCell
                                         align="left"
                                         sx={{
-                                          color: `${type_operation === 'entrée' ? 'green' : 'red'}`
+                                          color: `${
+                                            type_operation === "entrée"
+                                              ? "green"
+                                              : "red"
+                                          }`,
                                         }}
                                       >
                                         {type_operation}
                                       </TableCell>
 
-                                      <TableCell align="left">{quantite}</TableCell>
+                                      <TableCell align="left">
+                                        {quantite}
+                                      </TableCell>
 
-                                      <TableCell align="left">{commentaire}</TableCell>
+                                      <TableCell align="left">
+                                        {commentaire}
+                                      </TableCell>
+                                      <TableCell>
+                                        <StockMoreMenu value={id_operation} />
+                                      </TableCell>
                                     </TableRow>
                                   );
                                 })}
@@ -512,7 +459,11 @@ export default function Patient() {
                             ) : (
                               <TableBody>
                                 <TableRow>
-                                  <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
+                                  <TableCell
+                                    align="center"
+                                    colSpan={6}
+                                    sx={{ py: 3 }}
+                                  >
                                     <SearchNotFound searchQuery={filterDate} />
                                   </TableCell>
                                 </TableRow>
@@ -527,10 +478,10 @@ export default function Patient() {
                     <TableCell>
                       <GrFormPrevious
                         style={{
-                          width: '30px',
-                          height: '30px',
-                          color: '#1f2b35',
-                          cursor: 'pointer'
+                          width: "30px",
+                          height: "30px",
+                          color: "#1f2b35",
+                          cursor: "pointer",
                         }}
                         onClick={handleClickPrev}
                       />
@@ -538,16 +489,16 @@ export default function Patient() {
                     <TableCell>
                       <GrFormNext
                         style={{
-                          width: '30px',
-                          height: '30px',
-                          color: '#1f2b35',
-                          cursor: 'pointer'
+                          width: "30px",
+                          height: "30px",
+                          color: "#1f2b35",
+                          cursor: "pointer",
                         }}
                         onClick={handleClickNext}
                         // disabled={}
                       />
                     </TableCell>
-                    <TableCell style={{ fontWeight: '900px' }}>
+                    <TableCell style={{ fontWeight: "900px" }}>
                       {numberOfElement}/{lenghtData}
                     </TableCell>
                   </TableRow>
