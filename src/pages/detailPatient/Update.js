@@ -35,7 +35,95 @@ export default function Update({ id }) {
   const [pereEnabled, setPereEnabled] = useState(false);
   const [menageEnabled, setMenageEnabled] = useState(false);
   const date = new Date();
-  const RegisterSchema = Yup.object().shape({});
+  const RegisterSchema = Yup.object().shape({
+    firstPicture: Yup.string(),
+    lastPicture: Yup.string(),
+    NomPatient: Yup.string()
+      .min(2, "Min 2 caractère")
+      .max(100, "Max 100 caractère")
+      .matches(/[A-Za-z]/, "Il ne doit contenir que de lettre")
+      .trim()
+      .required("requis"),
+    fistNamePatient: Yup.string()
+      .min(2, "Min 2 caractère")
+      .max(25)
+      .matches(/[A-Za-z]/, "Il ne doit contenir que de lettre")
+      .trim(),
+    postNomPatient: Yup.string()
+      .min(2, "Minimum 2 caractère")
+      .max(25, "Maximum 25 caractère")
+      .matches(/[A-Za-z]/, "Il ne doit contenir que de lettre")
+      .trim()
+      .required("requis"),
+    sexePatient: Yup.string().trim().required("requis"),
+    dateNaissancePatient: Yup.date("intervalle entre")
+      .min(date.getFullYear() - 90, `Age minimum ${date.getFullYear()}` - 90)
+      .required("requis"),
+    provenancePatient: Yup.string().trim().min(2, "Min 2 caractère"),
+    modeArriver: Yup.string().trim().min(2, "Min 2 caractère"),
+    adressePatient: Yup.string().trim().min(2, "Min 2 caractère"),
+    vivreAvecParents: Yup.boolean(),
+    tuteur: Yup.string()
+      .min(0)
+      .max(25)
+      .matches(/[A-Za-z]/)
+      .trim(),
+    tailleFratrie: Yup.number().min(1).max(99),
+    rangFratrie: Yup.string(),
+    termeGrossesse: Yup.string().trim(),
+    eig: Yup.number(),
+    lieuAccouchement: Yup.string(),
+    asphyxiePrerinatale: Yup.string().trim(),
+    dpm: Yup.string(),
+    sejourNeo: Yup.string(),
+    poidsNaissance: Yup.number()
+      .positive()
+      .min(900, "Minimum 900 gr")
+      .required("requis"),
+    allaitementExclusifSixMois: Yup.string()
+      .trim()
+      .min(2, "Min 2 caractère")
+      .required("Champs requis"),
+    diversificationAliment: Yup.number("un nombre")
+      .positive("nombre positif")
+      .min(2, "Minimum 2"),
+    constitutionAliment: Yup.string().trim().min(2, "Min 2 caractère"),
+    consommationPoisson: Yup.string(),
+    calendrierVaccin: Yup.string(),
+    atcdMas: Yup.string(),
+    vaccinationRougeole: Yup.string().trim(),
+    tbc: Yup.boolean(),
+    transfererUnt: Yup.string().trim().min(2, "Min 2 caractère"),
+    hospitalisationRecente: Yup.string(),
+    diagnostiqueHospitalisation: Yup.string().min(5).trim(),
+    mereEnVie: Yup.string(),
+    dateNaissanceMere: Yup.number(),
+    statutMarital: Yup.string(),
+    etatMere: Yup.string(),
+    contraceptionMere: Yup.string(),
+    contraceptionType: Yup.string(),
+    methodeContraceptive: Yup.string(),
+    scolariteMere: Yup.string(),
+    professionMere: Yup.string(),
+    pereEnvie: Yup.string(),
+    dateNaissanceChefMenage: Yup.number(),
+    telephone: Yup.string().matches(
+      /^(\+243|0)[0-9]{9}$/g,
+      "+243813030011 ou 0813030011"
+    ),
+    ProffessionChefMenage: Yup.string(),
+    nbrFemme: Yup.number().min(2).max(99),
+    tailleMenage: Yup.number().min(2).max(99),
+    Tribut: Yup.string(),
+    Religion: Yup.string(),
+    NiveauSocioEconomique: Yup.string(),
+    NbrRepasJour: Yup.number(),
+    PossederTeleRadio: Yup.string(),
+    terrainVih: Yup.string().trim(),
+    tbcChezParent: Yup.string().trim(),
+    atcdDuTbcDansFratrie: Yup.string().trim(),
+    atcdRougeole: Yup.string().trim(),
+  });
 
   const formik = useFormik({
     initialValues: {},
@@ -198,7 +286,7 @@ export default function Update({ id }) {
                   Prenom :{" "}
                   <input
                     type="text"
-                    name="firstName"
+                    name="fistNamePatient"
                     disabled={!identityEnabled}
                     className="inputDisabled"
                   />
@@ -214,7 +302,7 @@ export default function Update({ id }) {
                   Nom :{" "}
                   <input
                     type="text"
-                    name="firstName"
+                    name="NomPatient"
                     disabled={!identityEnabled}
                     className="inputDisabled"
                   />
@@ -230,7 +318,7 @@ export default function Update({ id }) {
                   Postnom :{" "}
                   <input
                     type="text"
-                    name="lastName"
+                    name="postNomPatient"
                     disabled={!identityEnabled}
                     className="inputDisabled"
                   />
@@ -248,7 +336,7 @@ export default function Update({ id }) {
                   <select
                     className="selectDisabled"
                     disabled={!identityEnabled}
-                    name="gender"
+                    name="sexePatient"
                   >
                     <option value="M">M</option>
                     <option value="F">F</option>
@@ -265,7 +353,7 @@ export default function Update({ id }) {
                   Date de naissance :{" "}
                   <input
                     type="date"
-                    name="birthdate"
+                    name="dateNaissancePatient"
                     disabled={!identityEnabled}
                     className="inputDisabled"
                   />
@@ -281,7 +369,7 @@ export default function Update({ id }) {
                   Provenance :{" "}
                   <input
                     type="text"
-                    name="arrival"
+                    name="provenancePatient"
                     disabled={!identityEnabled}
                     className="inputDisabled"
                   />
@@ -297,7 +385,7 @@ export default function Update({ id }) {
                   Mode d'arrivé :{" "}
                   <input
                     type="text"
-                    name="arrivalMode"
+                    name="modeArriver"
                     disabled={!identityEnabled}
                     className="inputDisabled"
                   />
@@ -313,7 +401,7 @@ export default function Update({ id }) {
                   Adresse :{" "}
                   <input
                     type="text"
-                    name="adress"
+                    name="adressePatient"
                     disabled={!identityEnabled}
                     className="inputDisabled"
                   />
@@ -330,7 +418,7 @@ export default function Update({ id }) {
                   <select
                     className="selectDisabled"
                     disabled={!identityEnabled}
-                    name="liveWithParents"
+                    name="vivreAvecParents"
                   >
                     <option value="Oui">Oui</option>
                     <option value="Non">Non</option>
@@ -352,7 +440,7 @@ export default function Update({ id }) {
                   Tuteur :{" "}
                   <input
                     type="text"
-                    name="tutor"
+                    name="tuteur"
                     disabled={!identityEnabled}
                     className="inputDisabled"
                   />
@@ -368,7 +456,7 @@ export default function Update({ id }) {
                   Rang fratrie :{" "}
                   <input
                     type="text"
-                    name="rankInSiblings"
+                    name="rangFratrie"
                     disabled={!identityEnabled}
                     className="inputDisabled"
                   />
@@ -384,7 +472,7 @@ export default function Update({ id }) {
                   Taille Fratrie :{" "}
                   <input
                     type="text"
-                    name="siblingsNumber"
+                    name="tailleFratrie"
                     disabled={!identityEnabled}
                     className="inputDisabled"
                   />
@@ -450,7 +538,7 @@ export default function Update({ id }) {
                   <select
                     className="selectDisabled"
                     disabled={!malnutritionEnabled}
-                    name="termeGros"
+                    name="termeGrossesse"
                   >
                     <option value="A terme">A terme</option>
                     <option value="Prématuré">Prématuré</option>
@@ -467,7 +555,7 @@ export default function Update({ id }) {
                   EIG :{" "}
                   <input
                     type="text"
-                    name="firstName"
+                    name="eig"
                     disabled={!malnutritionEnabled}
                     className="inputDisabled"
                   />
@@ -484,7 +572,7 @@ export default function Update({ id }) {
                   <select
                     className="selectDisabled"
                     disabled={!malnutritionEnabled}
-                    name="lieuAccouch"
+                    name="lieuAccouchement"
                   >
                     <option value="Voiture">Voiture</option>
                     <option value="Docmicile">Docmicile</option>
@@ -512,7 +600,7 @@ export default function Update({ id }) {
                   <select
                     className="selectDisabled"
                     disabled={!malnutritionEnabled}
-                    name="asphixieperi"
+                    name="asphyxiePrerinatale"
                   >
                     <option value="Pas de cri">Pas de cri</option>
                     <option value="A crié spontanément">
@@ -551,7 +639,7 @@ export default function Update({ id }) {
                   <select
                     className="selectDisabled"
                     disabled={!malnutritionEnabled}
-                    name="neonat"
+                    name="sejourNeo"
                   >
                     <option value="Oui">Oui</option>
                     <option value="Non">Non</option>
@@ -574,7 +662,7 @@ export default function Update({ id }) {
                   Poids naissance :{" "}
                   <input
                     type="text"
-                    name="poids"
+                    name="poidsNaissance"
                     disabled={!malnutritionEnabled}
                     className="inputDisabled"
                   />
@@ -590,7 +678,7 @@ export default function Update({ id }) {
                   Allaitement Exclusif :{" "}
                   <input
                     type="text"
-                    name="allaitement"
+                    name="allaitementExclusifSixMois"
                     disabled={!malnutritionEnabled}
                     className="inputDisabled"
                   />
@@ -606,7 +694,7 @@ export default function Update({ id }) {
                   Age diversification aliment :{" "}
                   <input
                     type="text"
-                    name="diversificcation"
+                    name="diversificationAliment"
                     className="inputDisabled"
                   />
                 </InputLabel>{" "}
@@ -621,7 +709,7 @@ export default function Update({ id }) {
                   Constitution aliment :{" "}
                   <input
                     type="text"
-                    name="constitution"
+                    name="constitutionAliment"
                     disabled={!malnutritionEnabled}
                     className="inputDisabled"
                   />
@@ -638,7 +726,7 @@ export default function Update({ id }) {
                   <select
                     className="selectDisabled"
                     disabled={!malnutritionEnabled}
-                    name="consoPoisson"
+                    name="consommationPoisson"
                   >
                     <option value="Oui">Oui</option>
                     <option value="Non">Non</option>
@@ -661,7 +749,7 @@ export default function Update({ id }) {
                   Calendrier vaccinal :{" "}
                   <input
                     type="text"
-                    name="siblingsNumber"
+                    name="calendrierVaccin"
                     disabled={!malnutritionEnabled}
                     className="inputDisabled"
                   />
@@ -674,11 +762,11 @@ export default function Update({ id }) {
                     marginTop: `0.5%`,
                   }}
                 >
-                  ATCD Rougeole :{" "}
+                  Vaccination Rougeole :{" "}
                   <select
                     className="selectDisabled"
                     disabled={!malnutritionEnabled}
-                    name="atcdRougeole"
+                    name="vaccinationRougeole"
                   >
                     <option value="Oui">Oui</option>
                     <option value="Non">Non</option>
@@ -726,7 +814,7 @@ export default function Update({ id }) {
                   <select
                     className="selectDisabled"
                     disabled={!malnutritionEnabled}
-                    name="atcdTBC"
+                    name="tbc"
                   >
                     <option value="Oui">Oui</option>
                     <option value="Non">Non</option>
@@ -750,7 +838,7 @@ export default function Update({ id }) {
                   <select
                     className="selectDisabled"
                     disabled={!malnutritionEnabled}
-                    name="transferToUNT"
+                    name="transfererUnt"
                   >
                     <option value="Oui">Oui</option>
                     <option value="Non">Non</option>
@@ -773,7 +861,7 @@ export default function Update({ id }) {
                   <select
                     className="selectDisabled"
                     disabled={!malnutritionEnabled}
-                    name="hospital"
+                    name="hospitalisationRecente"
                   >
                     <option value="Oui">Oui</option>
                     <option value="Non">Non</option>
@@ -793,7 +881,11 @@ export default function Update({ id }) {
                   }}
                 >
                   Diagnostique Hospitalisation :{" "}
-                  <input type="text" name="diagno" className="inputDisabled" />
+                  <input
+                    type="text"
+                    name="diagnostiqueHospitalisation"
+                    className="inputDisabled"
+                  />
                 </InputLabel>
                 {!malnutritionEnabled === true ? (
                   <></>
@@ -866,7 +958,7 @@ export default function Update({ id }) {
                   <select
                     className="selectDisabled"
                     disabled={!mereEnabled}
-                    name="mereVit"
+                    name="mereEnVie"
                   >
                     <option value="Oui">Oui</option>
                     <option value="Non">Non</option>
@@ -883,7 +975,7 @@ export default function Update({ id }) {
                   Age de la mère :{" "}
                   <input
                     type="text"
-                    name="ageMere"
+                    name="dateNaissanceMere"
                     disabled={!mereEnabled}
                     className="inputDisabled"
                   />
@@ -900,7 +992,7 @@ export default function Update({ id }) {
                   <select
                     className="selectDisabled"
                     disabled={!mereEnabled}
-                    name="statutMaritalMere"
+                    name="statutMarital"
                   >
                     <option value="Non mariée">Non mariée</option>
                     <option value="Mariée">Mariée</option>
@@ -953,7 +1045,7 @@ export default function Update({ id }) {
                   <select
                     className="selectDisabled"
                     disabled={!mereEnabled}
-                    name="contraception"
+                    name="contraceptionMere"
                   >
                     <option value="Oui">Oui</option>
                     <option value="Non">Non</option>
@@ -977,7 +1069,7 @@ export default function Update({ id }) {
                   <select
                     className="selectDisabled"
                     disabled={!mereEnabled}
-                    name="moyenContraception"
+                    name="contraceptionType"
                   >
                     <option value="Naturel">Naturel</option>
                     <option value="Moderne">Moderne</option>
@@ -1003,7 +1095,7 @@ export default function Update({ id }) {
                   Methode de contraception :{" "}
                   <input
                     type="text"
-                    name="methodContraception"
+                    name="methodeContraceptive"
                     disabled={!mereEnabled}
                     className="inputDisabled"
                   />
@@ -1117,7 +1209,7 @@ export default function Update({ id }) {
                   <select
                     className="selectDisabled"
                     disabled={!pereEnabled}
-                    name="pereVit"
+                    name="pereEnvie"
                   >
                     <option value="Oui">Oui</option>
                     <option value="Non">Non</option>
@@ -1134,7 +1226,7 @@ export default function Update({ id }) {
                   Age du Chef de ménage :{" "}
                   <input
                     type="text"
-                    name="agePere"
+                    name="dateNaissanceChefMenage"
                     disabled={!pereEnabled}
                     className="inputDisabled"
                   />
@@ -1150,7 +1242,7 @@ export default function Update({ id }) {
                   Téléphone :{" "}
                   <input
                     type="text"
-                    name="tel"
+                    name="telephone"
                     disabled={!pereEnabled}
                     className="inputDisabled"
                   />
@@ -1167,7 +1259,7 @@ export default function Update({ id }) {
                   <select
                     className="selectDisabled"
                     disabled={!pereEnabled}
-                    name="professionPere"
+                    name="ProffessionChefMenage"
                   >
                     <option value="Salarié formel,infirmier,Ong,enseignant">
                       Salarié formel (infirmier, enseignant, ONG.)
@@ -1205,7 +1297,7 @@ export default function Update({ id }) {
                   Nombre de femme :{" "}
                   <input
                     type="text"
-                    name="nombreFemmes"
+                    name="nbrFemme"
                     className="inputDisabled"
                   />
                 </InputLabel>
@@ -1251,7 +1343,7 @@ export default function Update({ id }) {
                   Taille ménage :{" "}
                   <input
                     type="text"
-                    name="taillesMenage"
+                    name="tailleMenage"
                     disabled={!menageEnabled}
                     className="inputDisabled"
                   />
@@ -1268,7 +1360,7 @@ export default function Update({ id }) {
                   <select
                     className="selectDisabled"
                     disabled={!menageEnabled}
-                    name="tribu"
+                    name="Tribut"
                   >
                     <option value="Havu">Havu</option>
                     <option value="Shi">Shi</option>
@@ -1293,7 +1385,7 @@ export default function Update({ id }) {
                   <select
                     className="selectDisabled"
                     disabled={!menageEnabled}
-                    name="religion"
+                    name="Religion"
                   >
                     <option value="Catholique">Catholique</option>
                     <option value="Protestant">Protestant</option>
@@ -1319,7 +1411,7 @@ export default function Update({ id }) {
                   <select
                     className="selectDisabled"
                     disabled={!menageEnabled}
-                    name="niveauSocioEco"
+                    name="NiveauSocioEconomique"
                   >
                     <option value="Bas">Bas (Inferieur à 1$)</option>
                     <option value="Moyen">Moyen (5$)</option>
@@ -1343,7 +1435,7 @@ export default function Update({ id }) {
                   Nombre repas journalier :{" "}
                   <input
                     type="text"
-                    name="nombreRepas"
+                    name="NbrRepasJour"
                     disabled={!menageEnabled}
                     className="inputDisabled"
                   />
@@ -1361,7 +1453,7 @@ export default function Update({ id }) {
                   <select
                     className="selectDisabled"
                     disabled={!menageEnabled}
-                    name="possessionTV"
+                    name="PossederTeleRadio"
                   >
                     <option value="Oui">Oui</option>
                     <option value="Non">Non</option>
@@ -1380,7 +1472,7 @@ export default function Update({ id }) {
                   <select
                     className="selectDisabled"
                     disabled={!menageEnabled}
-                    name="possessionTV"
+                    name="terrainVih"
                   >
                     <option value="Oui">Oui</option>
                     <option value="Non">Non</option>
@@ -1399,7 +1491,7 @@ export default function Update({ id }) {
                   <select
                     className="selectDisabled"
                     disabled={!menageEnabled}
-                    name="possessionTV"
+                    name="tbcChezParent"
                   >
                     <option value="Oui">Oui</option>
                     <option value="Non">Non</option>
@@ -1418,7 +1510,7 @@ export default function Update({ id }) {
                   <select
                     className="selectDisabled"
                     disabled={!menageEnabled}
-                    name="possessionTV"
+                    name="atcdDuTbcDansFratrie"
                   >
                     <option value="Oui">Oui</option>
                     <option value="Non">Non</option>
@@ -1438,7 +1530,7 @@ export default function Update({ id }) {
                   <select
                     className="selectDisabled"
                     disabled={!menageEnabled}
-                    name="possessionTV"
+                    name="atcdRougeole"
                   >
                     <option value="Oui">Oui</option>
                     <option value="Non">Non</option>

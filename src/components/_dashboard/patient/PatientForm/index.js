@@ -51,46 +51,18 @@ export default function PatientForm({
   const RegisterSchema = Yup.object().shape({
     dateAdmissionPatient: Yup.date().required("Date d'admission requis"),
     dateGuerisonPatient: Yup.date(),
-    // firstPicture: Yup.string(),
-    // lastPicture: Yup.string(),
-    // commentaires: Yup.string(),
-    // rationSeche: Yup.boolean(),
-    // typeOedeme: Yup.string(),
-    // taille: Yup.number("Un chiffre requis")
-    //   .positive("La valeur doit être positive")
-    //   .min(1, "Taille minimum 1 Cm")
-    //   .max(400, "Taille maximum 400 Cm")
-    //   .required("Taille requis"),
     ExplicationAutre: Yup.string().trim().min(2, "Minimum 2 caractère"),
-    // allaitementExclusifSixMois: Yup.string()
-    //   .trim()
-    //   .min(2, "Min 2 caractère")
-    //   .required("Champs requis"),
     NomPatient: Yup.string()
       .min(2, "Min 2 caractère")
       .max(100, "Max 100 caractère")
       .matches(/[A-Za-z]/, "Il ne doit contenir que de lettre")
       .trim()
       .required("requis"),
-    // poidsActuel: Yup.number("Il ne doit contenir que de chiffre")
-    //   .min(2, "Minimun 2 Kg")
-    //   .positive("Le nombre doit être positive")
-    //   .required("Poids requis"),
-    // perimetreCranien: Yup.number("un chiffre requis").max(
-    //   10000,
-    //   "Maximum 10000 Cm"
-    // ),
-    // transfererUnt: Yup.string().trim().min(2, "Min 2 caractère"),
     fistNamePatient: Yup.string()
       .min(2, "Min 2 caractère")
       .max(25)
       .matches(/[A-Za-z]/, "Il ne doit contenir que de lettre")
       .trim(),
-    // perimetreBrachail: Yup.number("un chiffre requis")
-    //   .positive()
-    //   .min(5, "Minimum 5")
-    //   .max(100)
-    //   .required("Perimetre brachial requis"),
     postNomPatient: Yup.string()
       .min(2, "Minimum 2 caractère")
       .max(25, "Maximum 25 caractère")
@@ -101,31 +73,15 @@ export default function PatientForm({
       /^(\+243|0)[0-9]{9}$/g,
       "+243813030011 ou 0813030011"
     ),
-    // diversificationAliment: Yup.number("un nombre")
-    //   .positive("nombre positif")
-    //   .min(2, "Minimum 2"),
     sexePatient: Yup.string().trim().required("requis"),
     dataNaissancePatient: Yup.date("intervalle entre")
       .min(date.getFullYear() - 90, `Age minimum ${date.getFullYear()}` - 90)
       .required("requis"),
-    // constitutionAliment: Yup.string().trim().min(2, "Min 2 caractère"),
     provenancePatient: Yup.string().trim().min(2, "Min 2 caractère"),
     modeArriver: Yup.string().trim().min(2, "Min 2 caractère"),
-    // typeMalnutrition: Yup.string()
-    //   .trim()
-    //   .min(2, "Minimum 2 caractère")
-    //   .required("requis"),
-    // poidsNaissance: Yup.number()
-    //   .positive()
-    //   .min(900, "Minimum 900 gr")
-    //   .required("requis"),
-    // traitementNutritionnel: Yup.string().trim().min(2, "Minimum 2 caractère"),
-    // traitementNutritionnelAutre: Yup.string().min(5).trim(),
     adressePatient: Yup.string().trim().min(2, "Min 2 caractère"),
     ExplicationProvenance: Yup.string().min(2, "Min 2 caractère").trim(),
-    // ageFinAllaitement: Yup.number()
-    //   .min(1, "Minimum 1 mois")
-    //   .positive("champs doit être positive"),
+
   });
   const formik = useFormik({
     initialValues: {
