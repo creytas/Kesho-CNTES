@@ -42,8 +42,26 @@ import style from "../../_dashboard/patient/PatientForm/patient.module.css";
 
 AnthroListToolbar.propTypes = {
   value: PropTypes.string,
+  peri_brachial: PropTypes.number,
+  peri_cranien: PropTypes.number,
+  oedeme: PropTypes.string,
+  type_oedeme: PropTypes.string,
+  type_malnutrition: PropTypes.string,
+  commentaires: PropTypes.string,
+  poids: PropTypes.number,
+  taille: PropTypes.number,
 };
-export default function AnthroListToolbar({ value }) {
+export default function AnthroListToolbar({
+  value,
+  peri_brachial,
+  peri_cranien,
+  oedeme,
+  type_oedeme,
+  type_malnutrition,
+  commentaires,
+  poids,
+  taille,
+}) {
   const navigate = useNavigate();
   const [loader, setLoader] = useState(false);
   const [statutPersonnel, setStatutPersonnel] = useState("");
@@ -164,11 +182,11 @@ export default function AnthroListToolbar({ value }) {
             </DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
-                <Stack spacing={3}>
+                <Stack spacing={3} sx={{ marginTop: `4%` }}>
                   <TextField
                     sx={{ width: "100%", padding: "2px" }}
                     fullWidth
-                    // value={values.weight}
+                    value={poids}
                     label="Poids (kg)"
                     // {...getFieldProps("weight")}
                     // helperText={touched.weight && errors.weight}
@@ -177,7 +195,7 @@ export default function AnthroListToolbar({ value }) {
                   <TextField
                     sx={{ width: "100%", padding: "2px" }}
                     fullWidth
-                    // value={values.height}
+                    value={taille}
                     label="Taille (cm) "
                     // {...getFieldProps("height")}
                     // helperText={touched.height && errors.height}
@@ -186,7 +204,7 @@ export default function AnthroListToolbar({ value }) {
                   <TextField
                     sx={{ width: "100%", padding: "2px" }}
                     fullWidth
-                    // value={values.cranian}
+                    value={peri_cranien}
                     label="Périmètre crânien (cm) "
                     // {...getFieldProps("cranian")}
                     // helperText={touched.cranian && errors.cranian}
@@ -196,82 +214,15 @@ export default function AnthroListToolbar({ value }) {
                     sx={{ width: "100%", padding: "2px" }}
                     fullWidth
                     label="Périmètre brachial(cm)"
-                    // value={values.brachial}
+                    value={peri_brachial}
                     // {...getFieldProps("brachial")}
                     // helperText={touched.brachial && errors.brachial}
                     // error={Boolean(touched.brachial && errors.brachial)}
                   />
-                  <RadioGroup
-                  // onChange={handleChangeRationPatient}
-                  // error={Boolean(touched.ration && errors.ration)}
-                  // helperText={touched.ration && errors.ration}
-                  // setValues={  DataPatient.Sexe}
-                  >
-                    <Stack
-                      direction={{ xs: "column", md: "column", sm: "row" }}
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        paddingLeft: "10px",
-                        // border: `${
-                        //   Boolean(touched.ration && errors.ration) &&
-                        //   "1px solid red"
-                        // }`,
-                        // borderRadius: `${
-                        //   Boolean(touched.ration && errors.ration) && "10px"
-                        // }`,
-                      }}
-                      spacing={1}
-                    >
-                      <FormLabel component="label">Oedème:</FormLabel>
-                      <Stack direction={{ xs: "row", sm: "row" }}>
-                        <FormControlLabel
-                          value="true"
-                          control={<Radio checked="" />}
-                          label="Oui"
-                        />
-                        <FormControlLabel
-                          value="false"
-                          control={<Radio checked="" />}
-                          label="Non"
-                        />
-                      </Stack>
-                    </Stack>
-                  </RadioGroup>
                   <Select
                     native
                     sx={{ width: "100%", padding: "2px" }}
-                    // value={values.malnutrition}
-                    // {...getFieldProps("malnutrition")}
-                    // error={Boolean(touched.malnutrition && errors.malnutrition)}
-                  >
-                    <option value="" selected disabled hidden>
-                      Type d'Oedème
-                    </option>
-                    <option value="+">+</option>
-                    <option value="+ +">+ +</option>
-                    <option value="+ + +">+ + +</option>
-                  </Select>
-                  {/* <Select
-                    sx={{ padding: "2px" }}
-                    // value={values.oedeme}
-                    // native
-                    // {...getFieldProps("oedeme")}
-                    // disabled={!rationSeche}
-                    // error={Boolean(touched.oedeme && errors.oedeme)}
-                    // helperText={touched.oedeme && errors.oedeme}
-                  >
-                    <option value="" selected disabled hidden>
-                      Type d'Oedème
-                    </option>
-                    <option value="+">+</option>
-                    <option value="+ +">+ +</option>
-                    <option value="+ + +">+ + +</option>
-                  </Select> */}
-                  <Select
-                    native
-                    sx={{ width: "100%", padding: "2px" }}
-                    // value={values.malnutrition}
+                    value={type_malnutrition}
                     // {...getFieldProps("malnutrition")}
                     // error={Boolean(touched.malnutrition && errors.malnutrition)}
                   >
@@ -303,7 +254,7 @@ export default function AnthroListToolbar({ value }) {
                   <TextareaAutosize
                     minRows={8}
                     maxRows={8}
-                    // value={values.commentaires}
+                    value={commentaires}
                     // {...getFieldProps("commentaires")}
                     placeholder="Observations sur le patient"
                     className={style.textarea}

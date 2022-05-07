@@ -28,7 +28,23 @@ import * as Yup from "yup";
 import { useFormik, Form, FormikProvider } from "formik";
 import style from "./Details.css";
 
-export default function Update({ id }) {
+export default function Update({
+  firstPicture,
+  name,
+  sex,
+  age,
+  birthdate,
+  admission,
+  healing,
+  comments,
+  number,
+  tutor,
+  location,
+  id,
+  id_patient,
+  malnutrition,
+  transfer,
+}) {
   const [identityEnabled, setIdentityEnabled] = useState(false);
   const [malnutritionEnabled, setMalnutritionEnabled] = useState(false);
   const [mereEnabled, setMereEnabled] = useState(false);
@@ -126,7 +142,9 @@ export default function Update({ id }) {
   });
 
   const formik = useFormik({
-    initialValues: {},
+    initialValues: {
+      NomPatient: name,
+    },
     validationSchema: RegisterSchema,
     onSubmit: (patient) => {
       try {
@@ -207,7 +225,7 @@ export default function Update({ id }) {
                     >
                       <Avatar
                         alt="avant"
-                        src={``}
+                        src={firstPicture}
                         variant="square"
                         sx={{ width: `100%`, height: `100%` }}
                       />

@@ -519,6 +519,7 @@ export default function Patient() {
                                         <PatientMoreMenu
                                           value={id_patient}
                                           id_patient={id_patient}
+                                        
                                         />
                                       </TableCell>
                                     </TableRow>

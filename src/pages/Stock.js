@@ -450,7 +450,11 @@ export default function Patient() {
                                         {commentaire}
                                       </TableCell>
                                       <TableCell>
-                                        <StockMoreMenu value={id_operation} />
+                                        <StockMoreMenu
+                                          value={id_operation}
+                                          quantite={quantite}
+                                          raison={commentaire}
+                                        />
                                       </TableCell>
                                     </TableRow>
                                   );

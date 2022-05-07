@@ -39,11 +39,14 @@ import { fakeAuth } from "../../../fakeAuth";
 
 StockListToolbar.propTypes = {
   value: PropTypes.string,
+  quantite: PropTypes.number,
+  raison: PropTypes.string,
 };
-export default function StockListToolbar({ value }) {
+export default function StockListToolbar({ value, raison, quantite }) {
   const navigate = useNavigate();
   const [loader, setLoader] = useState(false);
-  const [statutPersonnel, setStatutPersonnel] = useState("");
+  const [amount, setAmount] = useState(quantite);
+  const [comment, setComment] = useState(raison);
   const [openModalChangeStatus, setopenModalChangeStatus] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [open, setOpen] = useState(false);
@@ -78,11 +81,17 @@ export default function StockListToolbar({ value }) {
   const handleCloseModaleChangeStatus = () => {
     setopenModalChangeStatus(false);
   };
-  const handleSelectChangeStatus = (event) => {
+  const handleChangeAmount = (event) => {
+    const { value } = event.target;
+    console.log(value);
+    const quantite = value;
+    setAmount(quantite);
+  };
+  const handleChangeComment = (event) => {
     const { value } = event.target;
     console.log(value);
     const status = value && value;
-    setStatutPersonnel(status);
+    setComment(value);
   };
   const handleClickOpen = () => {
     setOpen(true);
@@ -97,7 +106,9 @@ export default function StockListToolbar({ value }) {
       method: "PUT",
       url: `https://kesho-api.herokuapp.com/user/status?id=${value}`,
       data: {
-        statut: statutPersonnel,
+        // statut: statutPersonnel,
+        quantite: amount,
+        raison: comment,
       },
       headers: {
         "Content-Type": "application/json",
@@ -161,12 +172,23 @@ export default function StockListToolbar({ value }) {
             </DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
-                <Stack spacing={3}>
+                <Stack spacing={3} sx={{ marginTop: `4%` }}>
                   <TextField
                     sx={{ width: "100%", padding: "2px" }}
                     fullWidth
-                    // value={values.weight}
+                    onChange={handleChangeAmount}
+                    value={amount}
                     label="Quantité"
+                    // {...getFieldProps("weight")}
+                    // helperText={touched.weight && errors.weight}
+                    // error={Boolean(touched.weight && errors.weight)}
+                  />
+                  <TextField
+                    sx={{ width: "100%", padding: "2px" }}
+                    fullWidth
+                    onChange={handleChangeComment}
+                    value={comment} //{!comment ? raison : comment}
+                    label="Raison"
                     // {...getFieldProps("weight")}
                     // helperText={touched.weight && errors.weight}
                     // error={Boolean(touched.weight && errors.weight)}
