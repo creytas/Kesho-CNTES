@@ -324,8 +324,6 @@ export default function MoreDetails({ id }) {
                                 peri_brachial={anthro[i].peri_brachial}
                                 peri_cranien={anthro[i].peri_cranien}
                                 type_malnutrition={anthro[i].type_malnutrition}
-                                oedeme={anthro[i].ration_seche}
-                                type_oedeme={anthro[i].type_oedeme}
                                 commentaires={anthro[i].commentaires}
                               />
                             </TableCell>

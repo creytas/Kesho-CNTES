@@ -55,8 +55,6 @@ export default function AnthroListToolbar({
   value,
   peri_brachial,
   peri_cranien,
-  oedeme,
-  type_oedeme,
   type_malnutrition,
   commentaires,
   poids,
@@ -64,7 +62,13 @@ export default function AnthroListToolbar({
 }) {
   const navigate = useNavigate();
   const [loader, setLoader] = useState(false);
-  const [statutPersonnel, setStatutPersonnel] = useState("");
+  const [brachial, setBrachial] = useState(peri_brachial);
+  const [cranien, setCranien] = useState(peri_cranien);
+  const [malnutrition, setMalnutrition] = useState(type_malnutrition);
+  const [comment, setComment] = useState(commentaires);
+  const [poidsPatient, setPoidsPatient] = useState(poids);
+  const [taillePatient, setTaillePatient] = useState(taille);
+
   const [openModalChangeStatus, setopenModalChangeStatus] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [open, setOpen] = useState(false);
@@ -99,12 +103,43 @@ export default function AnthroListToolbar({
   const handleCloseModaleChangeStatus = () => {
     setopenModalChangeStatus(false);
   };
-  const handleSelectChangeStatus = (event) => {
+  // const handleSelectChangeStatus = (event) => {
+  //   const { value } = event.target;
+  //   console.log(value);
+  //   const status = value && value;
+  //   setStatutPersonnel(status);
+  // };
+  const handleChangePoids = (event) => {
     const { value } = event.target;
     console.log(value);
-    const status = value && value;
-    setStatutPersonnel(status);
+    setPoidsPatient(value);
   };
+  const handleChangeTaille = (event) => {
+    const { value } = event.target;
+    console.log(value);
+    setTaillePatient(value);
+  };
+  const handleChangeBrachial = (event) => {
+    const { value } = event.target;
+    console.log(value);
+    setBrachial(value);
+  };
+  const handleChangeCranien = (event) => {
+    const { value } = event.target;
+    console.log(value);
+    setCranien(value);
+  };
+  const handleChangeMalnutrition = (event) => {
+    const { value } = event.target;
+    console.log(value);
+    setMalnutrition(value);
+  };
+  const handleChangeComment = (event) => {
+    const { value } = event.target;
+    console.log(value);
+    setComment(value);
+  };
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -118,7 +153,7 @@ export default function AnthroListToolbar({
       method: "PUT",
       url: `https://kesho-api.herokuapp.com/user/status?id=${value}`,
       data: {
-        statut: statutPersonnel,
+        // statut: statutPersonnel,
       },
       headers: {
         "Content-Type": "application/json",
@@ -186,8 +221,9 @@ export default function AnthroListToolbar({
                   <TextField
                     sx={{ width: "100%", padding: "2px" }}
                     fullWidth
-                    value={poids}
+                    value={poidsPatient}
                     label="Poids (kg)"
+                    onChange={handleChangePoids}
                     // {...getFieldProps("weight")}
                     // helperText={touched.weight && errors.weight}
                     // error={Boolean(touched.weight && errors.weight)}
@@ -195,8 +231,9 @@ export default function AnthroListToolbar({
                   <TextField
                     sx={{ width: "100%", padding: "2px" }}
                     fullWidth
-                    value={taille}
+                    value={taillePatient}
                     label="Taille (cm) "
+                    onChange={handleChangeTaille}
                     // {...getFieldProps("height")}
                     // helperText={touched.height && errors.height}
                     // error={Boolean(touched.height && errors.height)}
@@ -204,8 +241,9 @@ export default function AnthroListToolbar({
                   <TextField
                     sx={{ width: "100%", padding: "2px" }}
                     fullWidth
-                    value={peri_cranien}
+                    value={cranien}
                     label="Périmètre crânien (cm) "
+                    onChange={handleChangeCranien}
                     // {...getFieldProps("cranian")}
                     // helperText={touched.cranian && errors.cranian}
                     // error={Boolean(touched.cranian && errors.cranian)}
@@ -214,7 +252,8 @@ export default function AnthroListToolbar({
                     sx={{ width: "100%", padding: "2px" }}
                     fullWidth
                     label="Périmètre brachial(cm)"
-                    value={peri_brachial}
+                    value={brachial}
+                    onChange={handleChangeBrachial}
                     // {...getFieldProps("brachial")}
                     // helperText={touched.brachial && errors.brachial}
                     // error={Boolean(touched.brachial && errors.brachial)}
@@ -222,7 +261,8 @@ export default function AnthroListToolbar({
                   <Select
                     native
                     sx={{ width: "100%", padding: "2px" }}
-                    value={type_malnutrition}
+                    value={malnutrition}
+                    onChange={handleChangeMalnutrition}
                     // {...getFieldProps("malnutrition")}
                     // error={Boolean(touched.malnutrition && errors.malnutrition)}
                   >
@@ -254,7 +294,8 @@ export default function AnthroListToolbar({
                   <TextareaAutosize
                     minRows={8}
                     maxRows={8}
-                    value={commentaires}
+                    value={comment}
+                    onChange={handleChangeComment}
                     // {...getFieldProps("commentaires")}
                     placeholder="Observations sur le patient"
                     className={style.textarea}
