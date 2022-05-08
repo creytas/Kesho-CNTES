@@ -103,7 +103,7 @@ export default function CauseForm({
       .positive("champs doit être positive"),
     diversificationAliment: Yup.number("un nombre")
       .positive("nombre positif")
-      .min(2, "Minimum 2"),
+      .min(1, "Minimum 1 mois"),
     constitutionAliment: Yup.string().trim().min(2, "Min 2 caractère"),
     consommationPoisson: Yup.string(),
   });
