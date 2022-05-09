@@ -45,7 +45,7 @@ PatientMoreMenu.propTypes = {
   //nom_patient,postnom_patient,prenom_patient,date_naissance,sexe_patient,transferer_unt,
 };
 
-export default function PatientMoreMenu({value, id_patient, id,  }) {
+export default function PatientMoreMenu({ value, id_patient, id }) {
   const navigate = useNavigate();
   const [loader, setLoader] = useState(false);
 
@@ -173,7 +173,29 @@ export default function PatientMoreMenu({value, id_patient, id,  }) {
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
         transformOrigin={{ vertical: "top", horizontal: "right" }}
       >
-        <MenuItem sx={{ color: "text.secondary" }}>
+        <MenuItem
+          component={RouterLink}
+          to={`update_patient/${id_patient}`}
+          sx={{ color: "text.secondary" }}
+        >
+          <ListItemIcon>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                flexWrap: "wrap",
+                paddingLeft: "8px",
+              }}
+            >
+              <Icon icon={eyeFill} width={40} height={25} />
+              <Typography variant="h6" sx={{ fontWeight: "400" }}>
+                Voir plus
+              </Typography>
+            </div>
+          </ListItemIcon>
+        </MenuItem>
+
+        {/* <MenuItem sx={{ color: "text.secondary" }}>
           <ListItemIcon onClick={handleClickOpenStatus}>
             <div
               style={{
@@ -189,7 +211,7 @@ export default function PatientMoreMenu({value, id_patient, id,  }) {
               </Typography>
             </div>
           </ListItemIcon>
-          {/* <Dialog
+           <Dialog
             open={openModalChangeStatus}
             onClose={handleCloseModaleChangeStatus}
             aria-labelledby="alert-dialog-title"
@@ -1565,12 +1587,9 @@ export default function PatientMoreMenu({value, id_patient, id,  }) {
                 Changer
               </LoadingButton>
             </DialogActions> 
-          </Dialog> */}
-          <Dialog>
-            
-            </Dialog>
+          </Dialog> 
   
-        </MenuItem>
+        </MenuItem>*/}
         <MenuItem>
           <ListItemIcon
             sx={{ textAlign: "center", color: "red" }} //sx={{ color: "red" }}

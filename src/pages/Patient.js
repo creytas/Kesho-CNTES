@@ -61,6 +61,7 @@ const useStyles = makeStyles(() => ({
     position: "relative",
     justifyContent: "center",
     top: "50%",
+    border: "0px solid red",
   },
   loading: {
     minWidth: 800,
@@ -519,7 +520,6 @@ export default function Patient() {
                                         <PatientMoreMenu
                                           value={id_patient}
                                           id_patient={id_patient}
-                                        
                                         />
                                       </TableCell>
                                     </TableRow>

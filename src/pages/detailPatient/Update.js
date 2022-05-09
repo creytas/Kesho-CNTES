@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   InputLabel,
   Stack,
@@ -12,7 +12,11 @@ import {
   Select,
   Radio,
   RadioGroup,
+  CircularProgress,
+  Toolbar,
 } from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
+import { styled } from "@material-ui/core/styles";
 import {
   Link as RouterLink,
   Navigate,
@@ -28,147 +32,315 @@ import * as Yup from "yup";
 import { useFormik, Form, FormikProvider } from "formik";
 import style from "./Details.css";
 
-export default function Update({
-  firstPicture,
-  name,
-  sex,
-  age,
-  birthdate,
-  admission,
-  healing,
-  comments,
-  number,
-  tutor,
-  location,
-  id,
-  id_patient,
-  malnutrition,
-  transfer,
-}) {
+const useStyles = makeStyles(() => ({
+  root: {
+    display: "flex",
+    position: "relative",
+    alignItems: "center",
+    justifyContent: "center",
+    // top: "50%",
+    marginTop: "20%",
+    border: "0px solid red",
+  },
+  loading: {
+    minWidth: 800,
+    minHeight: "200px",
+    display: "flex",
+    position: "relative",
+    justifyContent: "center",
+    margin: "auto",
+    top: "50%",
+    border: "1px solid red",
+  },
+  labelRoot: {
+    "&&": {
+      color: "red",
+    },
+  },
+  button: {
+    textAlign: "center",
+    position: "absolute",
+    left: "30%",
+  },
+  patientRow: {
+    cursor: "pointer",
+    textDecoration: "none",
+  },
+}));
+const RootStyle = styled(Toolbar)(({ theme }) => ({
+  height: 96,
+  display: "flex",
+  justifyContent: "space-between",
+  padding: theme.spacing(0, 1, 0, 3),
+}));
+
+export default function Update() {
+  const [loader, setLoader] = useState(true);
+  const classes = useStyles();
+  const location = useLocation();
+  const myId = location.pathname.split("/")[4];
+  const [onePatient, setOnePatient] = useState("");
+  const [patientAnthropometry, setPatientAnthropometry] = useState("");
+  const [patientIdentification, setPatientIdentification] = useState("");
+  const [patientFamily, setPatientFamily] = useState("");
+  const [patientHealth, setPatientHealth] = useState("");
+
+  // useEffect(async () => {
+  //   try {
+  //     const response = await Axios.get(
+  //       `https://kesho-api.herokuapp.com/patient?id_patient=${myId}`,
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `bearer ${localStorage.getItem("token")}`,
+  //         },
+  //       }
+  //     );
+  //     const data = await response.data;
+  //     const Patient = await data;
+  //     console.log(Patient);
+  //     const Identity = Patient.Patient;
+  //     const Anthropo = Patient.Anthropometrique;
+  //     const Family = Patient.Famille;
+  //     const Cause = Patient.CauseMalnutrition;
+  //     setOnePatient(Patient);
+  //     setPatientIdentification(Identity);
+  //     setPatientAnthropometry(Anthropo);
+  //     setPatientFamily(Family);
+  //     setPatientHealth(Cause);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }, []);
   const [identityEnabled, setIdentityEnabled] = useState(false);
   const [malnutritionEnabled, setMalnutritionEnabled] = useState(false);
   const [mereEnabled, setMereEnabled] = useState(false);
   const [pereEnabled, setPereEnabled] = useState(false);
   const [menageEnabled, setMenageEnabled] = useState(false);
-  const date = new Date();
-  const RegisterSchema = Yup.object().shape({
-    firstPicture: Yup.string(),
-    lastPicture: Yup.string(),
-    NomPatient: Yup.string()
-      .min(2, "Min 2 caractère")
-      .max(100, "Max 100 caractère")
-      .matches(/[A-Za-z]/, "Il ne doit contenir que de lettre")
-      .trim()
-      .required("requis"),
-    fistNamePatient: Yup.string()
-      .min(2, "Min 2 caractère")
-      .max(25)
-      .matches(/[A-Za-z]/, "Il ne doit contenir que de lettre")
-      .trim(),
-    postNomPatient: Yup.string()
-      .min(2, "Minimum 2 caractère")
-      .max(25, "Maximum 25 caractère")
-      .matches(/[A-Za-z]/, "Il ne doit contenir que de lettre")
-      .trim()
-      .required("requis"),
-    sexePatient: Yup.string().trim().required("requis"),
-    dateNaissancePatient: Yup.date("intervalle entre")
-      .min(date.getFullYear() - 90, `Age minimum ${date.getFullYear()}` - 90)
-      .required("requis"),
-    provenancePatient: Yup.string().trim().min(2, "Min 2 caractère"),
-    modeArriver: Yup.string().trim().min(2, "Min 2 caractère"),
-    adressePatient: Yup.string().trim().min(2, "Min 2 caractère"),
-    vivreAvecParents: Yup.boolean(),
-    tuteur: Yup.string()
-      .min(0)
-      .max(25)
-      .matches(/[A-Za-z]/)
-      .trim(),
-    tailleFratrie: Yup.number().min(1).max(99),
-    rangFratrie: Yup.string(),
-    termeGrossesse: Yup.string().trim(),
-    eig: Yup.number(),
-    lieuAccouchement: Yup.string(),
-    asphyxiePrerinatale: Yup.string().trim(),
-    dpm: Yup.string(),
-    sejourNeo: Yup.string(),
-    poidsNaissance: Yup.number()
-      .positive()
-      .min(900, "Minimum 900 gr")
-      .required("requis"),
-    allaitementExclusifSixMois: Yup.string()
-      .trim()
-      .min(2, "Min 2 caractère")
-      .required("Champs requis"),
-    diversificationAliment: Yup.number("un nombre")
-      .positive("nombre positif")
-      .min(2, "Minimum 2"),
-    constitutionAliment: Yup.string().trim().min(2, "Min 2 caractère"),
-    consommationPoisson: Yup.string(),
-    calendrierVaccin: Yup.string(),
-    atcdMas: Yup.string(),
-    vaccinationRougeole: Yup.string().trim(),
-    tbc: Yup.boolean(),
-    transfererUnt: Yup.string().trim().min(2, "Min 2 caractère"),
-    hospitalisationRecente: Yup.string(),
-    diagnostiqueHospitalisation: Yup.string().min(5).trim(),
-    mereEnVie: Yup.string(),
-    dateNaissanceMere: Yup.number(),
-    statutMarital: Yup.string(),
-    etatMere: Yup.string(),
-    contraceptionMere: Yup.string(),
-    contraceptionType: Yup.string(),
-    methodeContraceptive: Yup.string(),
-    scolariteMere: Yup.string(),
-    professionMere: Yup.string(),
-    pereEnvie: Yup.string(),
-    dateNaissanceChefMenage: Yup.number(),
-    telephone: Yup.string().matches(
-      /^(\+243|0)[0-9]{9}$/g,
-      "+243813030011 ou 0813030011"
-    ),
-    ProffessionChefMenage: Yup.string(),
-    nbrFemme: Yup.number().min(2).max(99),
-    tailleMenage: Yup.number().min(2).max(99),
-    Tribut: Yup.string(),
-    Religion: Yup.string(),
-    NiveauSocioEconomique: Yup.string(),
-    NbrRepasJour: Yup.number(),
-    PossederTeleRadio: Yup.string(),
-    terrainVih: Yup.string().trim(),
-    tbcChezParent: Yup.string().trim(),
-    atcdDuTbcDansFratrie: Yup.string().trim(),
-    atcdRougeole: Yup.string().trim(),
-  });
+  const [firstPicture, setFirstPicture] = useState("");
+  const [lastPicture, setLastPicture] = useState("");
+  const [urlBefore, setUrlBefore] = useState("");
+  const [urlAfter, setUrlAfter] = useState("");
+  const [nomPatient, setNomPatient] = useState("");
+  const [prenomPatient, setPrenomPatient] = useState("");
+  const [postnomPatient, setPostnomPatient] = useState("");
+  const [sexePatient, setSexePatient] = useState("");
+  const [dateNaissancePatient, setDateNaissancePatient] = useState("");
+  const [provenancePatient, setProvenancePatient] = useState("");
+  const [modeArriver, setModeArriver] = useState("");
+  const [adressePatient, setAdressePatient] = useState("");
+  const [vivreAvecParents, setVivreAvecParents] = useState("");
+  const [tuteur, setTuteur] = useState("");
+  const [tailleFratrie, setTailleFratrie] = useState("");
+  const [rangFratrie, setRangFratrie] = useState("");
+  const [termeGrossesse, setTermeGrossesse] = useState("");
+  const [eig, setEig] = useState("");
+  const [lieuAccouchement, setLieuAccouchement] = useState("");
+  const [asphyxiePrerinatale, setAsphyxiePrerinatale] = useState("");
+  const [dpm, setDpm] = useState("");
+  const [sejourNeo, setSejourNeo] = useState("");
+  const [poidsNaissance, setPoidsNaissance] = useState("");
+  const [allaitementExclusifSixMois, setAllaitementExclusifSixMois] =
+    useState("");
+  const [diversificationAliment, setDiversificationAliment] = useState("");
+  const [constitutionAliment, setConstitutionAliment] = useState("");
+  const [consommationPoisson, setConsommationPoisson] = useState("");
+  const [calendrierVaccin, setCalendrierVaccin] = useState("");
+  const [atcdMas, setAtcdMas] = useState("");
+  const [vaccinationRougeole, setVaccinationRougeole] = useState("");
+  const [tbc, setTbc] = useState("");
+  const [transfererUnt, setTransfererUnt] = useState("");
+  const [hospitalisationRecente, setHospitalisationRecente] = useState("");
+  const [diagnostiqueHospitalisation, setDiagnostiqueHospitalisation] =
+    useState("");
+  const [mereEnVie, setMereEnVie] = useState("");
+  const [dateNaissanceMere, setDateNaissanceMere] = useState("");
+  const [statutMarital, setStatutMarital] = useState("");
+  const [etatMere, setEtatMere] = useState("");
+  const [contraceptionMere, setContraceptionMere] = useState("");
+  const [contraceptionType, setContraceptionType] = useState("");
+  const [methodeContraceptive, setMethodeContraceptive] = useState("");
+  const [scolariteMere, setScolariteMere] = useState("");
+  const [professionMere, setProfessionMere] = useState("");
+  const [pereEnvie, setPereEnvie] = useState("");
+  const [dateNaissanceChefMenage, setDateNaissanceChefMenage] = useState("");
+  const [telephone, setTelephone] = useState("");
+  const [professionChefMenage, setProfessionChefMenage] = useState("");
+  const [nbrFemme, setNbrFemme] = useState("");
+  const [tailleMenage, setTailleMenage] = useState("");
+  const [tribu, setTribu] = useState("");
+  const [religion, setReligion] = useState("");
+  const [niveauSocioEconomique, setNiveauSocioEconomique] = useState("");
+  const [nbrRepasJour, setNbrRepasJour] = useState("");
+  const [possederTeleRadio, setPossederTeleRadio] = useState("");
+  const [terrainVih, setTerrainVih] = useState("");
+  const [tbcChezParent, setTbcChezParent] = useState("");
+  const [atcdTbcFratrie, setAtcdTbcFratrie] = useState("");
+  const [atcdRougeole, setAtcdRougeole] = useState("");
 
-  const formik = useFormik({
-    initialValues: {
-      NomPatient: name,
-    },
-    validationSchema: RegisterSchema,
-    onSubmit: (patient) => {
-      try {
-      } catch (e) {
-        console.log(e);
+  useEffect(async () => {
+    await Axios.get(
+      `https://kesho-api.herokuapp.com/patient?id_patient=${myId}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `bearer ${localStorage.getItem("token")}`,
+        },
       }
-    },
-  });
-  const { errors, setFieldValue, touched, values, handleSubmit, isSubmitting } =
-    formik;
+    ).then((response) => {
+      setOnePatient(response.data);
+      console.log(
+        `la data: ${response.data.Anthropometrique[0].first_picture}`
+      );
+      setFirstPicture(response.data.Anthropometrique[0].first_picture);
+      setUrlBefore(response.data.Anthropometrique[0].first_picture);
+      setLastPicture(response.data.Anthropometrique[0].last_picture);
+      setUrlAfter(response.data.Anthropometrique[0].last_picture);
+      setPrenomPatient(response.data.Patient.prenom_patient);
+      setNomPatient(response.data.Patient.nom_patient);
+      setPostnomPatient(response.data.Patient.postnom_patient);
+      setSexePatient(response.data.Patient.sexe_patient);
+      setDateNaissancePatient(response.data.Patient.date_naissance_patient);
+      setProvenancePatient(response.data.Patient.provenance_patient);
+      setModeArriver(response.data.Patient.mode_arrive);
+      setAdressePatient(response.data.Patient.adresse_patient);
+      setTransfererUnt(response.data.Patient.transferer_unt);
+      setTelephone(response.data.Patient.telephone);
+      setVivreAvecParents(response.data.Famille.vivre_deux_parents);
+      setTuteur(response.data.Famille.tuteur);
+      setTailleFratrie(response.data.CauseMalnutrition.taille_fratrie);
+      setRangFratrie(response.data.CauseMalnutrition.rang_fratrie);
+
+      setLoader(false);
+    });
+  }, []);
+
+  //   console.log(` onePatient: ${onePatient.Patient.nom_patient}`);
+  // // console.log(` patientAnthropometry: ${patientAnthropometry}`);
+  const date = new Date();
+
+  // const RegisterSchema = Yup.object().shape({
+  //   firstPicture: Yup.string(),
+  //   lastPicture: Yup.string(),
+  //   NomPatient: Yup.string()
+  //     .min(2, "Min 2 caractère")
+  //     .max(100, "Max 100 caractère")
+  //     .matches(/[A-Za-z]/, "Il ne doit contenir que de lettre")
+  //     .trim()
+  //     .required("requis"),
+  //   fistNamePatient: Yup.string()
+  //     .min(2, "Min 2 caractère")
+  //     .max(25)
+  //     .matches(/[A-Za-z]/, "Il ne doit contenir que de lettre")
+  //     .trim(),
+  //   postNomPatient: Yup.string()
+  //     .min(2, "Minimum 2 caractère")
+  //     .max(25, "Maximum 25 caractère")
+  //     .matches(/[A-Za-z]/, "Il ne doit contenir que de lettre")
+  //     .trim()
+  //     .required("requis"),
+  //   sexePatient: Yup.string().trim().required("requis"),
+  //   dateNaissancePatient: Yup.date("intervalle entre")
+  //     .min(date.getFullYear() - 90, `Age minimum ${date.getFullYear()}` - 90)
+  //     .required("requis"),
+  //   provenancePatient: Yup.string().trim().min(2, "Min 2 caractère"),
+  //   modeArriver: Yup.string().trim().min(2, "Min 2 caractère"),
+  //   adressePatient: Yup.string().trim().min(2, "Min 2 caractère"),
+  //   vivreAvecParents: Yup.boolean(),
+  //   tuteur: Yup.string()
+  //     .min(0)
+  //     .max(25)
+  //     .matches(/[A-Za-z]/)
+  //     .trim(),
+  //   tailleFratrie: Yup.number().min(1).max(99),
+  //   rangFratrie: Yup.string(),
+  //   termeGrossesse: Yup.string().trim(),
+  //   eig: Yup.number(),
+  //   lieuAccouchement: Yup.string(),
+  //   asphyxiePrerinatale: Yup.string().trim(),
+  //   dpm: Yup.string(),
+  //   sejourNeo: Yup.string(),
+  //   poidsNaissance: Yup.number()
+  //     .positive()
+  //     .min(900, "Minimum 900 gr")
+  //     .required("requis"),
+  //   allaitementExclusifSixMois: Yup.string()
+  //     .trim()
+  //     .min(2, "Min 2 caractère")
+  //     .required("Champs requis"),
+  //   diversificationAliment: Yup.number("un nombre")
+  //     .positive("nombre positif")
+  //     .min(2, "Minimum 2"),
+  //   constitutionAliment: Yup.string().trim().min(2, "Min 2 caractère"),
+  //   consommationPoisson: Yup.string(),
+  //   calendrierVaccin: Yup.string(),
+  //   atcdMas: Yup.string(),
+  //   vaccinationRougeole: Yup.string().trim(),
+  //   tbc: Yup.boolean(),
+  //   transfererUnt: Yup.string().trim().min(2, "Min 2 caractère"),
+  //   hospitalisationRecente: Yup.string(),
+  //   diagnostiqueHospitalisation: Yup.string().min(5).trim(),
+  //   mereEnVie: Yup.string(),
+  //   dateNaissanceMere: Yup.number(),
+  //   statutMarital: Yup.string(),
+  //   etatMere: Yup.string(),
+  //   contraceptionMere: Yup.string(),
+  //   contraceptionType: Yup.string(),
+  //   methodeContraceptive: Yup.string(),
+  //   scolariteMere: Yup.string(),
+  //   professionMere: Yup.string(),
+  //   pereEnvie: Yup.string(),
+  //   dateNaissanceChefMenage: Yup.number(),
+  //   telephone: Yup.string().matches(
+  //     /^(\+243|0)[0-9]{9}$/g,
+  //     "+243813030011 ou 0813030011"
+  //   ),
+  //   ProffessionChefMenage: Yup.string(),
+  //   nbrFemme: Yup.number().min(2).max(99),
+  //   tailleMenage: Yup.number().min(2).max(99),
+  //   Tribut: Yup.string(),
+  //   Religion: Yup.string(),
+  //   NiveauSocioEconomique: Yup.string(),
+  //   NbrRepasJour: Yup.number(),
+  //   PossederTeleRadio: Yup.string(),
+  //   terrainVih: Yup.string().trim(),
+  //   tbcChezParent: Yup.string().trim(),
+  //   atcdDuTbcDansFratrie: Yup.string().trim(),
+  //   atcdRougeole: Yup.string().trim(),
+  // });
+
+  // const formik = useFormik({
+  //   initialValues: {
+  //     NomPatient: name,
+  //   },
+  //   validationSchema: RegisterSchema,
+  //   onSubmit: (patient) => {
+  //     try {
+  //     } catch (e) {
+  //       console.log(e);
+  //     }
+  //   },
+  // });
+  // const { errors, setFieldValue, touched, values, handleSubmit, loader } =
+  //   formik;
 
   return (
     <div>
-      <Button
-        variant="outlined"
-        component={RouterLink}
-        to="/dashboard/patient"
-        // onClick={(e) => exportToCSV(allData, exportedFileName)}
-        startIcon={<Icon icon="bx:bx-arrow-back" />}
-      >
-        Retour
-      </Button>
-      <FormikProvider value={formik}>
-        <Form autoComplete="off" onSubmit={handleSubmit}>
+      {loader ? (
+        <div className={classes.root}>
+          <CircularProgress />
+        </div>
+      ) : (
+        <>
+          <Button
+            variant="outlined"
+            component={RouterLink}
+            to="/dashboard/patient"
+            // onClick={(e) => exportToCSV(allData, exportedFileName)}
+            startIcon={<Icon icon="bx:bx-arrow-back" />}
+          >
+            Retour
+          </Button>
           <Grid container spacing={2}>
             <Grid item xs={11} sm={5} md={5} sx={{ border: `0px solid green` }}>
               <Card
@@ -192,6 +364,7 @@ export default function Update({
                   <Button
                     sx={{ border: `0px solid red` }}
                     onClick={(e) => {
+                      console.log(`value a afficher ${onePatient}`);
                       setIdentityEnabled(!identityEnabled);
                     }}
                   >
@@ -216,7 +389,7 @@ export default function Update({
                     }}
                   >
                     <label
-                      for="firstPicture"
+                      for="beforePicture"
                       style={{
                         width: "100%",
                         height: "100%",
@@ -225,7 +398,7 @@ export default function Update({
                     >
                       <Avatar
                         alt="avant"
-                        src={firstPicture}
+                        src={urlBefore ? urlBefore : ""}
                         variant="square"
                         sx={{ width: `100%`, height: `100%` }}
                       />
@@ -234,7 +407,7 @@ export default function Update({
                       type="file"
                       accept="image/png, image/jpeg"
                       name="firstPicture"
-                      id="firstPicture"
+                      id="beforePicture"
                       disabled={!identityEnabled}
                       style={{ display: "none" }}
                     />
@@ -267,7 +440,7 @@ export default function Update({
                     >
                       <Avatar
                         alt="apres"
-                        src={``}
+                        src={urlAfter ? urlAfter : ""}
                         variant="square"
                         sx={{ width: `100%`, height: `100%` }}
                       />
@@ -305,6 +478,7 @@ export default function Update({
                   <input
                     type="text"
                     name="fistNamePatient"
+                    value={prenomPatient}
                     disabled={!identityEnabled}
                     className="inputDisabled"
                   />
@@ -321,6 +495,7 @@ export default function Update({
                   <input
                     type="text"
                     name="NomPatient"
+                    value={nomPatient} //patientIdentification.nom_patient
                     disabled={!identityEnabled}
                     className="inputDisabled"
                   />
@@ -337,6 +512,7 @@ export default function Update({
                   <input
                     type="text"
                     name="postNomPatient"
+                    value={postnomPatient}
                     disabled={!identityEnabled}
                     className="inputDisabled"
                   />
@@ -354,6 +530,7 @@ export default function Update({
                   <select
                     className="selectDisabled"
                     disabled={!identityEnabled}
+                    value={sexePatient}
                     name="sexePatient"
                   >
                     <option value="M">M</option>
@@ -372,6 +549,7 @@ export default function Update({
                   <input
                     type="date"
                     name="dateNaissancePatient"
+                    value={moment(dateNaissancePatient).format("YYYY-DD-MM")}
                     disabled={!identityEnabled}
                     className="inputDisabled"
                   />
@@ -388,6 +566,7 @@ export default function Update({
                   <input
                     type="text"
                     name="provenancePatient"
+                    value={provenancePatient}
                     disabled={!identityEnabled}
                     className="inputDisabled"
                   />
@@ -404,6 +583,7 @@ export default function Update({
                   <input
                     type="text"
                     name="modeArriver"
+                    value={modeArriver}
                     disabled={!identityEnabled}
                     className="inputDisabled"
                   />
@@ -420,6 +600,7 @@ export default function Update({
                   <input
                     type="text"
                     name="adressePatient"
+                    value={adressePatient}
                     disabled={!identityEnabled}
                     className="inputDisabled"
                   />
@@ -437,9 +618,10 @@ export default function Update({
                     className="selectDisabled"
                     disabled={!identityEnabled}
                     name="vivreAvecParents"
+                    value={vivreAvecParents}
                   >
-                    <option value="Oui">Oui</option>
-                    <option value="Non">Non</option>
+                    <option value={true}>Oui</option>
+                    <option value={false}>Non</option>
                   </select>
                   {/* <input
                     type="text"
@@ -459,6 +641,7 @@ export default function Update({
                   <input
                     type="text"
                     name="tuteur"
+                    value={tuteur}
                     disabled={!identityEnabled}
                     className="inputDisabled"
                   />
@@ -475,6 +658,7 @@ export default function Update({
                   <input
                     type="text"
                     name="rangFratrie"
+                    value={rangFratrie}
                     disabled={!identityEnabled}
                     className="inputDisabled"
                   />
@@ -491,6 +675,7 @@ export default function Update({
                   <input
                     type="text"
                     name="tailleFratrie"
+                    value={tailleFratrie}
                     disabled={!identityEnabled}
                     className="inputDisabled"
                   />
@@ -501,7 +686,7 @@ export default function Update({
                   <LoadingButton
                     type="submit"
                     variant="contained"
-                    loading={isSubmitting}
+                    loading={loader}
                     size="large"
                     sx={{ width: 200, marginLeft: "20px", marginTop: "20px" }}
                   >
@@ -911,7 +1096,7 @@ export default function Update({
                   <LoadingButton
                     type="submit"
                     variant="contained"
-                    loading={isSubmitting}
+                    loading={loader}
                     size="large"
                     sx={{ width: 200, marginLeft: "20px", marginTop: "20px" }}
                   >
@@ -1190,7 +1375,7 @@ export default function Update({
                   <LoadingButton
                     type="submit"
                     variant="contained"
-                    loading={isSubmitting}
+                    loading={loader}
                     size="large"
                     sx={{ width: 200, marginLeft: "20px", marginTop: "20px" }}
                   >
@@ -1325,7 +1510,7 @@ export default function Update({
                   <LoadingButton
                     type="submit"
                     variant="contained"
-                    loading={isSubmitting}
+                    loading={loader}
                     size="large"
                     sx={{ width: 200, marginLeft: "20px", marginTop: "20px" }}
                   >
@@ -1560,7 +1745,7 @@ export default function Update({
                   <LoadingButton
                     type="submit"
                     variant="contained"
-                    loading={isSubmitting}
+                    loading={loader}
                     size="large"
                     sx={{
                       width: 200,
@@ -1574,8 +1759,8 @@ export default function Update({
               </Card>
             </Grid>
           </Grid>
-        </Form>
-      </FormikProvider>
+        </>
+      )}
     </div>
   );
 }
