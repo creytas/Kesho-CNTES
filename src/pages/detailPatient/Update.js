@@ -199,6 +199,18 @@ export default function Update() {
       setProfessionChefMenage(response.data.Famille.profession_chef_menage);
       setRegimeMatrimonial(response.data.Famille.type_statut_marital);
       setNbrFemme(response.data.Famille.nbre_femme_pere);
+      setTailleMenage(response.data.Famille.taille_menage);
+      setTribu(response.data.Famille.tribu);
+      setReligion(response.data.Famille.religion);
+      setNiveauSocioEconomique(response.data.Famille.niveau_socioeconomique);
+      setNbrRepasJour(response.data.Famille.nbre_repas);
+      setPossederTeleRadio(response.data.Famille.posseder_radio_tele);
+      setTerrainVih(response.data.CauseMalnutrition.terrain_vih);
+      setTbcChezParent(response.data.Famille.tbc_parents);
+      setAtcdTbcFratrie(
+        response.data.CauseMalnutrition.atcd_du_tbc_dans_fratrie
+      );
+      setAtcdRougeole(response.data.CauseMalnutrition.atcd_rougeole_fratrie);
 
       setLoader(false);
     });
@@ -665,12 +677,6 @@ export default function Update() {
                       Structure sanitaire
                     </option>
                   </select>
-                  {/* <input
-                    type="text"
-                    name="lastName"
-                    disabled={!malnutritionEnabled}
-                    className="inputDisabled"
-                  /> */}
                 </InputLabel>
                 <InputLabel
                   sx={{
@@ -681,7 +687,6 @@ export default function Update() {
                   }}
                 >
                   Asphyxie périnatale :{" "}
-                  {/* <input type="text" name="gender" className="inputDisabled" /> */}
                   <select
                     className="selectDisabled"
                     disabled={!malnutritionEnabled}
@@ -729,12 +734,6 @@ export default function Update() {
                     <option value="Oui">Oui</option>
                     <option value="Non">Non</option>
                   </select>
-                  {/* <input
-                    type="text"
-                    name="arrival"
-                    disabled={!malnutritionEnabled}
-                    className="inputDisabled"
-                  /> */}
                 </InputLabel>
                 <InputLabel
                   sx={{
@@ -816,12 +815,6 @@ export default function Update() {
                     <option value="Oui">Oui</option>
                     <option value="Non">Non</option>
                   </select>
-                  {/* <input
-                    type="text"
-                    name="rankInSiblings"
-                    disabled={!malnutritionEnabled}
-                    className="inputDisabled"
-                  /> */}
                 </InputLabel>{" "}
                 <InputLabel
                   sx={{
@@ -1377,6 +1370,7 @@ export default function Update() {
                   <input
                     type="text"
                     name="tailleMenage"
+                    value={tailleMenage}
                     disabled={!menageEnabled}
                     className="inputDisabled"
                   />
@@ -1393,7 +1387,8 @@ export default function Update() {
                   <select
                     className="selectDisabled"
                     disabled={!menageEnabled}
-                    name="Tribut"
+                    value={tribu}
+                    name="tribu"
                   >
                     <option value="Havu">Havu</option>
                     <option value="Shi">Shi</option>
@@ -1418,7 +1413,8 @@ export default function Update() {
                   <select
                     className="selectDisabled"
                     disabled={!menageEnabled}
-                    name="Religion"
+                    name="religion"
+                    value={religion}
                   >
                     <option value="Catholique">Catholique</option>
                     <option value="Protestant">Protestant</option>
@@ -1438,7 +1434,8 @@ export default function Update() {
                   <select
                     className="selectDisabled"
                     disabled={!menageEnabled}
-                    name="NiveauSocioEconomique"
+                    name="niveauSocioEconomique"
+                    value={niveauSocioEconomique}
                   >
                     <option value="Bas">Bas (Inferieur à 1$)</option>
                     <option value="Moyen">Moyen (5$)</option>
@@ -1456,7 +1453,8 @@ export default function Update() {
                   Nombre repas journalier :{" "}
                   <input
                     type="text"
-                    name="NbrRepasJour"
+                    name="nbrRepasJour"
+                    value={nbrRepasJour}
                     disabled={!menageEnabled}
                     className="inputDisabled"
                   />
@@ -1473,10 +1471,11 @@ export default function Update() {
                   <select
                     className="selectDisabled"
                     disabled={!menageEnabled}
-                    name="PossederTeleRadio"
+                    name="possederTeleRadio"
+                    value={possederTeleRadio}
                   >
-                    <option value="Oui">Oui</option>
-                    <option value="Non">Non</option>
+                    <option value={true}>Oui</option>
+                    <option value={false}>Non</option>
                   </select>
                 </InputLabel>
                 <InputLabel
@@ -1492,9 +1491,10 @@ export default function Update() {
                     className="selectDisabled"
                     disabled={!menageEnabled}
                     name="terrainVih"
+                    value={terrainVih}
                   >
-                    <option value="Oui">Oui</option>
-                    <option value="Non">Non</option>
+                    <option value={true}>Oui</option>
+                    <option value={false}>Non</option>
                   </select>
                 </InputLabel>
                 <InputLabel
@@ -1510,9 +1510,10 @@ export default function Update() {
                     className="selectDisabled"
                     disabled={!menageEnabled}
                     name="tbcChezParent"
+                    value={tbcChezParent}
                   >
-                    <option value="Oui">Oui</option>
-                    <option value="Non">Non</option>
+                    <option value={true}>Oui</option>
+                    <option value={false}>Non</option>
                   </select>
                 </InputLabel>
                 <InputLabel
@@ -1527,10 +1528,11 @@ export default function Update() {
                   <select
                     className="selectDisabled"
                     disabled={!menageEnabled}
-                    name="atcdDuTbcDansFratrie"
+                    name="atcdTbcFratrie"
+                    value={atcdTbcFratrie}
                   >
-                    <option value="Oui">Oui</option>
-                    <option value="Non">Non</option>
+                    <option value={true}>Oui</option>
+                    <option value={false}>Non</option>
                   </select>
                 </InputLabel>
                 <InputLabel
@@ -1547,9 +1549,10 @@ export default function Update() {
                     className="selectDisabled"
                     disabled={!menageEnabled}
                     name="atcdRougeole"
+                    value={atcdRougeole}
                   >
-                    <option value="Oui">Oui</option>
-                    <option value="Non">Non</option>
+                    <option value={true}>Oui</option>
+                    <option value={false}>Non</option>
                   </select>
                 </InputLabel>
                 {!menageEnabled === true ? (
