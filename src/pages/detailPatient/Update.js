@@ -183,7 +183,11 @@ export default function Update() {
       setStatutMarital(response.data.Famille.statut_marital);
       setEtatMere(response.data.Famille.etat_mere);
       setContraceptionMere(response.data.Famille.contraception_mere);
-      setContraceptionType(response.data.Famille.contraception_type);
+      setContraceptionType(
+        response.data.Famille.contraception_mere === false
+          ? "pas de contraception"
+          : response.data.Famille.contraception_type
+      );
       setMethodeContraceptive(
         response.data.Famille.contraception_mere === false
           ? "Aucune"
@@ -416,13 +420,146 @@ export default function Update() {
   const handleChangeMereVivante = (event) => {
     const { value } = event.target;
     setMereEnVie(value);
-  }
-  
+  };
+  const handleChangeAgeMere = (event) => {
+    const { value } = event.target;
+    setDateNaissanceMere(value);
+  };
+  const handleChangeStatutMarital = (event) => {
+    const { value } = event.target;
+    setStatutMarital(value);
+  };
+  const handleChangeEtatMere = (event) => {
+    const { value } = event.target;
+    setEtatMere(value);
+  };
+  const handleChangeContraception = (event) => {
+    const { value } = event.target;
+    setContraceptionMere(value);
+  };
+  const handleChangeTypeContraception = (event) => {
+    const { value } = event.target;
+    setContraceptionType(value);
+  };
+  const handleChangeMethodeContraceptive = (event) => {
+    const { value } = event.target;
+    setMethodeContraceptive(value);
+  };
+  const handleChangeScolariteMere = (event) => {
+    const { value } = event.target;
+    setScolariteMere(value);
+  };
+  const handleChangeProfessionMere = (event) => {
+    const { value } = event.target;
+    setProfessionMere(value);
+  };
+  const handleClickUpdateMere = () => {
+    const mere = {
+      mereEnVie: mereEnVie,
+      dateNaissanceMere: dateNaissanceMere,
+      statutMarital: statutMarital,
+      etatMere: etatMere,
+      contraceptionMere: contraceptionMere,
+      contraceptionType:
+        contraceptionType === undefined || contraceptionMere === false
+          ? "pas de contraception"
+          : contraceptionType,
+      methodeContraceptive: methodeContraceptive,
+      scolariteMere: scolariteMere,
+      professionMere: professionMere,
+    };
+    console.log(mere);
+    console.log(`the update of mother is made successfully`);
+    setMereEnabled(!mereEnabled);
+  };
   const handleChangePereVivant = (event) => {
     const { value } = event.target;
     setPereEnvie(value);
-  }
-  const handleClickUpdateFamille = () => {};
+  };
+  const handleChangeProfessionChefMenage = (event) => {
+    const { value } = event.target;
+    setProfessionChefMenage(value);
+  };
+  const handleChangeRegimeMatrimonial = (event) => {
+    const { value } = event.target;
+    if (value === "Monogame") {
+      setNbrFemme(1);
+    }
+    setRegimeMatrimonial(value);
+  };
+  const handleChangeNbreFemme = (event) => {
+    const { value } = event.target;
+    setNbrFemme(value);
+  };
+  const handleClickUpdatePere = () => {
+    const pere = {
+      pereEnVie: pereEnvie,
+      professionChefMenage: professionChefMenage,
+      regimeMatrimonial: regimeMatrimonial,
+      nbrFemme: regimeMatrimonial === "Monogame" ? 1 : nbrFemme,
+      telephone: telephone,
+    };
+    console.log(pere);
+    console.log(`the update of father is made successfully`);
+    setPereEnabled(!pereEnabled);
+  };
+  const handleChangeTailleMenage = (event) => {
+    const { value } = event.target;
+    setTailleMenage(value);
+  };
+  const handleChangeTribu = (event) => {
+    const { value } = event.target;
+    setTribu(value);
+  };
+  const handleChangeReligion = (event) => {
+    const { value } = event.target;
+    setReligion(value);
+  };
+  const handleChangeNiveauSocioEco = (event) => {
+    const { value } = event.target;
+    setNiveauSocioEconomique(value);
+  };
+  const handleChangeNbreRepas = (event) => {
+    const { value } = event.target;
+    setNbrRepasJour(value);
+  };
+  const handleChangePossessionTv = (event) => {
+    const { value } = event.target;
+    setPossederTeleRadio(value);
+  };
+  const handleChangeTerrainVih = (event) => {
+    const { value } = event.target;
+    setTerrainVih(value);
+  };
+  const handleChangeTbcParents = (event) => {
+    const { value } = event.target;
+    setTbcChezParent(value);
+  };
+  const handleChangeTbcFratrie = (event) => {
+    const { value } = event.target;
+    setAtcdTbcFratrie(value);
+  };
+  const handleChangeRougeoleFratrie = (event) => {
+    const { value } = event.target;
+    setAtcdRougeole(value);
+  };
+  const handleClickUpdateFamille = () => {
+    const famille = {
+      tailleMenage: tailleMenage,
+      tribu: tribu,
+      religion: religion,
+      niveauSocioEconomique: niveauSocioEconomique,
+      nbrRepasJour: nbrRepasJour,
+      possederTeleRadio: possederTeleRadio,
+      terrainVih: terrainVih,
+      tbcChezParent: tbcChezParent,
+      atcdTbcFratrie: atcdTbcFratrie,
+      atcdRougeole: atcdRougeole,
+    };
+    console.log(famille);
+    console.log(`the update of family is made successfully`);
+    setMenageEnabled(!menageEnabled);
+  };
 
   const date = new Date();
 
@@ -475,7 +612,6 @@ export default function Update() {
                   <Button
                     sx={{ border: `0px solid red` }}
                     onClick={(e) => {
-                      console.log(`value a afficher ${onePatient}`);
                       setIdentityEnabled(!identityEnabled);
                     }}
                   >
@@ -1256,6 +1392,7 @@ export default function Update() {
                     disabled={!mereEnabled}
                     name="mereEnVie"
                     value={mereEnVie}
+                    onChange={handleChangeMereVivante}
                   >
                     <option value="Oui">Oui</option>
                     <option value="Non">Non</option>
@@ -1276,6 +1413,7 @@ export default function Update() {
                     value={dateNaissanceMere}
                     disabled={!mereEnabled}
                     className="inputDisabled"
+                    onChange={handleChangeAgeMere}
                   />
                 </InputLabel>
                 <InputLabel
@@ -1292,6 +1430,7 @@ export default function Update() {
                     disabled={!mereEnabled}
                     name="statutMarital"
                     value={statutMarital}
+                    onChange={handleChangeStatutMarital}
                   >
                     <option value="Non mariée">Non mariée</option>
                     <option value="Mariée">Mariée</option>
@@ -1313,6 +1452,7 @@ export default function Update() {
                     disabled={!mereEnabled}
                     name="etatMere"
                     value={etatMere}
+                    onChange={handleChangeEtatMere}
                   >
                     <option value="Aucun">Aucun</option>
                     <option value="Enceinte">Enceinte</option>
@@ -1336,6 +1476,7 @@ export default function Update() {
                     disabled={!mereEnabled}
                     name="contraceptionMere"
                     value={contraceptionMere}
+                    onChange={handleChangeContraception}
                   >
                     <option value={true}>Oui</option>
                     <option value={false}>Non</option>
@@ -1355,6 +1496,7 @@ export default function Update() {
                     disabled={!mereEnabled}
                     name="contraceptionType"
                     value={contraceptionType}
+                    onChange={handleChangeTypeContraception}
                   >
                     <option value="pas de contraception">Aucune</option>
                     <option value="Naturel">Naturel</option>
@@ -1379,6 +1521,7 @@ export default function Update() {
                     value={methodeContraceptive}
                     disabled={!mereEnabled}
                     className="inputDisabled"
+                    onChange={handleChangeMethodeContraceptive}
                   />
                 </InputLabel>
                 <InputLabel
@@ -1395,6 +1538,7 @@ export default function Update() {
                     disabled={!mereEnabled}
                     value={scolariteMere}
                     name="scolariteMere"
+                    onChange={handleChangeScolariteMere}
                   >
                     <option value="Analphabète">Analphabète</option>
                     <option value="Primaire">Primaire</option>
@@ -1416,6 +1560,7 @@ export default function Update() {
                     disabled={!mereEnabled}
                     name="professionMere"
                     value={professionMere}
+                    onChange={handleChangeProfessionMere}
                   >
                     <option value="Ménagère">Ménagère</option>
                     <option value="Salariée formelle,infirmière,Ong,enseignante">
@@ -1445,7 +1590,14 @@ export default function Update() {
                     variant="contained"
                     loading={loader}
                     size="large"
-                    sx={{ width: 200, marginLeft: "20px", marginTop: "20px" }}
+                    sx={{
+                      width: 140,
+                      marginLeft: "20px",
+                      marginBottom: "25px",
+                      marginTop: "25px",
+                      fontSize: "15px",
+                    }}
+                    onClick={handleClickUpdateMere}
                   >
                     Mettre à jour
                   </LoadingButton>
@@ -1482,6 +1634,7 @@ export default function Update() {
                     disabled={!pereEnabled}
                     name="pereEnvie"
                     value={pereEnvie}
+                    onChange={handleChangePereVivant}
                   >
                     <option value="Oui">Oui</option>
                     <option value="Non">Non</option>
@@ -1502,6 +1655,7 @@ export default function Update() {
                     value={telephone}
                     disabled={!pereEnabled}
                     className="inputDisabled"
+                    onChange={handleChangeTelephone}
                   />
                 </InputLabel>
                 <InputLabel
@@ -1518,6 +1672,7 @@ export default function Update() {
                     disabled={!pereEnabled}
                     name="ProfessionChefMenage"
                     value={professionChefMenage}
+                    onChange={handleChangeProfessionChefMenage}
                   >
                     <option value="Salarié formel,infirmier,Ong,enseignant">
                       Salarié formel (infirmier, enseignant, ONG.)
@@ -1552,6 +1707,7 @@ export default function Update() {
                     disabled={!pereEnabled}
                     name="regimeMatrimonial"
                     value={regimeMatrimonial}
+                    onChange={handleChangeRegimeMatrimonial}
                   >
                     <option value="Polygame">Polygame</option>
                     <option value="Monogame">Monogame</option>
@@ -1571,6 +1727,8 @@ export default function Update() {
                     name="nbrFemme"
                     value={nbrFemme}
                     className="inputDisabled"
+                    disabled={!pereEnabled}
+                    onChange={handleChangeNbreFemme}
                   />
                 </InputLabel>
                 {!pereEnabled === true ? (
@@ -1581,7 +1739,14 @@ export default function Update() {
                     variant="contained"
                     loading={loader}
                     size="large"
-                    sx={{ width: 200, marginLeft: "20px", marginTop: "20px" }}
+                    sx={{
+                      width: 140,
+                      marginLeft: "20px",
+                      marginBottom: "25px",
+                      marginTop: "25px",
+                      fontSize: "15px",
+                    }}
+                    onClick={handleClickUpdatePere}
                   >
                     Mettre à jour
                   </LoadingButton>
@@ -1617,6 +1782,7 @@ export default function Update() {
                     type="text"
                     name="tailleMenage"
                     value={tailleMenage}
+                    onChange={handleChangeTailleMenage}
                     disabled={!menageEnabled}
                     className="inputDisabled"
                   />
@@ -1634,6 +1800,7 @@ export default function Update() {
                     className="selectDisabled"
                     disabled={!menageEnabled}
                     value={tribu}
+                    onChange={handleChangeTribu}
                     name="tribu"
                   >
                     <option value="Havu">Havu</option>
@@ -1661,6 +1828,7 @@ export default function Update() {
                     disabled={!menageEnabled}
                     name="religion"
                     value={religion}
+                    onChange={handleChangeReligion}
                   >
                     <option value="Catholique">Catholique</option>
                     <option value="Protestant">Protestant</option>
@@ -1682,6 +1850,7 @@ export default function Update() {
                     disabled={!menageEnabled}
                     name="niveauSocioEconomique"
                     value={niveauSocioEconomique}
+                    onChange={handleChangeNiveauSocioEco}
                   >
                     <option value="Bas">Bas (Inferieur à 1$)</option>
                     <option value="Moyen">Moyen (5$)</option>
@@ -1701,6 +1870,7 @@ export default function Update() {
                     type="text"
                     name="nbrRepasJour"
                     value={nbrRepasJour}
+                    onChange={handleChangeNbreRepas}
                     disabled={!menageEnabled}
                     className="inputDisabled"
                   />
@@ -1719,6 +1889,7 @@ export default function Update() {
                     disabled={!menageEnabled}
                     name="possederTeleRadio"
                     value={possederTeleRadio}
+                    onChange={handleChangePossessionTv}
                   >
                     <option value={true}>Oui</option>
                     <option value={false}>Non</option>
@@ -1738,6 +1909,7 @@ export default function Update() {
                     disabled={!menageEnabled}
                     name="terrainVih"
                     value={terrainVih}
+                    onChange={handleChangeTerrainVih}
                   >
                     <option value={true}>Oui</option>
                     <option value={false}>Non</option>
@@ -1757,6 +1929,7 @@ export default function Update() {
                     disabled={!menageEnabled}
                     name="tbcChezParent"
                     value={tbcChezParent}
+                    onChange={handleChangeTbcParents}
                   >
                     <option value={true}>Oui</option>
                     <option value={false}>Non</option>
@@ -1776,6 +1949,7 @@ export default function Update() {
                     disabled={!menageEnabled}
                     name="atcdTbcFratrie"
                     value={atcdTbcFratrie}
+                    onChange={handleChangeTbcFratrie}
                   >
                     <option value={true}>Oui</option>
                     <option value={false}>Non</option>
@@ -1796,6 +1970,7 @@ export default function Update() {
                     disabled={!menageEnabled}
                     name="atcdRougeole"
                     value={atcdRougeole}
+                    onChange={handleChangeRougeoleFratrie}
                   >
                     <option value={true}>Oui</option>
                     <option value={false}>Non</option>
@@ -1810,10 +1985,12 @@ export default function Update() {
                     loading={loader}
                     size="large"
                     sx={{
-                      width: 200,
+                      width: 140,
                       marginLeft: "20px",
                       marginBottom: "25px",
+                      fontSize: "15px",
                     }}
+                    onClick={handleClickUpdateFamille}
                   >
                     Mettre à jour
                   </LoadingButton>
