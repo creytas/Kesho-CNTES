@@ -134,9 +134,9 @@ export default function Update() {
   const [scolariteMere, setScolariteMere] = useState("");
   const [professionMere, setProfessionMere] = useState("");
   const [pereEnvie, setPereEnvie] = useState("");
-  const [dateNaissanceChefMenage, setDateNaissanceChefMenage] = useState("");
   const [telephone, setTelephone] = useState("");
   const [professionChefMenage, setProfessionChefMenage] = useState("");
+  const [regimeMatrimonial, setRegimeMatrimonial] = useState("");
   const [nbrFemme, setNbrFemme] = useState("");
   const [tailleMenage, setTailleMenage] = useState("");
   const [tribu, setTribu] = useState("");
@@ -194,6 +194,12 @@ export default function Update() {
       );
       setScolariteMere(response.data.Famille.scolarite_mere);
       setProfessionMere(response.data.Famille.profession_mere);
+      setPereEnvie(response.data.Famille.pere_en_vie);
+      setTelephone(response.data.Patient.telephone);
+      setProfessionChefMenage(response.data.Famille.profession_chef_menage);
+      setRegimeMatrimonial(response.data.Famille.type_statut_marital);
+      setNbrFemme(response.data.Famille.nbre_femme_pere);
+
       setLoader(false);
     });
   }, []);
@@ -1111,9 +1117,7 @@ export default function Update() {
                     name="contraceptionType"
                     value={contraceptionType}
                   >
-                    <option value="pas de contraception">
-                      Aucune
-                    </option>
+                    <option value="pas de contraception">Aucune</option>
                     <option value="Naturel">Naturel</option>
                     <option value="Moderne">Moderne</option>
                     <option value="Naturel et Moderne">
@@ -1238,6 +1242,7 @@ export default function Update() {
                     className="selectDisabled"
                     disabled={!pereEnabled}
                     name="pereEnvie"
+                    value={pereEnvie}
                   >
                     <option value="Oui">Oui</option>
                     <option value="Non">Non</option>
@@ -1251,26 +1256,11 @@ export default function Update() {
                     marginTop: `0.5%`,
                   }}
                 >
-                  Age du Chef de ménage :{" "}
-                  <input
-                    type="text"
-                    name="dateNaissanceChefMenage"
-                    disabled={!pereEnabled}
-                    className="inputDisabled"
-                  />
-                </InputLabel>
-                <InputLabel
-                  sx={{
-                    width: `100%`,
-                    display: `flex`,
-                    alignItems: `center`,
-                    marginTop: `0.5%`,
-                  }}
-                >
                   Téléphone :{" "}
                   <input
                     type="text"
                     name="telephone"
+                    value={telephone}
                     disabled={!pereEnabled}
                     className="inputDisabled"
                   />
@@ -1287,7 +1277,8 @@ export default function Update() {
                   <select
                     className="selectDisabled"
                     disabled={!pereEnabled}
-                    name="ProffessionChefMenage"
+                    name="ProfessionChefMenage"
+                    value={professionChefMenage}
                   >
                     <option value="Salarié formel,infirmier,Ong,enseignant">
                       Salarié formel (infirmier, enseignant, ONG.)
@@ -1316,10 +1307,30 @@ export default function Update() {
                     marginTop: `0.5%`,
                   }}
                 >
+                  Régime matrimonial :{" "}
+                  <select
+                    className="selectDisabled"
+                    disabled={!pereEnabled}
+                    name="regimeMatrimonial"
+                    value={regimeMatrimonial}
+                  >
+                    <option value="Polygame">Polygame</option>
+                    <option value="Monogame">Monogame</option>
+                  </select>
+                </InputLabel>{" "}
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
                   Nombre de femme :{" "}
                   <input
                     type="text"
                     name="nbrFemme"
+                    value={nbrFemme}
                     className="inputDisabled"
                   />
                 </InputLabel>
