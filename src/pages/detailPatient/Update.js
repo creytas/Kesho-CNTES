@@ -107,10 +107,9 @@ export default function Update() {
   const [termeGrossesse, setTermeGrossesse] = useState("");
   const [eig, setEig] = useState("");
   const [lieuAccouchement, setLieuAccouchement] = useState("");
-  const [asphyxiePrerinatale, setAsphyxiePrerinatale] = useState("");
+  const [asphyxiePerinatale, setAsphyxiePerinatale] = useState("");
   const [dpm, setDpm] = useState("");
   const [sejourNeo, setSejourNeo] = useState("");
-  const [poidsNaissance, setPoidsNaissance] = useState("");
   const [allaitementExclusifSixMois, setAllaitementExclusifSixMois] =
     useState("");
   const [diversificationAliment, setDiversificationAliment] = useState("");
@@ -211,6 +210,40 @@ export default function Update() {
         response.data.CauseMalnutrition.atcd_du_tbc_dans_fratrie
       );
       setAtcdRougeole(response.data.CauseMalnutrition.atcd_rougeole_fratrie);
+      setTermeGrossesse(response.data.CauseMalnutrition.terme_grossesse);
+      setEig(response.data.CauseMalnutrition.eig);
+      setLieuAccouchement(response.data.CauseMalnutrition.lieu_accouchement);
+      setAsphyxiePerinatale(response.data.CauseMalnutrition.asphyxie_perinatal);
+      setDpm(
+        response.data.CauseMalnutrition.dpm === "Normal"
+          ? "Normal"
+          : response.data.CauseMalnutrition.cause_dpm
+      );
+      setSejourNeo(response.data.CauseMalnutrition.sejour_neonat);
+      setAllaitementExclusifSixMois(
+        response.data.CauseMalnutrition.allaitement_6mois === true
+          ? "6"
+          : response.data.CauseMalnutrition.age_fin_allaitement
+      );
+      setDiversificationAliment(
+        response.data.CauseMalnutrition.diversification_aliment
+      );
+      setConstitutionAliment(
+        response.data.CauseMalnutrition.constitution_aliment
+      );
+      setConsommationPoisson(response.data.Famille.consommation_poisson);
+      setCalendrierVaccin(response.data.CauseMalnutrition.calendrier_vaccinal);
+      setVaccinationRougeole(
+        response.data.CauseMalnutrition.vaccination_rougeole
+      );
+      setAtcdMas(response.data.CauseMalnutrition.atcd_mas);
+      setTbc(response.data.CauseMalnutrition.tbc);
+      setHospitalisationRecente(
+        response.data.CauseMalnutrition.hospitalisation_recente
+      );
+      setDiagnostiqueHospitalisation(
+        response.data.CauseMalnutrition.diagnostique_hospitalisation
+      );
 
       setLoader(false);
     });
@@ -636,6 +669,7 @@ export default function Update() {
                     className="selectDisabled"
                     disabled={!malnutritionEnabled}
                     name="termeGrossesse"
+                    value={termeGrossesse}
                   >
                     <option value="A terme">A terme</option>
                     <option value="Prématuré">Prématuré</option>
@@ -653,6 +687,7 @@ export default function Update() {
                   <input
                     type="text"
                     name="eig"
+                    value={eig}
                     disabled={!malnutritionEnabled}
                     className="inputDisabled"
                   />
@@ -670,10 +705,11 @@ export default function Update() {
                     className="selectDisabled"
                     disabled={!malnutritionEnabled}
                     name="lieuAccouchement"
+                    value={lieuAccouchement}
                   >
                     <option value="Voiture">Voiture</option>
                     <option value="Docmicile">Docmicile</option>
-                    <option value="Structure sanitaire">
+                    <option value="Structure sanitaire oui">
                       Structure sanitaire
                     </option>
                   </select>
@@ -690,14 +726,15 @@ export default function Update() {
                   <select
                     className="selectDisabled"
                     disabled={!malnutritionEnabled}
-                    name="asphyxiePrerinatale"
+                    name="asphyxiePerinatale"
+                    value={asphyxiePerinatale}
                   >
                     <option value="Pas de cri">Pas de cri</option>
-                    <option value="A crié spontanément">
+                    <option value="a crié spontanément oui">
                       A crié spontanément
                     </option>
-                    <option value="Cri apres réanimation">
-                      Cri apres réanimation
+                    <option value="cri après réanimation">
+                      Cri après réanimation
                     </option>
                   </select>
                 </InputLabel>
@@ -713,6 +750,7 @@ export default function Update() {
                   <input
                     type="text"
                     name="dpm"
+                    value={dpm}
                     disabled={!malnutritionEnabled}
                     className="inputDisabled"
                   />
@@ -730,27 +768,12 @@ export default function Update() {
                     className="selectDisabled"
                     disabled={!malnutritionEnabled}
                     name="sejourNeo"
+                    value={sejourNeo}
                   >
-                    <option value="Oui">Oui</option>
-                    <option value="Non">Non</option>
+                    <option value={true}>Oui</option>
+                    <option value={false}>Non</option>
                   </select>
                 </InputLabel>
-                <InputLabel
-                  sx={{
-                    width: `100%`,
-                    display: `flex`,
-                    alignItems: `center`,
-                    marginTop: `0.5%`,
-                  }}
-                >
-                  Poids naissance :{" "}
-                  <input
-                    type="text"
-                    name="poidsNaissance"
-                    disabled={!malnutritionEnabled}
-                    className="inputDisabled"
-                  />
-                </InputLabel>{" "}
                 <InputLabel
                   sx={{
                     width: `100%`,
@@ -763,6 +786,7 @@ export default function Update() {
                   <input
                     type="text"
                     name="allaitementExclusifSixMois"
+                    value={allaitementExclusifSixMois}
                     disabled={!malnutritionEnabled}
                     className="inputDisabled"
                   />
@@ -779,6 +803,7 @@ export default function Update() {
                   <input
                     type="text"
                     name="diversificationAliment"
+                    value={diversificationAliment}
                     className="inputDisabled"
                   />
                 </InputLabel>{" "}
@@ -794,6 +819,7 @@ export default function Update() {
                   <input
                     type="text"
                     name="constitutionAliment"
+                    value={constitutionAliment}
                     disabled={!malnutritionEnabled}
                     className="inputDisabled"
                   />
@@ -811,9 +837,10 @@ export default function Update() {
                     className="selectDisabled"
                     disabled={!malnutritionEnabled}
                     name="consommationPoisson"
+                    value={consommationPoisson}
                   >
-                    <option value="Oui">Oui</option>
-                    <option value="Non">Non</option>
+                    <option value={true}>Oui</option>
+                    <option value={false}>Non</option>
                   </select>
                 </InputLabel>{" "}
                 <InputLabel
@@ -828,6 +855,7 @@ export default function Update() {
                   <input
                     type="text"
                     name="calendrierVaccin"
+                    value={calendrierVaccin}
                     disabled={!malnutritionEnabled}
                     className="inputDisabled"
                   />
@@ -845,9 +873,10 @@ export default function Update() {
                     className="selectDisabled"
                     disabled={!malnutritionEnabled}
                     name="vaccinationRougeole"
+                    value={vaccinationRougeole}
                   >
-                    <option value="Oui">Oui</option>
-                    <option value="Non">Non</option>
+                    <option value={true}>Oui</option>
+                    <option value={false}>Non</option>
                   </select>
                 </InputLabel>{" "}
                 <InputLabel
@@ -863,9 +892,10 @@ export default function Update() {
                     className="selectDisabled"
                     disabled={!malnutritionEnabled}
                     name="atcdMas"
+                    value={atcdMas}
                   >
-                    <option value="Oui">Oui</option>
-                    <option value="Non">Non</option>
+                    <option value={true}>Oui</option>
+                    <option value={false}>Non</option>
                   </select>
                 </InputLabel>{" "}
                 <InputLabel
@@ -881,9 +911,10 @@ export default function Update() {
                     className="selectDisabled"
                     disabled={!malnutritionEnabled}
                     name="tbc"
+                    value={tbc}
                   >
-                    <option value="Oui">Oui</option>
-                    <option value="Non">Non</option>
+                    <option value={true}>Oui</option>
+                    <option value={false}>Non</option>
                   </select>
                 </InputLabel>{" "}
                 <InputLabel
@@ -894,14 +925,15 @@ export default function Update() {
                     marginTop: `0.5%`,
                   }}
                 >
-                  Transfert en UNT :{" "}
+                  ATCD hospitalisation en UNTI :{" "}
                   <select
                     className="selectDisabled"
                     disabled={!malnutritionEnabled}
                     name="transfererUnt"
+                    value={transfererUnt}
                   >
-                    <option value="Oui">Oui</option>
-                    <option value="Non">Non</option>
+                    <option value={true}>Oui</option>
+                    <option value={false}>Non</option>
                   </select>
                 </InputLabel>
                 <InputLabel
@@ -917,9 +949,10 @@ export default function Update() {
                     className="selectDisabled"
                     disabled={!malnutritionEnabled}
                     name="hospitalisationRecente"
+                    value={hospitalisationRecente}
                   >
-                    <option value="Oui">Oui</option>
-                    <option value="Non">Non</option>
+                    <option value={true}>Oui</option>
+                    <option value={false}>Non</option>
                   </select>
                 </InputLabel>
                 <InputLabel
@@ -934,6 +967,7 @@ export default function Update() {
                   <input
                     type="text"
                     name="diagnostiqueHospitalisation"
+                    value={diagnostiqueHospitalisation}
                     className="inputDisabled"
                   />
                 </InputLabel>
