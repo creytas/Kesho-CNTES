@@ -249,6 +249,181 @@ export default function Update() {
     });
   }, []);
 
+  const handleChangePrenom = (event) => {
+    const { value } = event.target;
+    setPrenomPatient(value);
+  };
+  const handleChangeNom = (event) => {
+    const { value } = event.target;
+    setNomPatient(value);
+  };
+  const handleChangePostnom = (event) => {
+    const { value } = event.target;
+    setPostnomPatient(value);
+  };
+  const handleChangeSexe = (event) => {
+    const { value } = event.target;
+    setSexePatient(value);
+  };
+  const handleChangeDateNaissance = (event) => {
+    const { value } = event.target;
+    setDateNaissancePatient(value);
+  };
+  const handleChangeProvenance = (event) => {
+    const { value } = event.target;
+    setProvenancePatient(value);
+  };
+  const handleChangeModeArriver = (event) => {
+    const { value } = event.target;
+    setModeArriver(value);
+  };
+  const handleChangeAdressePatient = (event) => {
+    const { value } = event.target;
+    setAdressePatient(value);
+  };
+  const handleChangeTelephone = (event) => {
+    const { value } = event.target;
+    setTelephone(value);
+  };
+  const handleChangeVitAvecParents = (event) => {
+    const { value } = event.target;
+    setVivreAvecParents(value);
+  };
+  const handleChangeTuteur = (event) => {
+    const { value } = event.target;
+    setTuteur(value);
+  };
+  const handleChangeRangFratrie = (event) => {
+    const { value } = event.target;
+    setRangFratrie(value);
+  };
+  const handleChangetailleFratrie = (event) => {
+    const { value } = event.target;
+    setTailleFratrie(value);
+  };
+  const handleClickUpdateIdentity = () => {
+    const patientIdentity = {
+      prenom: prenomPatient,
+      nom: nomPatient,
+      postnom: postnomPatient,
+      sexe: sexePatient,
+      dateNaissance: dateNaissancePatient,
+      provenance: provenancePatient,
+      modeArriver: modeArriver,
+      adresse: adressePatient,
+      vivreAvecParents: vivreAvecParents,
+      tuteur: tuteur,
+      rangFratrie: rangFratrie,
+      tailleFratrie: tailleFratrie,
+    };
+    console.log(patientIdentity);
+    console.log(`the update of patient identity is made successfully`);
+
+    setIdentityEnabled(!identityEnabled);
+  };
+  const handleChangeTermeGrossesse = (event) => {
+    const { value } = event.target;
+    setTermeGrossesse(value);
+  };
+  const handleChangeEig = (event) => {
+    const { value } = event.target;
+    setEig(value);
+  };
+  const handleChangeLieuAccouchement = (event) => {
+    const { value } = event.target;
+    setLieuAccouchement(value);
+  };
+  const handleChangeAsphyxiePerinatale = (event) => {
+    const { value } = event.target;
+    setAsphyxiePerinatale(value);
+  };
+  const handleChangeDpm = (event) => {
+    const { value } = event.target;
+    setDpm(value);
+  };
+  const handleChangeSejourNeo = (event) => {
+    const { value } = event.target;
+    setSejourNeo(value);
+  };
+  const handleChangeAllaitementExclusifSixMois = (event) => {
+    const { value } = event.target;
+    setAllaitementExclusifSixMois(value);
+  };
+  const handleChangeDiversificationAliment = (event) => {
+    const { value } = event.target;
+    setDiversificationAliment(value);
+  };
+  const handleChangeConstitutionAliment = (event) => {
+    const { value } = event.target;
+    setConstitutionAliment(value);
+  };
+  const handleChangeConsommationPoisson = (event) => {
+    const { value } = event.target;
+    setConsommationPoisson(value);
+  };
+  const handleChangeCalendrierVaccin = (event) => {
+    const { value } = event.target;
+    setCalendrierVaccin(value);
+  };
+  const handleChangeVaccinationRougeole = (event) => {
+    const { value } = event.target;
+    setVaccinationRougeole(value);
+  };
+  const handleChangeAtcdMas = (event) => {
+    const { value } = event.target;
+    setAtcdMas(value);
+  };
+  const handleChangeTbc = (event) => {
+    const { value } = event.target;
+    setTbc(value);
+  };
+  const handleChangeTransfererUnt = (event) => {
+    const { value } = event.target;
+    setTransfererUnt(value);
+  };
+  const handleChangeHospitalisationRecente = (event) => {
+    const { value } = event.target;
+    setHospitalisationRecente(value);
+  };
+  const handleChangeDiagnostiqueHospitalisation = (event) => {
+    const { value } = event.target;
+    setDiagnostiqueHospitalisation(value);
+  };
+  const handleClickUpdateMalnutrition = () => {
+    const patientMalnutrition = {
+      termeGrossesse: termeGrossesse,
+      eig: eig,
+      lieuAccouchement: lieuAccouchement,
+      asphyxiePerinatale: asphyxiePerinatale,
+      dpm: dpm,
+      sejourNeo: sejourNeo,
+      allaitementExclusifSixMois: allaitementExclusifSixMois,
+      diversificationAliment: diversificationAliment,
+      constitutionAliment: constitutionAliment,
+      consommationPoisson: consommationPoisson,
+      calendrierVaccin: calendrierVaccin,
+      vaccinationRougeole: vaccinationRougeole,
+      atcdMas: atcdMas,
+      tbc: tbc,
+      transfererUnt: transfererUnt,
+      hospitalisationRecente: hospitalisationRecente,
+      diagnostiqueHospitalisation: diagnostiqueHospitalisation,
+    };
+    console.log(patientMalnutrition);
+    console.log(`the update of patient malnutrition is made successfully`);
+    setMalnutritionEnabled(!malnutritionEnabled);
+  };
+  const handleChangeMereVivante = (event) => {
+    const { value } = event.target;
+    setMereEnVie(value);
+  }
+  
+  const handleChangePereVivant = (event) => {
+    const { value } = event.target;
+    setPereEnvie(value);
+  }
+  const handleClickUpdateFamille = () => {};
+
   const date = new Date();
 
   return (
@@ -267,6 +442,15 @@ export default function Update() {
             startIcon={<Icon icon="bx:bx-arrow-back" />}
           >
             Retour
+          </Button>
+          <Button
+            variant="outlined"
+            component={RouterLink}
+            to={`/dashboard/patient/detail_patient/${myId}`}
+            sx={{ marginLeft: "1rem" }}
+            startIcon={<Icon icon="uil:stethoscope" />}
+          >
+            Consulter
           </Button>
           <Grid container spacing={2}>
             <Grid item xs={11} sm={5} md={5} sx={{ border: `0px solid green` }}>
@@ -408,6 +592,7 @@ export default function Update() {
                     value={prenomPatient}
                     disabled={!identityEnabled}
                     className="inputDisabled"
+                    onChange={handleChangePrenom}
                   />
                 </InputLabel>
                 <InputLabel
@@ -422,9 +607,10 @@ export default function Update() {
                   <input
                     type="text"
                     name="NomPatient"
-                    value={nomPatient} //patientIdentification.nom_patient
+                    value={nomPatient}
                     disabled={!identityEnabled}
                     className="inputDisabled"
+                    onChange={handleChangeNom}
                   />
                 </InputLabel>
                 <InputLabel
@@ -442,6 +628,7 @@ export default function Update() {
                     value={postnomPatient}
                     disabled={!identityEnabled}
                     className="inputDisabled"
+                    onChange={handleChangePostnom}
                   />
                 </InputLabel>
                 <InputLabel
@@ -459,6 +646,7 @@ export default function Update() {
                     disabled={!identityEnabled}
                     value={sexePatient}
                     name="sexePatient"
+                    onChange={handleChangeSexe}
                   >
                     <option value="M">M</option>
                     <option value="F">F</option>
@@ -476,9 +664,10 @@ export default function Update() {
                   <input
                     type="date"
                     name="dateNaissancePatient"
-                    value={moment(dateNaissancePatient).format("YYYY-DD-MM")}
+                    value={moment(dateNaissancePatient).format("YYYY-MM-DD")}
                     disabled={!identityEnabled}
                     className="inputDisabled"
+                    onChange={handleChangeDateNaissance}
                   />
                 </InputLabel>
                 <InputLabel
@@ -496,6 +685,7 @@ export default function Update() {
                     value={provenancePatient}
                     disabled={!identityEnabled}
                     className="inputDisabled"
+                    onChange={handleChangeProvenance}
                   />
                 </InputLabel>
                 <InputLabel
@@ -513,6 +703,7 @@ export default function Update() {
                     value={modeArriver}
                     disabled={!identityEnabled}
                     className="inputDisabled"
+                    onChange={handleChangeModeArriver}
                   />
                 </InputLabel>{" "}
                 <InputLabel
@@ -530,6 +721,7 @@ export default function Update() {
                     value={adressePatient}
                     disabled={!identityEnabled}
                     className="inputDisabled"
+                    onChange={handleChangeAdressePatient}
                   />
                 </InputLabel>{" "}
                 <InputLabel
@@ -546,15 +738,11 @@ export default function Update() {
                     disabled={!identityEnabled}
                     name="vivreAvecParents"
                     value={vivreAvecParents}
+                    onChange={handleChangeVitAvecParents}
                   >
                     <option value={true}>Oui</option>
                     <option value={false}>Non</option>
                   </select>
-                  {/* <input
-                    type="text"
-                    name="liveWithParents"
-                    className="inputDisabled"
-                  /> */}
                 </InputLabel>{" "}
                 <InputLabel
                   sx={{
@@ -571,6 +759,7 @@ export default function Update() {
                     value={tuteur}
                     disabled={!identityEnabled}
                     className="inputDisabled"
+                    onChange={handleChangeTuteur}
                   />
                 </InputLabel>{" "}
                 <InputLabel
@@ -588,6 +777,7 @@ export default function Update() {
                     value={rangFratrie}
                     disabled={!identityEnabled}
                     className="inputDisabled"
+                    onChange={handleChangeRangFratrie}
                   />
                 </InputLabel>{" "}
                 <InputLabel
@@ -605,6 +795,7 @@ export default function Update() {
                     value={tailleFratrie}
                     disabled={!identityEnabled}
                     className="inputDisabled"
+                    onChange={handleChangetailleFratrie}
                   />
                 </InputLabel>{" "}
                 {!identityEnabled === true ? (
@@ -614,6 +805,7 @@ export default function Update() {
                     type="submit"
                     variant="contained"
                     loading={loader}
+                    onClick={handleClickUpdateIdentity}
                     size="large"
                     sx={{ width: 200, marginLeft: "20px", marginTop: "20px" }}
                   >
@@ -670,6 +862,7 @@ export default function Update() {
                     disabled={!malnutritionEnabled}
                     name="termeGrossesse"
                     value={termeGrossesse}
+                    onChange={handleChangeTermeGrossesse}
                   >
                     <option value="A terme">A terme</option>
                     <option value="Prématuré">Prématuré</option>
@@ -690,6 +883,7 @@ export default function Update() {
                     value={eig}
                     disabled={!malnutritionEnabled}
                     className="inputDisabled"
+                    onChange={handleChangeEig}
                   />
                 </InputLabel>
                 <InputLabel
@@ -706,6 +900,7 @@ export default function Update() {
                     disabled={!malnutritionEnabled}
                     name="lieuAccouchement"
                     value={lieuAccouchement}
+                    onChange={handleChangeLieuAccouchement}
                   >
                     <option value="Voiture">Voiture</option>
                     <option value="Docmicile">Docmicile</option>
@@ -728,6 +923,7 @@ export default function Update() {
                     disabled={!malnutritionEnabled}
                     name="asphyxiePerinatale"
                     value={asphyxiePerinatale}
+                    onChange={handleChangeAsphyxiePerinatale}
                   >
                     <option value="Pas de cri">Pas de cri</option>
                     <option value="a crié spontanément oui">
@@ -753,6 +949,7 @@ export default function Update() {
                     value={dpm}
                     disabled={!malnutritionEnabled}
                     className="inputDisabled"
+                    onChange={handleChangeDpm}
                   />
                 </InputLabel>
                 <InputLabel
@@ -769,6 +966,7 @@ export default function Update() {
                     disabled={!malnutritionEnabled}
                     name="sejourNeo"
                     value={sejourNeo}
+                    onChange={handleChangeSejourNeo}
                   >
                     <option value={true}>Oui</option>
                     <option value={false}>Non</option>
@@ -789,6 +987,7 @@ export default function Update() {
                     value={allaitementExclusifSixMois}
                     disabled={!malnutritionEnabled}
                     className="inputDisabled"
+                    onChange={handleChangeAllaitementExclusifSixMois}
                   />
                 </InputLabel>{" "}
                 <InputLabel
@@ -805,6 +1004,8 @@ export default function Update() {
                     name="diversificationAliment"
                     value={diversificationAliment}
                     className="inputDisabled"
+                    disabled={!malnutritionEnabled}
+                    onChange={handleChangeDiversificationAliment}
                   />
                 </InputLabel>{" "}
                 <InputLabel
@@ -822,6 +1023,7 @@ export default function Update() {
                     value={constitutionAliment}
                     disabled={!malnutritionEnabled}
                     className="inputDisabled"
+                    onChange={handleChangeConstitutionAliment}
                   />
                 </InputLabel>{" "}
                 <InputLabel
@@ -838,6 +1040,7 @@ export default function Update() {
                     disabled={!malnutritionEnabled}
                     name="consommationPoisson"
                     value={consommationPoisson}
+                    onChange={handleChangeConsommationPoisson}
                   >
                     <option value={true}>Oui</option>
                     <option value={false}>Non</option>
@@ -858,6 +1061,7 @@ export default function Update() {
                     value={calendrierVaccin}
                     disabled={!malnutritionEnabled}
                     className="inputDisabled"
+                    onChange={handleChangeCalendrierVaccin}
                   />
                 </InputLabel>{" "}
                 <InputLabel
@@ -874,6 +1078,7 @@ export default function Update() {
                     disabled={!malnutritionEnabled}
                     name="vaccinationRougeole"
                     value={vaccinationRougeole}
+                    onChange={handleChangeVaccinationRougeole}
                   >
                     <option value={true}>Oui</option>
                     <option value={false}>Non</option>
@@ -893,6 +1098,7 @@ export default function Update() {
                     disabled={!malnutritionEnabled}
                     name="atcdMas"
                     value={atcdMas}
+                    onChange={handleChangeAtcdMas}
                   >
                     <option value={true}>Oui</option>
                     <option value={false}>Non</option>
@@ -912,6 +1118,7 @@ export default function Update() {
                     disabled={!malnutritionEnabled}
                     name="tbc"
                     value={tbc}
+                    onChange={handleChangeTbc}
                   >
                     <option value={true}>Oui</option>
                     <option value={false}>Non</option>
@@ -931,6 +1138,7 @@ export default function Update() {
                     disabled={!malnutritionEnabled}
                     name="transfererUnt"
                     value={transfererUnt}
+                    onChange={handleChangeTransfererUnt}
                   >
                     <option value={true}>Oui</option>
                     <option value={false}>Non</option>
@@ -950,6 +1158,7 @@ export default function Update() {
                     disabled={!malnutritionEnabled}
                     name="hospitalisationRecente"
                     value={hospitalisationRecente}
+                    onChange={handleChangeHospitalisationRecente}
                   >
                     <option value={true}>Oui</option>
                     <option value={false}>Non</option>
@@ -969,6 +1178,8 @@ export default function Update() {
                     name="diagnostiqueHospitalisation"
                     value={diagnostiqueHospitalisation}
                     className="inputDisabled"
+                    disabled={!malnutritionEnabled}
+                    onChange={handleChangeDiagnostiqueHospitalisation}
                   />
                 </InputLabel>
                 {!malnutritionEnabled === true ? (
@@ -980,6 +1191,7 @@ export default function Update() {
                     loading={loader}
                     size="large"
                     sx={{ width: 200, marginLeft: "20px", marginTop: "20px" }}
+                    onClick={handleClickUpdateMalnutrition}
                   >
                     Mettre à jour
                   </LoadingButton>

@@ -47,7 +47,6 @@ export default function Router() {
         {
           path: "patient/detail_patient/:id",
           element: <PageDetail />,
-          // children: [{ path: "update", element: <Update /> }],
         },
         { path: "patient/detail_patient/more/:id", element: <MoreDetail /> },
         { path: "patient/update_patient/:id", element: <Update /> },
