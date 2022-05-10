@@ -80,38 +80,9 @@ export default function Update() {
   const location = useLocation();
   const myId = location.pathname.split("/")[4];
   const [onePatient, setOnePatient] = useState("");
-  const [patientAnthropometry, setPatientAnthropometry] = useState("");
   const [patientIdentification, setPatientIdentification] = useState("");
   const [patientFamily, setPatientFamily] = useState("");
   const [patientHealth, setPatientHealth] = useState("");
-
-  // useEffect(async () => {
-  //   try {
-  //     const response = await Axios.get(
-  //       `https://kesho-api.herokuapp.com/patient?id_patient=${myId}`,
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `bearer ${localStorage.getItem("token")}`,
-  //         },
-  //       }
-  //     );
-  //     const data = await response.data;
-  //     const Patient = await data;
-  //     console.log(Patient);
-  //     const Identity = Patient.Patient;
-  //     const Anthropo = Patient.Anthropometrique;
-  //     const Family = Patient.Famille;
-  //     const Cause = Patient.CauseMalnutrition;
-  //     setOnePatient(Patient);
-  //     setPatientIdentification(Identity);
-  //     setPatientAnthropometry(Anthropo);
-  //     setPatientFamily(Family);
-  //     setPatientHealth(Cause);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }, []);
   const [identityEnabled, setIdentityEnabled] = useState(false);
   const [malnutritionEnabled, setMalnutritionEnabled] = useState(false);
   const [mereEnabled, setMereEnabled] = useState(false);
@@ -189,9 +160,7 @@ export default function Update() {
       }
     ).then((response) => {
       setOnePatient(response.data);
-      console.log(
-        `la data: ${response.data.Anthropometrique[0].first_picture}`
-      );
+      console.log(`la data: ${response.data.Famille.age_mere}`);
       setFirstPicture(response.data.Anthropometrique[0].first_picture);
       setUrlBefore(response.data.Anthropometrique[0].first_picture);
       setLastPicture(response.data.Anthropometrique[0].last_picture);
@@ -210,7 +179,21 @@ export default function Update() {
       setTuteur(response.data.Famille.tuteur);
       setTailleFratrie(response.data.CauseMalnutrition.taille_fratrie);
       setRangFratrie(response.data.CauseMalnutrition.rang_fratrie);
-
+      setMereEnVie(response.data.Famille.mere_en_vie);
+      setDateNaissanceMere(response.data.Famille.age_mere);
+      setStatutMarital(response.data.Famille.statut_marital);
+      setEtatMere(response.data.Famille.etat_mere);
+      setContraceptionMere(response.data.Famille.contraception_mere);
+      setContraceptionType(response.data.Famille.contraception_type);
+      setMethodeContraceptive(
+        response.data.Famille.contraception_mere === false
+          ? "Aucune"
+          : response.data.Famille.contraception_type === "Naturel"
+          ? response.data.Famille.contraception_naturelle
+          : response.data.Famille.contraception_moderne
+      );
+      setScolariteMere(response.data.Famille.scolarite_mere);
+      setProfessionMere(response.data.Famille.profession_mere);
       setLoader(false);
     });
   }, []);
@@ -885,7 +868,6 @@ export default function Update() {
                     <option value="Oui">Oui</option>
                     <option value="Non">Non</option>
                   </select>
-
                 </InputLabel>{" "}
                 <InputLabel
                   sx={{
@@ -904,7 +886,6 @@ export default function Update() {
                     <option value="Oui">Oui</option>
                     <option value="Non">Non</option>
                   </select>
-
                 </InputLabel>{" "}
                 <InputLabel
                   sx={{
@@ -941,7 +922,6 @@ export default function Update() {
                     <option value="Oui">Oui</option>
                     <option value="Non">Non</option>
                   </select>
-
                 </InputLabel>
                 <InputLabel
                   sx={{
@@ -1030,6 +1010,7 @@ export default function Update() {
                     className="selectDisabled"
                     disabled={!mereEnabled}
                     name="mereEnVie"
+                    value={mereEnVie}
                   >
                     <option value="Oui">Oui</option>
                     <option value="Non">Non</option>
@@ -1047,6 +1028,7 @@ export default function Update() {
                   <input
                     type="text"
                     name="dateNaissanceMere"
+                    value={dateNaissanceMere}
                     disabled={!mereEnabled}
                     className="inputDisabled"
                   />
@@ -1064,6 +1046,7 @@ export default function Update() {
                     className="selectDisabled"
                     disabled={!mereEnabled}
                     name="statutMarital"
+                    value={statutMarital}
                   >
                     <option value="Non mariée">Non mariée</option>
                     <option value="Mariée">Mariée</option>
@@ -1084,6 +1067,7 @@ export default function Update() {
                     className="selectDisabled"
                     disabled={!mereEnabled}
                     name="etatMere"
+                    value={etatMere}
                   >
                     <option value="Aucun">Aucun</option>
                     <option value="Enceinte">Enceinte</option>
@@ -1106,9 +1090,10 @@ export default function Update() {
                     className="selectDisabled"
                     disabled={!mereEnabled}
                     name="contraceptionMere"
+                    value={contraceptionMere}
                   >
-                    <option value="Oui">Oui</option>
-                    <option value="Non">Non</option>
+                    <option value={true}>Oui</option>
+                    <option value={false}>Non</option>
                   </select>
                 </InputLabel>
                 <InputLabel
@@ -1124,7 +1109,11 @@ export default function Update() {
                     className="selectDisabled"
                     disabled={!mereEnabled}
                     name="contraceptionType"
+                    value={contraceptionType}
                   >
+                    <option value="pas de contraception">
+                      Aucune
+                    </option>
                     <option value="Naturel">Naturel</option>
                     <option value="Moderne">Moderne</option>
                     <option value="Naturel et Moderne">
@@ -1140,10 +1129,11 @@ export default function Update() {
                     marginTop: `0.5%`,
                   }}
                 >
-                  Methode de contraception :{" "}
+                  Methode contraceptive :{" "}
                   <input
                     type="text"
                     name="methodeContraceptive"
+                    value={methodeContraceptive}
                     disabled={!mereEnabled}
                     className="inputDisabled"
                   />
@@ -1160,6 +1150,7 @@ export default function Update() {
                   <select
                     className="selectDisabled"
                     disabled={!mereEnabled}
+                    value={scolariteMere}
                     name="scolariteMere"
                   >
                     <option value="Analphabète">Analphabète</option>
@@ -1181,6 +1172,7 @@ export default function Update() {
                     className="selectDisabled"
                     disabled={!mereEnabled}
                     name="professionMere"
+                    value={professionMere}
                   >
                     <option value="Ménagère">Ménagère</option>
                     <option value="Salariée formelle,infirmière,Ong,enseignante">

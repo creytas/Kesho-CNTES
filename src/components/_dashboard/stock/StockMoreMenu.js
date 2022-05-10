@@ -225,11 +225,11 @@ export default function StockListToolbar({ value, raison, quantite }) {
             aria-describedby="alert-dialog-description"
           >
             <DialogTitle id="alert-dialog-title">
-              Supprimer un utilisateur?
+              Supprimer une opération?
             </DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
-                Cette action est irreversible, si vous supprimez un utilisateur
+                Cette action est irreversible, si vous supprimez une opération
                 vous ne serrez plus en mésure de recuperer ses informations.
               </DialogContentText>
             </DialogContent>
