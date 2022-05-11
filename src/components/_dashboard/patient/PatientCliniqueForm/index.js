@@ -198,7 +198,6 @@ export default function CliniqueForm({
     }
     console.log(url);
   };
-
   const handleChangeTypeMalnutrition = (event) => {
     const { value } = event.target;
     setFieldValue("typeMalnutrition", value);

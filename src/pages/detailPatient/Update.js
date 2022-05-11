@@ -253,6 +253,24 @@ export default function Update() {
     });
   }, []);
 
+  const handleChangeFirstPicture = (event) => {
+    const fileBefore = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(fileBefore);
+    reader.onload = () => {
+      setUrlBefore(reader.result);
+      setFirstPicture(reader.result);
+    };
+  };
+  const handleChangeLastPicture = (event) => {
+    const fileAfter = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(fileAfter);
+    reader.onload = () => {
+      setUrlAfter(reader.result);
+      setLastPicture(reader.result);
+    };
+  };
   const handleChangePrenom = (event) => {
     const { value } = event.target;
     setPrenomPatient(value);
@@ -307,6 +325,8 @@ export default function Update() {
   };
   const handleClickUpdateIdentity = () => {
     const patientIdentity = {
+      firstPicture: firstPicture,
+      lastPicture: lastPicture,
       prenom: prenomPatient,
       nom: nomPatient,
       postnom: postnomPatient,
@@ -654,6 +674,7 @@ export default function Update() {
                       type="file"
                       accept="image/png, image/jpeg"
                       name="firstPicture"
+                      onChange={handleChangeFirstPicture}
                       id="beforePicture"
                       disabled={!identityEnabled}
                       style={{ display: "none" }}
@@ -696,6 +717,7 @@ export default function Update() {
                       type="file"
                       accept="image/png, image/jpeg"
                       name="lastPicture"
+                      onChange={handleChangeLastPicture}
                       id="lastPicture"
                       disabled={!identityEnabled}
                       style={{ display: "none" }}
