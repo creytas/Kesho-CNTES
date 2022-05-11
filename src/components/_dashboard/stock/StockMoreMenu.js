@@ -4,6 +4,7 @@ import Axios from "axios";
 import PropTypes from "prop-types";
 // import { FiEdit } from 'react-icons';
 import { useNavigate, useLocation } from "react-router-dom";
+import moment from "moment";
 // import { Link as RouterLink } from 'react-router-dom';
 // material  Typography
 // -------------------MODAL
@@ -41,10 +42,17 @@ StockListToolbar.propTypes = {
   value: PropTypes.string,
   quantite: PropTypes.number,
   raison: PropTypes.string,
+  dateOperation: PropTypes.string,
 };
-export default function StockListToolbar({ value, raison, quantite }) {
+export default function StockListToolbar({
+  value,
+  raison,
+  quantite,
+  dateOperation,
+}) {
   const navigate = useNavigate();
   const [loader, setLoader] = useState(false);
+  const [dateOp, setDateOp] = useState(dateOperation);
   const [amount, setAmount] = useState(quantite);
   const [comment, setComment] = useState(raison);
   const [openModalChangeStatus, setopenModalChangeStatus] = useState(false);
@@ -81,6 +89,9 @@ export default function StockListToolbar({ value, raison, quantite }) {
   const handleCloseModaleChangeStatus = () => {
     setopenModalChangeStatus(false);
   };
+  const handleChangeDateOperation = (event) => {
+    setDateOp(event.target.value);
+  };
   const handleChangeAmount = (event) => {
     const { value } = event.target;
     console.log(value);
@@ -99,35 +110,46 @@ export default function StockListToolbar({ value, raison, quantite }) {
   const handleClose = () => {
     setOpen(false);
   };
-  // changer le status d'une personne
-  const handleClickChangeStatus = () => {
+
+  const handleClickChangeOperation = () => {
     setLoader(true);
-    Axios.request({
-      method: "PUT",
-      url: `https://kesho-api.herokuapp.com/user/status?id=${value}`,
-      data: {
-        // statut: statutPersonnel,
-        quantite: amount,
-        raison: comment,
-      },
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `bearer ${localStorage.getItem("token")}`,
-      },
-    })
-      .then((response) => {
-        const message = response.data;
-        console.log("Yves", message);
-        fakeAuth.login(() => {
-          navigate(from);
-          navigate("/dashboard/personnel", { replace: true });
-          setopenModalChangeStatus(false);
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const data = {
+      dateOperation: dateOp,
+      quantite: amount,
+      raison: comment,
+    };
+    console.log(data);
+    console.log("stock operation updated successfully");
   };
+  // changer le status d'une personne
+  // const handleClickChangeStatus = () => {
+  //   setLoader(true);
+  //   Axios.request({
+  //     method: "PUT",
+  //     url: `https://kesho-api.herokuapp.com/user/status?id=${value}`,
+  //     data: {
+  //       // statut: statutPersonnel,
+  //       quantite: amount,
+  //       raison: comment,
+  //     },
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: `bearer ${localStorage.getItem("token")}`,
+  //     },
+  //   })
+  //     .then((response) => {
+  //       const message = response.data;
+  //       console.log("Yves", message);
+  //       fakeAuth.login(() => {
+  //         navigate(from);
+  //         navigate("/dashboard/personnel", { replace: true });
+  //         setopenModalChangeStatus(false);
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   return (
     <>
@@ -175,6 +197,17 @@ export default function StockListToolbar({ value, raison, quantite }) {
                 <Stack spacing={3} sx={{ marginTop: `4%` }}>
                   <TextField
                     sx={{ width: "100%", padding: "2px" }}
+                    type="date"
+                    fullWidth
+                    label="Date operation"
+                    onChange={handleChangeDateOperation}
+                    value={moment(dateOp).format("YYYY-MM-DD")}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                  />
+                  <TextField
+                    sx={{ width: "100%", padding: "2px" }}
                     fullWidth
                     onChange={handleChangeAmount}
                     value={amount}
@@ -201,7 +234,7 @@ export default function StockListToolbar({ value, raison, quantite }) {
                 Annuler
               </Button>
               <LoadingButton
-                onClick={handleClickChangeStatus}
+                onClick={handleClickChangeOperation}
                 size="medium"
                 type="submit"
                 variant="contained"

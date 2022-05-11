@@ -319,6 +319,7 @@ export default function MoreDetails({ id }) {
                             <TableCell>
                               <AnthroMoreMenu
                                 value={anthro[i].id_anthropometrique}
+                                date_consultation={anthro[i].createdAt}
                                 poids={anthro[i].poids}
                                 taille={anthro[i].taille}
                                 peri_brachial={anthro[i].peri_brachial}

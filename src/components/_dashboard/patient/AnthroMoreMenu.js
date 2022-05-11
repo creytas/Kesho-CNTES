@@ -13,6 +13,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import moment from "moment";
 import {
   Button,
   Typography,
@@ -50,6 +51,7 @@ AnthroListToolbar.propTypes = {
   commentaires: PropTypes.string,
   poids: PropTypes.number,
   taille: PropTypes.number,
+  date_consultation: PropTypes.string,
 };
 export default function AnthroListToolbar({
   value,
@@ -59,9 +61,11 @@ export default function AnthroListToolbar({
   commentaires,
   poids,
   taille,
+  date_consultation,
 }) {
   const navigate = useNavigate();
   const [loader, setLoader] = useState(false);
+  const [dateConsultation, setDateConsultation] = useState(date_consultation);
   const [brachial, setBrachial] = useState(peri_brachial);
   const [cranien, setCranien] = useState(peri_cranien);
   const [malnutrition, setMalnutrition] = useState(type_malnutrition);
@@ -103,12 +107,9 @@ export default function AnthroListToolbar({
   const handleCloseModaleChangeStatus = () => {
     setopenModalChangeStatus(false);
   };
-  // const handleSelectChangeStatus = (event) => {
-  //   const { value } = event.target;
-  //   console.log(value);
-  //   const status = value && value;
-  //   setStatutPersonnel(status);
-  // };
+  const handleChangeDateConsultation = (event) => {
+    setDateConsultation(event.target.value);
+  };
   const handleChangePoids = (event) => {
     const { value } = event.target;
     console.log(value);
@@ -146,33 +147,48 @@ export default function AnthroListToolbar({
   const handleClose = () => {
     setOpen(false);
   };
-  // changer le status d'une personne
-  const handleClickChangeStatus = () => {
+
+  const handleClickChangeAnthro = () => {
     setLoader(true);
-    Axios.request({
-      method: "PUT",
-      url: `https://kesho-api.herokuapp.com/user/status?id=${value}`,
-      data: {
-        // statut: statutPersonnel,
-      },
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `bearer ${localStorage.getItem("token")}`,
-      },
-    })
-      .then((response) => {
-        const message = response.data;
-        console.log("Yves", message);
-        fakeAuth.login(() => {
-          navigate(from);
-          navigate("/dashboard/personnel", { replace: true });
-          setopenModalChangeStatus(false);
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const data = {
+      date_consultation: dateConsultation,
+      peri_brachial: brachial,
+      peri_cranien: cranien,
+      type_malnutrition: malnutrition,
+      commentaires: comment,
+      poids: poidsPatient,
+      taille: taillePatient,
+    };
+    console.log(data);
+    console.log("anthropometry updated successfully");
   };
+  // changer le status d'une personne
+  // const handleClickChangeStatus = () => {
+  //   setLoader(true);
+  //   Axios.request({
+  //     method: "PUT",
+  //     url: `https://kesho-api.herokuapp.com/user/status?id=${value}`,
+  //     data: {
+  //       // statut: statutPersonnel,
+  //     },
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: `bearer ${localStorage.getItem("token")}`,
+  //     },
+  //   })
+  //     .then((response) => {
+  //       const message = response.data;
+  //       console.log("Yves", message);
+  //       fakeAuth.login(() => {
+  //         navigate(from);
+  //         navigate("/dashboard/personnel", { replace: true });
+  //         setopenModalChangeStatus(false);
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   return (
     <>
@@ -218,6 +234,17 @@ export default function AnthroListToolbar({
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
                 <Stack spacing={3} sx={{ marginTop: `4%` }}>
+                  <TextField
+                    sx={{ width: "100%", padding: "2px" }}
+                    type="date"
+                    fullWidth
+                    label="Date consultation"
+                    onChange={handleChangeDateConsultation}
+                    value={moment(dateConsultation).format("YYYY-MM-DD")}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                  />
                   <TextField
                     sx={{ width: "100%", padding: "2px" }}
                     fullWidth
@@ -310,7 +337,7 @@ export default function AnthroListToolbar({
                 Annuler
               </Button>
               <LoadingButton
-                onClick={handleClickChangeStatus}
+                onClick={handleClickChangeAnthro}
                 size="medium"
                 type="submit"
                 variant="contained"
@@ -338,8 +365,9 @@ export default function AnthroListToolbar({
             </DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
-                Cette action est irreversible, si vous supprimez une consultation
-                vous ne serrez plus en mésure de recuperer ses informations.
+                Cette action est irreversible, si vous supprimez une
+                consultation vous ne serrez plus en mésure de recuperer ses
+                informations.
               </DialogContentText>
             </DialogContent>
             <DialogActions>

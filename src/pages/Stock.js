@@ -454,6 +454,7 @@ export default function Patient() {
                                           value={id_operation}
                                           quantite={quantite}
                                           raison={commentaire}
+                                          dateOperation={date_operation}
                                         />
                                       </TableCell>
                                     </TableRow>
