@@ -251,6 +251,7 @@ export default function Details() {
                   admission={
                     onePatient.Anthropometrique[0].date_admission_patient
                   }
+                  patientPicture={onePatient.Anthropometrique[0].first_picture}
                 />
               </div>
               <div className="productRight">

@@ -392,10 +392,11 @@ export default function Patient() {
                                   const {
                                     date_operation,
                                     matiere,
+                                    matiere_id,
                                     quantite,
                                     type_operation,
                                     commentaire,
-                                    id_operation,
+                                    id,
                                   } = row;
                                   const isItemSelected =
                                     selected.indexOf(date_operation) !== -1;
@@ -403,10 +404,10 @@ export default function Patient() {
                                   return (
                                     <TableRow
                                       // component={RouterLink}
-                                      // to={`detail_patient/${id_operation}`}
+                                      // to={`detail_patient/${id}`}
                                       className={classes.patientRow}
                                       hover
-                                      key={id_operation}
+                                      key={id}
                                       tabIndex={-1}
                                       // role="checkbox"
                                       selected={isItemSelected}
@@ -451,7 +452,9 @@ export default function Patient() {
                                       </TableCell>
                                       <TableCell>
                                         <StockMoreMenu
-                                          value={id_operation}
+                                          value={id}
+                                          matId={matiere_id}
+                                          typeOperation={type_operation}
                                           quantite={quantite}
                                           raison={commentaire}
                                           dateOperation={date_operation}

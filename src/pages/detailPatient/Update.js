@@ -108,6 +108,7 @@ export default function Update() {
   const [eig, setEig] = useState("");
   const [lieuAccouchement, setLieuAccouchement] = useState("");
   const [asphyxiePerinatale, setAsphyxiePerinatale] = useState("");
+  const [poidsNaissance, setPoidsNaissance] = useState("");
   const [dpm, setDpm] = useState("");
   const [sejourNeo, setSejourNeo] = useState("");
   const [allaitementExclusifSixMois, setAllaitementExclusifSixMois] =
@@ -218,6 +219,7 @@ export default function Update() {
       setEig(response.data.CauseMalnutrition.eig);
       setLieuAccouchement(response.data.CauseMalnutrition.lieu_accouchement);
       setAsphyxiePerinatale(response.data.CauseMalnutrition.asphyxie_perinatal);
+      setPoidsNaissance(response.data.Patient.poids_naissance);
       setDpm(
         response.data.CauseMalnutrition.dpm === "Normal"
           ? "Normal"
@@ -369,6 +371,11 @@ export default function Update() {
     const { value } = event.target;
     setSejourNeo(value);
   };
+  const handleChangePoidsNaissance = (event) => {
+    const { value } = event.target;
+    setPoidsNaissance(value);
+  };
+
   const handleChangeAllaitementExclusifSixMois = (event) => {
     const { value } = event.target;
     setAllaitementExclusifSixMois(value);
@@ -421,6 +428,7 @@ export default function Update() {
       asphyxiePerinatale: asphyxiePerinatale,
       dpm: dpm,
       sejourNeo: sejourNeo,
+      poidsNaissance: poidsNaissance,
       allaitementExclusifSixMois: allaitementExclusifSixMois,
       diversificationAliment: diversificationAliment,
       constitutionAliment: constitutionAliment,
@@ -1129,6 +1137,24 @@ export default function Update() {
                     <option value={true}>Oui</option>
                     <option value={false}>Non</option>
                   </select>
+                </InputLabel>
+                <InputLabel
+                  sx={{
+                    width: `100%`,
+                    display: `flex`,
+                    alignItems: `center`,
+                    marginTop: `0.5%`,
+                  }}
+                >
+                  Poids à la naissance :{" "}
+                  <input
+                    type="text"
+                    name="poidsNaissance"
+                    value={poidsNaissance}
+                    disabled={!malnutritionEnabled}
+                    className="inputDisabled"
+                    onChange={handleChangePoidsNaissance}
+                  />
                 </InputLabel>
                 <InputLabel
                   sx={{

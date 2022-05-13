@@ -47,7 +47,7 @@ const SubDivContenaire = styled("div")(() => ({
   justifyContent: "center",
 }));
 
-export default function AddAnthro({ id, admission }) {
+export default function AddAnthro({ id, admission, patientPicture }) {
   const [rationSeche, setRationSeche] = useState("false");
   const location = useLocation();
   const navigate = useNavigate();
@@ -62,10 +62,13 @@ export default function AddAnthro({ id, admission }) {
     oedeme: Yup.string(),
     commentaires: Yup.string(),
     admission: Yup.date(),
+    consultation: Yup.date(),
+    picture: Yup.string(),
   });
 
   const formik = useFormik({
     initialValues: {
+      picture: patientPicture,
       weight: "",
       height: "",
       brachial: "",
@@ -75,6 +78,7 @@ export default function AddAnthro({ id, admission }) {
       oedeme: "",
       commentaires: "",
       admission: admission,
+      consultation: new Date(),
       // checked: false
     },
     validationSchema: RegisterSchema,
@@ -88,8 +92,11 @@ export default function AddAnthro({ id, admission }) {
       oedeme,
       commentaires,
       admission,
+      consultation,
+      picture,
     }) => {
       console.log({
+        consultation,
         weight,
         height,
         brachial,
@@ -99,6 +106,7 @@ export default function AddAnthro({ id, admission }) {
         rationSeche,
         oedeme,
         commentaires,
+        picture,
       });
       Axios.post(
         `https://kesho-api.herokuapp.com/anthropometrique?id_patient=${id}`,
@@ -112,6 +120,8 @@ export default function AddAnthro({ id, admission }) {
           type_oedeme: oedeme,
           commentaires: commentaires,
           date_admission_patient: admission,
+          date_examen: consultation,
+          first_picture: picture,
           // declarer_gueri: checked
         },
         {
@@ -162,6 +172,20 @@ export default function AddAnthro({ id, admission }) {
         <Div>
           <SubDivContenaire>
             <Stack spacing={3}>
+              <TextField
+                sx={{ padding: "2px" }}
+                type="date"
+                fullWidth
+                label="Date de consultation"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                value={values.consultation}
+                {...getFieldProps("consultation")}
+                helperText={touched.consultation && errors.consultation}
+                error={Boolean(touched.consultation && errors.consultation)}
+              />
+
               <TextField
                 sx={{ width: "100%", padding: "2px" }}
                 fullWidth
@@ -271,7 +295,7 @@ export default function AddAnthro({ id, admission }) {
                   Chronique
                 </option>
                 <option value="MAS-K">
-                Malnutrition Aigue Sévère Kwashiorkor
+                  Malnutrition Aigue Sévère Kwashiorkor
                 </option>
                 <option value="MAS-K / FMC">
                   Malnutrition Aigue Sévère Kwashiorkor / Fond de Malnutrition

@@ -39,13 +39,17 @@ import { fakeAuth } from "../../../fakeAuth";
 // ----------------------------------------------------------------------
 
 StockListToolbar.propTypes = {
-  value: PropTypes.string,
+  value: PropTypes.number,
+  matId: PropTypes.number,
+  typeOperation: PropTypes.string,
   quantite: PropTypes.number,
   raison: PropTypes.string,
   dateOperation: PropTypes.string,
 };
 export default function StockListToolbar({
   value,
+  matId,
+  typeOperation,
   raison,
   quantite,
   dateOperation,
@@ -64,7 +68,7 @@ export default function StockListToolbar({
   const { from } = location.state || { from: { pathname: "/dashboard/app" } };
   const handleDeleteClick = () => {
     setLoader(true);
-    Axios.delete(`https://kesho-api.herokuapp.com/user?id=${value}`, {
+    Axios.delete(`https://kesho-api.herokuapp.com/operation/${value}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `bearer ${localStorage.getItem("token")}`,
@@ -75,7 +79,7 @@ export default function StockListToolbar({
         console.log("Yves", message);
         fakeAuth.login(() => {
           navigate(from);
-          navigate("/dashboard/personnel", { replace: true });
+          navigate("/dashboard/stock", { replace: true });
         });
       })
       .catch((err) => {
@@ -111,14 +115,39 @@ export default function StockListToolbar({
     setOpen(false);
   };
 
-  const handleClickChangeOperation = () => {
+  const handleClickChangeOperation = async () => {
     setLoader(true);
     const data = {
-      dateOperation: dateOp,
-      quantite: amount,
-      raison: comment,
+      date_operation: dateOp,
+      matiere_id: matId,
+      type_operation: typeOperation,
+      qte_operation: amount,
+      commentaire_operation: comment,
     };
     console.log(data);
+    await Axios.request({
+      method: "PUT",
+      url: `https://kesho-api.herokuapp.com/operation/${value}`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `bearer ${localStorage.getItem("token")}`,
+      },
+      data: data,
+    })
+      .then((response) => {
+        const message = response.data;
+        console.log(`l'enregistrement ${message} a ete mis a jour`);
+        fakeAuth.login(() => {
+          navigate(from);
+          navigate("/dashboard/stock", { replace: true });
+          setopenModalChangeStatus(false);
+        });
+      })
+      .catch((err) => {
+        alert(`Erreur de mise a jour: ${err.message}`);
+        setLoader(false);
+      });
+
     console.log("stock operation updated successfully");
   };
   // changer le status d'une personne
@@ -180,7 +209,7 @@ export default function StockListToolbar({
               }}
             >
               <Edit />
-              <Typography>Modifier Quantité</Typography>
+              <Typography>Modifier Opération</Typography>
             </div>
           </ListItemIcon>
           <Dialog
@@ -190,7 +219,7 @@ export default function StockListToolbar({
             aria-describedby="alert-dialog-description"
           >
             <DialogTitle id="alert-dialog-title">
-              Modification Stock
+              Modification Opération
             </DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
