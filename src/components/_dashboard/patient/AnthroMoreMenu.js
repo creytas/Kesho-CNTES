@@ -82,7 +82,7 @@ export default function AnthroListToolbar({
   const { from } = location.state || { from: { pathname: "/dashboard/app" } };
   const handleDeleteClick = () => {
     setLoader(true);
-    Axios.delete(`https://kesho-api.herokuapp.com/user?id=${value}`, {
+    Axios.delete(`https://kesho-api.herokuapp.com/anthropometrique/{value}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `bearer ${localStorage.getItem("token")}`,

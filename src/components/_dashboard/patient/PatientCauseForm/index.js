@@ -1729,7 +1729,7 @@ export default function CauseForm({
                 spacing={1}
               >
                 <FormLabel component="label">
-                  Prise de cocktail d’ATB Machangé :{" "}
+                  Prise de cocktail d’ATB "Machangé" :{" "}
                 </FormLabel>
                 <Stack direction={{ xs: "row", sm: "row" }}>
                   <FormControlLabel
