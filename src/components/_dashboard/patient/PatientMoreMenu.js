@@ -54,21 +54,19 @@ export default function PatientMoreMenu({ value, id_patient, id }) {
   // ---------------------------------LOgic state-------------------------------------
   const handleDeleteClick = () => {
     setLoader(true);
-    Axios.delete(
-      `https://kesho-congo-api.herokuapp.com/patient?id_patient=${value}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    )
+    Axios.delete(`https://kesho-congo-api.herokuapp.com/patient/${value}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `bearer ${localStorage.getItem("token")}`,
+      },
+    })
       .then((response) => {
         const message = response.data;
-        console.log("Yves", message);
+        console.log("Message", message);
         fakeAuth.login(() => {
           navigate(from);
           navigate("/dashboard/patient", { replace: true });
+          setopenModalChangeStatus(false);
         });
       })
       .catch((err) => {

@@ -148,6 +148,8 @@ export default function Update() {
   const [tbcChezParent, setTbcChezParent] = useState("");
   const [atcdTbcFratrie, setAtcdTbcFratrie] = useState("");
   const [atcdRougeole, setAtcdRougeole] = useState("");
+  const [patientId, setPatientId] = useState(0);
+  const [familyId, setFamilyId] = useState(0);
 
   useEffect(async () => {
     await Axios.get(
@@ -161,6 +163,8 @@ export default function Update() {
     ).then((response) => {
       setOnePatient(response.data);
       console.log(`la data: ${response.data.Famille.age_mere}`);
+      setPatientId(response.data.Patient.id);
+      setFamilyId(response.data.Famille.id);
       setFirstPicture(response.data.Anthropometrique[0].first_picture);
       setUrlBefore(response.data.Anthropometrique[0].first_picture);
       setLastPicture(response.data.Anthropometrique[0].last_picture);
@@ -327,6 +331,7 @@ export default function Update() {
   };
   const handleClickUpdateIdentity = () => {
     const patientIdentity = {
+      patientId: patientId,
       firstPicture: firstPicture,
       lastPicture: lastPicture,
       prenom: prenomPatient,
@@ -337,15 +342,28 @@ export default function Update() {
       provenance: provenancePatient,
       modeArriver: modeArriver,
       adresse: adressePatient,
+      familyId: familyId,
       vivreAvecParents: vivreAvecParents,
       tuteur: tuteur,
       rangFratrie: rangFratrie,
       tailleFratrie: tailleFratrie,
     };
-    console.log(patientIdentity);
-    console.log(`the update of patient identity is made successfully`);
-
-    setIdentityEnabled(!identityEnabled);
+    Axios.put({
+      url: `https://kesho-api.herokuapp.com/patient/update-identity/${patientId}`,
+      data: patientIdentity,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((response) => {
+        console.log(`the update of patient identity is made successfully`);
+        setIdentityEnabled(!identityEnabled);
+      })
+      .catch((error) => {
+        setLoader(false);
+        console.log(error);
+      });
   };
   const handleChangeTermeGrossesse = (event) => {
     const { value } = event.target;
@@ -422,6 +440,8 @@ export default function Update() {
   };
   const handleClickUpdateMalnutrition = () => {
     const patientMalnutrition = {
+      patientId: patientId,
+      familyId: familyId,
       termeGrossesse: termeGrossesse,
       eig: eig,
       lieuAccouchement: lieuAccouchement,
@@ -441,9 +461,22 @@ export default function Update() {
       hospitalisationRecente: hospitalisationRecente,
       diagnostiqueHospitalisation: diagnostiqueHospitalisation,
     };
-    console.log(patientMalnutrition);
-    console.log(`the update of patient malnutrition is made successfully`);
-    setMalnutritionEnabled(!malnutritionEnabled);
+    Axios.put({
+      url: `https://kesho-api.herokuapp.com/patient/update-cause/${patientId}`,
+      data: patientMalnutrition,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((response) => {
+        console.log(`the update of patient malnutrition is made successfully`);
+        setMalnutritionEnabled(!malnutritionEnabled);
+      })
+      .catch((error) => {
+        setLoader(false);
+        console.log(error);
+      });
   };
   const handleChangeMereVivante = (event) => {
     const { value } = event.target;
@@ -483,6 +516,7 @@ export default function Update() {
   };
   const handleClickUpdateMere = () => {
     const mere = {
+      familyId: familyId,
       mereEnVie: mereEnVie,
       dateNaissanceMere: dateNaissanceMere,
       statutMarital: statutMarital,
@@ -496,9 +530,22 @@ export default function Update() {
       scolariteMere: scolariteMere,
       professionMere: professionMere,
     };
-    console.log(mere);
-    console.log(`the update of mother is made successfully`);
-    setMereEnabled(!mereEnabled);
+    Axios.put({
+      url: `https://kesho-api.herokuapp.com/patient/update-mere/${patientId}`,
+      data: mere,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((response) => {
+        console.log(`the update of mother is made successfully`);
+        setMereEnabled(!mereEnabled);
+      })
+      .catch((error) => {
+        setLoader(false);
+        console.log(error);
+      });
   };
   const handleChangePereVivant = (event) => {
     const { value } = event.target;
@@ -521,15 +568,29 @@ export default function Update() {
   };
   const handleClickUpdatePere = () => {
     const pere = {
+      familyId: familyId,
       pereEnVie: pereEnvie,
       professionChefMenage: professionChefMenage,
       regimeMatrimonial: regimeMatrimonial,
       nbrFemme: regimeMatrimonial === "Monogame" ? 1 : nbrFemme,
       telephone: telephone,
     };
-    console.log(pere);
-    console.log(`the update of father is made successfully`);
-    setPereEnabled(!pereEnabled);
+    Axios.put({
+      url: `https://kesho-api.herokuapp.com/patient/update-pere/${patientId}`,
+      data: pere,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((response) => {
+        console.log(`the update of father is made successfully`);
+        setPereEnabled(!pereEnabled);
+      })
+      .catch((error) => {
+        setLoader(false);
+        console.log(error);
+      });
   };
   const handleChangeTailleMenage = (event) => {
     const { value } = event.target;
@@ -573,6 +634,7 @@ export default function Update() {
   };
   const handleClickUpdateFamille = () => {
     const famille = {
+      familyId: familyId,
       tailleMenage: tailleMenage,
       tribu: tribu,
       religion: religion,
@@ -584,9 +646,22 @@ export default function Update() {
       atcdTbcFratrie: atcdTbcFratrie,
       atcdRougeole: atcdRougeole,
     };
-    console.log(famille);
-    console.log(`the update of family is made successfully`);
-    setMenageEnabled(!menageEnabled);
+    Axios.put({
+      url: `https://kesho-api.herokuapp.com/patient/update-menage/${patientId}`,
+      data: famille,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((response) => {
+        console.log(`the update of family is made successfully`);
+        setMenageEnabled(!menageEnabled);
+      })
+      .catch((error) => {
+        setLoader(false);
+        console.log(error);
+      });
   };
 
   const date = new Date();

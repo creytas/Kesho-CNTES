@@ -392,6 +392,7 @@ export default function Patient() {
                               <TableBody>
                                 {filteredPatient.map((row, i) => {
                                   const {
+                                    id,
                                     id_patient,
                                     nom_patient,
                                     type_malnutrition,
@@ -518,7 +519,7 @@ export default function Patient() {
                                       </TableCell>
                                       <TableCell>
                                         <PatientMoreMenu
-                                          value={id_patient}
+                                          value={id}
                                           id_patient={id_patient}
                                         />
                                       </TableCell>

@@ -76,10 +76,11 @@ export default function StockListToolbar({
     })
       .then((response) => {
         const message = response.data;
-        console.log("Yves", message);
+        console.log("Message", message);
         fakeAuth.login(() => {
           navigate(from);
           navigate("/dashboard/stock", { replace: true });
+          setopenModalChangeStatus(false);
         });
       })
       .catch((err) => {
@@ -104,8 +105,6 @@ export default function StockListToolbar({
   };
   const handleChangeComment = (event) => {
     const { value } = event.target;
-    console.log(value);
-    const status = value && value;
     setComment(value);
   };
   const handleClickOpen = () => {
@@ -147,38 +146,7 @@ export default function StockListToolbar({
         alert(`Erreur de mise a jour: ${err.message}`);
         setLoader(false);
       });
-
-    console.log("stock operation updated successfully");
-  };
-  // changer le status d'une personne
-  // const handleClickChangeStatus = () => {
-  //   setLoader(true);
-  //   Axios.request({
-  //     method: "PUT",
-  //     url: `https://kesho-api.herokuapp.com/user/status?id=${value}`,
-  //     data: {
-  //       // statut: statutPersonnel,
-  //       quantite: amount,
-  //       raison: comment,
-  //     },
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: `bearer ${localStorage.getItem("token")}`,
-  //     },
-  //   })
-  //     .then((response) => {
-  //       const message = response.data;
-  //       console.log("Yves", message);
-  //       fakeAuth.login(() => {
-  //         navigate(from);
-  //         navigate("/dashboard/personnel", { replace: true });
-  //         setopenModalChangeStatus(false);
-  //       });
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
+ };
 
   return (
     <>

@@ -90,10 +90,9 @@ export default function AnthroListToolbar({
     })
       .then((response) => {
         const message = response.data;
-        console.log("Yves", message);
+        console.log("Message", message);
         fakeAuth.login(() => {
-          navigate(from);
-          navigate("/dashboard/personnel", { replace: true });
+          setopenModalChangeStatus(false);
         });
       })
       .catch((err) => {
@@ -159,36 +158,27 @@ export default function AnthroListToolbar({
       poids: poidsPatient,
       taille: taillePatient,
     };
-    console.log(data);
-    console.log("anthropometry updated successfully");
+
+    Axios.put({
+      url: `https://kesho-api.herokuapp.com/anthropometrique/${value}`,
+      data: data,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((response) => {
+        const message = response.data;
+        console.log(`l'enregistrement ${message} a ete mis a jour`);
+        fakeAuth.login(() => {
+          setopenModalChangeStatus(false);
+        });
+      })
+      .catch((err) => {
+        alert(`Erreur de mise a jour: ${err.message}`);
+        setLoader(false);
+      });
   };
-  // changer le status d'une personne
-  // const handleClickChangeStatus = () => {
-  //   setLoader(true);
-  //   Axios.request({
-  //     method: "PUT",
-  //     url: `https://kesho-api.herokuapp.com/user/status?id=${value}`,
-  //     data: {
-  //       // statut: statutPersonnel,
-  //     },
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: `bearer ${localStorage.getItem("token")}`,
-  //     },
-  //   })
-  //     .then((response) => {
-  //       const message = response.data;
-  //       console.log("Yves", message);
-  //       fakeAuth.login(() => {
-  //         navigate(from);
-  //         navigate("/dashboard/personnel", { replace: true });
-  //         setopenModalChangeStatus(false);
-  //       });
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
 
   return (
     <>
