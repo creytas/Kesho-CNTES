@@ -41,7 +41,8 @@ import { fakeAuth } from "../../../fakeAuth";
 
 PatientMoreMenu.propTypes = {
   id_patient: propTypes.string,
-  value: propTypes.string,
+  value: propTypes.number,
+  id: propTypes.number,
   //nom_patient,postnom_patient,prenom_patient,date_naissance,sexe_patient,transferer_unt,
 };
 
@@ -53,8 +54,11 @@ export default function PatientMoreMenu({ value, id_patient, id }) {
   const { from } = location.state || { from: { pathname: "/dashboard/app" } };
   // ---------------------------------LOgic state-------------------------------------
   const handleDeleteClick = () => {
+    console.log(value);
     setLoader(true);
-    Axios.delete(`https://kesho-congo-api.herokuapp.com/patient/${value}`, {
+    Axios.request({
+      url: `https://kesho-congo-api.herokuapp.com/patient/${value}`,
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         Authorization: `bearer ${localStorage.getItem("token")}`,
@@ -70,7 +74,8 @@ export default function PatientMoreMenu({ value, id_patient, id }) {
         });
       })
       .catch((err) => {
-        console.log(err);
+        alert(`Erreur de mise a jour: ${err.message}`);
+        setLoader(false);
       });
   };
   // ---------------------------------LOgic state------------------------------------
@@ -91,6 +96,7 @@ export default function PatientMoreMenu({ value, id_patient, id }) {
   const handleClose = () => {
     setOpen(false);
   };
+
   return (
     <>
       <IconButton ref={ref} onClick={() => setIsOpen(true)}>

@@ -348,7 +348,8 @@ export default function Update() {
       rangFratrie: rangFratrie,
       tailleFratrie: tailleFratrie,
     };
-    Axios.put({
+    Axios.request({
+      method: "PUT",
       url: `https://kesho-api.herokuapp.com/patient/update-identity/${patientId}`,
       data: patientIdentity,
       headers: {
@@ -461,7 +462,8 @@ export default function Update() {
       hospitalisationRecente: hospitalisationRecente,
       diagnostiqueHospitalisation: diagnostiqueHospitalisation,
     };
-    Axios.put({
+    Axios.request({
+      method: "PUT",
       url: `https://kesho-api.herokuapp.com/patient/update-cause/${patientId}`,
       data: patientMalnutrition,
       headers: {
@@ -530,7 +532,8 @@ export default function Update() {
       scolariteMere: scolariteMere,
       professionMere: professionMere,
     };
-    Axios.put({
+    Axios.request({
+      method: "PUT",
       url: `https://kesho-api.herokuapp.com/patient/update-mere/${patientId}`,
       data: mere,
       headers: {
@@ -575,7 +578,8 @@ export default function Update() {
       nbrFemme: regimeMatrimonial === "Monogame" ? 1 : nbrFemme,
       telephone: telephone,
     };
-    Axios.put({
+    Axios.request({
+      method: "PUT",
       url: `https://kesho-api.herokuapp.com/patient/update-pere/${patientId}`,
       data: pere,
       headers: {
@@ -646,7 +650,8 @@ export default function Update() {
       atcdTbcFratrie: atcdTbcFratrie,
       atcdRougeole: atcdRougeole,
     };
-    Axios.put({
+    Axios.request({
+      method: "PUT",
       url: `https://kesho-api.herokuapp.com/patient/update-menage/${patientId}`,
       data: famille,
       headers: {

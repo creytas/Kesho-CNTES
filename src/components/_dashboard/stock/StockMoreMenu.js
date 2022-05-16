@@ -177,7 +177,7 @@ export default function StockListToolbar({
               }}
             >
               <Edit />
-              <Typography>Modifier Opération</Typography>
+              <Typography>Opération</Typography>
             </div>
           </ListItemIcon>
           <Dialog

@@ -42,7 +42,8 @@ import { fakeAuth } from "../../../fakeAuth";
 import style from "../../_dashboard/patient/PatientForm/patient.module.css";
 
 AnthroListToolbar.propTypes = {
-  value: PropTypes.string,
+  value: PropTypes.number,
+  id_patient: PropTypes.string,
   peri_brachial: PropTypes.number,
   peri_cranien: PropTypes.number,
   oedeme: PropTypes.string,
@@ -55,6 +56,7 @@ AnthroListToolbar.propTypes = {
 };
 export default function AnthroListToolbar({
   value,
+  id_patient,
   peri_brachial,
   peri_cranien,
   type_malnutrition,
@@ -82,7 +84,9 @@ export default function AnthroListToolbar({
   const { from } = location.state || { from: { pathname: "/dashboard/app" } };
   const handleDeleteClick = () => {
     setLoader(true);
-    Axios.delete(`https://kesho-api.herokuapp.com/anthropometrique/{value}`, {
+    Axios.request({
+      method: "delete",
+      url: `https://kesho-api.herokuapp.com/anthropometrique/${value}`,
       headers: {
         "Content-Type": "application/json",
         Authorization: `bearer ${localStorage.getItem("token")}`,
@@ -92,11 +96,16 @@ export default function AnthroListToolbar({
         const message = response.data;
         console.log("Message", message);
         fakeAuth.login(() => {
+          navigate(from);
+          navigate(`/dashboard/patient/detail_patient/${id_patient}`, {
+            replace: true,
+          });
           setopenModalChangeStatus(false);
         });
       })
       .catch((err) => {
-        console.log(err);
+        alert(`Erreur de mise a jour: ${err.message}`);
+        setLoader(false);
       });
   };
 
@@ -158,8 +167,10 @@ export default function AnthroListToolbar({
       poids: poidsPatient,
       taille: taillePatient,
     };
+    console.log(value);
 
-    Axios.put({
+    Axios.request({
+      method: "PUT",
       url: `https://kesho-api.herokuapp.com/anthropometrique/${value}`,
       data: data,
       headers: {
@@ -171,6 +182,10 @@ export default function AnthroListToolbar({
         const message = response.data;
         console.log(`l'enregistrement ${message} a ete mis a jour`);
         fakeAuth.login(() => {
+          navigate(from);
+          navigate(`/dashboard/patient/detail_patient/${id_patient}`, {
+            replace: true,
+          });
           setopenModalChangeStatus(false);
         });
       })
