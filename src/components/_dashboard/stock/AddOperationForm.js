@@ -100,21 +100,20 @@ export default function AddOperationForm() {
       event
     ) => {
       setLoader(true);
-      Axios.post(
-        `https://kesho-api.herokuapp.com/operation`,
-        {
+      Axios.request({
+        url: `https://kesho-api.herokuapp.com/operation`,
+        method: "POST",
+        data: {
           date_operation: dateOperation,
           matieres: operations,
           type_operation: typeOperation,
           commentaire_operation: commentaire,
         },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      )
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `bearer ${localStorage.getItem("token")}`,
+        },
+      })
         .then((response) => {
           setLoader(false);
           const message = response.data;
