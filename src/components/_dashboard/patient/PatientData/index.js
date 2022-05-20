@@ -171,6 +171,8 @@ export default function PatientData({ DataPatient, PrevStep }) {
     clinic.firstPicture === "" ? "" : clinic.pictureUploaded;
   newPatient.declarer_gueri = false;
   newPatient.age_tuteur = FamalyData.dateNaissanceChefMenage;
+  newPatient.hemoglobine = clinic.hemoglobine;
+  newPatient.hematocrite = clinic.hematocrite;
   console.log(newPatient);
   const formatDate = (date) => {
     let formatted_date =

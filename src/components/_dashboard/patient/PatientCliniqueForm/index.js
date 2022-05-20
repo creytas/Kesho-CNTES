@@ -49,6 +49,8 @@ export default function CliniqueForm({
     commentaires: Yup.string(),
     rationSeche: Yup.boolean(),
     typeOedeme: Yup.string(),
+    hemoglobine: Yup.number(),
+    hematocrite: Yup.number(),
     taille: Yup.number("Un chiffre requis")
       .positive("La valeur doit être positive")
       .min(1, "Taille minimum 1 Cm")
@@ -87,6 +89,12 @@ export default function CliniqueForm({
         : "false",
       typeOedeme: patientClinicForm.typeOedeme
         ? patientClinicForm.typeOedeme
+        : "",
+      hemoglobine: patientClinicForm.hemoglobine
+        ? patientClinicForm.hemoglobine
+        : "",
+      hematocrite: patientClinicForm.hematocrite
+        ? patientClinicForm.hematocrite
         : "",
       taille: patientClinicForm.taille ? patientClinicForm.taille : "",
       poidsActuel: patientClinicForm.poidsActuel
@@ -174,6 +182,16 @@ export default function CliniqueForm({
     const { value } = event.target;
     setFieldValue("typeOedeme", value);
     patientClinicForm.setTypeOedeme(value);
+  };
+  const handleChangeHb = (event) => {
+    const { value } = event.target;
+    setFieldValue("hemoglobine");
+    patientClinicForm.setHemoglobine(value);
+  };
+  const handleChangeHt = (event) => {
+    const { value } = event.target;
+    setFieldValue("hematocrite");
+    patientClinicForm.setHematocrite(value);
   };
   const handleChangeRationPatient = (event) => {
     const { value } = event.target;
@@ -288,6 +306,22 @@ export default function CliniqueForm({
                   onChange={handleChangeTaille}
                   error={Boolean(touched.taille && errors.taille)}
                   helperText={touched.taille && errors.taille}
+                />
+                <TextField
+                  sx={{ padding: "2px" }}
+                  label="Taux d'hemoglobine en (gr/dl) ex: 6.1"
+                  value={patientClinicForm.hemoglobine}
+                  onChange={handleChangeHb}
+                  error={Boolean(touched.hemoglobine && errors.hemoglobine)}
+                  helperText={touched.hemoglobine && errors.hemoglobine}
+                />
+                <TextField
+                  sx={{ padding: "2px" }}
+                  label="Taux d'hematocrite en (%) ex: 18"
+                  value={patientClinicForm.hematocrite}
+                  onChange={handleChangeHt}
+                  error={Boolean(touched.hematocrite && errors.hematocrite)}
+                  helperText={touched.hematocrite && errors.hematocrite}
                 />
                 <RadioGroup
                   helperText={touched.rationSeche && errors.rationSeche}

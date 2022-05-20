@@ -54,7 +54,7 @@ export default function AddAnthro({ id, admission, patientPicture }) {
   const { from } = location.state || { from: { pathname: "/dashboard/app" } };
   const RegisterSchema = Yup.object().shape({
     weight: Yup.number().required("Poids requis"),
-    height: Yup.number().required("Taille requise"),
+    height: Yup.number(),
     brachial: Yup.number().required("Périmètre brachial requis"),
     cranian: Yup.number(),
     malnutrition: Yup.string().required(),
@@ -64,6 +64,8 @@ export default function AddAnthro({ id, admission, patientPicture }) {
     admission: Yup.date(),
     consultation: Yup.date(),
     picture: Yup.string(),
+    hemoglobine: Yup.number(),
+    hematocrite: Yup.number(),
   });
 
   const formik = useFormik({
@@ -73,6 +75,8 @@ export default function AddAnthro({ id, admission, patientPicture }) {
       height: "",
       brachial: "",
       cranian: "",
+      hemoglobine: "",
+      hematocrite: "",
       malnutrition: "",
       ration: rationSeche,
       oedeme: "",
@@ -90,6 +94,8 @@ export default function AddAnthro({ id, admission, patientPicture }) {
       malnutrition,
       ration,
       oedeme,
+      hemoglobine,
+      hematocrite,
       commentaires,
       admission,
       consultation,
@@ -105,6 +111,8 @@ export default function AddAnthro({ id, admission, patientPicture }) {
         ration,
         rationSeche,
         oedeme,
+        hemoglobine,
+        hematocrite,
         commentaires,
         picture,
       });
@@ -122,6 +130,8 @@ export default function AddAnthro({ id, admission, patientPicture }) {
           date_admission_patient: admission,
           date_examen: consultation,
           first_picture: picture,
+          hemoglobine: hemoglobine,
+          hematocrite: hematocrite,
           // declarer_gueri: checked
         },
         {
@@ -221,6 +231,24 @@ export default function AddAnthro({ id, admission, patientPicture }) {
                 {...getFieldProps("brachial")}
                 helperText={touched.brachial && errors.brachial}
                 error={Boolean(touched.brachial && errors.brachial)}
+              />
+              <TextField
+                sx={{ width: "100%", padding: "2px" }}
+                fullWidth
+                label="Taux d'hemoglobine (gr/dl)"
+                value={values.hemoglobine}
+                {...getFieldProps("hemoglobine")}
+                helperText={touched.hemoglobine && errors.hemoglobine}
+                error={Boolean(touched.hemoglobine && errors.hemoglobine)}
+              />
+              <TextField
+                sx={{ width: "100%", padding: "2px" }}
+                fullWidth
+                label="Taux d'hematocrite (%)"
+                value={values.hematocrite}
+                {...getFieldProps("hematocrite")}
+                helperText={touched.hematocrite && errors.hematocrite}
+                error={Boolean(touched.hematocrite && errors.hematocrite)}
               />
               <RadioGroup
                 onChange={handleChangeRationPatient}

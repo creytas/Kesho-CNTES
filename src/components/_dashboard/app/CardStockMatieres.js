@@ -32,7 +32,7 @@ export default function CardStockMatieres({ title, nombre, icon }) {
         {fShortenNumber(nombre)}{" "}
         {title === "Huiles"
           ? "L"
-          : title === "Pain" || title === "Vêtement" || title === "Oeufs"
+          : title === "Pain" || title === "Vêtement" || title === "Jouets"
           ? "Pces"
           : "Kg"}
       </Typography>

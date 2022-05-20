@@ -546,10 +546,10 @@ export default function DashboardApp() {
                   </Grid>
                   <Grid item xs={12} sm={6} md={3}>
                     <CardStockMatieres
-                      icon="jam:eggs-f"
-                      title="Oeufs"
+                      icon="ic:outline-toys"
+                      title="Jouets"
                       nombre={
-                        reports.oeufs === null ? 0 : reports.oeufs.qte_matiere
+                        reports.jouets === null ? 0 : reports.jouets.qte_matiere
                       }
                     />
                   </Grid>
