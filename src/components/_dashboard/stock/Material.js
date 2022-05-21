@@ -49,7 +49,7 @@ export default function Material({ id, libelle_matiere, handleChange }) {
         />
         <TextField
           fullWidth
-          label="Quantite"
+          label="Quantité"
           name="qte_operation"
           disabled={enable}
           onBlur={handleChange}

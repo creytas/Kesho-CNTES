@@ -472,7 +472,7 @@ export default function DashboardApp() {
                   <Grid item xs={12} sm={6} md={3}>
                     <CardStockMatieres
                       icon="ri:oil-fill"
-                      title="Huiles"
+                      title="Huile végétale"
                       nombre={
                         reports.huiles === null
                           ? 0
@@ -483,7 +483,7 @@ export default function DashboardApp() {
                   <Grid item xs={12} sm={6} md={3}>
                     <CardStockMatieres
                       icon="fluent:molecule-24-regular"
-                      title="Ext. foliaires"
+                      title="Extr. foliaires"
                       nombre={
                         reports.extrait_foliaires === null
                           ? 0
@@ -494,7 +494,7 @@ export default function DashboardApp() {
                   <Grid item xs={12} sm={6} md={3}>
                     <CardStockMatieres
                       icon="fa-solid:soap"
-                      title="Savon"
+                      title="Savon Omo"
                       nombre={
                         reports.savon === null
                           ? 0
@@ -505,7 +505,7 @@ export default function DashboardApp() {
                   <Grid item xs={12} sm={6} md={3}>
                     <CardStockMatieres
                       icon="simple-line-icons:energy"
-                      title="Briq. energ"
+                      title="Briq. énerg"
                       nombre={
                         reports.briquettes === null
                           ? 0
@@ -516,7 +516,7 @@ export default function DashboardApp() {
                   <Grid item xs={12} sm={6} md={3}>
                     <CardStockMatieres
                       icon="fa-solid:bread-slice"
-                      title="Pain"
+                      title="Pains/Biscuits"
                       nombre={
                         reports.pain === null ? 0 : reports.pain.qte_matiere
                       }
@@ -536,7 +536,7 @@ export default function DashboardApp() {
                   <Grid item xs={12} sm={6} md={3}>
                     <CardStockMatieres
                       icon="ion:shirt-outline"
-                      title="Vêtement"
+                      title="Vêtements"
                       nombre={
                         reports.vetement === null
                           ? 0

@@ -154,7 +154,7 @@ export default function AddOperationForm() {
               sx={{ padding: "2px" }}
               type="date"
               // fullWidth
-              label="Date operation"
+              label="Date opération"
               InputLabelProps={{
                 shrink: true,
               }}
@@ -171,7 +171,7 @@ export default function AddOperationForm() {
               error={Boolean(touched.typeOperation && errors.typeOperation)}
             >
               <option value="" selected disabled hidden>
-                Type operation {console.log(values.typeOperation)}
+                Type opération {console.log(values.typeOperation)}
               </option>
               <option value="entrée">Entrée</option>
               <option value="sortie">Sortie</option>
@@ -201,7 +201,7 @@ export default function AddOperationForm() {
             />
             <FormControlLabel
               control={<Checkbox />}
-              label="Confirmez-vous cette operation"
+              label="Confirmez-vous cette opération"
             />
             <LoadingButton
               fullWidth

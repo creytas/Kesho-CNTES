@@ -72,7 +72,7 @@ export default function AddAnthro({ id, admission, patientPicture }) {
     initialValues: {
       picture: patientPicture,
       weight: "",
-      height: "",
+      height: null,
       brachial: "",
       cranian: "",
       hemoglobine: "",

@@ -47,7 +47,7 @@ import StockMoreMenu from "src/components/_dashboard/stock/StockMoreMenu";
 
 const TABLE_HEAD = [
   { id: "DO", label: "Date", alignLeft: true },
-  { id: "MO", label: "Matiere", alignRight: false },
+  { id: "MO", label: "Matière", alignRight: false },
   { id: "TO", label: "Type opération", alignRight: false },
   { id: "QTE", label: "Quantité", alignRight: false },
   { id: "CO", label: "Commentaire", alignRight: false },
@@ -299,7 +299,7 @@ export default function Patient() {
                       to="add_Operation"
                       startIcon={<Icon icon={plusFill} />}
                     >
-                      operation
+                      Opération
                     </Button>
                     &nbsp; &nbsp;
                     <Button
