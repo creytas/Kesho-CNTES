@@ -304,10 +304,11 @@ export default function Patient() {
                     &nbsp; &nbsp;
                     <Button
                       variant="outlined"
-                      onClick={() => exportToCSV(allData, exportedFileName)}
+                      component={RouterLink}
+                      to="/dashboard/stock/etat_stock"
                       startIcon={<Icon icon="bx:bx-export" />}
                     >
-                      Exporter
+                      Etat stock
                     </Button>
                   </div>
                 </Stack>

@@ -9,6 +9,7 @@ import Patient from "./pages/Patient";
 import NotFound from "./pages/Page404";
 import Personnel from "./pages/Personnel";
 import Stock from "./pages/Stock";
+import EtatStock from "./pages/EtatStock";
 import NewPatient from "./pages/NewPatient";
 import Settings from "./components/_dashboard/personnel/Setting";
 import DashboardApp from "./pages/DashboardApp";
@@ -44,6 +45,7 @@ export default function Router() {
         { path: "app", element: <DashboardApp /> },
         { path: "personnel", element: <Personnel /> },
         { path: "stock", element: <Stock /> },
+        { path: "stock/etat_stock", element: <EtatStock /> },
         {
           path: "patient/detail_patient/:id",
           element: <PageDetail />,
