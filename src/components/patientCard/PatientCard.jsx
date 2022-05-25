@@ -312,14 +312,17 @@ const PatientCard = ({
             />
           </>
         ) : (
-          <Button
+          <LoadingButton
+            size="medium"
+            type="submit"
             variant="contained"
-            startIcon={
-              <Icon icon={enterIcon} onClick={handleClickReadmission} />
-            }
+            loading={loader}
+            color="primary"
+            startIcon={<Icon icon={enterIcon} />}
+            onClick={handleClickReadmission}
           >
             Réadmettre patient
-          </Button>
+          </LoadingButton>
         )}
       </div>
     </div>
