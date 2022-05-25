@@ -47,7 +47,7 @@ const ExitDialog = ({ openModal, onClose, value }) => {
     const { value } = event.target;
     setModaliteSortie(value);
   };
-  const handleClickConfirmExit = (onClose) => {
+  const handleClickConfirmExit = () => {
     setLoader(true);
     const sortie = {
       declarer_sorti: true,
@@ -139,11 +139,50 @@ const PatientCard = ({
   transfer,
 }) => {
   const [openModal, setOpenModal] = useState(false);
+  const [loader, setLoader] = useState(false);
+  const navigate = useNavigate();
+  const linkLocation = useLocation();
+  const id_patient = linkLocation.pathname.split("/")[4];
+  const { from } = linkLocation.state || {
+    from: { pathname: "/dashboard/app" },
+  };
   const handleClickSortie = () => {
     setOpenModal(true);
   };
   const handleCloseModalSortie = () => {
     setOpenModal(false);
+  };
+  const handleClickReadmission = () => {
+    setLoader(true);
+    const sortie = {
+      declarer_sorti: false,
+      modalite_sortie: "",
+    };
+    console.log(sortie);
+    Axios.request({
+      method: "PUT",
+      url: `https://kesho-api.herokuapp.com/patient/update-sortie/${id}`,
+      data: sortie,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((response) => {
+        const message = response.data;
+        console.log(`l'enregistrement ${message} a ete mis a jour`);
+        fakeAuth.login(() => {
+          navigate(from);
+          navigate(`/dashboard/patient/detail_patient/${id_patient}`, {
+            replace: true,
+          });
+          //;
+        });
+      })
+      .catch((err) => {
+        alert(`Erreur de mise a jour: ${err.message}`);
+        setLoader(false);
+      });
   };
 
   return (
@@ -273,7 +312,12 @@ const PatientCard = ({
             />
           </>
         ) : (
-          <Button variant="contained" startIcon={<Icon icon={enterIcon} />}>
+          <Button
+            variant="contained"
+            startIcon={
+              <Icon icon={enterIcon} onClick={handleClickReadmission} />
+            }
+          >
             Réadmettre patient
           </Button>
         )}
