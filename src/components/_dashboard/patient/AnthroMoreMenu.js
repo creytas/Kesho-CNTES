@@ -167,7 +167,6 @@ export default function AnthroListToolbar({
       poids: poidsPatient,
       taille: taillePatient,
     };
-    console.log(value);
 
     Axios.request({
       method: "PUT",

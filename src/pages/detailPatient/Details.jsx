@@ -222,6 +222,7 @@ export default function Details() {
             <div className="product">
               <div className="productLeft">
                 <PatientCard
+                  id={onePatient.Patient.id}
                   firstPicture={onePatient.Anthropometrique[0].first_picture}
                   name={`${onePatient.Patient.nom_patient} ${onePatient.Patient.postnom_patient}`}
                   sex={onePatient.Patient.sexe_patient}
@@ -243,6 +244,8 @@ export default function Details() {
                     onePatient.Anthropometrique[0].type_malnutrition
                   }
                   transfer={onePatient.Patient.transferer_unt}
+                  sortie={onePatient.Patient.declarer_sorti}
+                  modalite={onePatient.Patient.modalite_sortie}
                 />
                 <br />
                 <br />
@@ -252,6 +255,7 @@ export default function Details() {
                     onePatient.Anthropometrique[0].date_admission_patient
                   }
                   patientPicture={onePatient.Anthropometrique[0].first_picture}
+                  disabled={onePatient.Patient.declarer_sorti}
                 />
               </div>
               <div className="productRight">

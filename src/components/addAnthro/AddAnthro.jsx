@@ -47,8 +47,8 @@ const SubDivContenaire = styled("div")(() => ({
   justifyContent: "center",
 }));
 
-export default function AddAnthro({ id, admission, patientPicture }) {
-  const [rationSeche, setRationSeche] = useState("false");
+export default function AddAnthro({ id, admission, patientPicture, disabled }) {
+  const [rationSeche, setRationSeche] = useState("true");
   const location = useLocation();
   const navigate = useNavigate();
   const { from } = location.state || { from: { pathname: "/dashboard/app" } };
@@ -187,6 +187,7 @@ export default function AddAnthro({ id, admission, patientPicture }) {
                 type="date"
                 fullWidth
                 label="Date de consultation"
+                disabled={disabled}
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -201,6 +202,7 @@ export default function AddAnthro({ id, admission, patientPicture }) {
                 fullWidth
                 value={values.weight}
                 label="Poids (kg)"
+                disabled={disabled}
                 {...getFieldProps("weight")}
                 helperText={touched.weight && errors.weight}
                 error={Boolean(touched.weight && errors.weight)}
@@ -210,6 +212,7 @@ export default function AddAnthro({ id, admission, patientPicture }) {
                 fullWidth
                 value={values.height}
                 label="Taille (cm) "
+                disabled={disabled}
                 {...getFieldProps("height")}
                 helperText={touched.height && errors.height}
                 error={Boolean(touched.height && errors.height)}
@@ -219,6 +222,7 @@ export default function AddAnthro({ id, admission, patientPicture }) {
                 fullWidth
                 value={values.cranian}
                 label="Périmètre crânien (cm) "
+                disabled={disabled}
                 {...getFieldProps("cranian")}
                 helperText={touched.cranian && errors.cranian}
                 error={Boolean(touched.cranian && errors.cranian)}
@@ -227,6 +231,7 @@ export default function AddAnthro({ id, admission, patientPicture }) {
                 sx={{ width: "100%", padding: "2px" }}
                 fullWidth
                 label="Périmètre brachial(cm)"
+                disabled={disabled}
                 value={values.brachial}
                 {...getFieldProps("brachial")}
                 helperText={touched.brachial && errors.brachial}
@@ -236,6 +241,7 @@ export default function AddAnthro({ id, admission, patientPicture }) {
                 sx={{ width: "100%", padding: "2px" }}
                 fullWidth
                 label="Taux d'hemoglobine (gr/dl)"
+                disabled={disabled}
                 value={values.hemoglobine}
                 {...getFieldProps("hemoglobine")}
                 helperText={touched.hemoglobine && errors.hemoglobine}
@@ -245,6 +251,7 @@ export default function AddAnthro({ id, admission, patientPicture }) {
                 sx={{ width: "100%", padding: "2px" }}
                 fullWidth
                 label="Taux d'hematocrite (%)"
+                disabled={disabled}
                 value={values.hematocrite}
                 {...getFieldProps("hematocrite")}
                 helperText={touched.hematocrite && errors.hematocrite}
@@ -254,6 +261,7 @@ export default function AddAnthro({ id, admission, patientPicture }) {
                 onChange={handleChangeRationPatient}
                 error={Boolean(touched.ration && errors.ration)}
                 helperText={touched.ration && errors.ration}
+                
                 // setValues={  DataPatient.Sexe}
               >
                 <Stack
@@ -278,11 +286,13 @@ export default function AddAnthro({ id, admission, patientPicture }) {
                       value="true"
                       control={<Radio checked={values.ration === "true"} />}
                       label="Oui"
+                      disabled={disabled}
                     />
                     <FormControlLabel
                       value="false"
                       control={<Radio checked={values.ration === "false"} />}
                       label="Non"
+                      disabled={disabled}
                     />
                   </Stack>
                 </Stack>
@@ -307,6 +317,7 @@ export default function AddAnthro({ id, admission, patientPicture }) {
                 native
                 sx={{ width: "100%", padding: "2px" }}
                 value={values.malnutrition}
+                disabled={disabled}
                 {...getFieldProps("malnutrition")}
                 error={Boolean(touched.malnutrition && errors.malnutrition)}
               >
@@ -333,6 +344,7 @@ export default function AddAnthro({ id, admission, patientPicture }) {
                 <option value="Guéri">Declaré Guéri</option>
               </Select>
               <TextareaAutosize
+                disabled={disabled}
                 minRows={8}
                 maxRows={8}
                 value={values.commentaires}
@@ -346,6 +358,7 @@ export default function AddAnthro({ id, admission, patientPicture }) {
                 type="submit"
                 variant="contained"
                 size="large"
+                disabled={disabled}
                 loading={isSubmitting}
                 sx={{ width: 200, margin: "auto", marginTop: "40px" }}
               >
