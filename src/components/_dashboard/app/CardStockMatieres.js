@@ -30,9 +30,9 @@ export default function CardStockMatieres({ title, nombre, icon }) {
       <Typography variant="h3">{title}</Typography>
       <Typography variant="h3">
         {fShortenNumber(nombre)}{" "}
-        {title === "Huiles"
+        {title === "Huile végétale"
           ? "L"
-          : title === "Pain" || title === "Vêtement" || title === "Jouets"
+          : title === "Pains/Biscuits" || title === "Vêtements" || title === "Jouets"
           ? "Pces"
           : "Kg"}
       </Typography>

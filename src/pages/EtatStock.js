@@ -46,12 +46,10 @@ import image from "../utils/undraw_doctors_stock.svg";
 import StockMoreMenu from "src/components/_dashboard/stock/StockMoreMenu";
 
 const TABLE_HEAD = [
-  { id: "DO", label: "Date", alignLeft: true },
   { id: "MO", label: "Matière", alignRight: false },
-  { id: "QTEDEP", label: "Quantité disponible", alignRight: false },
   { id: "QTENT", label: "Quantité réceptionnée", alignRight: false },
   { id: "QTESORT", label: "Quantité depensée", alignRight: false },
-  { id: "CO", label: "Solde", alignRight: false },
+  { id: "SOLDE", label: "Solde", alignRight: false },
 ];
 const useStyles = makeStyles(() => ({
   root: {
@@ -96,7 +94,6 @@ const SearchStyle = styled(OutlinedInput)(() => ({
 }));
 
 export default function Patient() {
-  const [operationsList, setOperationsList] = useState([]);
   const [allData, setAllData] = useState([]);
   const [lenghtData, setLenghtData] = useState(0);
   const [order, setOrder] = useState("asc");
@@ -112,24 +109,17 @@ export default function Patient() {
   const classes = useStyles();
   const refButtonRefresh = useRef(null);
   useEffect(() => {
-    fetch(
-      `https://kesho-api.herokuapp.com/operation/affectation/CNTES/?limit_start=${start}&limit_end=${10}`,
-      {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          Authorization: `bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    )
+    fetch(`https://kesho-api.herokuapp.com/operation/states`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: `bearer ${localStorage.getItem("token")}`,
+      },
+    })
       .then((response) => response.json())
       .then((data) => {
-        const Operations = data.operations;
-        setNumberOfElement(
-          numberOfElement === 0 ? Operations.length : numberOfElement
-        );
-        setLenghtData(data.data_amount);
-        setOperationsList(Operations);
+        console.log(`here's data: ${data}`);
+        setAllData(data);
         setLoader(false);
         setLoadingData(false);
       })
@@ -138,8 +128,8 @@ export default function Patient() {
         setLoader(false);
         setLoadingData(false);
       });
-  }, [start, numberOfElement]);
-  console.log(`donnees operations : ${operationsList}`);
+  }, []);
+  console.log(allData);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -150,85 +140,18 @@ export default function Patient() {
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
       setLoader(true);
-      const newSelecteds = operationsList.map((n) => n.nom_patient);
+      const newSelecteds = allData.map((n) => n.designation);
       setSelected(newSelecteds);
       return;
     }
     setSelected([]);
   };
-  const handleClickPrev = () => {
-    if (numberOfElement > 3) {
-      setLoadingData(true);
-      const step = numberOfElement % 3 === 0 ? 3 : operationsList.length;
-      setStart((prevState) => prevState - step);
-      const number = numberOfElement % 3 === 0 ? 3 : operationsList.length;
-      setNumberOfElement((prevState) => prevState - number);
-    }
-  };
-  const handleClickNext = () => {
-    if (numberOfElement < lenghtData) {
-      setLoadingData(true);
-      const step =
-        numberOfElement + 3 > lenghtData
-          ? lenghtData - numberOfElement + 1
-          : operationsList.length;
-      setStart((prevState) => prevState + step);
-      const number =
-        numberOfElement + 3 > lenghtData
-          ? lenghtData - numberOfElement
-          : operationsList.length;
-      setNumberOfElement((prevState) => prevState + number);
-    }
-  };
-
-  // -------------------FOrmik----------------------------
-  const SearchSchema = Yup.object().shape({
-    searchValue: Yup.date().required("Entrez une date"),
-  });
-  const formik = useFormik({
-    enableReinitialize: true,
-    initialValues: {
-      searchValue: searchedValue,
-    },
-    validationSchema: SearchSchema,
-    onSubmit: async ({ searchValue }) => {
-      setLoadingButton(true);
-      try {
-        const response = await Axios.post(
-          "https://kesho-api.herokuapp.com/operation/etat-stock/CNTES/search",
-          {
-            date_operation: searchValue,
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
-        const output = await response.data;
-        setSearchedValue("");
-        setLoadingButton(false);
-        setOperationsList(output);
-      } catch (err) {
-        console.log("message error :", err.message);
-        setLoadingButton(false);
-      }
-    },
-  });
-  const { handleSubmit, setFieldValue } = formik;
-
-  const handleFilterByDate = (event) => {
-    setFieldValue("searchValue", event.target.value);
-    setFilterDate(event.target.value);
-  };
   const handleClickRefresh = () => {
-    setFilterDate("");
     setLoadingData(true);
     setStart(3);
     setNumberOfElement(0);
   };
-  const filteredPatient = operationsList;
+  const filteredPatient = allData;
 
   const location = useLocation();
   const [isAuth, setIsAuth] = useState(localStorage.getItem("token"));
@@ -237,7 +160,7 @@ export default function Patient() {
     setIsAuth(isAuth);
   }, [isAuth]);
   const component = "add_Operation";
-  console.log(operationsList);
+  console.log(allData);
   return isAuth ? (
     <>
       {loader ? (
@@ -246,7 +169,7 @@ export default function Patient() {
         </div>
       ) : (
         <>
-          {operationsList.length === 0 ? (
+          {allData.length === 0 ? (
             <DefaultPage image={image} component={component} />
           ) : (
             <Page>
@@ -273,61 +196,6 @@ export default function Patient() {
                 </Stack>
 
                 <Card>
-                  <RootStyle
-                    sx={{
-                      ...(selected.length > 0 && {
-                        color: "primary.main",
-                        bgcolor: "primary.lighter",
-                      }),
-                    }}
-                  >
-                    {selected.length > 0 ? (
-                      <Typography component="div" variant="subtitle1">
-                        {selected.length} selectionés
-                      </Typography>
-                    ) : (
-                      <>
-                        <FormikProvider value={formik}>
-                          <Form onSubmit={handleSubmit}>
-                            <LoadingButton
-                              style={{
-                                width: "auto",
-                                height: "55px",
-                              }}
-                              variant="contained"
-                              color="primary"
-                              type="submit"
-                              loading={loadingButton}
-                              className={classes.button}
-                              startIcon={
-                                <Icon>
-                                  <SearchIcon />
-                                </Icon>
-                              }
-                            >
-                              Rechercher
-                            </LoadingButton>
-                            <SearchStyle
-                              type="date"
-                              value={filterDate}
-                              inputRef={refButtonRefresh}
-                              onChange={handleFilterByDate}
-                              placeholder="Tapez une date"
-                            />
-                          </Form>
-                        </FormikProvider>
-                        <Tooltip
-                          title="Rafraîchir"
-                          color="primary"
-                          onClick={handleClickRefresh}
-                        >
-                          <IconButton>
-                            <RefreshIcon />
-                          </IconButton>
-                        </Tooltip>
-                      </>
-                    )}
-                  </RootStyle>
                   <Scrollbar>
                     <TableContainer sx={{ minWidth: 800 }}>
                       <>
@@ -341,84 +209,79 @@ export default function Patient() {
                               order={order}
                               orderBy={orderBy}
                               headLabel={TABLE_HEAD}
-                              rowCount={operationsList.length}
+                              rowCount={allData.length}
                               numSelected={selected.length}
                               onRequestSort={handleRequestSort}
                               onSelectAllClick={handleSelectAllClick}
                             />
                             {filteredPatient.length > 0 ? (
                               <TableBody>
-                                {filteredPatient.map((row, i) => {
-                                  const {
-                                    date_operation,
-                                    matiere,
-                                    matiere_id,
-                                    quantite,
-                                    type_operation,
-                                    commentaire,
-                                    id,
-                                  } = row;
+                                {allData.map((row, i) => {
+                                  const { designation, entrance, exit } = row;
                                   const isItemSelected =
-                                    selected.indexOf(date_operation) !== -1;
-
+                                    selected.indexOf(i) !== -1;
+                                  console.log(designation);
                                   return (
                                     <TableRow
-                                      // component={RouterLink}
-                                      // to={`detail_patient/${id}`}
                                       className={classes.patientRow}
                                       hover
-                                      key={id}
+                                      key={i}
                                       tabIndex={-1}
                                       // role="checkbox"
                                       selected={isItemSelected}
                                       aria-checked={isItemSelected}
                                     >
-                                      <TableCell padding="left">
-                                        <TableCell
-                                          padding="checkbox"
-                                          variant="subtitle2"
-                                          noWrap
-                                        >
-                                          {i + 1}
-                                        </TableCell>
-                                      </TableCell>
+                                      <TableCell align="left"></TableCell>
                                       <TableCell align="left">
-                                        {moment(date_operation).format(
-                                          "DD/MM/YYYY"
-                                        )}
-                                      </TableCell>
-                                      <TableCell align="left">
-                                        {matiere}
+                                        {designation}
                                       </TableCell>
                                       <TableCell
-                                        align="left"
                                         sx={{
-                                          color: `${
-                                            type_operation === "entrée"
-                                              ? "green"
-                                              : "red"
-                                          }`,
+                                          color: "green",
                                         }}
                                       >
-                                        {type_operation}
+                                        {`${entrance / 1000} ${
+                                          designation === "huiles"
+                                            ? "L"
+                                            : designation ===
+                                                "pains/biscuits" ||
+                                              designation === "vêtements" ||
+                                              designation === "jouets" ||
+                                              designation === "chaussures"
+                                            ? "Pces"
+                                            : "Kg"
+                                        }`}
+                                      </TableCell>
+                                      <TableCell
+                                        sx={{
+                                          color: "red",
+                                        }}
+                                      >
+                                        {`${exit / 1000} ${
+                                          designation === "huiles"
+                                            ? "L"
+                                            : designation ===
+                                                "pains/biscuits" ||
+                                              designation === "vêtements" ||
+                                              designation === "jouets" ||
+                                              designation === "chaussures"
+                                            ? "Pces"
+                                            : "Kg"
+                                        }`}
                                       </TableCell>
 
-                                      <TableCell align="left">
-                                        {quantite}
-                                      </TableCell>
-
-                                      <TableCell align="left">
-                                        {commentaire}
-                                      </TableCell>
                                       <TableCell>
-                                        <StockMoreMenu
-                                          value={id}
-                                          matId={matiere_id}
-                                          typeOperation={type_operation}
-                                          quantite={quantite}
-                                          raison={commentaire}
-                                          dateOperation={date_operation}
-                                        />
+                                        {`${(entrance - exit) / 1000} ${
+                                          designation === "huiles"
+                                            ? "L"
+                                            : designation ===
+                                                "pains/biscuits" ||
+                                              designation === "vêtements" ||
+                                              designation === "jouets" ||
+                                              designation === "chaussures"
+                                            ? "Pces"
+                                            : "Kg"
+                                        }`}
                                       </TableCell>
                                     </TableRow>
                                   );
@@ -432,7 +295,10 @@ export default function Patient() {
                                     colSpan={6}
                                     sx={{ py: 3 }}
                                   >
-                                    <SearchNotFound searchQuery={filterDate} />
+                                    <Typography variant="h6">
+                                      Les informations que vous cherchez sont
+                                      indisponibles
+                                    </Typography>
                                   </TableCell>
                                 </TableRow>
                               </TableBody>
@@ -442,34 +308,6 @@ export default function Patient() {
                       </>
                     </TableContainer>
                   </Scrollbar>
-                  <TableRow>
-                    <TableCell>
-                      <GrFormPrevious
-                        style={{
-                          width: "30px",
-                          height: "30px",
-                          color: "#1f2b35",
-                          cursor: "pointer",
-                        }}
-                        onClick={handleClickPrev}
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <GrFormNext
-                        style={{
-                          width: "30px",
-                          height: "30px",
-                          color: "#1f2b35",
-                          cursor: "pointer",
-                        }}
-                        onClick={handleClickNext}
-                        // disabled={}
-                      />
-                    </TableCell>
-                    <TableCell style={{ fontWeight: "900px" }}>
-                      {numberOfElement}/{lenghtData}
-                    </TableCell>
-                  </TableRow>
                 </Card>
               </Container>
             </Page>

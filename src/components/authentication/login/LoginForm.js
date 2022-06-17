@@ -68,6 +68,9 @@ export default function LoginForm() {
           email,
           password,
         },
+        headers: {
+          Accept: "application/json",
+        },
       })
         .then((response) => {
           const { token, name, isAdmin, id_user, id, status } = response.data;
