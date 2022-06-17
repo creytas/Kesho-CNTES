@@ -192,6 +192,15 @@ export default function Patient() {
                     >
                       Retour
                     </Button>
+                    <Button
+                      variant="outlined"
+                      component={RouterLink}
+                      to={`/dashboard/stock/add_Operation`}
+                      sx={{ marginLeft: "1rem" }}
+                      startIcon={<Icon icon={plusFill} />}
+                    >
+                      Opération
+                    </Button>
                   </div>
                 </Stack>
 
