@@ -252,9 +252,7 @@ export default function Patient() {
                                         {`${entrance / 1000} ${
                                           designation === "huiles"
                                             ? "L"
-                                            : designation ===
-                                                "pains/biscuits" ||
-                                              designation === "vêtements" ||
+                                            : designation === "vêtements" ||
                                               designation === "jouets" ||
                                               designation === "chaussures" ||
                                               designation === "pain/biscuit"
@@ -270,8 +268,7 @@ export default function Patient() {
                                         {`${exit / 1000} ${
                                           designation === "huiles"
                                             ? "L"
-                                            : designation ===
-                                                "pains/biscuits" ||
+                                            : designation === "pain/biscuit" ||
                                               designation === "vêtements" ||
                                               designation === "jouets" ||
                                               designation === "chaussures"
@@ -284,8 +281,7 @@ export default function Patient() {
                                         {`${(entrance - exit) / 1000} ${
                                           designation === "huiles"
                                             ? "L"
-                                            : designation ===
-                                                "pains/biscuits" ||
+                                            : designation === "pain/biscuit" ||
                                               designation === "vêtements" ||
                                               designation === "jouets" ||
                                               designation === "chaussures"
