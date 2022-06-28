@@ -23,10 +23,7 @@ import {
   IconButton,
   TextField,
   Stack,
-  FormControlLabel,
-  // FormLabel,
-  Radio,
-  RadioGroup,
+  Select,
 } from "@material-ui/core";
 import { LoadingButton } from "@material-ui/lab";
 import moreVerticalFill from "@iconify/icons-eva/more-vertical-fill";
@@ -57,6 +54,7 @@ export default function StockListToolbar({
   const navigate = useNavigate();
   const [loader, setLoader] = useState(false);
   const [dateOp, setDateOp] = useState(dateOperation);
+  const [operation, setOperation] = useState(typeOperation);
   const [amount, setAmount] = useState(quantite);
   const [comment, setComment] = useState(raison);
   const [openModalChangeStatus, setopenModalChangeStatus] = useState(false);
@@ -97,6 +95,10 @@ export default function StockListToolbar({
   const handleChangeDateOperation = (event) => {
     setDateOp(event.target.value);
   };
+  const handleChangeTypeOperation = (event) => {
+    const { value } = event.target;
+    setOperation(value);
+  };
   const handleChangeAmount = (event) => {
     const { value } = event.target;
     console.log(value);
@@ -119,7 +121,7 @@ export default function StockListToolbar({
     const data = {
       date_operation: dateOp,
       matiere_id: matId,
-      type_operation: typeOperation,
+      type_operation: operation,
       qte_operation: amount,
       commentaire_operation: comment,
     };
@@ -146,7 +148,7 @@ export default function StockListToolbar({
         alert(`Erreur de mise a jour: ${err.message}`);
         setLoader(false);
       });
- };
+  };
 
   return (
     <>
@@ -203,6 +205,23 @@ export default function StockListToolbar({
                       shrink: true,
                     }}
                   />
+                  <Select
+                    native
+                    value={operation}
+                    fullWidth
+                    label="Type opération"
+                    onChange={handleChangeTypeOperation}
+                    // {...getFieldProps("typeOperation")}
+                    // error={Boolean(
+                    //   touched.typeOperation && errors.typeOperation
+                    // )}
+                  >
+                    <option value="" selected disabled hidden>
+                      Type opération
+                    </option>
+                    <option value="entrée">Entrée</option>
+                    <option value="sortie">Sortie</option>
+                  </Select>
                   <TextField
                     sx={{ width: "100%", padding: "2px" }}
                     fullWidth

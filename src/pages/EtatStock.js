@@ -256,7 +256,8 @@ export default function Patient() {
                                                 "pains/biscuits" ||
                                               designation === "vêtements" ||
                                               designation === "jouets" ||
-                                              designation === "chaussures"
+                                              designation === "chaussures" ||
+                                              designation === "pain/biscuit"
                                             ? "Pces"
                                             : "Kg"
                                         }`}
