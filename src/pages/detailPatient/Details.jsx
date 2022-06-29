@@ -233,7 +233,7 @@ export default function Details() {
                   sex={onePatient.Patient.sexe_patient}
                   age={
                     onePatient.PatientAge[0].ageEnMois < 365
-                      ? `${parseInt(
+                      ? `${Math.round(
                           onePatient.PatientAge[0].ageEnMois / 30
                         )} mois`
                       : `${Math.round(onePatient.PatientAge[0].ageEnAnnee)} ans`
