@@ -11,6 +11,7 @@ import { fShortenNumber } from "../../../utils/formatNumber";
 const RootStyle = styled(Card)(({ theme }) => ({
   boxShadow: "none",
   textAlign: "center",
+  height: "245px",
   padding: theme.spacing(5, 0),
   color: theme.palette.warning.darker,
   backgroundColor: theme.palette.warning.light,
@@ -32,7 +33,9 @@ export default function CardStockMatieres({ title, nombre, icon }) {
         {fShortenNumber(nombre)}{" "}
         {title === "Huile végétale"
           ? "L"
-          : title === "Pains/Biscuits" || title === "Vêtements" || title === "Jouets"
+          : title === "Pains/Biscuits" ||
+            title === "Vêtements" ||
+            title === "Jouets"
           ? "Pces"
           : "Kg"}
       </Typography>

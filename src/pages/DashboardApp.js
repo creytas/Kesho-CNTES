@@ -419,7 +419,7 @@ export default function DashboardApp() {
                     <AppWebsiteVisits />
                   </Grid>
 
-                  <Grid item xs={12} md={6} lg={4}>
+                  <Grid item xs={12} md={6} lg={4} sx={{ height: "509px" }}>
                     <AppCurrentVisits />
                   </Grid>
                 </Grid>

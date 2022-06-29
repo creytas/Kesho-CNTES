@@ -130,7 +130,7 @@ export default function AppCurrentVisits() {
   });
 
   return (
-    <Card>
+    <Card sx={{ height: "100%" }}>
       <CardHeader
         className={classes.labelRoot}
         title={`Ratio Annuel ${currentYear}`}
