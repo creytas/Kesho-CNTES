@@ -119,6 +119,7 @@ export default function Update() {
   const [calendrierVaccin, setCalendrierVaccin] = useState("");
   const [atcdMas, setAtcdMas] = useState("");
   const [vaccinationRougeole, setVaccinationRougeole] = useState("");
+  const [atcdRougeole, setAtcdRougeole] = useState("");
   const [tbc, setTbc] = useState("");
   const [transfererUnt, setTransfererUnt] = useState("");
   const [hospitalisationRecente, setHospitalisationRecente] = useState("");
@@ -147,7 +148,6 @@ export default function Update() {
   const [terrainVih, setTerrainVih] = useState("");
   const [tbcChezParent, setTbcChezParent] = useState("");
   const [atcdTbcFratrie, setAtcdTbcFratrie] = useState("");
-  const [atcdRougeole, setAtcdRougeole] = useState("");
   const [patientId, setPatientId] = useState(0);
   const [familyId, setFamilyId] = useState(0);
 
@@ -162,7 +162,6 @@ export default function Update() {
       }
     ).then((response) => {
       setOnePatient(response.data);
-      console.log(`la data: ${response.data.Famille.age_mere}`);
       setPatientId(response.data.Patient.id);
       setFamilyId(response.data.Famille.id);
       setFirstPicture(response.data.Anthropometrique[0].first_picture);
@@ -348,6 +347,7 @@ export default function Update() {
       rangFratrie: rangFratrie,
       tailleFratrie: tailleFratrie,
     };
+    console.log(patientIdentity);
     Axios.request({
       method: "PUT",
       url: `https://kesho-api.herokuapp.com/patient/update-identity/${patientId}`,
