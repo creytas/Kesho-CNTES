@@ -30,11 +30,11 @@ import MoreDetails from "./MoreDetails";
 import { fakeAuth } from "../../fakeAuth";
 
 export default function Details() {
-  console.log("hobed", moment().toDate("MM/DD/YYYY"));
   const location = useLocation();
   const navigate = useNavigate();
   const { from } = location.state || { from: { pathname: "/dashboard/app" } };
   const [loader, setLoader] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [transferUNT, setTransferUNT] = useState(false);
   const [onePatient, setOnePatient] = useState([]);
   const [anthro, setAnthro] = useState([]);
@@ -57,7 +57,6 @@ export default function Details() {
       setAnthro(PatientBrachial);
       setOnePatient(Patient);
       setLoader(false);
-      console.log(`patient picture: ${onePatient.Patient.first_picture}`);
     } catch (err) {
       console.log(err);
     }
@@ -69,6 +68,7 @@ export default function Details() {
     initialValues: {},
     validationSchema: RegisterSchema,
     onSubmit: () => {
+      // setLoading(true);
       setTransferUNT(true);
       Axios.put(
         `https://kesho-api.herokuapp.com/patient/transfert?id_patient=${myId}`,
@@ -83,7 +83,7 @@ export default function Details() {
         .then(() => {
           setTransferUNT(false);
           fakeAuth.login(() => {
-            navigate(from);
+            // navigate(from);
             navigate(`/dashboard/patient/detail_patient/${myId}`, {
               replace: true,
             });
@@ -181,7 +181,7 @@ export default function Details() {
   const handleClose = () => {
     setOpen(false);
   };
-  // console.log(onePatient.Patient.first_picture);
+
   return isAuth ? (
     <>
       {loader ? (
@@ -223,12 +223,19 @@ export default function Details() {
               <div className="productLeft">
                 <PatientCard
                   id={onePatient.Patient.id}
-                  firstPicture={onePatient.Anthropometrique[0].first_picture}
+                  patientPicture={
+                    onePatient.Anthropometrique[0].last_picture
+                      ? onePatient.Anthropometrique[0].last_picture
+                      : onePatient.Anthropometrique[0].first_picture
+                  }
+                  // lastPicture={onePatient.Anthropometrique[0].last_picture}
                   name={`${onePatient.Patient.nom_patient} ${onePatient.Patient.postnom_patient}`}
                   sex={onePatient.Patient.sexe_patient}
                   age={
-                    onePatient.PatientAge[0].ageEnMois <= 59
-                      ? `${onePatient.PatientAge[0].ageEnMois} mois`
+                    onePatient.PatientAge[0].ageEnMois < 365
+                      ? `${parseInt(
+                          onePatient.PatientAge[0].ageEnMois / 30
+                        )} mois`
                       : `${Math.round(onePatient.PatientAge[0].ageEnAnnee)} ans`
                   }
                   birthdate={onePatient.Patient.date_naissance_patient}

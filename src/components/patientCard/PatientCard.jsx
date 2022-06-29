@@ -122,7 +122,8 @@ const ExitDialog = ({ openModal, onClose, value }) => {
 
 const PatientCard = ({
   id,
-  firstPicture,
+  patientPicture,
+  // lastPicture,
   name,
   sex,
   age,
@@ -193,7 +194,9 @@ const PatientCard = ({
             sx={{ width: "250px", height: "250px", border: "0px solid red" }}
             alt={name}
             src={
-              firstPicture === null || firstPicture === "" ? "" : firstPicture
+              patientPicture !== null || patientPicture !== ""
+                ? patientPicture
+                : ""
             }
           />
 
