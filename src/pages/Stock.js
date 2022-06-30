@@ -274,7 +274,7 @@ export default function Patient() {
                   mb={2}
                 >
                   <Typography variant="h4" gutterBottom>
-                    Stocks
+                    Opérations stocks
                   </Typography>
                   <div>
                     <Button

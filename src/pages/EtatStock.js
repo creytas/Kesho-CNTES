@@ -287,7 +287,7 @@ export default function Patient() {
                             className={classes.container}
                             onSubmit={handleSubmit}
                             style={{
-                              margin: "2rem 0 0 2rem",
+                              marginBottom: "0.5rem 0 2rem 0.5rem",
                             }}
                           >
                             <TextField
@@ -321,10 +321,9 @@ export default function Patient() {
                                 width: "80px",
                                 height: "55px",
                               }}
-                              // onClick={handleClick}
                               type="submit"
                               variant="contained"
-                              //loading={buttonLoader}
+                              loading={buttonLoader}
                             >
                               Trouver
                             </LoadingButton>
