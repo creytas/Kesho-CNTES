@@ -16,7 +16,7 @@ import {
   Card,
   Table,
   Stack,
-  Avatar,
+  TextField,
   Button,
   TableRow,
   TableBody,
@@ -106,6 +106,10 @@ export default function Patient() {
   const [loader, setLoader] = useState(true);
   const [loadingButton, setLoadingButton] = useState(false);
   const [searchedValue, setSearchedValue] = useState("");
+  const [startingDate, setStartingDate] = useState("");
+  const [endingDate, setEndingDate] = useState("");
+  const [buttonLoader, setButtonLoader] = useState(false);
+  const [displayDate, setDisplayDate] = useState(false);
   const classes = useStyles();
   const refButtonRefresh = useRef(null);
   useEffect(() => {
@@ -161,6 +165,47 @@ export default function Patient() {
   }, [isAuth]);
   const component = "add_Operation";
   console.log(allData);
+  // -------------------FOrmik----------------------------
+  const DateSchema = Yup.object().shape({
+    startDate: Yup.date().required("selectionnez une date"),
+    endDate: Yup.date(),
+  });
+  const formik = useFormik({
+    enableReinitialize: true,
+    initialValues: {
+      startDate: "",
+      endDate: "",
+      remember: true,
+    },
+    validationSchema: DateSchema,
+    onSubmit: async ({ startDate, endDate }) => {
+      setButtonLoader(true);
+      setDisplayDate(false);
+      try {
+        const response = await Axios.post(
+          "https://kesho-api.herokuapp.com/operation/states",
+          {
+            starting_date: startDate,
+            ending_date: endDate,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        const output = await response.data;
+        setSearchedValue("");
+        setLoadingButton(false);
+        // setPatientsList(output);
+      } catch (err) {
+        console.log("message error :", err.message);
+      }
+    },
+  });
+  const { errors, touched, handleSubmit, getFieldProps } = formik;
+
   return isAuth ? (
     <>
       {loader ? (
@@ -181,7 +226,25 @@ export default function Patient() {
                   mb={2}
                 >
                   <Typography variant="h4" gutterBottom>
-                    Etat stocks
+                    Etat stocks{" "}
+                    {displayDate ? (
+                      <>
+                        du{" "}
+                        <span className={classes.labelRoot}>
+                          {moment(startingDate)
+                            .format("DD MMM YYYY")
+                            .toUpperCase()}
+                        </span>{" "}
+                        au{" "}
+                        <span className={classes.labelRoot}>
+                          {moment(endingDate)
+                            .format("DD MMM YYYY")
+                            .toUpperCase()}
+                        </span>
+                      </>
+                    ) : (
+                      <> </>
+                    )}
                   </Typography>
                   <div>
                     <Button
@@ -205,6 +268,80 @@ export default function Patient() {
                 </Stack>
 
                 <Card>
+                  <RootStyle
+                    sx={{
+                      ...(selected.length > 0 && {
+                        color: "primary.main",
+                        bgcolor: "primary.lighter",
+                      }),
+                    }}
+                  >
+                    {selected.length > 0 ? (
+                      <Typography component="div" variant="subtitle1">
+                        {selected.length} selectionés
+                      </Typography>
+                    ) : (
+                      <>
+                        <FormikProvider value={formik}>
+                          <Form
+                            className={classes.container}
+                            onSubmit={handleSubmit}
+                            style={{
+                              margin: "2rem 0 0 2rem",
+                            }}
+                          >
+                            <TextField
+                              label="Début"
+                              type="date"
+                              className={classes.textField}
+                              InputLabelProps={{
+                                shrink: true,
+                              }}
+                              {...getFieldProps("startDate")}
+                              error={Boolean(
+                                touched.startDate && errors.startDate
+                              )}
+                              helperText={touched.startDate && errors.startDate}
+                            />
+                            &nbsp;&nbsp;
+                            <TextField
+                              label="Fin"
+                              type="date"
+                              className={classes.textField}
+                              InputLabelProps={{
+                                shrink: true,
+                              }}
+                              {...getFieldProps("endDate")}
+                              error={Boolean(touched.endDate && errors.endDate)}
+                              helperText={touched.endDate && errors.endDate}
+                            />
+                            &nbsp;&nbsp;
+                            <LoadingButton
+                              style={{
+                                width: "80px",
+                                height: "55px",
+                              }}
+                              // onClick={handleClick}
+                              type="submit"
+                              variant="contained"
+                              //loading={buttonLoader}
+                            >
+                              Trouver
+                            </LoadingButton>
+                          </Form>
+                        </FormikProvider>
+                        <Tooltip
+                          title="Rafraîchir"
+                          color="primary"
+                          onClick={handleClickRefresh}
+                        >
+                          <IconButton>
+                            <RefreshIcon />
+                          </IconButton>
+                        </Tooltip>
+                      </>
+                    )}
+                  </RootStyle>
                   <Scrollbar>
                     <TableContainer sx={{ minWidth: 800 }}>
                       <>
