@@ -730,6 +730,7 @@ export default function FamilleForm({
                   Sans profession (sans emploi)
                 </option>
                 <option value="Cultivateur">Cultivateur</option>
+                <option value="Portefaix">Portefaix</option>
                 <option value="Autre">autre</option>
               </Select>
             </Stack>

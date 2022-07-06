@@ -181,6 +181,7 @@ export default function Patient() {
     onSubmit: async ({ startDate, endDate }) => {
       setButtonLoader(true);
       setDisplayDate(false);
+      console.log(`start_date: ${startDate} & end_date: ${endDate}`);
       try {
         const response = await Axios.post(
           "https://kesho-api.herokuapp.com/operation/states",
@@ -198,7 +199,7 @@ export default function Patient() {
         const output = await response.data;
         setSearchedValue("");
         setLoadingButton(false);
-        // setPatientsList(output);
+        setAllData(output);
       } catch (err) {
         console.log("message error :", err.message);
       }
