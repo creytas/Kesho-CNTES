@@ -1084,7 +1084,7 @@ export default function Update() {
                     marginBottom: "0.5%",
                   }}
                 >
-                  Cause malnutrition
+                  ATCDs physiologiques & médicaux
                   <Button
                     sx={{ border: `0px solid red` }}
                     onClick={(e) => {
@@ -1486,7 +1486,7 @@ export default function Update() {
                     marginBottom: "0.5%",
                   }}
                 >
-                  Famille
+                  ATCDs familiaux & collatéraux
                 </Typography>
                 <Typography
                   sx={{

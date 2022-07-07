@@ -371,7 +371,7 @@ export default function PatientData({ DataPatient, PrevStep }) {
               </span>
             </InputLabel>
             <Typography sx={{ fontWeight: "900", fontSize: "larger" }}>
-              Causes malnutrition
+              ATCDs physiologiques & médicaux
             </Typography>
             <InputLabel>
               Terme grossesse :
@@ -543,7 +543,7 @@ export default function PatientData({ DataPatient, PrevStep }) {
             }}
           >
             <Typography sx={{ fontWeight: "900", fontSize: "larger" }}>
-              Famille
+              ATCDs familiaux & collatéraux
             </Typography>
             <Typography>Père</Typography>
             <InputLabel>
@@ -570,7 +570,8 @@ export default function PatientData({ DataPatient, PrevStep }) {
               Age du chef de menage :
               <span style={{ color: "black" }}>
                 {" "}
-                {FamalyData.dateNaissanceChefMenage === ""
+                {FamalyData.dateNaissanceChefMenage === "" ||
+                FamalyData.dateNaissanceChefMenage === 0
                   ? "Non renseigné"
                   : `${FamalyData.dateNaissanceChefMenage} ans`}
               </span>
