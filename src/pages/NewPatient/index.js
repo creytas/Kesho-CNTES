@@ -410,15 +410,15 @@ export default function NewPatient() {
         />
         <div
           className={`progress-step  ${Step === 2 && "progress-step-active"}`}
-          data-title="Cause malnutrition"
+          data-title="ATCDs physiologiques & médicaux"
         />
         <div
           className={`progress-step  ${Step === 3 && "progress-step-active"}`}
-          data-title="Famille"
+          data-title="ATCDs familiaux & collatéraux"
         />
         <div
           className={`progress-step  ${Step === 4 && "progress-step-active"}`}
-          data-title="Examen clinique"
+          data-title="Consulter"
         />
         <div
           className={`progress-step  ${Step === 5 && "progress-step-active"}`}

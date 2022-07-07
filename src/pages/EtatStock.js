@@ -105,7 +105,7 @@ export default function Patient() {
   const [loadingData, setLoadingData] = useState(false);
   const [loader, setLoader] = useState(true);
   const [loadingButton, setLoadingButton] = useState(false);
-  const [searchedValue, setSearchedValue] = useState("");
+  //  const [searchedValue, setSearchedValue] = useState("");
   const [startingDate, setStartingDate] = useState("");
   const [endingDate, setEndingDate] = useState("");
   const [buttonLoader, setButtonLoader] = useState(false);
@@ -197,7 +197,7 @@ export default function Patient() {
           }
         );
         const output = await response.data;
-        setSearchedValue("");
+        //setSearchedValue("");
         setLoadingButton(false);
         setAllData(output);
       } catch (err) {
