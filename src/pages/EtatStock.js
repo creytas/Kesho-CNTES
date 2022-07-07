@@ -392,7 +392,7 @@ export default function Patient() {
                                         {`${entrance / 1000} ${
                                           designation === "huiles"
                                             ? "L"
-                                            : designation === "vêtements" ||
+                                            : designation === "vêtement" ||
                                               designation === "jouets" ||
                                               designation === "chaussures" ||
                                               designation === "pain/biscuit"
@@ -409,7 +409,7 @@ export default function Patient() {
                                           designation === "huiles"
                                             ? "L"
                                             : designation === "pain/biscuit" ||
-                                              designation === "vêtements" ||
+                                              designation === "vêtement" ||
                                               designation === "jouets" ||
                                               designation === "chaussures"
                                             ? "Pces"
@@ -422,7 +422,7 @@ export default function Patient() {
                                           designation === "huiles"
                                             ? "L"
                                             : designation === "pain/biscuit" ||
-                                              designation === "vêtements" ||
+                                              designation === "vêtement" ||
                                               designation === "jouets" ||
                                               designation === "chaussures"
                                             ? "Pces"
