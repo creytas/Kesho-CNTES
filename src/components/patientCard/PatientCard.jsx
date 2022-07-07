@@ -32,6 +32,8 @@ import Badge from "@material-ui/core/Badge";
 import moment from "moment";
 import Label from "../Label";
 import { LoadingButton } from "@material-ui/lab";
+import { fAge } from "src/utils/formatTime";
+
 const exitIcon = "majesticons:door-exit";
 const enterIcon = "majesticons:door-enter";
 
@@ -209,7 +211,7 @@ const PatientCard = ({
       <div className="userShowBottom">
         <div className="userShowInfo">
           <ChildCareIcon className="userShowIcon" />
-          <span className="userShowInfoTitle">{age}</span>
+          <span className="userShowInfoTitle">{fAge(birthdate)}</span>
         </div>
         <div className="userShowInfo">
           <CalendarToday className="userShowIcon" />

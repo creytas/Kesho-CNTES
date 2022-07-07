@@ -226,7 +226,7 @@ export default function CliniqueForm({
     <>
       <FormikProvider value={formik}>
         <Form autoComplete="off" onSubmit={handleSubmit}>
-          <Grid container spacing={3}>
+          <Grid container spacing={3} sx={{ marginTop: "0.5%" }}>
             <Grid item xs={11} sm={6} md={6}>
               <Stack
                 style={{
@@ -417,11 +417,11 @@ export default function CliniqueForm({
                       rapport poids - taille
                     </a>
                     <a
-                      href="https://cdn.who.int/media/docs/default-source/child-growth/child-growth-standards/indicators/body-mass-index-for-age/cht-bfa-boys-z-0-5.pdf"
+                      href="https://cdn.who.int/media/docs/default-source/child-growth/child-growth-standards/indicators/head-circumference-for-age/cht_hcfa_boys_z_0_5.pdf"
                       target="_blank"
                       rel="noreferrer"
                     >
-                      IMC
+                      rapport p. cranien - age
                     </a>
                     <a
                       href="http://www.bamisagora.org/documents_pdf/07bb-La_Malnutrition-Tables_et_courbes_de_suivi.pdf"
@@ -455,11 +455,11 @@ export default function CliniqueForm({
                       rapport poids - taille
                     </a>
                     <a
-                      href="https://cdn.who.int/media/docs/default-source/child-growth/child-growth-standards/indicators/body-mass-index-for-age/cht-bfa-girls-z-0-5.pdf"
+                      href="https://cdn.who.int/media/docs/default-source/child-growth/child-growth-standards/indicators/head-circumference-for-age/cht_hcfa_girls_z_0_5.pdf"
                       target="_blank"
                       rel="noreferrer"
                     >
-                      IMC
+                      rapport p. cranien - age
                     </a>
                     <a
                       href="http://www.bamisagora.org/documents_pdf/07bb-La_Malnutrition-Tables_et_courbes_de_suivi.pdf"

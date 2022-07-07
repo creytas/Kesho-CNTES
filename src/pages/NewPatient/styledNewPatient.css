@@ -69,7 +69,7 @@ div.progress-bartotal::before {
   top: calc(100% - 0.08rem);
   font-size: 0.85rem;
   color: #666;
-  border:1px solid black;
+  border:0px solid black;
   width: 100px;
   display: flex;
   justify-content: center;

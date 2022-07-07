@@ -206,7 +206,7 @@ export default function PatientData({ DataPatient, PrevStep }) {
 
   return (
     <Container>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} sx={{ marginTop: "0.3%" }}>
         <Grid item xs={11} sm={5} md={5}>
           <Card
             sx={{

@@ -410,7 +410,11 @@ export default function FamilleForm({
   return (
     <FormikProvider value={formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-        <Grid sx={{ justifyContent: "center" }} container spacing={3}>
+        <Grid
+          sx={{ justifyContent: "center", marginTop: "0.5%" }}
+          container
+          spacing={3}
+        >
           <Grid item xs={11} sm={6} md={6}>
             <Stack spacing={3}>
               <TextField
