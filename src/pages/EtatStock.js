@@ -198,10 +198,13 @@ export default function Patient() {
         );
         const output = await response.data;
         //setSearchedValue("");
-        setLoadingButton(false);
+        setButtonLoader(false);
         setAllData(output);
+        setStartingDate(startDate);
+        setEndingDate(endDate);
+        setDisplayDate(true);
       } catch (err) {
-        console.log("message error :", err.message);
+        alert("message error :", err.message);
       }
     },
   });
